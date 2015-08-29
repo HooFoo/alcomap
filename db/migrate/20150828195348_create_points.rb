@@ -5,7 +5,7 @@ class CreatePoints < ActiveRecord::Migration
       t.float :lat
       t.string :name
       t.string :description
-      t.belongs_to :user, index: true, foreign_key: true
+
 
       t.timestamps null: false
     end
