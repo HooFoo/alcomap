@@ -1,15 +1,28 @@
 <div class="wrapper" ng-view ng-controller="IndexController as controller">
   <h1 ng-model="controller.heading">{{controller.heading}}</h1>
+
   <div style='width: 800px;'>
     <div id="map" style='width: 800px; height: 400px;'></div>
   </div>
-  <form name="myForm"  class="my-form">
-    userType: <input name="input" ng-model="userType" required>
-    <span class="error" ng-show="myForm.input.$error.required">Required!</span><br>
-    <code>userType = {{userType}}</code><br>
-    <code>myForm.input.$valid = {{myForm.input.$valid}}</code><br>
-    <code>myForm.input.$error = {{myForm.input.$error}}</code><br>
-    <code>myForm.$valid = {{myForm.$valid}}</code><br>
-    <code>myForm.$error.required = {{!!myForm.$error.required}}</code><br>
+  <form name="myForm" class="my-form">
+    <div class="input-group">
+      <span class="input-group-addon" id="point_name">Имя:</span>
+      <input type="text" class="form-control" placeholder="" aria-describedby="point_name">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon" id="point_long">Долгота:</span>
+      <input type="text" class="form-control" placeholder="00.00" aria-describedby="point_long">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon" id="point_lat">Широта:</span>
+      <input type="text" class="form-control" placeholder="00.00" aria-describedby="point_lat">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon" id="point_desc">Описание:</span>
+      <input type="text" class="form-control" placeholder="" aria-describedby="point_desc">
+    </div>
+    <div class="input-group">
+      <button class="btn btn-default">Добавить</button>
+    </div>
   </form>
 </div>
