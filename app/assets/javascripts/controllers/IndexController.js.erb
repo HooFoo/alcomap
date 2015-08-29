@@ -5,11 +5,11 @@ function IndexController($scope, gmap, Point) {
     var $this = this;
     this.heading = 'Алкомап (пре альфа)';
     this.addPoint = function () {
-        var point = Point.new(point,function(result)
+        var point = Point.new($scope.point,function(result)
         {
             var marker = new google.maps.Marker({
-                position: {lng: point.long, lat: point.lat},
-                title: point.name
+                position: {lng: result.long, lat: result.lat},
+                title: result.name
             });
             marker.setMap(gmap);
         });
@@ -31,5 +31,6 @@ function IndexController($scope, gmap, Point) {
             });
             marker.setMap(gmap)
         });
+        $scope.point = {long:USER_POSITION.lng,lat:USER_POSITION.lat,name:'def',description:'desc'};
     }();
 }

@@ -27,10 +27,14 @@ app.factory('Point', ['$resource', function ($resource) {
             resource.update({id: id,format: 'json'}, data).$promise.then(accept, reject);
         },
         new: function (data, accept, reject) {
+            console.log(data);
             $resource('/points.:format').save({format: 'json'}, data).$promise.then(accept, reject);
         },
         delete: function (id, accept, reject) {
             resource.delete({id: id, format: 'json'}).$promise.then(accept, reject);
         }
     }
+}]);
+app.run(['$http',function($http){
+    $http.defaults.headers.common['X-CSRF-Token']= $('meta[name="csrf-token"]').attr('content');
 }]);

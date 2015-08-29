@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150828204414) do
+ActiveRecord::Schema.define(version: 20160828204414) do
 
   create_table "comments", force: :cascade do |t|
     t.string   "text"
-    t.integer  "user_id"
-    t.integer  "point_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.integer  "point_id"
   end
 
   add_index "comments", ["point_id"], name: "index_comments_on_point_id"
@@ -29,9 +29,9 @@ ActiveRecord::Schema.define(version: 20150828204414) do
     t.float    "lat"
     t.string   "name"
     t.string   "description"
-    t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "user_id"
   end
 
   add_index "points", ["user_id"], name: "index_points_on_user_id"
