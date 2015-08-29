@@ -1,0 +1,2 @@
+module IndexControllerHelper
+end

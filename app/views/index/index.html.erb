@@ -1,0 +1,15 @@
+<div class="wrapper" ng-view ng-controller="IndexController as controller">
+  <h1 ng-model="controller.heading">{{controller.heading}}</h1>
+  <div style='width: 800px;'>
+    <div id="map" style='width: 800px; height: 400px;'></div>
+  </div>
+  <form name="myForm"  class="my-form">
+    userType: <input name="input" ng-model="userType" required>
+    <span class="error" ng-show="myForm.input.$error.required">Required!</span><br>
+    <code>userType = {{userType}}</code><br>
+    <code>myForm.input.$valid = {{myForm.input.$valid}}</code><br>
+    <code>myForm.input.$error = {{myForm.input.$error}}</code><br>
+    <code>myForm.$valid = {{myForm.$valid}}</code><br>
+    <code>myForm.$error.required = {{!!myForm.$error.required}}</code><br>
+  </form>
+</div>

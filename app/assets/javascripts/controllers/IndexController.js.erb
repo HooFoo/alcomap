@@ -1,0 +1,29 @@
+/**
+ * Created by Геннадий on 28.08.2015.
+ */
+function IndexController($scope, gmap, Point) {
+    var $this = this;
+    this.heading = 'Алкомап (пре альфа)';
+    this.addPoint = function () {
+
+    }
+    var init = function () {
+
+        Point.index(function (result) {
+            $this.points = result;
+            $this.points.forEach(function (item) {
+                console.log(item,USER_POSITION,{lng: item.long, lat: item.lat});
+                var marker = new google.maps.Marker({
+                    position: {lng: item.long, lat: item.lat},
+                    title: item.name
+                });
+                marker.setMap(gmap)
+            });
+            var marker = new google.maps.Marker({
+                position:USER_POSITION,
+                title: "Ето ты"
+            });
+            marker.setMap(gmap)
+        });
+    }();
+}
