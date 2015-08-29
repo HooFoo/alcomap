@@ -27,7 +27,7 @@ app.factory('Point', ['$resource', function ($resource) {
             resource.update({id: id,format: 'json'}, data).$promise.then(accept, reject);
         },
         new: function (data, accept, reject) {
-            $resource('/points:format').save({format: 'json'}, data).$promise.then(accept, reject);
+            $resource('/points.:format').save({format: 'json'}, data).$promise.then(accept, reject);
         },
         delete: function (id, accept, reject) {
             resource.delete({id: id, format: 'json'}).$promise.then(accept, reject);
