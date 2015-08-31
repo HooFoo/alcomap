@@ -8,17 +8,22 @@
     </div>
     <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 comments">
       <span>comments</span>
+
       <form class="form-horizontal">
         <div class="form-group">
           <div class="input-group-addon"><label for="name">Название</label></div>
           <input type="text" class="form-control" id="name" placeholder="Дядя Боря..." ng-model="comment.text">
-          <div class="input-group-addon"><div class="send_comment btn btn-default" ng-click="controller.comment()">Отправить </div></div>
+
+          <div class="input-group-addon">
+            <div class="send_comment btn btn-default" ng-click="controller.comment()">Отправить</div>
+          </div>
         </div>
       </form>
       <div class="comments">
         <div class="comment" ng-repeat="comment in controller.currentPoint.comments track by $index">
           <span class="comment_user">{{comment.user.name}}</span>
-          <div class="comment_text"> {{comment.text}} </div>
+          <span class="comment_user">{{comment.point.name}}</span>
+          <div class="comment_text"> {{comment.text}}</div>
         </div>
       </div>
       <div class="info">
