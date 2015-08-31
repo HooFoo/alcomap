@@ -1,11 +1,21 @@
 /**
  * Created by Геннадий on 28.08.2015.
  */
-function IndexController($scope, gmap, Point) {
+function IndexController($scope, gmap, Point, Comment) {
     var $this = this;
     this.heading = 'Алкомап (пре альфа)';
     this.currentPoint = undefined;
 
+    var findPointInList = function(point)
+    {
+        var result = point;
+        $this.points.forEach(function(item)
+        {
+            if(item.id == point.id)
+                result=item;
+        });
+        return result;
+    };
     this.addPoint = function () {
         var point = Point.new($scope.point, function (result) {
             $this.points.push(result);
@@ -14,8 +24,21 @@ function IndexController($scope, gmap, Point) {
                 title: result.name,
                 map: gmap
             });
+            marker.addListener('click',function(event)
+            {
+                $this.currentPoint = findPointInList(result);
+                console.log($this.currentPoint);
+            });
             result.marker = marker;
         });
+    };
+    this.comment =function(){
+        $scope.comment.point_id = $this.currentPoint.id;
+        var comment = Comment.new($scope.comment, function(result)
+        {
+            $this.currentPoint.comments.push(result);
+        });
+        
     };
     var init = function () {
 
@@ -28,9 +51,15 @@ function IndexController($scope, gmap, Point) {
                     map: gmap,
                     icon: '<%= asset_path 'bottle.png' %>'
                 });
+                marker.addListener('click',function(event)
+                {
+                    $this.currentPoint = findPointInList(item);
+                    $scope.$apply();
+                    console.log($this.currentPoint.comments);
+                });
                 item.marker = marker;
             });
-            $this.currentPoint = $this.points[0];
+            $this.currentPoint= $this.points[0];
             var marker = new google.maps.Marker({
                 position: USER_POSITION,
                 title: "Ето ты",
@@ -40,6 +69,6 @@ function IndexController($scope, gmap, Point) {
                 map: gmap
             });
         });
-        $scope.point = {long: USER_POSITION.lng, lat: USER_POSITION.lat, name: 'def', description: 'desc'};
+        $scope.point = {long: USER_POSITION.lng, lat: USER_POSITION.lat, name: 'Test', description: 'Description'};
     }();
 }

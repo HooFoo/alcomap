@@ -2,7 +2,7 @@
  * Created by Геннадий on 28.08.2015.
  */
 app = angular.module('alcomap', ['ngResource']);
-app.controller('IndexController', IndexController, ['$scope', 'gmap','Point']);
+app.controller('IndexController', IndexController, ['$scope', 'gmap','Point','Comment']);
 app.factory('gmap', function () {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
@@ -29,6 +29,31 @@ app.factory('Point', ['$resource', function ($resource) {
         new: function (data, accept, reject) {
             console.log(data);
             $resource('/points.:format').save({format: 'json'}, data).$promise.then(accept, reject);
+        },
+        delete: function (id, accept, reject) {
+            resource.delete({id: id, format: 'json'}).$promise.then(accept, reject);
+        }
+    }
+}]);
+app.factory('Comment', ['$resource', function ($resource) {
+    var resource = $resource('/comments/:id.:format', null, {
+        'update': {
+            method: 'put'
+        }
+    });
+    return {
+        index: function (accept, reject) {
+            $resource('/comments.:format').query({id: null, format: 'json'}).$promise.then(accept, reject);
+        },
+        show: function (id, accept, reject) {
+            resource.get({id: id, format: 'json'}).$promise.then(accept, reject);
+        },
+        edit: function (id, data, accept, reject) {
+            resource.update({id: id,format: 'json'}, data).$promise.then(accept, reject);
+        },
+        new: function (data, accept, reject) {
+            console.log(data);
+            $resource('/comments.:format').save({format: 'json'}, data).$promise.then(accept, reject);
         },
         delete: function (id, accept, reject) {
             resource.delete({id: id, format: 'json'}).$promise.then(accept, reject);

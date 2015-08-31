@@ -1,7 +1,8 @@
 // Place all the styles related to the index_controller controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-@import 'airport.scss';
+@import 'airport';
+@import 'anahit';
 
 #map {
   width: 100%;
@@ -14,4 +15,19 @@
 
 .title_wrapper {
   text-align: center;
+}
+.comment_user
+{
+  font-family: monospace;
+  font-size: 14pt;
+  font-weight: bold;
+}
+.comment_text
+{
+  font-family: 'AMG Anahit',monospace;
+  font-size: 10pt;
+}
+.info
+{
+  border: 1px solid black;
 }
