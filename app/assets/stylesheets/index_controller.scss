@@ -17,6 +17,7 @@
     left: 0;
     width: 100%;
     z-index: 999;
+        padding-top: 35px;
 }
 
 .title_wrapper {
@@ -47,4 +48,35 @@
 .nopadding {
    padding: 0 !important;
    margin: 0 !important;
+}
+.inset_shadow
+{
+  box-shadow: inset 0px 0px 160px 32px rgba(0,0,0,0.59);
+}
+.comments
+{
+      background-color: rgba(138, 136, 136, 0.75);
+          padding-top: 10px;
+          height: 80vh;
+    overflow: auto;
+}
+.comment_form
+{
+    background: rgba(249, 249, 249, 0.7)
+    padding: 5px 10px;    padding: 5px 10px;
+    height: 20vh;
+}
+.comment_div
+{
+      margin: 0px 0px 15px 0px;
+}
+.comment
+{
+  border: 2px solid rgba(2, 2, 2, 0.51);
+    padding: 3px 6px;
+    margin-bottom: 5px;
+}
+.send_comment
+{
+  width:100%;
 }

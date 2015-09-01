@@ -6,7 +6,8 @@ app.controller('IndexController', IndexController, ['$compile','$scope', 'gmap',
 app.factory('gmap', function () {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
-        center: USER_POSITION
+        center: USER_POSITION,
+        styles: [{"featureType":"all","elementType":"all","stylers":[{"saturation":-100},{"gamma":0.5}]}]
     });
     return map;
 });
