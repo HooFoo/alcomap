@@ -1,10 +1,12 @@
 <div class="wrapper" ng-view ng-controller="IndexController as controller">
-  <div class="title_wrapper">
-    <h1 ng-model="controller.heading" class="app_tittle">{{controller.heading}}</h1>
-  </div>
-  <div class="container">
+
+  <div class="map_container">
     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+      <div class="title_wrapper">
+        <h1 ng-model="controller.heading" class="app_tittle">{{controller.heading}}</h1>
+      </div>
       <div id="map"></div>
+      <div class="btn btn-primary add_button" ng-click="controller.addPointDraggable()">Добавить</div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 comments">
 
@@ -31,7 +33,6 @@
         </div>
       </div>
 
-      <div class="btn btn-default" ng-click="controller.addPointDraggable()">Добавить</div>
 
     </div>
   </div>
