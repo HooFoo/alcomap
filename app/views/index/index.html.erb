@@ -30,27 +30,9 @@
           </div>
         </div>
       </div>
+
+      <div class="btn btn-default" ng-click="controller.addPointDraggable()">Добавить</div>
+
     </div>
   </div>
-  <form name="myForm" class="my-form">
-    <div class="input-group">
-      <span class="input-group-addon" id="point_name">Имя:</span>
-      <input type="text" class="form-control" placeholder="" aria-describedby="point_name" ng-model="point.name">
-    </div>
-    <div class="input-group">
-      <span class="input-group-addon" id="point_long">Долгота:</span>
-      <input type="text" class="form-control" placeholder="00.00" aria-describedby="point_long" ng-model="point.long">
-    </div>
-    <div class="input-group">
-      <span class="input-group-addon" id="point_lat">Широта:</span>
-      <input type="text" class="form-control" placeholder="00.00" aria-describedby="point_lat" ng-model="point.lat">
-    </div>
-    <div class="input-group">
-      <span class="input-group-addon" id="point_desc">Описание:</span>
-      <input type="text" class="form-control" placeholder="" aria-describedby="point_desc" ng-model="point.description">
-    </div>
-    <div class="input-group">
-      <button class="btn btn-default" ng-click="controller.addPoint()">Добавить</button>
-    </div>
-  </form>
 </div>

@@ -2,7 +2,7 @@
  * Created by Геннадий on 28.08.2015.
  */
 app = angular.module('alcomap', ['ngResource']);
-app.controller('IndexController', IndexController, ['$scope', 'gmap','Point','Comment']);
+app.controller('IndexController', IndexController, ['$compile','$scope', 'gmap','Point','Comment']);
 app.factory('gmap', function () {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
@@ -27,7 +27,6 @@ app.factory('Point', ['$resource', function ($resource) {
             resource.update({id: id,format: 'json'}, data).$promise.then(accept, reject);
         },
         new: function (data, accept, reject) {
-            console.log(data);
             $resource('/points.:format').save({format: 'json'}, data).$promise.then(accept, reject);
         },
         delete: function (id, accept, reject) {
@@ -52,7 +51,6 @@ app.factory('Comment', ['$resource', function ($resource) {
             resource.update({id: id,format: 'json'}, data).$promise.then(accept, reject);
         },
         new: function (data, accept, reject) {
-            console.log(data);
             $resource('/comments.:format').save({format: 'json'}, data).$promise.then(accept, reject);
         },
         delete: function (id, accept, reject) {

@@ -1,26 +1,24 @@
 /**
  * Created by Геннадий on 28.08.2015.
  */
-function IndexController($scope, gmap, Point, Comment) {
+function IndexController($compile,$scope, gmap, Point, Comment) {
     var $this = this;
     this.heading = 'Алкомап (пре альфа)';
     this.currentPoint = undefined;
     this.openedInfos = undefined;
 
-    var findPointInList = function(point)
-    {
+    var findPointInList = function (point) {
         var result = point;
-        $this.points.forEach(function(item)
-        {
-            if(item.id == point.id)
-                result=item;
+        $this.points.forEach(function (item) {
+            if (item.id == point.id)
+                result = item;
         });
         return result;
     };
 
-    function buildMarker(item) {
+    var buildMarker = function (item) {
         var marker = new google.maps.Marker({
-            position: {lng: item.long, lat: item.lat},
+            position: {lng: item.lng, lat: item.lat},
             label: item.name,
             title: item.description,
             map: gmap,
@@ -28,37 +26,71 @@ function IndexController($scope, gmap, Point, Comment) {
         });
 
         var infoWindow = new google.maps.InfoWindow({
-            content:"<div class='info'>" +
+            content: "<div class='info'>" +
             "<span class='comment_user'>Название: </span>" +
-            "<span class='comment_user'>"+ item.name+"</span><br>" +
+            "<span class='comment_user'>" + item.name + "</span><br>" +
             "<span class='comment_user'>Описание: </span>" +
-            "<span class='comment_user'>"+item.description+"</span><br>" +
+            "<span class='comment_user'>" + item.description + "</span><br>" +
             "<span class='comment_user'>Добавлено: </span>" +
-            "<span class='comment_user'>"+item.user.name+"</span>" +
+            "<span class='comment_user'>" + item.user.name + "</span>" +
             "</div>"
         });
-        marker.addListener('click',function(event)
-        {
+        marker.addListener('click', function (event) {
             $this.currentPoint = findPointInList(item);
-            if($this.openedInfos)
+            if ($this.openedInfos)
                 $this.openedInfos.close();
-            infoWindow.open(gmap,marker);
+            infoWindow.open(gmap, marker);
             $this.openedInfos = infoWindow;
             $scope.$apply();
         });
         item.marker = marker;
         return marker
-    }
+    };
 
+    this.addPointDraggable = function () {
+        $scope.point = {lat:gmap.getCenter().lat(),lng:gmap.getCenter().lng()};
+        var marker = new google.maps.Marker({
+            position: $scope.point,
+            label: $scope.point.name,
+            title: $scope.point.description,
+            map: gmap,
+            draggable: true,
+            icon: '<%= asset_path 'drinks.png' %>'
+        });
+        var content = "<div class='addBox'>" +
+                "<span class='comment_user'>Название: </span>" +
+                "<input type='text' class='comment_user' ng-model='point.name'><br>" +
+                "<span class='comment_user'>Описание: </span>" +
+                "<input type='text' class='comment_user' ng-model='point.description'><br>" +
+                "<button class='btn btn-default' ng-click='controller.addPoint()'>Сохранить</button>" +
+                "</div>";
+        var infoWindow = new google.maps.InfoWindow({
+            content: content
+        });
+        infoWindow.addListener('domready',function(){
+            $scope.$apply(function(){
+                $compile(document.getElementsByClassName('addBox'))($scope);
+            });
+        });
+        infoWindow.open(gmap,marker);
+        infoWindow.addListener('closeclick',function(){
+           marker.setMap(null);
+        });
+        marker.addListener('dragend',function(){
+            var pos = marker.getPosition();
+            $scope.point.lng = pos.lng();
+            $scope.point.lat = pos.lat();
+            $scope.$apply();
+        })
+    };
     this.addPoint = function () {
         var point = Point.new($scope.point, function (result) {
             buildMarker(result);
         });
     };
-    this.comment =function(){
+    this.comment = function () {
         $scope.comment.point_id = $this.currentPoint.id;
-        var comment = Comment.new($scope.comment, function(result)
-        {
+        var comment = Comment.new($scope.comment, function (result) {
             $this.currentPoint.comments.push(result);
         });
 
@@ -70,7 +102,7 @@ function IndexController($scope, gmap, Point, Comment) {
             $this.points.forEach(function (item) {
                 buildMarker(item);
             });
-            $this.currentPoint= $this.points[0];
+            $this.currentPoint = $this.points[0];
             var marker = new google.maps.Marker({
                 position: USER_POSITION,
                 label: "Ето ты",
@@ -80,11 +112,10 @@ function IndexController($scope, gmap, Point, Comment) {
                 map: gmap
             });
         });
-        setTimeout(function(){
+        setTimeout(function () {
             $scope.point = {long: USER_POSITION.lng, lat: USER_POSITION.lat, name: 'Test', description: 'Description'};
             gmap.setCenter(USER_POSITION);
-            console.log(USER_POSITION)
-        },2000);
-        var myScroll  = new IScroll('#comments_scroller');
+        }, 2000);
+        var myScroll = new IScroll('#comments_scroller');
     }();
 }

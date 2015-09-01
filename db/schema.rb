@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20160828204414) do
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
   create_table "points", force: :cascade do |t|
-    t.float    "long"
+    t.float    "lng"
     t.float    "lat"
     t.string   "name"
     t.string   "description"
