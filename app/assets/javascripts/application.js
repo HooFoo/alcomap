@@ -16,7 +16,7 @@
 //= require bootstrap
 //= require underscore
 //= require gmaps/google
-
+//= require iscroll/iscroll
 //= require angular
 //= require angular-resource
 

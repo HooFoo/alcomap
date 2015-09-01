@@ -5,6 +5,7 @@ function IndexController($scope, gmap, Point, Comment) {
     var $this = this;
     this.heading = 'Алкомап (пре альфа)';
     this.currentPoint = undefined;
+    this.openedInfos = undefined;
 
     var findPointInList = function(point)
     {
@@ -16,20 +17,42 @@ function IndexController($scope, gmap, Point, Comment) {
         });
         return result;
     };
+
+    function buildMarker(item) {
+        var marker = new google.maps.Marker({
+            position: {lng: item.long, lat: item.lat},
+            label: item.name,
+            title: item.description,
+            map: gmap,
+            icon: '<%= asset_path 'bottle.png' %>'
+        });
+
+        var infoWindow = new google.maps.InfoWindow({
+            content:"<div class='info'>" +
+            "<span class='comment_user'>Название: </span>" +
+            "<span class='comment_user'>"+ item.name+"</span><br>" +
+            "<span class='comment_user'>Описание: </span>" +
+            "<span class='comment_user'>"+item.description+"</span><br>" +
+            "<span class='comment_user'>Добавлено: </span>" +
+            "<span class='comment_user'>"+item.user.name+"</span>" +
+            "</div>"
+        });
+        marker.addListener('click',function(event)
+        {
+            $this.currentPoint = findPointInList(item);
+            if($this.openedInfos)
+                $this.openedInfos.close();
+            infoWindow.open(gmap,marker);
+            $this.openedInfos = infoWindow;
+            $scope.$apply();
+        });
+        item.marker = marker;
+        return marker
+    }
+
     this.addPoint = function () {
         var point = Point.new($scope.point, function (result) {
-            $this.points.push(result);
-            var marker = new google.maps.Marker({
-                position: {lng: result.long, lat: result.lat},
-                title: result.name,
-                map: gmap
-            });
-            marker.addListener('click',function(event)
-            {
-                $this.currentPoint = findPointInList(result);
-                console.log($this.currentPoint);
-            });
-            result.marker = marker;
+            buildMarker(result);
         });
     };
     this.comment =function(){
@@ -38,37 +61,30 @@ function IndexController($scope, gmap, Point, Comment) {
         {
             $this.currentPoint.comments.push(result);
         });
-        
+
     };
     var init = function () {
 
         Point.index(function (result) {
             $this.points = result;
             $this.points.forEach(function (item) {
-                var marker = new google.maps.Marker({
-                    position: {lng: item.long, lat: item.lat},
-                    title: item.name,
-                    map: gmap,
-                    icon: '<%= asset_path 'bottle.png' %>'
-                });
-                marker.addListener('click',function(event)
-                {
-                    $this.currentPoint = findPointInList(item);
-                    $scope.$apply();
-                    console.log($this.currentPoint.comments);
-                });
-                item.marker = marker;
+                buildMarker(item);
             });
             $this.currentPoint= $this.points[0];
             var marker = new google.maps.Marker({
                 position: USER_POSITION,
-                title: "Ето ты",
+                label: "Ето ты",
                 icon: {
                     url: '<%= asset_path 'Alien.png' %>'
                 },
                 map: gmap
             });
         });
-        $scope.point = {long: USER_POSITION.lng, lat: USER_POSITION.lat, name: 'Test', description: 'Description'};
+        setTimeout(function(){
+            $scope.point = {long: USER_POSITION.lng, lat: USER_POSITION.lat, name: 'Test', description: 'Description'};
+            gmap.setCenter(USER_POSITION);
+            console.log(USER_POSITION)
+        },2000);
+        var myScroll  = new IScroll('#comments_scroller');
     }();
 }
