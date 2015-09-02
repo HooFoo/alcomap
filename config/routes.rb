@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: {registrations: 'users/registrations', invitations: 'users/invitations'}
+  devise_for :users, controllers: {registrations: 'users/registrations',
+                                   invitations: 'users/invitations'},
+             path_names: {sign_up: ''}
   get 'index_controller/index'
 
   #resources :users
