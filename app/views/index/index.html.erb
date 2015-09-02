@@ -1,5 +1,5 @@
 <div class="wrapper" ng-view ng-controller="IndexController as controller">
-<div class="loader inset_shadow" ng-hide="controller.hideLoader"><h1>Загружаюсь...</h1></div>
+  <div class="loader inset_shadow" ng-hide="controller.hideLoader"><h1>Загружаюсь...</h1></div>
   <div class="map_container">
     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 nopadding inset_shadow">
       <div class="title_wrapper">
@@ -9,7 +9,7 @@
       <div class="btn btn-primary add_button" ng-click="controller.addPointDraggable()">Добавить</div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 nopadding">
-      <a href="users/invitation/new" class="invite_link">Позвать друзей</a>
+      <a href="/users/invitation" class="invite_link">Позвать друзей</a>
 
       <form class="comment_form">
         <div class="form-group comment_div">
@@ -25,12 +25,14 @@
             <div class="comment" ng-repeat="comment in controller.currentPoint.comments track by $index">
               <span class="comment_user">{{comment.user.name}}</span>
               <span class="comment_user">{{comment.point.name}}</span>
+
               <div class="comment_text"> {{comment.text}}</div>
             </div>
           </div>
         </div>
       </div>
 
+      <a class="log_out" href="/users/sign_out">Ужас!</a>
 
     </div>
   </div>

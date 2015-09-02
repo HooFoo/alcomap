@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {registrations: 'users/registrations', invitations: 'users/invitations'}
   get 'index_controller/index'
 
-  resources :users
+  #resources :users
   resources :comments
   resources :points
 

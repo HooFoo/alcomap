@@ -80,8 +80,8 @@ Rails.application.configure do
   ActionMailer::Base.smtp_settings = {
       :address => 'smtp.mail.ru',
       :port => 465,
-      :user_name => "alcomap",
-      :password => "P@$$w0rd",
+      :user_name => ENV['MAIL_USER'],
+      :password => ENV['MAIL_PASSWORD'],
       :authentication => :plain,
       :enable_starttls_auto => true,
       :openssl_verify_mode => 'none'

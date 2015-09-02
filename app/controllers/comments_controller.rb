@@ -5,6 +5,7 @@ class CommentsController < InheritedResources::Base
     @comment.point = Point.find(params[:point_id])
     @comment.user = current_user
 
+
     if create_resource(@comment)
       options[:location] ||= smart_resource_url
     end

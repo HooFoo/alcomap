@@ -1,7 +1,7 @@
 /**
  * Created by Геннадий on 28.08.2015.
  */
-function IndexController($compile,$scope, gmap, Point, Comment) {
+function IndexController($compile, $scope, gmap, Point, Comment) {
     var $this = this;
     this.heading = 'Алкомап (альфа)';
     this.currentPoint = undefined;
@@ -26,16 +26,18 @@ function IndexController($compile,$scope, gmap, Point, Comment) {
             icon: '<%= asset_path 'bottle.png' %>'
         });
 
+        var content = "<div class='info'>" +
+                "<span class='comment_user'>Название: </span>" +
+                "<span class='comment_user'>" + item.name + "</span><br>";
+        if (item.description)
+            content += "<span class='comment_user'>Описание: </span><span class='comment_user'>" + item.description + "</span><br>";
+        content += "<span class='comment_user'>Добавлено: </span>" +
+                "<span class='comment_user'>" + item.user.name + "</span>" +
+                "</div>";
+
         var infoWindow = new google.maps.InfoWindow({
-            content: "<div class='info'>" +
-            "<span class='comment_user'>Название: </span>" +
-            "<span class='comment_user'>" + item.name + "</span><br>" +
-            "<span class='comment_user'>Описание: </span>" +
-            "<span class='comment_user'>" + item.description + "</span><br>" +
-            "<span class='comment_user'>Добавлено: </span>" +
-            "<span class='comment_user'>" + item.user.name + "</span>" +
-            "</div>"
-        });
+                            content: content
+                        });
         marker.addListener('click', function (event) {
             $this.currentPoint = findPointInList(item);
             if ($this.openedInfos)
@@ -49,7 +51,7 @@ function IndexController($compile,$scope, gmap, Point, Comment) {
     };
 
     this.addPointDraggable = function () {
-        $scope.point = {lat:gmap.getCenter().lat(),lng:gmap.getCenter().lng()};
+        $scope.point = {lat: gmap.getCenter().lat(), lng: gmap.getCenter().lng()};
         var marker = new google.maps.Marker({
             position: $scope.point,
             label: $scope.point.name,
@@ -58,6 +60,7 @@ function IndexController($compile,$scope, gmap, Point, Comment) {
             draggable: true,
             icon: '<%= asset_path 'drinks.png' %>'
         });
+
         var content = "<div class='addBox'>" +
                 "<span class='comment_user'>Название: </span>" +
                 "<input type='text' class='comment_user' ng-model='point.name'><br>" +
@@ -68,16 +71,16 @@ function IndexController($compile,$scope, gmap, Point, Comment) {
         var infoWindow = new google.maps.InfoWindow({
             content: content
         });
-        infoWindow.addListener('domready',function(){
-            $scope.$apply(function(){
+        infoWindow.addListener('domready', function () {
+            $scope.$apply(function () {
                 $compile(document.getElementsByClassName('addBox'))($scope);
             });
         });
-        infoWindow.open(gmap,marker);
-        infoWindow.addListener('closeclick',function(){
-           marker.setMap(null);
+        infoWindow.open(gmap, marker);
+        infoWindow.addListener('closeclick', function () {
+            marker.setMap(null);
         });
-        marker.addListener('dragend',function(){
+        marker.addListener('dragend', function () {
             var pos = marker.getPosition();
             $scope.point.lng = pos.lng();
             $scope.point.lat = pos.lat();
@@ -119,6 +122,6 @@ function IndexController($compile,$scope, gmap, Point, Comment) {
             gmap.setCenter(USER_POSITION);
         }, 2000);
         var myScroll = new IScroll('#comments_scroller');
-        $this.hideLoader =true;
+        $this.hideLoader = true;
     }();
 }

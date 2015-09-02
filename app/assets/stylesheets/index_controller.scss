@@ -36,7 +36,6 @@
 }
 
 .info {
-  border: 1px solid black;
 }
 
 .map_container {
@@ -44,7 +43,10 @@
 }
 
 .add_button {
-  transform: translate(20px, -70px);
+  transform: translate(-30px, -70px);
+  position: absolute;
+  right: 0;
+  -webkit-transform: translate(-30px, -70px);
 }
 
 .nopadding {
@@ -116,9 +118,16 @@
   display: table-cell;
   vertical-align: middle;
 }
-.invite_link
-{
+
+.invite_link {
   position: absolute;
   right: 4px;
   top: 6px;
+}
+
+.log_out {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+
 }
