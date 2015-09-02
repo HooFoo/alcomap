@@ -3,9 +3,10 @@
  */
 function IndexController($compile,$scope, gmap, Point, Comment) {
     var $this = this;
-    this.heading = 'Алкомап (пре альфа)';
+    this.heading = 'Алкомап (альфа)';
     this.currentPoint = undefined;
     this.openedInfos = undefined;
+    this.hideLoader = false;
 
     var findPointInList = function (point) {
         var result = point;
@@ -113,9 +114,11 @@ function IndexController($compile,$scope, gmap, Point, Comment) {
             });
         });
         setTimeout(function () {
+            updateUserPosition();
             $scope.point = {long: USER_POSITION.lng, lat: USER_POSITION.lat, name: 'Test', description: 'Description'};
             gmap.setCenter(USER_POSITION);
         }, 2000);
         var myScroll = new IScroll('#comments_scroller');
+        $this.hideLoader =true;
     }();
 }
