@@ -9,6 +9,7 @@
       <div class="btn btn-primary add_button" ng-click="controller.addPointDraggable()">Добавить</div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 nopadding">
+      <a href="users/invitation/new" class="invite_link">Позвать друзей</a>
 
       <form class="comment_form">
         <div class="form-group comment_div">
@@ -19,13 +20,11 @@
       </form>
 
       <div class="comments">
-
         <div id="comments_scroller">
           <div>
             <div class="comment" ng-repeat="comment in controller.currentPoint.comments track by $index">
               <span class="comment_user">{{comment.user.name}}</span>
               <span class="comment_user">{{comment.point.name}}</span>
-
               <div class="comment_text"> {{comment.text}}</div>
             </div>
           </div>

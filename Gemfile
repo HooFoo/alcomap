@@ -59,6 +59,7 @@ gem 'bower-rails'
 #gem 'quite_assets'
 
 gem 'devise'
+gem 'devise_invitable', '~> 1.5.2'
 gem 'omniauth'
 gem 'omniauth-facebook'
 
