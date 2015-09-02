@@ -77,4 +77,14 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  ActionMailer::Base.smtp_settings = {
+      :address => 'smtp.mail.ru',
+      :port => 465,
+      :user_name => "alcomap",
+      :password => "P@$$w0rd",
+      :authentication => :plain,
+      :enable_starttls_auto => true,
+      :openssl_verify_mode => 'none'
+  }
+
 end
