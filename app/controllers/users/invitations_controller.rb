@@ -4,6 +4,10 @@ class Users::InvitationsController < Devise::InvitationsController
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:accept_invitation) << [:name,:email]
+=begin
+    devise_parameter_sanitizer.for(:accept_invitation) do |u|
+      u.permit(:name,:email)
+    end
+=end
   end
 end

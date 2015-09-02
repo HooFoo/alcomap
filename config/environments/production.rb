@@ -77,14 +77,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  ActionMailer::Base.smtp_settings = {
-      :address => 'smtp.mail.ru',
-      :port => 465,
-      :user_name => ENV['MAIL_USER'],
-      :password => ENV['MAIL_PASSWORD'],
-      :authentication => :plain,
-      :enable_starttls_auto => true,
-      :openssl_verify_mode => 'none'
-  }
+  config.action_mailer.default_url_options = { :host => 'alcomap.heroku.com' }
 
 end

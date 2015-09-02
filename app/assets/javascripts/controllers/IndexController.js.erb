@@ -17,6 +17,13 @@ function IndexController($compile, $scope, gmap, Point, Comment) {
         return result;
     };
 
+    function closeOther(window,marker) {
+        if ($this.openedInfos)
+            $this.openedInfos.close();
+        $this.openedInfos = window;
+        window.open(gmap,marker);
+    }
+
     var buildMarker = function (item) {
         var marker = new google.maps.Marker({
             position: {lng: item.lng, lat: item.lat},
@@ -40,10 +47,7 @@ function IndexController($compile, $scope, gmap, Point, Comment) {
                         });
         marker.addListener('click', function (event) {
             $this.currentPoint = findPointInList(item);
-            if ($this.openedInfos)
-                $this.openedInfos.close();
-            infoWindow.open(gmap, marker);
-            $this.openedInfos = infoWindow;
+            closeOther(infoWindow,marker);
             $scope.$apply();
         });
         item.marker = marker;
@@ -52,6 +56,7 @@ function IndexController($compile, $scope, gmap, Point, Comment) {
 
     this.addPointDraggable = function () {
         $scope.point = {lat: gmap.getCenter().lat(), lng: gmap.getCenter().lng()};
+
         var marker = new google.maps.Marker({
             position: $scope.point,
             label: $scope.point.name,
@@ -60,6 +65,8 @@ function IndexController($compile, $scope, gmap, Point, Comment) {
             draggable: true,
             icon: '<%= asset_path 'drinks.png' %>'
         });
+
+        $scope.addMarker = marker;
 
         var content = "<div class='addBox'>" +
                 "<span class='comment_user'>Название: </span>" +
@@ -76,7 +83,7 @@ function IndexController($compile, $scope, gmap, Point, Comment) {
                 $compile(document.getElementsByClassName('addBox'))($scope);
             });
         });
-        infoWindow.open(gmap, marker);
+        closeOther(infoWindow, marker);
         infoWindow.addListener('closeclick', function () {
             marker.setMap(null);
         });
@@ -89,8 +96,10 @@ function IndexController($compile, $scope, gmap, Point, Comment) {
     };
     this.addPoint = function () {
         var point = Point.new($scope.point, function (result) {
-            buildMarker(result);
+            var marker = buildMarker(result);
         });
+        $scope.addMarker.setMap(null);
+        closeOther(undefined,undefined);
     };
     this.comment = function () {
         $scope.comment.point_id = $this.currentPoint.id;
