@@ -3,7 +3,7 @@ Rails.application.routes.draw do
                                    invitations: 'users/invitations'},
              path_names: {sign_up: ''}
   get 'index_controller/index'
-
+  post 'users/invitation', to: 'users/invitations#update'
   #resources :users
   resources :comments
   resources :points
