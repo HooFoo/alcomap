@@ -1,14 +1,16 @@
 <div class="wrapper" ng-view ng-controller="IndexController as controller">
   <div class="loader inset_shadow" ng-hide="controller.hideLoader"><h1>Загружаюсь...</h1></div>
   <div class="map_container">
-    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 nopadding inset_shadow">
+    <div id="map_area" class="col-xs-12 col-sm-12 col-md-8 col-lg-8 nopadding inset_shadow">
       <div class="title_wrapper">
         <h1 ng-model="controller.heading" class="app_tittle">{{controller.heading}}</h1>
       </div>
       <div id="map"></div>
       <div class="btn btn-primary add_button" ng-click="controller.addPointDraggable()">Добавить</div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 nopadding">
+    <a href="#comments" class="col-xs-12 col-sm-12  half_btn half_btn_up" > Комментарии </a>
+    <a href="#map_area" class="col-xs-12 col-sm-12  half_btn half_btn_dn" > Карта </a>
+    <div id="comments" class="col-xs-12 col-sm-12 col-md-4 col-lg-4 nopadding">
       <a href="/users/invitation/new" class="invite_link">Позвать друзей</a>
 
       <form class="comment_form">

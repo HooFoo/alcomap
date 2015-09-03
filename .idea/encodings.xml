@@ -4,6 +4,7 @@
     <file url="file://$PROJECT_DIR$/app/assets/javascripts/controllers/IndexController.js.erb" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/views/index/index.html.erb" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/views/users/invitations/new.html.erb" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/views/users/invitations/terms.erb" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/views/users/registrations/new.html.erb" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/views/users/shared/_links.html.erb" charset="UTF-8" />
   </component>
