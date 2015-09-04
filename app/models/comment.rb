@@ -10,8 +10,8 @@ class Comment < ActiveRecord::Base
   protected
 
   def spam_stop
-    comment = Comment.find_by_user_id(self.user_id).last
-    (self.created_at-comment.created_at > 5000) &&
+    comment = Comment.where(user_id: self.user_id).last
+    (Time.current - comment.created_at > 5000) &&
         (self.text != comment.text)
   end
 end
