@@ -106,13 +106,15 @@ function IndexController($compile, $scope, gmap, Point, Comment) {
     };
     this.comment = function () {
         $scope.comment.point_id = $this.currentPoint.id;
-        var comment = Comment.new($scope.comment, function (result) {
+        var comment = Comment.new($scope.comment, function (result){
+            $scope.comment.text='';
             $this.currentPoint.comments.push(result);
         });
 
     };
     this.centerForUser = function () {
         gmap.setCenter(USER_POSITION);
+        gmap.setZoom(14);
     };
 
     var init = function () {

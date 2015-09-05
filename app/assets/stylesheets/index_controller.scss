@@ -47,6 +47,7 @@
   position: absolute;
   right: 0;
   -webkit-transform: translate(-30px, -70px);
+
 }
 
 .nopadding {
@@ -131,8 +132,8 @@
   right: 10px;
 
 }
-.half_btn
-{
+
+.half_btn {
   display: inline-block;
   text-align: center;
   animation-name: blinking;
@@ -143,21 +144,24 @@
   z-index: 1;
   top: 100vh;
 }
-.half_btn_up{
+
+.half_btn_up {
   transform: translate(0px, -30px);
   -webkit-transform: translate(0px, -30px);
 }
-.half_btn_dn{
+
+.half_btn_dn {
   -webkit-transform: translate(0px, 5px);
   transform: translate(0px, 5px);
   width: 100% !important;
 }
 
 @media (min-width: 992px) {
-  .half_btn{
+  .half_btn {
     display: none;
   }
 }
+
 @keyframes blinking {
   0% {
     opacity: 0.55;
@@ -168,4 +172,14 @@
   100% {
     opacity: 0.55;
   }
+}
+
+.center_btn {
+  transform: translate(-30px, -50vh);
+  position: absolute;
+  right: 0;
+  -webkit-transform: translate(-30px, -50vh);
+  padding: 4px !important;
+  padding-left: 2px !important;
+  padding-bottom: 3px !important;
 }

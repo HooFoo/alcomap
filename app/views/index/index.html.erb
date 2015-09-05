@@ -5,7 +5,8 @@
         <h1 ng-model="controller.heading" class="app_tittle">{{controller.heading}}</h1>
       </div>
       <div id="map"></div>
-      <div class="btn btn-primary add_button" ng-click="controller.addPointDraggable()">Добавить</div>
+      <div class="btn btn-primary add_button" ng-click="controller.addPointDraggable()"><%= image_tag 'new.png'%></div>
+      <div class="btn btn-default center_btn" ng-click="controller.centerForUser()"><%= image_tag 'center.png'%></div>
     </div>
     <a href="#comments" class="col-xs-12 col-sm-12  half_btn half_btn_up" > Комментарии </a>
     <a href="#map_area" class="col-xs-12 col-sm-12  half_btn half_btn_dn" > Карта </a>
