@@ -13,11 +13,10 @@
 .app_tittle {
   font-family: 'Airport', monospace;
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 999;
-  padding-top: 35px;
+  left: 50%;
+  transform: translate(-50%, 35px);
+  -webkit-transform: translate(-50%, 35px);
+  z-index: 1;
 }
 
 .title_wrapper {
@@ -60,7 +59,7 @@
 }
 
 .comments {
-  background-color: rgba(138, 136, 136, 0.75);
+  background-color: rgba(249, 249, 249, 0.7);
   padding-top: 10px;
   height: 80vh;
   overflow: auto;
@@ -80,7 +79,7 @@
   border: 2px solid rgba(2, 2, 2, 0.51);
   padding: 3px 6px;
   margin-bottom: 5px;
-  background-color: rgb(191, 191, 191);
+  background-color: rgba(249, 249, 249, 0.7);
   margin-left: 2px;
   margin-right: 2px;
 }
@@ -143,6 +142,11 @@
   left: 50%;
   margin-left: -60px;
   width: auto !important;
+
+}
+
+a::hover {
+  background: rgba(0,0,0,0) !important;
 }
 
 .half_btn_up {
