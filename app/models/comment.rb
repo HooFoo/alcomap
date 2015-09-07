@@ -11,8 +11,7 @@ class Comment < ActiveRecord::Base
 
   def spam_stop
     comment = Comment.where(user_id: self.user_id).last
-    puts Time.current - comment.created_at;
     (Time.current - comment.created_at > 5) &&
-        (self.text != comment.text)
+        (self.text != comment.text) unless comment.nil?
   end
 end
