@@ -134,15 +134,15 @@
 }
 
 .half_btn {
-  display: inline-block;
+  display: block;
   text-align: center;
   animation-name: blinking;
   animation-duration: 2s;
   animation-iteration-count: infinite;
-  position: absolute !important;
-  left: 0;
-  z-index: 1;
-  top: 100vh;
+  z-index: 3;
+  left: 50%;
+  margin-left: -60px;
+  width: auto !important;
 }
 
 .half_btn_up {
@@ -151,9 +151,8 @@
 }
 
 .half_btn_dn {
-  -webkit-transform: translate(0px, 5px);
-  transform: translate(0px, 5px);
-  width: 100% !important;
+  -webkit-transform: translate(-34px, 23px);
+  transform: translate(-34px, 23px);
 }
 
 @media (min-width: 992px) {
