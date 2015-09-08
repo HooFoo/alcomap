@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   get 'index_controller/index'
   post 'users/invitation', to: 'users/invitations#update'
   #resources :users
-  resources :comments
-  resources :points
+  resources :comments, defaults: {format: :json}
+  resources :points, defaults: {format: :json}
 
   root 'index#index'
 

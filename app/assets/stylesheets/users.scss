@@ -1,9 +1,59 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-#new_user
-{
+@import "bootstrap";
+#new_user {
   position: absolute;
   left: 50%;
   transform: translate(-50%, 30vh);
+}
+
+.is_overlay {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
+
+#trailer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+
+}
+
+#trailer > video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-aspect-ratio: 16/9) {
+  #trailer > video {
+    height: 300%;
+    top: -100%;
+  }
+}
+
+@media (max-aspect-ratio: 16/9) {
+  #trailer > video {
+    width: 300%;
+    left: -100%;
+  }
+}
+
+/* Если есть поддержка object-fit (Chrome/Chrome для Android, Safari в iOS 8 и Opera), используем его: */
+@supports (object-fit: cover) {
+  #trailer > video {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }

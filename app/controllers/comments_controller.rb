@@ -1,4 +1,5 @@
 class CommentsController < InheritedResources::Base
+  respond_to :json
 
   def create(options={}, &block)
     @comment = build_resource

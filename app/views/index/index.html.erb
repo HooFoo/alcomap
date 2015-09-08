@@ -3,15 +3,29 @@
     <div id="map_area" class="col-xs-12 col-sm-12 col-md-8 col-lg-8 nopadding">
       <div class="title_wrapper">
         <h1 ng-model="controller.heading" class="app_tittle">{{controller.heading}}</h1>
+
+        <div class="dropdown ib">
+          <button class="ddt dropdown-toggle " type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li>
+              <a href="/users/invitation/new" >Позвать друзей</a>
+            </li>
+            <li>
+              <a  href="/users/sign_out">Ужас!</a>
+            </li>
+          </ul>
+        </div>
       </div>
       <div id="map"></div>
-      <div class="btn btn-primary add_button" ng-click="controller.addPointDraggable()"><%= image_tag 'new.png'%></div>
-      <div class="btn btn-default center_btn" ng-click="controller.centerForUser()"><%= image_tag 'center.png'%></div>
+      <div class="btn btn-primary add_button" ng-click="controller.addPointDraggable()"><%= image_tag 'new.png' %></div>
+      <div class="btn btn-default center_btn" ng-click="controller.centerForUser()"><%= image_tag 'center.png' %></div>
     </div>
-    <a href="#comments" class="col-xs-12 col-sm-12  half_btn half_btn_up" > Комментарии </a>
-    <a href="#map_area" class="col-xs-12 col-sm-12  half_btn half_btn_dn" > Карта </a>
+    <a href="#comments" class="col-xs-12 col-sm-12  half_btn half_btn_up"> Комментарии </a>
+    <a href="#map_area" class="col-xs-12 col-sm-12  half_btn half_btn_dn"> Карта </a>
+
     <div id="comments" class="col-xs-12 col-sm-12 col-md-4 col-lg-4 nopadding">
-      <a href="/users/invitation/new" class="invite_link">Позвать друзей</a>
 
       <form class="comment_form">
         <div class="form-group comment_div">
@@ -33,8 +47,6 @@
           </div>
         </div>
       </div>
-
-      <a class="log_out" href="/users/sign_out">Ужас!</a>
 
     </div>
   </div>

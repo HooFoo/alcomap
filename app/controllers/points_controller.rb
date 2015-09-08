@@ -1,5 +1,7 @@
 class PointsController < InheritedResources::Base
 
+  respond_to :json
+
   def create(options={}, &block)
     @point = build_resource
 

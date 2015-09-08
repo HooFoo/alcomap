@@ -6,8 +6,8 @@
 
 <% resource.class.invite_key_fields.each do |field| -%>
   <p><%= f.label field %><br />
-  <%= f.text_field field %></p>
+  <%= f.text_field field, class: 'form-control' %></p>
 <% end -%>
 
-  <p><%= f.submit t("devise.invitations.new.submit_button") %></p>
+  <p><%= f.submit 'Отправить', class: 'form-control' %></p>
 <% end %>

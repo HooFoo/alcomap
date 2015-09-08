@@ -12,15 +12,16 @@
 
 .app_tittle {
   font-family: 'Airport', monospace;
+  display: inline-block;
+}
+
+.title_wrapper {
+  text-align: center;
   position: absolute;
   left: 50%;
   transform: translate(-50%, 35px);
   -webkit-transform: translate(-50%, 35px);
   z-index: 1;
-}
-
-.title_wrapper {
-  text-align: center;
 }
 
 .comment_user {
@@ -145,7 +146,7 @@
 
 }
 
-a::hover {
+a:hover {
   background: rgba(0,0,0,0) !important;
 }
 
@@ -185,4 +186,31 @@ a::hover {
   padding: 4px !important;
   padding-left: 2px !important;
   padding-bottom: 3px !important;
+}
+.ddt
+{
+  display: inline-block;
+  padding: 0px;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 1.42857143;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.ib{
+  display: inline-block;
+}
+div.dropdown.ib
+{
+  transform: translate(0px,-50%);
+  -webkit-transform: translate(0px,-50%);
 }

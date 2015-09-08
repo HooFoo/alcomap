@@ -1,5 +1,6 @@
 class Users::InvitationsController < Devise::InvitationsController
 
+
   def update
     puts params.inspect
     super
