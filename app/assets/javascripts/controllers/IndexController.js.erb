@@ -50,6 +50,7 @@ function IndexController($compile, $scope, gmap, Point, Comment) {
             $scope.$apply();
         });
         item.marker = marker;
+        gmap.clusterer.addMarker(marker);
         return marker
     };
     this.trackUser = function () {
@@ -106,8 +107,8 @@ function IndexController($compile, $scope, gmap, Point, Comment) {
     };
     this.comment = function () {
         $scope.comment.point_id = $this.currentPoint.id;
-        var comment = Comment.new($scope.comment, function (result){
-            $scope.comment.text='';
+        var comment = Comment.new($scope.comment, function (result) {
+            $scope.comment.text = '';
             $this.currentPoint.comments.push(result);
         });
 
@@ -116,23 +117,37 @@ function IndexController($compile, $scope, gmap, Point, Comment) {
         gmap.setCenter(USER_POSITION);
         gmap.setZoom(14);
     };
-
-    var init = function () {
-
-        Point.index(function (result) {
+    this.showMarkers = function () {
+        var bounds = gmap.getBounds();
+        Point.index_optimised(bounds, function (result) {
+            gmap.clusterer.clearMarkers();
+            if ($this.points)
+                $this.points.forEach(function (item) {
+                    item.marker.setMap(null);
+                });
             $this.points = result;
             $this.points.forEach(function (item) {
                 buildMarker(item);
             });
-            $this.currentPoint = $this.points[0];
-            $this.usersMarker = new google.maps.Marker({
-                position: USER_POSITION,
-                label: "Ето ты",
-                icon: {
-                    url: '<%= asset_path 'Alien.png' %>'
-                },
-                map: gmap
-            });
+        });
+    };
+    var init = function () {
+        gmap.addListener('idle', $this.showMarkers);
+//        Point.index(function (result) {
+//            $this.points = result;
+//            $this.points.forEach(function (item) {
+//                buildMarker(item);
+//            });
+//            $this.currentPoint = $this.points[0];
+//
+//        });
+        $this.usersMarker = new google.maps.Marker({
+            position: USER_POSITION,
+            label: "Ето ты",
+            icon: {
+                url: '<%= asset_path 'Alien.png' %>'
+            },
+            map: gmap
         });
         updateUserPosition();
         $this.centerForUser();

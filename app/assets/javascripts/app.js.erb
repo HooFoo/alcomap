@@ -9,6 +9,32 @@ app.factory('gmap', function () {
         center: USER_POSITION,
         styles:[{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]}]
     });
+    var mc = new MarkerClusterer(map);
+    var clusterStyles = [
+        {
+            textColor: 'rgba(0, 161, 199, 0.62)',
+            url: '<%= asset_path('bottle.png')%>',
+            height: 32,
+            width: 32,
+            textSize: '43px'
+        },
+        {
+            textColor: 'rgba(0, 161, 199, 0.62)',
+            url: '<%= asset_path('bottle.png')%>',
+            height: 32,
+            width: 32,
+            textSize: '43px'
+        },
+        {
+            textColor: 'rgba(0, 161, 199, 0.62)',
+            url: '<%= asset_path('bottle.png')%>',
+            height: 32,
+            width: 32,
+            textSize: '43px'
+        }
+    ];
+    mc.setStyles(clusterStyles);
+    map.clusterer = mc;
     return map;
 });
 app.factory('Point', ['$resource', function ($resource) {
@@ -32,6 +58,11 @@ app.factory('Point', ['$resource', function ($resource) {
         },
         delete: function (id, accept, reject) {
             resource.delete({id: id, format: 'json'}).$promise.then(accept, reject);
+        },
+        index_optimised:function(bounds,accept,reject)
+        {
+            $resource('/points.:format').query({bounds:bounds, format: 'json'}).$promise.then(accept, reject);
+
         }
     }
 }]);
