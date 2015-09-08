@@ -1,12 +1,12 @@
 /**
  * Created by Геннадий on 28.08.2015.
  */
-function IndexController($compile, $scope, gmap, Point, Comment) {
+function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
     var $this = this;
     this.heading = 'Алкомап (альфа)';
     this.currentPoint = undefined;
     this.openedInfos = undefined;
-
+    this.user = User;
     var findPointInList = function (point) {
         var result = point;
         $this.points.forEach(function (item) {
@@ -32,6 +32,7 @@ function IndexController($compile, $scope, gmap, Point, Comment) {
             icon: '<%= asset_path 'bottle.png' %>'
         });
 
+        //TODO: ужас
         var content = "<div class='info'>" +
                 "<span class='comment_user'>Название: </span>" +
                 "<span class='comment_user'>" + item.name + "</span><br>";
@@ -131,16 +132,18 @@ function IndexController($compile, $scope, gmap, Point, Comment) {
             });
         });
     };
+    this.deleteComment = function (id) {
+        $http.delete('/comments/' + id);
+        $this.currentPoint.comments.forEach(function (item, index) {
+            if (item.id == id)
+                $this.currentPoint.comments.splice(index, 1);
+        })
+        console.log(id);
+
+    };
     var init = function () {
         gmap.addListener('idle', $this.showMarkers);
-//        Point.index(function (result) {
-//            $this.points = result;
-//            $this.points.forEach(function (item) {
-//                buildMarker(item);
-//            });
-//            $this.currentPoint = $this.points[0];
-//
-//        });
+
         $this.usersMarker = new google.maps.Marker({
             position: USER_POSITION,
             label: "Ето ты",

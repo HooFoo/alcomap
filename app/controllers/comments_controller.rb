@@ -14,6 +14,13 @@ class CommentsController < InheritedResources::Base
     respond_with_dual_blocks(@comment, options, &block)
   end
 
+  def destroy
+    comment = Comment.find(params[:id])
+    comment.destroy if (current_user.id== comment.user_id)
+    render json: {ok: true}
+  end
+
+
   private
 
     def comment_params
