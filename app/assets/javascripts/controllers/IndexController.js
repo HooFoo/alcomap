@@ -29,29 +29,52 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
             label: item.name,
             title: item.description,
             map: gmap,
-            icon: '<%= asset_path 'bottle.png' %>'
+            icon: asset_path('bottle.png')
         });
 
         //TODO: ужас
         var content = "<div class='info'>" +
-                "<span class='comment_user'>Название: </span>" +
-                "<span class='comment_user'>" + item.name + "</span><br>";
+            "<span class='comment_user'>Название: </span>" +
+            "<span class='comment_user'>" + item.name + "</span><br>";
+
         if (item.description)
             content += "<span class='comment_user'>Описание: </span><span class='comment_user'>" + item.description + "</span><br>";
+
         content += "<span class='comment_user'>Добавлено: </span>" +
-                "<span class='comment_user'>" + item.user.name + "</span>" +
-                "</div>";
+            "<span class='comment_user'>" + item.user.name + "</span>" +
+            "</div>";
+
+        content += "<div class='infobox_down'><div class='rating_box'>" +
+            "<span class='plus' ng-click='controller.pointRate()'>+</span>" +
+            "<span class='rating'>" + item.rating + "</span>" +
+            "<span class='minus' ng-click='controller.pointRate()'>-</span>" +
+            "</div></div>";
 
         var infoWindow = new google.maps.InfoWindow({
             content: content
         });
+
+        infoWindow.addListener('domready', function () {
+            $scope.$apply(function () {
+                $compile(document.getElementsByClassName('info'))($scope);
+            });
+        });
+        infoWindow.addListener('close', function () {
+            $this.points.push(item);
+        });
+
         marker.addListener('click', function (event) {
             $this.currentPoint = findPointInList(item);
+            $this.points.splice($this.points.indexOf(item), 1);
+            gmap.clusterer.removeMarker(item);
             closeOther(infoWindow, marker);
             $scope.$apply();
         });
+
+
         item.marker = marker;
         gmap.clusterer.addMarker(marker);
+
         return marker
     };
     this.trackUser = function () {
@@ -68,18 +91,18 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
             title: $scope.point.description,
             map: gmap,
             draggable: true,
-            icon: '<%= asset_path 'drinks.png' %>'
+            icon: asset_path('drinks.png')
         });
 
         $scope.addMarker = marker;
 
         var content = "<div class='addBox'>" +
-                "<span class='comment_user'>Название: </span>" +
-                "<input type='text' class='comment_user' ng-model='point.name'><br>" +
-                "<span class='comment_user'>Описание: </span>" +
-                "<input type='text' class='comment_user' ng-model='point.description'><br>" +
-                "<button class='btn btn-default' ng-click='controller.addPoint()'>Сохранить</button>" +
-                "</div>";
+            "<span class='comment_user'>Название: </span>" +
+            "<input type='text' class='comment_user' ng-model='point.name'><br>" +
+            "<span class='comment_user'>Описание: </span>" +
+            "<input type='text' class='comment_user' ng-model='point.description'><br>" +
+            "<button class='btn btn-default' ng-click='controller.addPoint()'>Сохранить</button>" +
+            "</div>";
         var infoWindow = new google.maps.InfoWindow({
             content: content
         });
@@ -122,13 +145,10 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         var bounds = gmap.getBounds();
         Point.index_optimised(bounds, function (result) {
             gmap.clusterer.clearMarkers();
-            if ($this.points)
-                $this.points.forEach(function (item) {
-                    item.marker.setMap(null);
-                });
             $this.points = result;
             $this.points.forEach(function (item) {
-                buildMarker(item);
+                if (!(item == $this.currentPoint))
+                    buildMarker(item);
             });
         });
     };
@@ -137,9 +157,15 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         $this.currentPoint.comments.forEach(function (item, index) {
             if (item.id == id)
                 $this.currentPoint.comments.splice(index, 1);
-        })
+        });
         console.log(id);
 
+    };
+    this.pointRate = function (dir) {
+        console.log(dir);
+        Point.rate($this.currentPoint.id, dir, function (result) {
+
+        });
     };
     var init = function () {
         gmap.addListener('idle', $this.showMarkers);
@@ -148,7 +174,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
             position: USER_POSITION,
             label: "Ето ты",
             icon: {
-                url: '<%= asset_path 'Alien.png' %>'
+                url: asset_path('Alien.png')
             },
             map: gmap
         });

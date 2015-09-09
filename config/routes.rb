@@ -4,6 +4,7 @@ Rails.application.routes.draw do
              path_names: {sign_up: ''}
   get 'index_controller/index'
   post 'users/invitation', to: 'users/invitations#update'
+  post 'points/rate/:id', to: 'points#rate'
   get '/user', to: 'user#index', defaults: {format: :json}
   resources :comments, defaults: {format: :json}
   resources :points, defaults: {format: :json}

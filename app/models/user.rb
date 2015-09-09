@@ -8,4 +8,5 @@ class User < ActiveRecord::Base
   has_many :points
   has_many :comments
   has_many :invitations, :class_name => self.to_s, :as => :invited_by
+  has_many :rated_points
 end

@@ -20,6 +20,8 @@
 //= require markerclusterer_compiled
 //= require angular
 //= require angular-resource
+//= require app_assets
+
 
 //= require common
 

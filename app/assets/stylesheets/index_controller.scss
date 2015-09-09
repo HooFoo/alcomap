@@ -147,7 +147,7 @@
 }
 
 a:hover {
-  background: rgba(0,0,0,0) !important;
+  background: rgba(0, 0, 0, 0) !important;
 }
 
 .half_btn_up {
@@ -187,8 +187,8 @@ a:hover {
   padding-left: 2px !important;
   padding-bottom: 3px !important;
 }
-.ddt
-{
+
+.ddt {
   display: inline-block;
   padding: 0px;
   font-weight: normal;
@@ -206,17 +206,39 @@ a:hover {
   -ms-user-select: none;
   user-select: none;
 }
-.ib{
+
+.ib {
   display: inline-block;
 }
-div.dropdown.ib
-{
-  transform: translate(0px,-50%);
-  -webkit-transform: translate(0px,-50%);
+
+div.dropdown.ib {
+  transform: translate(0px, -50%);
+  -webkit-transform: translate(0px, -50%);
 }
-.delete_comment
-{
+
+.delete_comment {
   position: absolute;
   right: 11px;
   display: inline-block;
+}
+
+.infobox_down {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: right;
+  transform: translateY(29%);
+  -webkit-transform: translateY(29%);
+}
+
+.rating_box {
+  display: inline-block;
+}
+
+.plus {
+  margin-right: 5px;
+}
+
+.minus {
+  margin-left: 5px
 }

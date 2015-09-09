@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160828204414) do
+ActiveRecord::Schema.define(version: 20160828204416) do
 
   create_table "comments", force: :cascade do |t|
     t.string   "text"
@@ -29,12 +29,24 @@ ActiveRecord::Schema.define(version: 20160828204414) do
     t.float    "lat"
     t.string   "name"
     t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer  "user_id"
+    t.string "rating", default: "0"
   end
 
   add_index "points", ["user_id"], name: "index_points_on_user_id"
+
+  create_table "rated_points", force: :cascade do |t|
+    t.boolean "direction"
+    t.integer "user_id"
+    t.integer "point_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "rated_points", ["point_id"], name: "index_rated_points_on_point_id"
+  add_index "rated_points", ["user_id"], name: "index_rated_points_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "name"

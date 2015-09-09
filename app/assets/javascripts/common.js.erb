@@ -1,6 +1,16 @@
 /**
  * Created by Геннадий on 28.08.2015.
  */
+
+function asset_path(name) {
+    assets = {
+        'bottle.png': '<%= asset_path "bottle.png" %>',
+        'Alien.png': '<%= asset_path "Alien.png" %>',
+        'drinks.png': '<%= asset_path "drinks.png" %>',
+        'new.png': '<%= asset_path "new.png" %>'
+    };
+    return assets[name];
+}
 var USER_POSITION = {lng: 59.996651699999994, lat: 30.1950724}
 function updateUserPosition() {
     navigator.geolocation.getCurrentPosition(function (position) {

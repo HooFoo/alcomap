@@ -48,6 +48,9 @@ group :development, :test do
   #gem "capybara"
   #gem "database_cleaner"
   #gem "selenium-webdriver"
+  gem 'guard'
+  gem 'guard-shell'
+  gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -65,6 +68,8 @@ gem 'omniauth-facebook'
 
 gem 'gmaps4rails'
 gem 'underscore-rails'
+gem 'js_assets'
+
 group :production do
   gem 'pg', '0.15.1'
   gem 'rails_12factor', '0.0.2'

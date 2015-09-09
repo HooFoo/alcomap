@@ -14,15 +14,37 @@ class PointsController < InheritedResources::Base
     respond_with_dual_blocks(@point, options, &block)
   end
 
-  def index(options={},&block)
+  def index(options={}, &block)
     bounds = params[:bounds]
-    unless(bounds.nil?)
+    unless bounds.nil?
       parsed = JSON.parse bounds
       @points = Point.where("lat <= #{parsed['Da']['j']} and lat >= #{parsed['Da']['A']} and lng <= #{parsed['va']['A']} and lng >= #{parsed['va']['j']}")
     else
       super
     end
 
+  end
+
+  def rate
+    user = current_user
+    point = Point.find(params[:id])
+
+    if RatedPoint.where('user_id = :uid and point_id = :pid', {uid: user.id, pid: point.id}).length==0
+      rated = RatedPoint.new :direction => params[:direction],
+                             :user => user,
+                             :point => point
+      rated.save
+      if params[:direction]
+        rating = 1
+      else
+        rating = -1
+      end
+      point.rating+=rating
+      if point.rating <= -5
+        point.destroy
+      end
+      point.save
+    end
   end
 
   private
