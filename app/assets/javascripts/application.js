@@ -16,7 +16,6 @@
 //= require bootstrap
 //= require underscore
 //= require gmaps/google
-//= require iscroll/iscroll
 //= require markerclusterer_compiled
 //= require angular
 //= require angular-resource

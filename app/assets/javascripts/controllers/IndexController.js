@@ -20,7 +20,8 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         if ($this.openedInfos)
             $this.openedInfos.close();
         $this.openedInfos = window;
-        window.open(gmap, marker);
+        if(window)
+            window.open(gmap, marker);
     }
 
     var buildMarker = function (item) {
@@ -33,40 +34,29 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         });
 
         //TODO: ужас
-        var content = "<div class='info'>" +
-            "<span class='comment_user'>Название: </span>" +
-            "<span class='comment_user'>" + item.name + "</span><br>";
-
-        if (item.description)
-            content += "<span class='comment_user'>Описание: </span><span class='comment_user'>" + item.description + "</span><br>";
-
-        content += "<span class='comment_user'>Добавлено: </span>" +
-            "<span class='comment_user'>" + item.user.name + "</span>" +
-            "</div>";
-
-        content += "<div class='infobox_down'><div class='rating_box'>" +
-            "<span class='plus' ng-click='controller.pointRate()'>+</span>" +
-            "<span class='rating'>" + item.rating + "</span>" +
-            "<span class='minus' ng-click='controller.pointRate()'>-</span>" +
-            "</div></div>";
-
+        var content = '<div id="info" ng-include src="\'' + asset_path("info.html")+'\'" ng-show="controller.currentPoint"></div>';
         var infoWindow = new google.maps.InfoWindow({
             content: content
         });
 
         infoWindow.addListener('domready', function () {
             $scope.$apply(function () {
-                $compile(document.getElementsByClassName('info'))($scope);
+                $compile(document.getElementById('info'))($scope);
             });
         });
-        infoWindow.addListener('close', function () {
+        infoWindow.addListener('closeclick', function () {
             $this.points.push(item);
+            marker.setMap(null);
+            gmap.clusterer.addMarker(marker);
+            $this.currentPoint = undefined;
+            $scope.$apply();
         });
 
         marker.addListener('click', function (event) {
             $this.currentPoint = findPointInList(item);
             $this.points.splice($this.points.indexOf(item), 1);
-            gmap.clusterer.removeMarker(item);
+            gmap.clusterer.removeMarker(marker);
+            marker.setMap(gmap);
             closeOther(infoWindow, marker);
             $scope.$apply();
         });
@@ -96,13 +86,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
 
         $scope.addMarker = marker;
 
-        var content = "<div class='addBox'>" +
-            "<span class='comment_user'>Название: </span>" +
-            "<input type='text' class='comment_user' ng-model='point.name'><br>" +
-            "<span class='comment_user'>Описание: </span>" +
-            "<input type='text' class='comment_user' ng-model='point.description'><br>" +
-            "<button class='btn btn-default' ng-click='controller.addPoint()'>Сохранить</button>" +
-            "</div>";
+        var content = "<div class='addBox' ng-include='\""+asset_path('new_point.html')+"\"'></div>";
         var infoWindow = new google.maps.InfoWindow({
             content: content
         });
@@ -133,7 +117,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         $scope.comment.point_id = $this.currentPoint.id;
         var comment = Comment.new($scope.comment, function (result) {
             $scope.comment.text = '';
-            $this.currentPoint.comments.push(result);
+            $this.currentPoint.comments.unshift(result);
         });
 
     };
@@ -147,8 +131,10 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
             gmap.clusterer.clearMarkers();
             $this.points = result;
             $this.points.forEach(function (item) {
-                if (!(item == $this.currentPoint))
+                if (!(item.id == ($this.currentPoint ? $this.currentPoint.id : undefined)))
                     buildMarker(item);
+                else
+                    console.log("drop");
             });
         });
     };
@@ -158,11 +144,8 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
             if (item.id == id)
                 $this.currentPoint.comments.splice(index, 1);
         });
-        console.log(id);
-
     };
     this.pointRate = function (dir) {
-        console.log(dir);
         Point.rate($this.currentPoint.id, dir, function (result) {
 
         });
@@ -180,7 +163,6 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         });
         updateUserPosition();
         $this.centerForUser();
-        var myScroll = new IScroll('#comments_scroller');
         $this.trackUser();
     }();
 }

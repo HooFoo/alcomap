@@ -23,7 +23,7 @@ describe PointsController do
   # This should return the minimal set of attributes required to create a valid
   # Point. As you add validations to Point, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "coords" => "MyString" } }
+  let(:valid_attributes) { {"coords" => "MyString"} }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -85,14 +85,14 @@ describe PointsController do
       it "assigns a newly created but unsaved point as @point" do
         # Trigger the behavior that occurs when invalid params are submitted
         Point.any_instance.stub(:save).and_return(false)
-        post :create, {:point => { "coords" => "invalid value" }}, valid_session
+        post :create, {:point => {"coords" => "invalid value"}}, valid_session
         assigns(:point).should be_a_new(Point)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Point.any_instance.stub(:save).and_return(false)
-        post :create, {:point => { "coords" => "invalid value" }}, valid_session
+        post :create, {:point => {"coords" => "invalid value"}}, valid_session
         response.should render_template("new")
       end
     end
@@ -106,8 +106,8 @@ describe PointsController do
         # specifies that the Point created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Point.any_instance.should_receive(:update).with({ "coords" => "MyString" })
-        put :update, {:id => point.to_param, :point => { "coords" => "MyString" }}, valid_session
+        Point.any_instance.should_receive(:update).with({"coords" => "MyString"})
+        put :update, {:id => point.to_param, :point => {"coords" => "MyString"}}, valid_session
       end
 
       it "assigns the requested point as @point" do
@@ -128,7 +128,7 @@ describe PointsController do
         point = Point.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Point.any_instance.stub(:save).and_return(false)
-        put :update, {:id => point.to_param, :point => { "coords" => "invalid value" }}, valid_session
+        put :update, {:id => point.to_param, :point => {"coords" => "invalid value"}}, valid_session
         assigns(:point).should eq(point)
       end
 
@@ -136,7 +136,7 @@ describe PointsController do
         point = Point.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Point.any_instance.stub(:save).and_return(false)
-        put :update, {:id => point.to_param, :point => { "coords" => "invalid value" }}, valid_session
+        put :update, {:id => point.to_param, :point => {"coords" => "invalid value"}}, valid_session
         response.should render_template("edit")
       end
     end

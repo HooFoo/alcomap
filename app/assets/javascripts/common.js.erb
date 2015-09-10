@@ -7,7 +7,9 @@ function asset_path(name) {
         'bottle.png': '<%= asset_path "bottle.png" %>',
         'Alien.png': '<%= asset_path "Alien.png" %>',
         'drinks.png': '<%= asset_path "drinks.png" %>',
-        'new.png': '<%= asset_path "new.png" %>'
+        'new.png': '<%= asset_path "new.png" %>',
+        'info.html': '<%= asset_path "info.html" %>',
+        'new_point.html': '<%= asset_path "new_point.html" %>'
     };
     return assets[name];
 }
@@ -20,6 +22,6 @@ function updateUserPosition() {
     });
 };
 updateUserPosition();
-setTimeout(function(){
+setTimeout(function () {
     $('p.alert').hide();
-},5800);
+}, 5800);

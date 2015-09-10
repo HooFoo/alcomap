@@ -24,13 +24,14 @@
     opacity: 0.0;
   }
 }
-.alert{
+
+.alert {
   animation-name: autoclose;
   animation-duration: 5s;
   animation-fill-mode: forwards;
 }
-.options
-{
+
+.options {
   position: absolute !important;
   top: 0px;
   left: 0px;

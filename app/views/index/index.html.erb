@@ -10,10 +10,10 @@
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
             <li>
-              <a href="/users/invitation/new" >Позвать друзей</a>
+              <a href="/users/invitation/new">Позвать друзей</a>
             </li>
             <li>
-              <a  href="/users/sign_out">Ужас!</a>
+              <a href="/users/sign_out">Ужас!</a>
             </li>
           </ul>
         </div>
@@ -27,7 +27,7 @@
 
     <div id="comments" class="col-xs-12 col-sm-12 col-md-4 col-lg-4 nopadding">
 
-      <form class="comment_form" >
+      <form class="comment_form">
         <div class="form-group comment_div">
           <label for="name">Есть что сказать?</label>
           <textarea class="form-control" id="name" placeholder="..." ng-model="comment.text" ng-disabled="controller.currentPoint==undefined"></textarea>
@@ -37,13 +37,14 @@
 
       <div class="comments">
         <div id="comments_scroller">
-          <div>
-            <div class="comment" ng-repeat="comment in controller.currentPoint.comments track by $index">
+          <ul>
+            <li class="comment" ng-repeat="comment in controller.currentPoint.comments track by $index">
               <span class="comment_user">{{comment.user.name}}</span>
               <span class="delete_comment" ng-hide="!(comment.user.id == controller.user.id)" ng-click="controller.deleteComment(comment.id)">X</span>
+
               <div class="comment_text"> {{comment.text}}</div>
-            </div>
-          </div>
+            </li>
+          </ul>
         </div>
       </div>
 

@@ -27,24 +27,26 @@ class PointsController < InheritedResources::Base
 
   def rate
     user = current_user
-    point = Point.find(params[:id])
-
-    if RatedPoint.where('user_id = :uid and point_id = :pid', {uid: user.id, pid: point.id}).length==0
+    @point = Point.find(params[:id])
+    rated_list = RatedPoint.where('user_id = :uid and point_id = :pid', {uid: user.id, pid: @point.id})
+    if rated_list.length==0
       rated = RatedPoint.new :direction => params[:direction],
                              :user => user,
-                             :point => point
-      rated.save
+                             :point => @point
       if params[:direction]
         rating = 1
       else
         rating = -1
       end
-      point.rating+=rating
-      if point.rating <= -5
-        point.destroy
+      @point.rating+=rating
+      @point.save
+      rated.save
+      if @point.rating <= -5
+        @point.destroy
+        render json: nil
       end
-      point.save
     end
+    render 'show.json'
   end
 
   private

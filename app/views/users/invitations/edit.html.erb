@@ -12,7 +12,7 @@
     <%= f.hidden_field :invitation_token, class: 'form-control' %>
 
     <p><%= f.label :name %><br/>
-      <%= f.text_field :name, :required => true, class: 'form-control'  %></p>
+      <%= f.text_field :name, :required => true, class: 'form-control' %></p>
 
     <p><%= f.label :password %><br/>
       <%= f.password_field :password, class: 'form-control' %></p>
@@ -21,7 +21,7 @@
       <%= f.password_field :password_confirmation, class: 'form-control' %></p>
 
     <p><%= f.label 'Я все понял' %><br/>
-      <%= f.check_box :nil? , :required => true,  %></p>
+      <%= f.check_box :nil?, :required => true, %></p>
 
     <p><%= f.submit 'Я готов', class: 'form-control' %></p>
 <% end %>

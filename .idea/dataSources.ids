@@ -24,8 +24,20 @@
       <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
       <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
       <column name="user_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
+      <column name="rating" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4" def="MA=="/>
       <primary-key columns="id"/>
       <index name="index_points_on_user_id" unique="true" columns="user_id"/>
+    </table>
+    <table name="rated_points" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="direction" sqlType="BOOLEAN" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
+      <column name="user_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
+      <column name="point_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <primary-key columns="id"/>
+      <index name="index_rated_points_on_point_id" unique="true" columns="point_id"/>
+      <index name="index_rated_points_on_user_id" unique="true" columns="user_id"/>
     </table>
     <table name="schema_migrations" schema="" catalog="" type="TABLE">
       <column name="version" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>

@@ -124,7 +124,7 @@ Devise.setup do |config|
 
   # Flag that force a record to be valid before being actually invited
   # Default: false
-   config.validate_on_invite = true
+  config.validate_on_invite = true
 
   # Resend invitation if user with invited status is invited again
   # Default: true
@@ -176,7 +176,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
-   config.remember_for = 4.weeks
+  config.remember_for = 4.weeks
 
   # Invalidates all the remember me tokens when the user signs out.
   config.expire_all_remember_me_on_sign_out = true
@@ -226,7 +226,7 @@ Devise.setup do |config|
   config.unlock_in = 1.hour
 
   # Warn on the last attempt before the account is locked.
-   config.last_attempt_warning = true
+  config.last_attempt_warning = true
 
   # ==> Configuration for :recoverable
   #

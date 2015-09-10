@@ -8,8 +8,8 @@ class TestData < ActiveRecord::Migration
                     :admin => true
     user.save
 
-    point = Point.new :lng =>30.396 ,
-                      :lat => 59.983 ,
+    point = Point.new :lng => 30.396,
+                      :lat => 59.983,
                       :name => 'Мой кругляк',
                       :description => '24 часа у арки',
                       :user => user

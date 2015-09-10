@@ -3,6 +3,6 @@ class Point < ActiveRecord::Base
   has_many :comments, :dependent => :delete_all
   has_many :rated_points, :dependent => :delete_all
   validates :user, presence: true
-  validates :lng,:lat,:name, presence: true
-  validates :lng,:lat, numericality: true
+  validates :lng, :lat, :name, presence: true
+  validates :lng, :lat, numericality: true
 end
