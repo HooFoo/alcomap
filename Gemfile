@@ -68,7 +68,6 @@ gem 'omniauth-facebook'
 
 gem 'gmaps4rails'
 gem 'underscore-rails'
-gem 'js_assets'
 
 group :production do
   gem 'pg', '0.15.1'

@@ -1,25 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ff93d683-874e-4cb0-9edc-ec7b955db34a" name="Default" comment="Assets">
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\.sprockets-manifest-2d08a6e16864ee8aa2ed45c5d0cf10a1.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\apple-touch-icon-iphone-2db74db60ce82daafc3215328363cf50143732c396cf67d3912f17aabc456632.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\application-04ce2fbae73e18a05d418f23c81525471b115d9358da8b6db3b38e26922c537c.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\application-5aba0778abfcda07d3342eba2c88eef46ce7b6f97f1c743f0a463690fdb602c2.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\application-8626b6a298ef705e8198bdcf52338f1f4de43e64a82b81b28a0ec8cd7b4f947f.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\application-b97ad62d358da5e531f3016c93c8a47d26396f672eddbcb992593102ae0ff4a3.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\application-f15374435691d384513603b828c86e4b616e190eaaaefaba69c41ecfcd06ff9c.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bottle-db78e7f595e5ebbf7d0e729e24227fddd41b6a8434feec85186984da6f8e3b9b.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\favicon-6e2e672896605ba210dfd26efa9a33464bdbb93bb4c4299dae548d7fb599bd44.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\loader-05b145312af13a4bb23c636fe852b748d2fd8a11ecbb4b3ab79a1d32e36d574f.gif" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\touch-icon-ipad-30187e51c81edcd7d9e57e37d2d7c62881ae775116ad2083cf2bc27eae157c8b.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\touch-icon-ipad-retina-3907c8b210a7af08e0aad3d4c06063c20f6d6b78e07590b66122c4a75971bf38.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\touch-icon-iphone-retina-6511d8ca8d8a0195d6b73485702a2b169a51d998d147a52d12be837471156101.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/alcomap.iml" afterPath="$PROJECT_DIR$/.idea/alcomap.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application-a14d68483e80bc1dcf9eb8642e006ad4a7c86c4715e3f4e4a49571d585ba8869.css" afterPath="$PROJECT_DIR$/public/assets/application-a14d68483e80bc1dcf9eb8642e006ad4a7c86c4715e3f4e4a49571d585ba8869.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/common.js.erb" afterPath="$PROJECT_DIR$/app/assets/javascripts/common.js.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/info-4b84a421331f8861ed77e43c23270097a5ddb55bf96ba0cb74d79dabfd491de5.html" afterPath="$PROJECT_DIR$/public/assets/info-4b84a421331f8861ed77e43c23270097a5ddb55bf96ba0cb74d79dabfd491de5.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/new_point-bfd6bf04e818658c7c2291d233cc0f51f4ff89c238a94b672252bb65a02803a4.html" afterPath="$PROJECT_DIR$/public/assets/new_point-bfd6bf04e818658c7c2291d233cc0f51f4ff89c238a94b672252bb65a02803a4.html" />
+    <list default="true" id="ff93d683-874e-4cb0-9edc-ec7b955db34a" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="alcomap.iws" />
@@ -140,11 +124,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="common.js.erb" pinned="false" current-in-tab="true">
+      <file leaf-file-name="common.js.erb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/common.js.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.35831383">
+            <state vertical-scroll-proportion="0.0">
               <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Gemfile" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Gemfile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6018735">
+              <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -219,7 +213,6 @@
         <option value="$PROJECT_DIR$/app/assets/javascripts/controllers/IndexController.js.erb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/app.js.erb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/app.js" />
-        <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/Guardfile" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/application.js" />
         <option value="$PROJECT_DIR$/app/views/points/rate.json.jbuilder" />
@@ -236,6 +229,7 @@
         <option value="$PROJECT_DIR$/app/assets/javascripts/controllers/IndexController.js" />
         <option value="$PROJECT_DIR$/app/views/points/create.json.jbuilder" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/common.js.erb" />
+        <option value="$PROJECT_DIR$/Gemfile" />
       </list>
     </option>
   </component>
@@ -837,14 +831,20 @@
       <option name="project" value="LOCAL" />
       <updated>1441924888705</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Assets for heroku">
+      <created>1441926833639</created>
+      <option name="number" value="00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1441926833639</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32890856" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32890856" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32890856" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18003026" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -893,7 +893,8 @@
     <MESSAGE value="Rating //not working!&#10;fixes" />
     <MESSAGE value="Rating, templates" />
     <MESSAGE value="Assets" />
-    <option name="LAST_COMMIT_MESSAGE" value="Assets" />
+    <MESSAGE value="Assets for heroku" />
+    <option name="LAST_COMMIT_MESSAGE" value="Assets for heroku" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1100,14 +1101,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Gemfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.64365256">
-          <caret line="52" column="44" selection-start-line="52" selection-start-column="44" selection-end-line="52" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/routes.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.37861916">
@@ -1244,8 +1237,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/common.js.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35831383">
+        <state vertical-scroll-proportion="0.0">
           <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gemfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6018735">
+          <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
           <folding />
         </state>
       </provider>
