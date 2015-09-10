@@ -16747,2032 +16747,360 @@ if (typeof jQuery === 'undefined') {
 
 
 }).call(this);
-/*! iScroll v5.1.3 ~ (c) 2008-2014 Matteo Spinelli ~ http://cubiq.org/license */
+(function () {
+    var d = null;
 
-(function (window, document, Math) {
-    var rAF = window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        window.oRequestAnimationFrame ||
-        window.msRequestAnimationFrame ||
-        function (callback) {
-            window.setTimeout(callback, 1000 / 60);
-        };
-
-    var utils = (function () {
-        var me = {};
-
-        var _elementStyle = document.createElement('div').style;
-        var _vendor = (function () {
-            var vendors = ['t', 'webkitT', 'MozT', 'msT', 'OT'],
-                transform,
-                i = 0,
-                l = vendors.length;
-
-            for (; i < l; i++) {
-                transform = vendors[i] + 'ransform';
-                if (transform in _elementStyle) return vendors[i].substr(0, vendors[i].length - 1);
-            }
-
-            return false;
-        })();
-
-        function _prefixStyle(style) {
-            if (_vendor === false) return false;
-            if (_vendor === '') return style;
-            return _vendor + style.charAt(0).toUpperCase() + style.substr(1);
+    function e(a) {
+        return function (b) {
+            this[a] = b
         }
-
-        me.getTime = Date.now || function getTime() {
-                return new Date().getTime();
-            };
-
-        me.extend = function (target, obj) {
-            for (var i in obj) {
-                target[i] = obj[i];
-            }
-        };
-
-        me.addEvent = function (el, type, fn, capture) {
-            el.addEventListener(type, fn, !!capture);
-        };
-
-        me.removeEvent = function (el, type, fn, capture) {
-            el.removeEventListener(type, fn, !!capture);
-        };
-
-        me.prefixPointerEvent = function (pointerEvent) {
-            return window.MSPointerEvent ?
-            'MSPointer' + pointerEvent.charAt(9).toUpperCase() + pointerEvent.substr(10) :
-                pointerEvent;
-        };
-
-        me.momentum = function (current, start, time, lowerMargin, wrapperSize, deceleration) {
-            var distance = current - start,
-                speed = Math.abs(distance) / time,
-                destination,
-                duration;
-
-            deceleration = deceleration === undefined ? 0.0006 : deceleration;
-
-            destination = current + ( speed * speed ) / ( 2 * deceleration ) * ( distance < 0 ? -1 : 1 );
-            duration = speed / deceleration;
-
-            if (destination < lowerMargin) {
-                destination = wrapperSize ? lowerMargin - ( wrapperSize / 2.5 * ( speed / 8 ) ) : lowerMargin;
-                distance = Math.abs(destination - current);
-                duration = distance / speed;
-            } else if (destination > 0) {
-                destination = wrapperSize ? wrapperSize / 2.5 * ( speed / 8 ) : 0;
-                distance = Math.abs(current) + destination;
-                duration = distance / speed;
-            }
-
-            return {
-                destination: Math.round(destination),
-                duration: duration
-            };
-        };
-
-        var _transform = _prefixStyle('transform');
-
-        me.extend(me, {
-            hasTransform: _transform !== false,
-            hasPerspective: _prefixStyle('perspective') in _elementStyle,
-            hasTouch: 'ontouchstart' in window,
-            hasPointer: window.PointerEvent || window.MSPointerEvent, // IE10 is prefixed
-            hasTransition: _prefixStyle('transition') in _elementStyle
-        });
-
-        // This should find all Android browsers lower than build 535.19 (both stock browser and webview)
-        me.isBadAndroid = /Android /.test(window.navigator.appVersion) && !(/Chrome\/\d/.test(window.navigator.appVersion));
-
-        me.extend(me.style = {}, {
-            transform: _transform,
-            transitionTimingFunction: _prefixStyle('transitionTimingFunction'),
-            transitionDuration: _prefixStyle('transitionDuration'),
-            transitionDelay: _prefixStyle('transitionDelay'),
-            transformOrigin: _prefixStyle('transformOrigin')
-        });
-
-        me.hasClass = function (e, c) {
-            var re = new RegExp("(^|\\s)" + c + "(\\s|$)");
-            return re.test(e.className);
-        };
-
-        me.addClass = function (e, c) {
-            if (me.hasClass(e, c)) {
-                return;
-            }
-
-            var newclass = e.className.split(' ');
-            newclass.push(c);
-            e.className = newclass.join(' ');
-        };
-
-        me.removeClass = function (e, c) {
-            if (!me.hasClass(e, c)) {
-                return;
-            }
-
-            var re = new RegExp("(^|\\s)" + c + "(\\s|$)", 'g');
-            e.className = e.className.replace(re, ' ');
-        };
-
-        me.offset = function (el) {
-            var left = -el.offsetLeft,
-                top = -el.offsetTop;
-
-            // jshint -W084
-            while (el = el.offsetParent) {
-                left -= el.offsetLeft;
-                top -= el.offsetTop;
-            }
-            // jshint +W084
-
-            return {
-                left: left,
-                top: top
-            };
-        };
-
-        me.preventDefaultException = function (el, exceptions) {
-            for (var i in exceptions) {
-                if (exceptions[i].test(el[i])) {
-                    return true;
-                }
-            }
-
-            return false;
-        };
-
-        me.extend(me.eventType = {}, {
-            touchstart: 1,
-            touchmove: 1,
-            touchend: 1,
-
-            mousedown: 2,
-            mousemove: 2,
-            mouseup: 2,
-
-            pointerdown: 3,
-            pointermove: 3,
-            pointerup: 3,
-
-            MSPointerDown: 3,
-            MSPointerMove: 3,
-            MSPointerUp: 3
-        });
-
-        me.extend(me.ease = {}, {
-            quadratic: {
-                style: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                fn: function (k) {
-                    return k * ( 2 - k );
-                }
-            },
-            circular: {
-                style: 'cubic-bezier(0.1, 0.57, 0.1, 1)',	// Not properly "circular" but this looks better, it should be (0.075, 0.82, 0.165, 1)
-                fn: function (k) {
-                    return Math.sqrt(1 - ( --k * k ));
-                }
-            },
-            back: {
-                style: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                fn: function (k) {
-                    var b = 4;
-                    return ( k = k - 1 ) * k * ( ( b + 1 ) * k + b ) + 1;
-                }
-            },
-            bounce: {
-                style: '',
-                fn: function (k) {
-                    if (( k /= 1 ) < ( 1 / 2.75 )) {
-                        return 7.5625 * k * k;
-                    } else if (k < ( 2 / 2.75 )) {
-                        return 7.5625 * ( k -= ( 1.5 / 2.75 ) ) * k + 0.75;
-                    } else if (k < ( 2.5 / 2.75 )) {
-                        return 7.5625 * ( k -= ( 2.25 / 2.75 ) ) * k + 0.9375;
-                    } else {
-                        return 7.5625 * ( k -= ( 2.625 / 2.75 ) ) * k + 0.984375;
-                    }
-                }
-            },
-            elastic: {
-                style: '',
-                fn: function (k) {
-                    var f = 0.22,
-                        e = 0.4;
-
-                    if (k === 0) {
-                        return 0;
-                    }
-                    if (k == 1) {
-                        return 1;
-                    }
-
-                    return ( e * Math.pow(2, -10 * k) * Math.sin(( k - f / 4 ) * ( 2 * Math.PI ) / f) + 1 );
-                }
-            }
-        });
-
-        me.tap = function (e, eventName) {
-            var ev = document.createEvent('Event');
-            ev.initEvent(eventName, true, true);
-            ev.pageX = e.pageX;
-            ev.pageY = e.pageY;
-            e.target.dispatchEvent(ev);
-        };
-
-        me.click = function (e) {
-            var target = e.target,
-                ev;
-
-            if (!(/(SELECT|INPUT|TEXTAREA)/i).test(target.tagName)) {
-                ev = document.createEvent('MouseEvents');
-                ev.initMouseEvent('click', true, true, e.view, 1,
-                    target.screenX, target.screenY, target.clientX, target.clientY,
-                    e.ctrlKey, e.altKey, e.shiftKey, e.metaKey,
-                    0, null);
-
-                ev._constructed = true;
-                target.dispatchEvent(ev);
-            }
-        };
-
-        return me;
-    })();
-
-    function IScroll(el, options) {
-        this.wrapper = typeof el == 'string' ? document.querySelector(el) : el;
-        this.scroller = this.wrapper.children[0];
-        this.scrollerStyle = this.scroller.style;		// cache style for better performance
-
-        this.options = {
-
-            resizeScrollbars: true,
-
-            mouseWheelSpeed: 20,
-
-            snapThreshold: 0.334,
-
-// INSERT POINT: OPTIONS 
-
-            startX: 0,
-            startY: 0,
-            scrollY: true,
-            directionLockThreshold: 5,
-            momentum: true,
-
-            bounce: true,
-            bounceTime: 600,
-            bounceEasing: '',
-
-            preventDefault: true,
-            preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT)$/},
-
-            HWCompositing: true,
-            useTransition: true,
-            useTransform: true
-        };
-
-        for (var i in options) {
-            this.options[i] = options[i];
-        }
-
-        // Normalize options
-        this.translateZ = this.options.HWCompositing && utils.hasPerspective ? ' translateZ(0)' : '';
-
-        this.options.useTransition = utils.hasTransition && this.options.useTransition;
-        this.options.useTransform = utils.hasTransform && this.options.useTransform;
-
-        this.options.eventPassthrough = this.options.eventPassthrough === true ? 'vertical' : this.options.eventPassthrough;
-        this.options.preventDefault = !this.options.eventPassthrough && this.options.preventDefault;
-
-        // If you want eventPassthrough I have to lock one of the axes
-        this.options.scrollY = this.options.eventPassthrough == 'vertical' ? false : this.options.scrollY;
-        this.options.scrollX = this.options.eventPassthrough == 'horizontal' ? false : this.options.scrollX;
-
-        // With eventPassthrough we also need lockDirection mechanism
-        this.options.freeScroll = this.options.freeScroll && !this.options.eventPassthrough;
-        this.options.directionLockThreshold = this.options.eventPassthrough ? 0 : this.options.directionLockThreshold;
-
-        this.options.bounceEasing = typeof this.options.bounceEasing == 'string' ? utils.ease[this.options.bounceEasing] || utils.ease.circular : this.options.bounceEasing;
-
-        this.options.resizePolling = this.options.resizePolling === undefined ? 60 : this.options.resizePolling;
-
-        if (this.options.tap === true) {
-            this.options.tap = 'tap';
-        }
-
-        if (this.options.shrinkScrollbars == 'scale') {
-            this.options.useTransition = false;
-        }
-
-        this.options.invertWheelDirection = this.options.invertWheelDirection ? -1 : 1;
-
-// INSERT POINT: NORMALIZATION
-
-        // Some defaults	
-        this.x = 0;
-        this.y = 0;
-        this.directionX = 0;
-        this.directionY = 0;
-        this._events = {};
-
-// INSERT POINT: DEFAULTS
-
-        this._init();
-        this.refresh();
-
-        this.scrollTo(this.options.startX, this.options.startY);
-        this.enable();
     }
 
-    IScroll.prototype = {
-        version: '5.1.3',
-
-        _init: function () {
-            this._initEvents();
-
-            if (this.options.scrollbars || this.options.indicators) {
-                this._initIndicators();
-            }
-
-            if (this.options.mouseWheel) {
-                this._initWheel();
-            }
-
-            if (this.options.snap) {
-                this._initSnap();
-            }
-
-            if (this.options.keyBindings) {
-                this._initKeys();
-            }
-
-// INSERT POINT: _init
-
-        },
-
-        destroy: function () {
-            this._initEvents(true);
-
-            this._execEvent('destroy');
-        },
-
-        _transitionEnd: function (e) {
-            if (e.target != this.scroller || !this.isInTransition) {
-                return;
-            }
-
-            this._transitionTime();
-            if (!this.resetPosition(this.options.bounceTime)) {
-                this.isInTransition = false;
-                this._execEvent('scrollEnd');
-            }
-        },
-
-        _start: function (e) {
-            // React to left mouse button only
-            if (utils.eventType[e.type] != 1) {
-                if (e.button !== 0) {
-                    return;
-                }
-            }
-
-            if (!this.enabled || (this.initiated && utils.eventType[e.type] !== this.initiated)) {
-                return;
-            }
-
-            if (this.options.preventDefault && !utils.isBadAndroid && !utils.preventDefaultException(e.target, this.options.preventDefaultException)) {
-                e.preventDefault();
-            }
-
-            var point = e.touches ? e.touches[0] : e,
-                pos;
-
-            this.initiated = utils.eventType[e.type];
-            this.moved = false;
-            this.distX = 0;
-            this.distY = 0;
-            this.directionX = 0;
-            this.directionY = 0;
-            this.directionLocked = 0;
-
-            this._transitionTime();
-
-            this.startTime = utils.getTime();
-
-            if (this.options.useTransition && this.isInTransition) {
-                this.isInTransition = false;
-                pos = this.getComputedPosition();
-                this._translate(Math.round(pos.x), Math.round(pos.y));
-                this._execEvent('scrollEnd');
-            } else if (!this.options.useTransition && this.isAnimating) {
-                this.isAnimating = false;
-                this._execEvent('scrollEnd');
-            }
-
-            this.startX = this.x;
-            this.startY = this.y;
-            this.absStartX = this.x;
-            this.absStartY = this.y;
-            this.pointX = point.pageX;
-            this.pointY = point.pageY;
-
-            this._execEvent('beforeScrollStart');
-        },
-
-        _move: function (e) {
-            if (!this.enabled || utils.eventType[e.type] !== this.initiated) {
-                return;
-            }
-
-            if (this.options.preventDefault) {	// increases performance on Android? TODO: check!
-                e.preventDefault();
-            }
-
-            var point = e.touches ? e.touches[0] : e,
-                deltaX = point.pageX - this.pointX,
-                deltaY = point.pageY - this.pointY,
-                timestamp = utils.getTime(),
-                newX, newY,
-                absDistX, absDistY;
-
-            this.pointX = point.pageX;
-            this.pointY = point.pageY;
-
-            this.distX += deltaX;
-            this.distY += deltaY;
-            absDistX = Math.abs(this.distX);
-            absDistY = Math.abs(this.distY);
-
-            // We need to move at least 10 pixels for the scrolling to initiate
-            if (timestamp - this.endTime > 300 && (absDistX < 10 && absDistY < 10)) {
-                return;
-            }
-
-            // If you are scrolling in one direction lock the other
-            if (!this.directionLocked && !this.options.freeScroll) {
-                if (absDistX > absDistY + this.options.directionLockThreshold) {
-                    this.directionLocked = 'h';		// lock horizontally
-                } else if (absDistY >= absDistX + this.options.directionLockThreshold) {
-                    this.directionLocked = 'v';		// lock vertically
-                } else {
-                    this.directionLocked = 'n';		// no lock
-                }
-            }
-
-            if (this.directionLocked == 'h') {
-                if (this.options.eventPassthrough == 'vertical') {
-                    e.preventDefault();
-                } else if (this.options.eventPassthrough == 'horizontal') {
-                    this.initiated = false;
-                    return;
-                }
-
-                deltaY = 0;
-            } else if (this.directionLocked == 'v') {
-                if (this.options.eventPassthrough == 'horizontal') {
-                    e.preventDefault();
-                } else if (this.options.eventPassthrough == 'vertical') {
-                    this.initiated = false;
-                    return;
-                }
-
-                deltaX = 0;
-            }
-
-            deltaX = this.hasHorizontalScroll ? deltaX : 0;
-            deltaY = this.hasVerticalScroll ? deltaY : 0;
-
-            newX = this.x + deltaX;
-            newY = this.y + deltaY;
-
-            // Slow down if outside of the boundaries
-            if (newX > 0 || newX < this.maxScrollX) {
-                newX = this.options.bounce ? this.x + deltaX / 3 : newX > 0 ? 0 : this.maxScrollX;
-            }
-            if (newY > 0 || newY < this.maxScrollY) {
-                newY = this.options.bounce ? this.y + deltaY / 3 : newY > 0 ? 0 : this.maxScrollY;
-            }
-
-            this.directionX = deltaX > 0 ? -1 : deltaX < 0 ? 1 : 0;
-            this.directionY = deltaY > 0 ? -1 : deltaY < 0 ? 1 : 0;
-
-            if (!this.moved) {
-                this._execEvent('scrollStart');
-            }
-
-            this.moved = true;
-
-            this._translate(newX, newY);
-
-            /* REPLACE START: _move */
-
-            if (timestamp - this.startTime > 300) {
-                this.startTime = timestamp;
-                this.startX = this.x;
-                this.startY = this.y;
-            }
-
-            /* REPLACE END: _move */
-
-        },
-
-        _end: function (e) {
-            if (!this.enabled || utils.eventType[e.type] !== this.initiated) {
-                return;
-            }
-
-            if (this.options.preventDefault && !utils.preventDefaultException(e.target, this.options.preventDefaultException)) {
-                e.preventDefault();
-            }
-
-            var point = e.changedTouches ? e.changedTouches[0] : e,
-                momentumX,
-                momentumY,
-                duration = utils.getTime() - this.startTime,
-                newX = Math.round(this.x),
-                newY = Math.round(this.y),
-                distanceX = Math.abs(newX - this.startX),
-                distanceY = Math.abs(newY - this.startY),
-                time = 0,
-                easing = '';
-
-            this.isInTransition = 0;
-            this.initiated = 0;
-            this.endTime = utils.getTime();
-
-            // reset if we are outside of the boundaries
-            if (this.resetPosition(this.options.bounceTime)) {
-                return;
-            }
-
-            this.scrollTo(newX, newY);	// ensures that the last position is rounded
-
-            // we scrolled less than 10 pixels
-            if (!this.moved) {
-                if (this.options.tap) {
-                    utils.tap(e, this.options.tap);
-                }
-
-                if (this.options.click) {
-                    utils.click(e);
-                }
-
-                this._execEvent('scrollCancel');
-                return;
-            }
-
-            if (this._events.flick && duration < 200 && distanceX < 100 && distanceY < 100) {
-                this._execEvent('flick');
-                return;
-            }
-
-            // start momentum animation if needed
-            if (this.options.momentum && duration < 300) {
-                momentumX = this.hasHorizontalScroll ? utils.momentum(this.x, this.startX, duration, this.maxScrollX, this.options.bounce ? this.wrapperWidth : 0, this.options.deceleration) : {
-                    destination: newX,
-                    duration: 0
-                };
-                momentumY = this.hasVerticalScroll ? utils.momentum(this.y, this.startY, duration, this.maxScrollY, this.options.bounce ? this.wrapperHeight : 0, this.options.deceleration) : {
-                    destination: newY,
-                    duration: 0
-                };
-                newX = momentumX.destination;
-                newY = momentumY.destination;
-                time = Math.max(momentumX.duration, momentumY.duration);
-                this.isInTransition = 1;
-            }
-
-
-            if (this.options.snap) {
-                var snap = this._nearestSnap(newX, newY);
-                this.currentPage = snap;
-                time = this.options.snapSpeed || Math.max(
-                        Math.max(
-                            Math.min(Math.abs(newX - snap.x), 1000),
-                            Math.min(Math.abs(newY - snap.y), 1000)
-                        ), 300);
-                newX = snap.x;
-                newY = snap.y;
-
-                this.directionX = 0;
-                this.directionY = 0;
-                easing = this.options.bounceEasing;
-            }
-
-// INSERT POINT: _end
-
-            if (newX != this.x || newY != this.y) {
-                // change easing function when scroller goes out of the boundaries
-                if (newX > 0 || newX < this.maxScrollX || newY > 0 || newY < this.maxScrollY) {
-                    easing = utils.ease.quadratic;
-                }
-
-                this.scrollTo(newX, newY, time, easing);
-                return;
-            }
-
-            this._execEvent('scrollEnd');
-        },
-
-        _resize: function () {
-            var that = this;
-
-            clearTimeout(this.resizeTimeout);
-
-            this.resizeTimeout = setTimeout(function () {
-                that.refresh();
-            }, this.options.resizePolling);
-        },
-
-        resetPosition: function (time) {
-            var x = this.x,
-                y = this.y;
-
-            time = time || 0;
-
-            if (!this.hasHorizontalScroll || this.x > 0) {
-                x = 0;
-            } else if (this.x < this.maxScrollX) {
-                x = this.maxScrollX;
-            }
-
-            if (!this.hasVerticalScroll || this.y > 0) {
-                y = 0;
-            } else if (this.y < this.maxScrollY) {
-                y = this.maxScrollY;
-            }
-
-            if (x == this.x && y == this.y) {
-                return false;
-            }
-
-            this.scrollTo(x, y, time, this.options.bounceEasing);
-
-            return true;
-        },
-
-        disable: function () {
-            this.enabled = false;
-        },
-
-        enable: function () {
-            this.enabled = true;
-        },
-
-        refresh: function () {
-            var rf = this.wrapper.offsetHeight;		// Force reflow
-
-            this.wrapperWidth = this.wrapper.clientWidth;
-            this.wrapperHeight = this.wrapper.clientHeight;
-
-            /* REPLACE START: refresh */
-
-            this.scrollerWidth = this.scroller.offsetWidth;
-            this.scrollerHeight = this.scroller.offsetHeight;
-
-            this.maxScrollX = this.wrapperWidth - this.scrollerWidth;
-            this.maxScrollY = this.wrapperHeight - this.scrollerHeight;
-
-            /* REPLACE END: refresh */
-
-            this.hasHorizontalScroll = this.options.scrollX && this.maxScrollX < 0;
-            this.hasVerticalScroll = this.options.scrollY && this.maxScrollY < 0;
-
-            if (!this.hasHorizontalScroll) {
-                this.maxScrollX = 0;
-                this.scrollerWidth = this.wrapperWidth;
-            }
-
-            if (!this.hasVerticalScroll) {
-                this.maxScrollY = 0;
-                this.scrollerHeight = this.wrapperHeight;
-            }
-
-            this.endTime = 0;
-            this.directionX = 0;
-            this.directionY = 0;
-
-            this.wrapperOffset = utils.offset(this.wrapper);
-
-            this._execEvent('refresh');
-
-            this.resetPosition();
-
-// INSERT POINT: _refresh
-
-        },
-
-        on: function (type, fn) {
-            if (!this._events[type]) {
-                this._events[type] = [];
-            }
-
-            this._events[type].push(fn);
-        },
-
-        off: function (type, fn) {
-            if (!this._events[type]) {
-                return;
-            }
-
-            var index = this._events[type].indexOf(fn);
-
-            if (index > -1) {
-                this._events[type].splice(index, 1);
-            }
-        },
-
-        _execEvent: function (type) {
-            if (!this._events[type]) {
-                return;
-            }
-
-            var i = 0,
-                l = this._events[type].length;
-
-            if (!l) {
-                return;
-            }
-
-            for (; i < l; i++) {
-                this._events[type][i].apply(this, [].slice.call(arguments, 1));
-            }
-        },
-
-        scrollBy: function (x, y, time, easing) {
-            x = this.x + x;
-            y = this.y + y;
-            time = time || 0;
-
-            this.scrollTo(x, y, time, easing);
-        },
-
-        scrollTo: function (x, y, time, easing) {
-            easing = easing || utils.ease.circular;
-
-            this.isInTransition = this.options.useTransition && time > 0;
-
-            if (!time || (this.options.useTransition && easing.style)) {
-                this._transitionTimingFunction(easing.style);
-                this._transitionTime(time);
-                this._translate(x, y);
-            } else {
-                this._animate(x, y, time, easing.fn);
-            }
-        },
-
-        scrollToElement: function (el, time, offsetX, offsetY, easing) {
-            el = el.nodeType ? el : this.scroller.querySelector(el);
-
-            if (!el) {
-                return;
-            }
-
-            var pos = utils.offset(el);
-
-            pos.left -= this.wrapperOffset.left;
-            pos.top -= this.wrapperOffset.top;
-
-            // if offsetX/Y are true we center the element to the screen
-            if (offsetX === true) {
-                offsetX = Math.round(el.offsetWidth / 2 - this.wrapper.offsetWidth / 2);
-            }
-            if (offsetY === true) {
-                offsetY = Math.round(el.offsetHeight / 2 - this.wrapper.offsetHeight / 2);
-            }
-
-            pos.left -= offsetX || 0;
-            pos.top -= offsetY || 0;
-
-            pos.left = pos.left > 0 ? 0 : pos.left < this.maxScrollX ? this.maxScrollX : pos.left;
-            pos.top = pos.top > 0 ? 0 : pos.top < this.maxScrollY ? this.maxScrollY : pos.top;
-
-            time = time === undefined || time === null || time === 'auto' ? Math.max(Math.abs(this.x - pos.left), Math.abs(this.y - pos.top)) : time;
-
-            this.scrollTo(pos.left, pos.top, time, easing);
-        },
-
-        _transitionTime: function (time) {
-            time = time || 0;
-
-            this.scrollerStyle[utils.style.transitionDuration] = time + 'ms';
-
-            if (!time && utils.isBadAndroid) {
-                this.scrollerStyle[utils.style.transitionDuration] = '0.001s';
-            }
-
-
-            if (this.indicators) {
-                for (var i = this.indicators.length; i--;) {
-                    this.indicators[i].transitionTime(time);
-                }
-            }
-
-
-// INSERT POINT: _transitionTime
-
-        },
-
-        _transitionTimingFunction: function (easing) {
-            this.scrollerStyle[utils.style.transitionTimingFunction] = easing;
-
-
-            if (this.indicators) {
-                for (var i = this.indicators.length; i--;) {
-                    this.indicators[i].transitionTimingFunction(easing);
-                }
-            }
-
-
-// INSERT POINT: _transitionTimingFunction
-
-        },
-
-        _translate: function (x, y) {
-            if (this.options.useTransform) {
-
-                /* REPLACE START: _translate */
-
-                this.scrollerStyle[utils.style.transform] = 'translate(' + x + 'px,' + y + 'px)' + this.translateZ;
-
-                /* REPLACE END: _translate */
-
-            } else {
-                x = Math.round(x);
-                y = Math.round(y);
-                this.scrollerStyle.left = x + 'px';
-                this.scrollerStyle.top = y + 'px';
-            }
-
-            this.x = x;
-            this.y = y;
-
-
-            if (this.indicators) {
-                for (var i = this.indicators.length; i--;) {
-                    this.indicators[i].updatePosition();
-                }
-            }
-
-
-// INSERT POINT: _translate
-
-        },
-
-        _initEvents: function (remove) {
-            var eventType = remove ? utils.removeEvent : utils.addEvent,
-                target = this.options.bindToWrapper ? this.wrapper : window;
-
-            eventType(window, 'orientationchange', this);
-            eventType(window, 'resize', this);
-
-            if (this.options.click) {
-                eventType(this.wrapper, 'click', this, true);
-            }
-
-            if (!this.options.disableMouse) {
-                eventType(this.wrapper, 'mousedown', this);
-                eventType(target, 'mousemove', this);
-                eventType(target, 'mousecancel', this);
-                eventType(target, 'mouseup', this);
-            }
-
-            if (utils.hasPointer && !this.options.disablePointer) {
-                eventType(this.wrapper, utils.prefixPointerEvent('pointerdown'), this);
-                eventType(target, utils.prefixPointerEvent('pointermove'), this);
-                eventType(target, utils.prefixPointerEvent('pointercancel'), this);
-                eventType(target, utils.prefixPointerEvent('pointerup'), this);
-            }
-
-            if (utils.hasTouch && !this.options.disableTouch) {
-                eventType(this.wrapper, 'touchstart', this);
-                eventType(target, 'touchmove', this);
-                eventType(target, 'touchcancel', this);
-                eventType(target, 'touchend', this);
-            }
-
-            eventType(this.scroller, 'transitionend', this);
-            eventType(this.scroller, 'webkitTransitionEnd', this);
-            eventType(this.scroller, 'oTransitionEnd', this);
-            eventType(this.scroller, 'MSTransitionEnd', this);
-        },
-
-        getComputedPosition: function () {
-            var matrix = window.getComputedStyle(this.scroller, null),
-                x, y;
-
-            if (this.options.useTransform) {
-                matrix = matrix[utils.style.transform].split(')')[0].split(', ');
-                x = +(matrix[12] || matrix[4]);
-                y = +(matrix[13] || matrix[5]);
-            } else {
-                x = +matrix.left.replace(/[^-\d.]/g, '');
-                y = +matrix.top.replace(/[^-\d.]/g, '');
-            }
-
-            return {x: x, y: y};
-        },
-
-        _initIndicators: function () {
-            var interactive = this.options.interactiveScrollbars,
-                customStyle = typeof this.options.scrollbars != 'string',
-                indicators = [],
-                indicator;
-
-            var that = this;
-
-            this.indicators = [];
-
-            if (this.options.scrollbars) {
-                // Vertical scrollbar
-                if (this.options.scrollY) {
-                    indicator = {
-                        el: createDefaultScrollbar('v', interactive, this.options.scrollbars),
-                        interactive: interactive,
-                        defaultScrollbars: true,
-                        customStyle: customStyle,
-                        resize: this.options.resizeScrollbars,
-                        shrink: this.options.shrinkScrollbars,
-                        fade: this.options.fadeScrollbars,
-                        listenX: false
-                    };
-
-                    this.wrapper.appendChild(indicator.el);
-                    indicators.push(indicator);
-                }
-
-                // Horizontal scrollbar
-                if (this.options.scrollX) {
-                    indicator = {
-                        el: createDefaultScrollbar('h', interactive, this.options.scrollbars),
-                        interactive: interactive,
-                        defaultScrollbars: true,
-                        customStyle: customStyle,
-                        resize: this.options.resizeScrollbars,
-                        shrink: this.options.shrinkScrollbars,
-                        fade: this.options.fadeScrollbars,
-                        listenY: false
-                    };
-
-                    this.wrapper.appendChild(indicator.el);
-                    indicators.push(indicator);
-                }
-            }
-
-            if (this.options.indicators) {
-                // TODO: check concat compatibility
-                indicators = indicators.concat(this.options.indicators);
-            }
-
-            for (var i = indicators.length; i--;) {
-                this.indicators.push(new Indicator(this, indicators[i]));
-            }
-
-            // TODO: check if we can use array.map (wide compatibility and performance issues)
-            function _indicatorsMap(fn) {
-                for (var i = that.indicators.length; i--;) {
-                    fn.call(that.indicators[i]);
-                }
-            }
-
-            if (this.options.fadeScrollbars) {
-                this.on('scrollEnd', function () {
-                    _indicatorsMap(function () {
-                        this.fade();
-                    });
-                });
-
-                this.on('scrollCancel', function () {
-                    _indicatorsMap(function () {
-                        this.fade();
-                    });
-                });
-
-                this.on('scrollStart', function () {
-                    _indicatorsMap(function () {
-                        this.fade(1);
-                    });
-                });
-
-                this.on('beforeScrollStart', function () {
-                    _indicatorsMap(function () {
-                        this.fade(1, true);
-                    });
-                });
-            }
-
-
-            this.on('refresh', function () {
-                _indicatorsMap(function () {
-                    this.refresh();
-                });
+    function h(a) {
+        return function () {
+            return this[a]
+        }
+    }
+
+    var j;
+
+    function k(a, b, c) {
+        this.extend(k, google.maps.OverlayView);
+        this.c = a;
+        this.a = [];
+        this.f = [];
+        this.ca = [53, 56, 66, 78, 90];
+        this.j = [];
+        this.A = !1;
+        c = c || {};
+        this.g = c.gridSize || 60;
+        this.l = c.minimumClusterSize || 2;
+        this.J = c.maxZoom || d;
+        this.j = c.styles || [];
+        this.X = c.imagePath || this.Q;
+        this.W = c.imageExtension || this.P;
+        this.O = !0;
+        if (c.zoomOnClick != void 0)this.O = c.zoomOnClick;
+        this.r = !1;
+        if (c.averageCenter != void 0)this.r = c.averageCenter;
+        l(this);
+        this.setMap(a);
+        this.K = this.c.getZoom();
+        var f = this;
+        google.maps.event.addListener(this.c,
+            "zoom_changed", function () {
+                var a = f.c.getZoom();
+                if (f.K != a)f.K = a, f.m()
             });
+        google.maps.event.addListener(this.c, "idle", function () {
+            f.i()
+        });
+        b && b.length && this.C(b, !1)
+    }
 
-            this.on('destroy', function () {
-                _indicatorsMap(function () {
-                    this.destroy();
-                });
+    j = k.prototype;
+    j.Q = "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m";
+    j.P = "png";
+    j.extend = function (a, b) {
+        return function (a) {
+            for (var b in a.prototype)this.prototype[b] = a.prototype[b];
+            return this
+        }.apply(a, [b])
+    };
+    j.onAdd = function () {
+        if (!this.A)this.A = !0, n(this)
+    };
+    j.draw = function () {
+    };
+    function l(a) {
+        if (!a.j.length)for (var b = 0, c; c = a.ca[b]; b++)a.j.push({
+            url: a.X + (b + 1) + "." + a.W,
+            height: c,
+            width: c
+        })
+    }
 
-                delete this.indicators;
-            });
-        },
+    j.S = function () {
+        for (var a = this.o(), b = new google.maps.LatLngBounds, c = 0, f; f = a[c]; c++)b.extend(f.getPosition());
+        this.c.fitBounds(b)
+    };
+    j.z = h("j");
+    j.o = h("a");
+    j.V = function () {
+        return this.a.length
+    };
+    j.ba = e("J");
+    j.I = h("J");
+    j.G = function (a, b) {
+        for (var c = 0, f = a.length, g = f; g !== 0;)g = parseInt(g / 10, 10), c++;
+        c = Math.min(c, b);
+        return {text: f, index: c}
+    };
+    j.$ = e("G");
+    j.H = h("G");
+    j.C = function (a, b) {
+        for (var c = 0, f; f = a[c]; c++)q(this, f);
+        b || this.i()
+    };
+    function q(a, b) {
+        b.s = !1;
+        b.draggable && google.maps.event.addListener(b, "dragend", function () {
+            b.s = !1;
+            a.L()
+        });
+        a.a.push(b)
+    }
 
-        _initWheel: function () {
-            utils.addEvent(this.wrapper, 'wheel', this);
-            utils.addEvent(this.wrapper, 'mousewheel', this);
-            utils.addEvent(this.wrapper, 'DOMMouseScroll', this);
+    j.q = function (a, b) {
+        q(this, a);
+        b || this.i()
+    };
+    function r(a, b) {
+        var c = -1;
+        if (a.a.indexOf)c = a.a.indexOf(b); else for (var f = 0, g; g = a.a[f]; f++)if (g == b) {
+            c = f;
+            break
+        }
+        if (c == -1)return !1;
+        b.setMap(d);
+        a.a.splice(c, 1);
+        return !0
+    }
 
-            this.on('destroy', function () {
-                utils.removeEvent(this.wrapper, 'wheel', this);
-                utils.removeEvent(this.wrapper, 'mousewheel', this);
-                utils.removeEvent(this.wrapper, 'DOMMouseScroll', this);
-            });
-        },
-
-        _wheel: function (e) {
-            if (!this.enabled) {
-                return;
-            }
-
-            e.preventDefault();
-            e.stopPropagation();
-
-            var wheelDeltaX, wheelDeltaY,
-                newX, newY,
-                that = this;
-
-            if (this.wheelTimeout === undefined) {
-                that._execEvent('scrollStart');
-            }
-
-            // Execute the scrollEnd event after 400ms the wheel stopped scrolling
-            clearTimeout(this.wheelTimeout);
-            this.wheelTimeout = setTimeout(function () {
-                that._execEvent('scrollEnd');
-                that.wheelTimeout = undefined;
-            }, 400);
-
-            if ('deltaX' in e) {
-                if (e.deltaMode === 1) {
-                    wheelDeltaX = -e.deltaX * this.options.mouseWheelSpeed;
-                    wheelDeltaY = -e.deltaY * this.options.mouseWheelSpeed;
-                } else {
-                    wheelDeltaX = -e.deltaX;
-                    wheelDeltaY = -e.deltaY;
-                }
-            } else if ('wheelDeltaX' in e) {
-                wheelDeltaX = e.wheelDeltaX / 120 * this.options.mouseWheelSpeed;
-                wheelDeltaY = e.wheelDeltaY / 120 * this.options.mouseWheelSpeed;
-            } else if ('wheelDelta' in e) {
-                wheelDeltaX = wheelDeltaY = e.wheelDelta / 120 * this.options.mouseWheelSpeed;
-            } else if ('detail' in e) {
-                wheelDeltaX = wheelDeltaY = -e.detail / 3 * this.options.mouseWheelSpeed;
-            } else {
-                return;
-            }
-
-            wheelDeltaX *= this.options.invertWheelDirection;
-            wheelDeltaY *= this.options.invertWheelDirection;
-
-            if (!this.hasVerticalScroll) {
-                wheelDeltaX = wheelDeltaY;
-                wheelDeltaY = 0;
-            }
-
-            if (this.options.snap) {
-                newX = this.currentPage.pageX;
-                newY = this.currentPage.pageY;
-
-                if (wheelDeltaX > 0) {
-                    newX--;
-                } else if (wheelDeltaX < 0) {
-                    newX++;
-                }
-
-                if (wheelDeltaY > 0) {
-                    newY--;
-                } else if (wheelDeltaY < 0) {
-                    newY++;
-                }
-
-                this.goToPage(newX, newY);
-
-                return;
-            }
-
-            newX = this.x + Math.round(this.hasHorizontalScroll ? wheelDeltaX : 0);
-            newY = this.y + Math.round(this.hasVerticalScroll ? wheelDeltaY : 0);
-
-            if (newX > 0) {
-                newX = 0;
-            } else if (newX < this.maxScrollX) {
-                newX = this.maxScrollX;
-            }
-
-            if (newY > 0) {
-                newY = 0;
-            } else if (newY < this.maxScrollY) {
-                newY = this.maxScrollY;
-            }
-
-            this.scrollTo(newX, newY, 0);
-
-// INSERT POINT: _wheel
-        },
-
-        _initSnap: function () {
-            this.currentPage = {};
-
-            if (typeof this.options.snap == 'string') {
-                this.options.snap = this.scroller.querySelectorAll(this.options.snap);
-            }
-
-            this.on('refresh', function () {
-                var i = 0, l,
-                    m = 0, n,
-                    cx, cy,
-                    x = 0, y,
-                    stepX = this.options.snapStepX || this.wrapperWidth,
-                    stepY = this.options.snapStepY || this.wrapperHeight,
-                    el;
-
-                this.pages = [];
-
-                if (!this.wrapperWidth || !this.wrapperHeight || !this.scrollerWidth || !this.scrollerHeight) {
-                    return;
-                }
-
-                if (this.options.snap === true) {
-                    cx = Math.round(stepX / 2);
-                    cy = Math.round(stepY / 2);
-
-                    while (x > -this.scrollerWidth) {
-                        this.pages[i] = [];
-                        l = 0;
-                        y = 0;
-
-                        while (y > -this.scrollerHeight) {
-                            this.pages[i][l] = {
-                                x: Math.max(x, this.maxScrollX),
-                                y: Math.max(y, this.maxScrollY),
-                                width: stepX,
-                                height: stepY,
-                                cx: x - cx,
-                                cy: y - cy
-                            };
-
-                            y -= stepY;
-                            l++;
-                        }
-
-                        x -= stepX;
-                        i++;
-                    }
-                } else {
-                    el = this.options.snap;
-                    l = el.length;
-                    n = -1;
-
-                    for (; i < l; i++) {
-                        if (i === 0 || el[i].offsetLeft <= el[i - 1].offsetLeft) {
-                            m = 0;
-                            n++;
-                        }
-
-                        if (!this.pages[m]) {
-                            this.pages[m] = [];
-                        }
-
-                        x = Math.max(-el[i].offsetLeft, this.maxScrollX);
-                        y = Math.max(-el[i].offsetTop, this.maxScrollY);
-                        cx = x - Math.round(el[i].offsetWidth / 2);
-                        cy = y - Math.round(el[i].offsetHeight / 2);
-
-                        this.pages[m][n] = {
-                            x: x,
-                            y: y,
-                            width: el[i].offsetWidth,
-                            height: el[i].offsetHeight,
-                            cx: cx,
-                            cy: cy
-                        };
-
-                        if (x > this.maxScrollX) {
-                            m++;
-                        }
-                    }
-                }
-
-                this.goToPage(this.currentPage.pageX || 0, this.currentPage.pageY || 0, 0);
-
-                // Update snap threshold if needed
-                if (this.options.snapThreshold % 1 === 0) {
-                    this.snapThresholdX = this.options.snapThreshold;
-                    this.snapThresholdY = this.options.snapThreshold;
-                } else {
-                    this.snapThresholdX = Math.round(this.pages[this.currentPage.pageX][this.currentPage.pageY].width * this.options.snapThreshold);
-                    this.snapThresholdY = Math.round(this.pages[this.currentPage.pageX][this.currentPage.pageY].height * this.options.snapThreshold);
-                }
-            });
-
-            this.on('flick', function () {
-                var time = this.options.snapSpeed || Math.max(
-                        Math.max(
-                            Math.min(Math.abs(this.x - this.startX), 1000),
-                            Math.min(Math.abs(this.y - this.startY), 1000)
-                        ), 300);
-
-                this.goToPage(
-                    this.currentPage.pageX + this.directionX,
-                    this.currentPage.pageY + this.directionY,
-                    time
-                );
-            });
-        },
-
-        _nearestSnap: function (x, y) {
-            if (!this.pages.length) {
-                return {x: 0, y: 0, pageX: 0, pageY: 0};
-            }
-
-            var i = 0,
-                l = this.pages.length,
-                m = 0;
-
-            // Check if we exceeded the snap threshold
-            if (Math.abs(x - this.absStartX) < this.snapThresholdX &&
-                Math.abs(y - this.absStartY) < this.snapThresholdY) {
-                return this.currentPage;
-            }
-
-            if (x > 0) {
-                x = 0;
-            } else if (x < this.maxScrollX) {
-                x = this.maxScrollX;
-            }
-
-            if (y > 0) {
-                y = 0;
-            } else if (y < this.maxScrollY) {
-                y = this.maxScrollY;
-            }
-
-            for (; i < l; i++) {
-                if (x >= this.pages[i][0].cx) {
-                    x = this.pages[i][0].x;
-                    break;
+    j.Y = function (a, b) {
+        var c = r(this, a);
+        return !b && c ? (this.m(), this.i(), !0) : !1
+    };
+    j.Z = function (a, b) {
+        for (var c = !1, f = 0, g; g = a[f]; f++)g = r(this, g), c = c || g;
+        if (!b && c)return this.m(), this.i(), !0
+    };
+    j.U = function () {
+        return this.f.length
+    };
+    j.getMap = h("c");
+    j.setMap = e("c");
+    j.w = h("g");
+    j.aa = e("g");
+    j.v = function (a) {
+        var b = this.getProjection(), c = new google.maps.LatLng(a.getNorthEast().lat(), a.getNorthEast().lng()), f = new google.maps.LatLng(a.getSouthWest().lat(), a.getSouthWest().lng()), c = b.fromLatLngToDivPixel(c);
+        c.x += this.g;
+        c.y -= this.g;
+        f = b.fromLatLngToDivPixel(f);
+        f.x -= this.g;
+        f.y += this.g;
+        c = b.fromDivPixelToLatLng(c);
+        b = b.fromDivPixelToLatLng(f);
+        a.extend(c);
+        a.extend(b);
+        return a
+    };
+    j.R = function () {
+        this.m(!0);
+        this.a = []
+    };
+    j.m = function (a) {
+        for (var b = 0, c; c = this.f[b]; b++)c.remove();
+        for (b = 0; c = this.a[b]; b++)c.s = !1, a && c.setMap(d);
+        this.f = []
+    };
+    j.L = function () {
+        var a = this.f.slice();
+        this.f.length = 0;
+        this.m();
+        this.i();
+        window.setTimeout(function () {
+            for (var b = 0, c; c = a[b]; b++)c.remove()
+        }, 0)
+    };
+    j.i = function () {
+        n(this)
+    };
+    function n(a) {
+        if (a.A)for (var b = a.v(new google.maps.LatLngBounds(a.c.getBounds().getSouthWest(), a.c.getBounds().getNorthEast())), c = 0, f; f = a.a[c]; c++)if (!f.s && b.contains(f.getPosition())) {
+            for (var g = a, u = 4E4, o = d, v = 0, m = void 0; m = g.f[v]; v++) {
+                var i = m.getCenter();
+                if (i) {
+                    var p = f.getPosition();
+                    if (!i || !p)i = 0; else var w = (p.lat() - i.lat()) * Math.PI / 180, x = (p.lng() - i.lng()) * Math.PI / 180, i = Math.sin(w / 2) * Math.sin(w / 2) + Math.cos(i.lat() * Math.PI / 180) * Math.cos(p.lat() * Math.PI / 180) * Math.sin(x / 2) * Math.sin(x / 2), i = 6371 * 2 * Math.atan2(Math.sqrt(i),
+                            Math.sqrt(1 - i));
+                    i < u && (u = i, o = m)
                 }
             }
+            o && o.F.contains(f.getPosition()) ? o.q(f) : (m = new s(g), m.q(f), g.f.push(m))
+        }
+    }
 
-            l = this.pages[i].length;
+    function s(a) {
+        this.k = a;
+        this.c = a.getMap();
+        this.g = a.w();
+        this.l = a.l;
+        this.r = a.r;
+        this.d = d;
+        this.a = [];
+        this.F = d;
+        this.n = new t(this, a.z(), a.w())
+    }
 
-            for (; m < l; m++) {
-                if (y >= this.pages[0][m].cy) {
-                    y = this.pages[0][m].y;
-                    break;
-                }
+    j = s.prototype;
+    j.q = function (a) {
+        var b;
+        a:if (this.a.indexOf)b = this.a.indexOf(a) != -1; else {
+            b = 0;
+            for (var c; c = this.a[b]; b++)if (c == a) {
+                b = !0;
+                break a
             }
+            b = !1
+        }
+        if (b)return !1;
+        if (this.d) {
+            if (this.r)c = this.a.length + 1, b = (this.d.lat() * (c - 1) + a.getPosition().lat()) / c, c = (this.d.lng() * (c - 1) + a.getPosition().lng()) / c, this.d = new google.maps.LatLng(b, c), y(this)
+        } else this.d = a.getPosition(), y(this);
+        a.s = !0;
+        this.a.push(a);
+        b = this.a.length;
+        b < this.l && a.getMap() != this.c && a.setMap(this.c);
+        if (b == this.l)for (c = 0; c < b; c++)this.a[c].setMap(d);
+        b >= this.l && a.setMap(d);
+        a = this.c.getZoom();
+        if ((b = this.k.I()) && a > b)for (a = 0; b = this.a[a]; a++)b.setMap(this.c); else if (this.a.length < this.l)z(this.n); else {
+            b = this.k.H()(this.a, this.k.z().length);
+            this.n.setCenter(this.d);
+            a = this.n;
+            a.B = b;
+            a.ga = b.text;
+            a.ea = b.index;
+            if (a.b)a.b.innerHTML = b.text;
+            b = Math.max(0, a.B.index - 1);
+            b = Math.min(a.j.length - 1, b);
+            b = a.j[b];
+            a.da = b.url;
+            a.h = b.height;
+            a.p = b.width;
+            a.M = b.textColor;
+            a.e = b.anchor;
+            a.N = b.textSize;
+            a.D = b.backgroundPosition;
+            this.n.show()
+        }
+        return !0
+    };
+    j.getBounds = function () {
+        for (var a = new google.maps.LatLngBounds(this.d, this.d), b = this.o(), c = 0, f; f = b[c]; c++)a.extend(f.getPosition());
+        return a
+    };
+    j.remove = function () {
+        this.n.remove();
+        this.a.length = 0;
+        delete this.a
+    };
+    j.T = function () {
+        return this.a.length
+    };
+    j.o = h("a");
+    j.getCenter = h("d");
+    function y(a) {
+        a.F = a.k.v(new google.maps.LatLngBounds(a.d, a.d))
+    }
 
-            if (i == this.currentPage.pageX) {
-                i += this.directionX;
+    j.getMap = h("c");
+    function t(a, b, c) {
+        a.k.extend(t, google.maps.OverlayView);
+        this.j = b;
+        this.fa = c || 0;
+        this.u = a;
+        this.d = d;
+        this.c = a.getMap();
+        this.B = this.b = d;
+        this.t = !1;
+        this.setMap(this.c)
+    }
 
-                if (i < 0) {
-                    i = 0;
-                } else if (i >= this.pages.length) {
-                    i = this.pages.length - 1;
-                }
+    j = t.prototype;
+    j.onAdd = function () {
+        this.b = document.createElement("DIV");
+        if (this.t)this.b.style.cssText = A(this, B(this, this.d)), this.b.innerHTML = this.B.text;
+        this.getPanes().overlayMouseTarget.appendChild(this.b);
+        var a = this;
+        google.maps.event.addDomListener(this.b, "click", function () {
+            var b = a.u.k;
+            google.maps.event.trigger(b, "clusterclick", a.u);
+            b.O && a.c.fitBounds(a.u.getBounds())
+        })
+    };
+    function B(a, b) {
+        var c = a.getProjection().fromLatLngToDivPixel(b);
+        c.x -= parseInt(a.p / 2, 10);
+        c.y -= parseInt(a.h / 2, 10);
+        return c
+    }
 
-                x = this.pages[i][0].x;
-            }
-
-            if (m == this.currentPage.pageY) {
-                m += this.directionY;
-
-                if (m < 0) {
-                    m = 0;
-                } else if (m >= this.pages[0].length) {
-                    m = this.pages[0].length - 1;
-                }
-
-                y = this.pages[0][m].y;
-            }
-
-            return {
-                x: x,
-                y: y,
-                pageX: i,
-                pageY: m
-            };
-        },
-
-        goToPage: function (x, y, time, easing) {
-            easing = easing || this.options.bounceEasing;
-
-            if (x >= this.pages.length) {
-                x = this.pages.length - 1;
-            } else if (x < 0) {
-                x = 0;
-            }
-
-            if (y >= this.pages[x].length) {
-                y = this.pages[x].length - 1;
-            } else if (y < 0) {
-                y = 0;
-            }
-
-            var posX = this.pages[x][y].x,
-                posY = this.pages[x][y].y;
-
-            time = time === undefined ? this.options.snapSpeed || Math.max(
-                Math.max(
-                    Math.min(Math.abs(posX - this.x), 1000),
-                    Math.min(Math.abs(posY - this.y), 1000)
-                ), 300) : time;
-
-            this.currentPage = {
-                x: posX,
-                y: posY,
-                pageX: x,
-                pageY: y
-            };
-
-            this.scrollTo(posX, posY, time, easing);
-        },
-
-        next: function (time, easing) {
-            var x = this.currentPage.pageX,
-                y = this.currentPage.pageY;
-
-            x++;
-
-            if (x >= this.pages.length && this.hasVerticalScroll) {
-                x = 0;
-                y++;
-            }
-
-            this.goToPage(x, y, time, easing);
-        },
-
-        prev: function (time, easing) {
-            var x = this.currentPage.pageX,
-                y = this.currentPage.pageY;
-
-            x--;
-
-            if (x < 0 && this.hasVerticalScroll) {
-                x = 0;
-                y--;
-            }
-
-            this.goToPage(x, y, time, easing);
-        },
-
-        _initKeys: function (e) {
-            // default key bindings
-            var keys = {
-                pageUp: 33,
-                pageDown: 34,
-                end: 35,
-                home: 36,
-                left: 37,
-                up: 38,
-                right: 39,
-                down: 40
-            };
-            var i;
-
-            // if you give me characters I give you keycode
-            if (typeof this.options.keyBindings == 'object') {
-                for (i in this.options.keyBindings) {
-                    if (typeof this.options.keyBindings[i] == 'string') {
-                        this.options.keyBindings[i] = this.options.keyBindings[i].toUpperCase().charCodeAt(0);
-                    }
-                }
-            } else {
-                this.options.keyBindings = {};
-            }
-
-            for (i in keys) {
-                this.options.keyBindings[i] = this.options.keyBindings[i] || keys[i];
-            }
-
-            utils.addEvent(window, 'keydown', this);
-
-            this.on('destroy', function () {
-                utils.removeEvent(window, 'keydown', this);
-            });
-        },
-
-        _key: function (e) {
-            if (!this.enabled) {
-                return;
-            }
-
-            var snap = this.options.snap,	// we are using this alot, better to cache it
-                newX = snap ? this.currentPage.pageX : this.x,
-                newY = snap ? this.currentPage.pageY : this.y,
-                now = utils.getTime(),
-                prevTime = this.keyTime || 0,
-                acceleration = 0.250,
-                pos;
-
-            if (this.options.useTransition && this.isInTransition) {
-                pos = this.getComputedPosition();
-
-                this._translate(Math.round(pos.x), Math.round(pos.y));
-                this.isInTransition = false;
-            }
-
-            this.keyAcceleration = now - prevTime < 200 ? Math.min(this.keyAcceleration + acceleration, 50) : 0;
-
-            switch (e.keyCode) {
-                case this.options.keyBindings.pageUp:
-                    if (this.hasHorizontalScroll && !this.hasVerticalScroll) {
-                        newX += snap ? 1 : this.wrapperWidth;
-                    } else {
-                        newY += snap ? 1 : this.wrapperHeight;
-                    }
-                    break;
-                case this.options.keyBindings.pageDown:
-                    if (this.hasHorizontalScroll && !this.hasVerticalScroll) {
-                        newX -= snap ? 1 : this.wrapperWidth;
-                    } else {
-                        newY -= snap ? 1 : this.wrapperHeight;
-                    }
-                    break;
-                case this.options.keyBindings.end:
-                    newX = snap ? this.pages.length - 1 : this.maxScrollX;
-                    newY = snap ? this.pages[0].length - 1 : this.maxScrollY;
-                    break;
-                case this.options.keyBindings.home:
-                    newX = 0;
-                    newY = 0;
-                    break;
-                case this.options.keyBindings.left:
-                    newX += snap ? -1 : 5 + this.keyAcceleration >> 0;
-                    break;
-                case this.options.keyBindings.up:
-                    newY += snap ? 1 : 5 + this.keyAcceleration >> 0;
-                    break;
-                case this.options.keyBindings.right:
-                    newX -= snap ? -1 : 5 + this.keyAcceleration >> 0;
-                    break;
-                case this.options.keyBindings.down:
-                    newY -= snap ? 1 : 5 + this.keyAcceleration >> 0;
-                    break;
-                default:
-                    return;
-            }
-
-            if (snap) {
-                this.goToPage(newX, newY);
-                return;
-            }
-
-            if (newX > 0) {
-                newX = 0;
-                this.keyAcceleration = 0;
-            } else if (newX < this.maxScrollX) {
-                newX = this.maxScrollX;
-                this.keyAcceleration = 0;
-            }
-
-            if (newY > 0) {
-                newY = 0;
-                this.keyAcceleration = 0;
-            } else if (newY < this.maxScrollY) {
-                newY = this.maxScrollY;
-                this.keyAcceleration = 0;
-            }
-
-            this.scrollTo(newX, newY, 0);
-
-            this.keyTime = now;
-        },
-
-        _animate: function (destX, destY, duration, easingFn) {
-            var that = this,
-                startX = this.x,
-                startY = this.y,
-                startTime = utils.getTime(),
-                destTime = startTime + duration;
-
-            function step() {
-                var now = utils.getTime(),
-                    newX, newY,
-                    easing;
-
-                if (now >= destTime) {
-                    that.isAnimating = false;
-                    that._translate(destX, destY);
-
-                    if (!that.resetPosition(that.options.bounceTime)) {
-                        that._execEvent('scrollEnd');
-                    }
-
-                    return;
-                }
-
-                now = ( now - startTime ) / duration;
-                easing = easingFn(now);
-                newX = ( destX - startX ) * easing + startX;
-                newY = ( destY - startY ) * easing + startY;
-                that._translate(newX, newY);
-
-                if (that.isAnimating) {
-                    rAF(step);
-                }
-            }
-
-            this.isAnimating = true;
-            step();
-        },
-        handleEvent: function (e) {
-            switch (e.type) {
-                case 'touchstart':
-                case 'pointerdown':
-                case 'MSPointerDown':
-                case 'mousedown':
-                    this._start(e);
-                    break;
-                case 'touchmove':
-                case 'pointermove':
-                case 'MSPointerMove':
-                case 'mousemove':
-                    this._move(e);
-                    break;
-                case 'touchend':
-                case 'pointerup':
-                case 'MSPointerUp':
-                case 'mouseup':
-                case 'touchcancel':
-                case 'pointercancel':
-                case 'MSPointerCancel':
-                case 'mousecancel':
-                    this._end(e);
-                    break;
-                case 'orientationchange':
-                case 'resize':
-                    this._resize();
-                    break;
-                case 'transitionend':
-                case 'webkitTransitionEnd':
-                case 'oTransitionEnd':
-                case 'MSTransitionEnd':
-                    this._transitionEnd(e);
-                    break;
-                case 'wheel':
-                case 'DOMMouseScroll':
-                case 'mousewheel':
-                    this._wheel(e);
-                    break;
-                case 'keydown':
-                    this._key(e);
-                    break;
-                case 'click':
-                    if (!e._constructed) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                    }
-                    break;
-            }
+    j.draw = function () {
+        if (this.t) {
+            var a = B(this, this.d);
+            this.b.style.top = a.y + "px";
+            this.b.style.left = a.x + "px"
         }
     };
-    function createDefaultScrollbar(direction, interactive, type) {
-        var scrollbar = document.createElement('div'),
-            indicator = document.createElement('div');
-
-        if (type === true) {
-            scrollbar.style.cssText = 'position:absolute;z-index:9999';
-            indicator.style.cssText = '-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;position:absolute;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.9);border-radius:3px';
-        }
-
-        indicator.className = 'iScrollIndicator';
-
-        if (direction == 'h') {
-            if (type === true) {
-                scrollbar.style.cssText += ';height:7px;left:2px;right:2px;bottom:0';
-                indicator.style.height = '100%';
-            }
-            scrollbar.className = 'iScrollHorizontalScrollbar';
-        } else {
-            if (type === true) {
-                scrollbar.style.cssText += ';width:7px;bottom:2px;top:2px;right:1px';
-                indicator.style.width = '100%';
-            }
-            scrollbar.className = 'iScrollVerticalScrollbar';
-        }
-
-        scrollbar.style.cssText += ';overflow:hidden';
-
-        if (!interactive) {
-            scrollbar.style.pointerEvents = 'none';
-        }
-
-        scrollbar.appendChild(indicator);
-
-        return scrollbar;
+    function z(a) {
+        if (a.b)a.b.style.display = "none";
+        a.t = !1
     }
 
-    function Indicator(scroller, options) {
-        this.wrapper = typeof options.el == 'string' ? document.querySelector(options.el) : options.el;
-        this.wrapperStyle = this.wrapper.style;
-        this.indicator = this.wrapper.children[0];
-        this.indicatorStyle = this.indicator.style;
-        this.scroller = scroller;
-
-        this.options = {
-            listenX: true,
-            listenY: true,
-            interactive: false,
-            resize: true,
-            defaultScrollbars: false,
-            shrink: false,
-            fade: false,
-            speedRatioX: 0,
-            speedRatioY: 0
-        };
-
-        for (var i in options) {
-            this.options[i] = options[i];
-        }
-
-        this.sizeRatioX = 1;
-        this.sizeRatioY = 1;
-        this.maxPosX = 0;
-        this.maxPosY = 0;
-
-        if (this.options.interactive) {
-            if (!this.options.disableTouch) {
-                utils.addEvent(this.indicator, 'touchstart', this);
-                utils.addEvent(window, 'touchend', this);
-            }
-            if (!this.options.disablePointer) {
-                utils.addEvent(this.indicator, utils.prefixPointerEvent('pointerdown'), this);
-                utils.addEvent(window, utils.prefixPointerEvent('pointerup'), this);
-            }
-            if (!this.options.disableMouse) {
-                utils.addEvent(this.indicator, 'mousedown', this);
-                utils.addEvent(window, 'mouseup', this);
-            }
-        }
-
-        if (this.options.fade) {
-            this.wrapperStyle[utils.style.transform] = this.scroller.translateZ;
-            this.wrapperStyle[utils.style.transitionDuration] = utils.isBadAndroid ? '0.001s' : '0ms';
-            this.wrapperStyle.opacity = '0';
-        }
-    }
-
-    Indicator.prototype = {
-        handleEvent: function (e) {
-            switch (e.type) {
-                case 'touchstart':
-                case 'pointerdown':
-                case 'MSPointerDown':
-                case 'mousedown':
-                    this._start(e);
-                    break;
-                case 'touchmove':
-                case 'pointermove':
-                case 'MSPointerMove':
-                case 'mousemove':
-                    this._move(e);
-                    break;
-                case 'touchend':
-                case 'pointerup':
-                case 'MSPointerUp':
-                case 'mouseup':
-                case 'touchcancel':
-                case 'pointercancel':
-                case 'MSPointerCancel':
-                case 'mousecancel':
-                    this._end(e);
-                    break;
-            }
-        },
-
-        destroy: function () {
-            if (this.options.interactive) {
-                utils.removeEvent(this.indicator, 'touchstart', this);
-                utils.removeEvent(this.indicator, utils.prefixPointerEvent('pointerdown'), this);
-                utils.removeEvent(this.indicator, 'mousedown', this);
-
-                utils.removeEvent(window, 'touchmove', this);
-                utils.removeEvent(window, utils.prefixPointerEvent('pointermove'), this);
-                utils.removeEvent(window, 'mousemove', this);
-
-                utils.removeEvent(window, 'touchend', this);
-                utils.removeEvent(window, utils.prefixPointerEvent('pointerup'), this);
-                utils.removeEvent(window, 'mouseup', this);
-            }
-
-            if (this.options.defaultScrollbars) {
-                this.wrapper.parentNode.removeChild(this.wrapper);
-            }
-        },
-
-        _start: function (e) {
-            var point = e.touches ? e.touches[0] : e;
-
-            e.preventDefault();
-            e.stopPropagation();
-
-            this.transitionTime();
-
-            this.initiated = true;
-            this.moved = false;
-            this.lastPointX = point.pageX;
-            this.lastPointY = point.pageY;
-
-            this.startTime = utils.getTime();
-
-            if (!this.options.disableTouch) {
-                utils.addEvent(window, 'touchmove', this);
-            }
-            if (!this.options.disablePointer) {
-                utils.addEvent(window, utils.prefixPointerEvent('pointermove'), this);
-            }
-            if (!this.options.disableMouse) {
-                utils.addEvent(window, 'mousemove', this);
-            }
-
-            this.scroller._execEvent('beforeScrollStart');
-        },
-
-        _move: function (e) {
-            var point = e.touches ? e.touches[0] : e,
-                deltaX, deltaY,
-                newX, newY,
-                timestamp = utils.getTime();
-
-            if (!this.moved) {
-                this.scroller._execEvent('scrollStart');
-            }
-
-            this.moved = true;
-
-            deltaX = point.pageX - this.lastPointX;
-            this.lastPointX = point.pageX;
-
-            deltaY = point.pageY - this.lastPointY;
-            this.lastPointY = point.pageY;
-
-            newX = this.x + deltaX;
-            newY = this.y + deltaY;
-
-            this._pos(newX, newY);
-
-// INSERT POINT: indicator._move
-
-            e.preventDefault();
-            e.stopPropagation();
-        },
-
-        _end: function (e) {
-            if (!this.initiated) {
-                return;
-            }
-
-            this.initiated = false;
-
-            e.preventDefault();
-            e.stopPropagation();
-
-            utils.removeEvent(window, 'touchmove', this);
-            utils.removeEvent(window, utils.prefixPointerEvent('pointermove'), this);
-            utils.removeEvent(window, 'mousemove', this);
-
-            if (this.scroller.options.snap) {
-                var snap = this.scroller._nearestSnap(this.scroller.x, this.scroller.y);
-
-                var time = this.options.snapSpeed || Math.max(
-                        Math.max(
-                            Math.min(Math.abs(this.scroller.x - snap.x), 1000),
-                            Math.min(Math.abs(this.scroller.y - snap.y), 1000)
-                        ), 300);
-
-                if (this.scroller.x != snap.x || this.scroller.y != snap.y) {
-                    this.scroller.directionX = 0;
-                    this.scroller.directionY = 0;
-                    this.scroller.currentPage = snap;
-                    this.scroller.scrollTo(snap.x, snap.y, time, this.scroller.options.bounceEasing);
-                }
-            }
-
-            if (this.moved) {
-                this.scroller._execEvent('scrollEnd');
-            }
-        },
-
-        transitionTime: function (time) {
-            time = time || 0;
-            this.indicatorStyle[utils.style.transitionDuration] = time + 'ms';
-
-            if (!time && utils.isBadAndroid) {
-                this.indicatorStyle[utils.style.transitionDuration] = '0.001s';
-            }
-        },
-
-        transitionTimingFunction: function (easing) {
-            this.indicatorStyle[utils.style.transitionTimingFunction] = easing;
-        },
-
-        refresh: function () {
-            this.transitionTime();
-
-            if (this.options.listenX && !this.options.listenY) {
-                this.indicatorStyle.display = this.scroller.hasHorizontalScroll ? 'block' : 'none';
-            } else if (this.options.listenY && !this.options.listenX) {
-                this.indicatorStyle.display = this.scroller.hasVerticalScroll ? 'block' : 'none';
-            } else {
-                this.indicatorStyle.display = this.scroller.hasHorizontalScroll || this.scroller.hasVerticalScroll ? 'block' : 'none';
-            }
-
-            if (this.scroller.hasHorizontalScroll && this.scroller.hasVerticalScroll) {
-                utils.addClass(this.wrapper, 'iScrollBothScrollbars');
-                utils.removeClass(this.wrapper, 'iScrollLoneScrollbar');
-
-                if (this.options.defaultScrollbars && this.options.customStyle) {
-                    if (this.options.listenX) {
-                        this.wrapper.style.right = '8px';
-                    } else {
-                        this.wrapper.style.bottom = '8px';
-                    }
-                }
-            } else {
-                utils.removeClass(this.wrapper, 'iScrollBothScrollbars');
-                utils.addClass(this.wrapper, 'iScrollLoneScrollbar');
-
-                if (this.options.defaultScrollbars && this.options.customStyle) {
-                    if (this.options.listenX) {
-                        this.wrapper.style.right = '2px';
-                    } else {
-                        this.wrapper.style.bottom = '2px';
-                    }
-                }
-            }
-
-            var r = this.wrapper.offsetHeight;	// force refresh
-
-            if (this.options.listenX) {
-                this.wrapperWidth = this.wrapper.clientWidth;
-                if (this.options.resize) {
-                    this.indicatorWidth = Math.max(Math.round(this.wrapperWidth * this.wrapperWidth / (this.scroller.scrollerWidth || this.wrapperWidth || 1)), 8);
-                    this.indicatorStyle.width = this.indicatorWidth + 'px';
-                } else {
-                    this.indicatorWidth = this.indicator.clientWidth;
-                }
-
-                this.maxPosX = this.wrapperWidth - this.indicatorWidth;
-
-                if (this.options.shrink == 'clip') {
-                    this.minBoundaryX = -this.indicatorWidth + 8;
-                    this.maxBoundaryX = this.wrapperWidth - 8;
-                } else {
-                    this.minBoundaryX = 0;
-                    this.maxBoundaryX = this.maxPosX;
-                }
-
-                this.sizeRatioX = this.options.speedRatioX || (this.scroller.maxScrollX && (this.maxPosX / this.scroller.maxScrollX));
-            }
-
-            if (this.options.listenY) {
-                this.wrapperHeight = this.wrapper.clientHeight;
-                if (this.options.resize) {
-                    this.indicatorHeight = Math.max(Math.round(this.wrapperHeight * this.wrapperHeight / (this.scroller.scrollerHeight || this.wrapperHeight || 1)), 8);
-                    this.indicatorStyle.height = this.indicatorHeight + 'px';
-                } else {
-                    this.indicatorHeight = this.indicator.clientHeight;
-                }
-
-                this.maxPosY = this.wrapperHeight - this.indicatorHeight;
-
-                if (this.options.shrink == 'clip') {
-                    this.minBoundaryY = -this.indicatorHeight + 8;
-                    this.maxBoundaryY = this.wrapperHeight - 8;
-                } else {
-                    this.minBoundaryY = 0;
-                    this.maxBoundaryY = this.maxPosY;
-                }
-
-                this.maxPosY = this.wrapperHeight - this.indicatorHeight;
-                this.sizeRatioY = this.options.speedRatioY || (this.scroller.maxScrollY && (this.maxPosY / this.scroller.maxScrollY));
-            }
-
-            this.updatePosition();
-        },
-
-        updatePosition: function () {
-            var x = this.options.listenX && Math.round(this.sizeRatioX * this.scroller.x) || 0,
-                y = this.options.listenY && Math.round(this.sizeRatioY * this.scroller.y) || 0;
-
-            if (!this.options.ignoreBoundaries) {
-                if (x < this.minBoundaryX) {
-                    if (this.options.shrink == 'scale') {
-                        this.width = Math.max(this.indicatorWidth + x, 8);
-                        this.indicatorStyle.width = this.width + 'px';
-                    }
-                    x = this.minBoundaryX;
-                } else if (x > this.maxBoundaryX) {
-                    if (this.options.shrink == 'scale') {
-                        this.width = Math.max(this.indicatorWidth - (x - this.maxPosX), 8);
-                        this.indicatorStyle.width = this.width + 'px';
-                        x = this.maxPosX + this.indicatorWidth - this.width;
-                    } else {
-                        x = this.maxBoundaryX;
-                    }
-                } else if (this.options.shrink == 'scale' && this.width != this.indicatorWidth) {
-                    this.width = this.indicatorWidth;
-                    this.indicatorStyle.width = this.width + 'px';
-                }
-
-                if (y < this.minBoundaryY) {
-                    if (this.options.shrink == 'scale') {
-                        this.height = Math.max(this.indicatorHeight + y * 3, 8);
-                        this.indicatorStyle.height = this.height + 'px';
-                    }
-                    y = this.minBoundaryY;
-                } else if (y > this.maxBoundaryY) {
-                    if (this.options.shrink == 'scale') {
-                        this.height = Math.max(this.indicatorHeight - (y - this.maxPosY) * 3, 8);
-                        this.indicatorStyle.height = this.height + 'px';
-                        y = this.maxPosY + this.indicatorHeight - this.height;
-                    } else {
-                        y = this.maxBoundaryY;
-                    }
-                } else if (this.options.shrink == 'scale' && this.height != this.indicatorHeight) {
-                    this.height = this.indicatorHeight;
-                    this.indicatorStyle.height = this.height + 'px';
-                }
-            }
-
-            this.x = x;
-            this.y = y;
-
-            if (this.scroller.options.useTransform) {
-                this.indicatorStyle[utils.style.transform] = 'translate(' + x + 'px,' + y + 'px)' + this.scroller.translateZ;
-            } else {
-                this.indicatorStyle.left = x + 'px';
-                this.indicatorStyle.top = y + 'px';
-            }
-        },
-
-        _pos: function (x, y) {
-            if (x < 0) {
-                x = 0;
-            } else if (x > this.maxPosX) {
-                x = this.maxPosX;
-            }
-
-            if (y < 0) {
-                y = 0;
-            } else if (y > this.maxPosY) {
-                y = this.maxPosY;
-            }
-
-            x = this.options.listenX ? Math.round(x / this.sizeRatioX) : this.scroller.x;
-            y = this.options.listenY ? Math.round(y / this.sizeRatioY) : this.scroller.y;
-
-            this.scroller.scrollTo(x, y);
-        },
-
-        fade: function (val, hold) {
-            if (hold && !this.visible) {
-                return;
-            }
-
-            clearTimeout(this.fadeTimeout);
-            this.fadeTimeout = null;
-
-            var time = val ? 250 : 500,
-                delay = val ? 0 : 300;
-
-            val = val ? '1' : '0';
-
-            this.wrapperStyle[utils.style.transitionDuration] = time + 'ms';
-
-            this.fadeTimeout = setTimeout((function (val) {
-                this.wrapperStyle.opacity = val;
-                this.visible = +val;
-            }).bind(this, val), delay);
-        }
+    j.show = function () {
+        if (this.b)this.b.style.cssText = A(this, B(this, this.d)), this.b.style.display = "";
+        this.t = !0
     };
-
-    IScroll.utils = utils;
-
-    if (typeof module != 'undefined' && module.exports) {
-        module.exports = IScroll;
-    } else {
-        window.IScroll = IScroll;
+    j.remove = function () {
+        this.setMap(d)
+    };
+    j.onRemove = function () {
+        if (this.b && this.b.parentNode)z(this), this.b.parentNode.removeChild(this.b), this.b = d
+    };
+    j.setCenter = e("d");
+    function A(a, b) {
+        var c = [];
+        c.push("background-image:url(" + a.da + ");");
+        c.push("background-position:" + (a.D ? a.D : "0 0") + ";");
+        typeof a.e === "object" ? (typeof a.e[0] === "number" && a.e[0] > 0 && a.e[0] < a.h ? c.push("height:" + (a.h - a.e[0]) + "px; padding-top:" + a.e[0] + "px;") : c.push("height:" + a.h + "px; line-height:" + a.h + "px;"), typeof a.e[1] === "number" && a.e[1] > 0 && a.e[1] < a.p ? c.push("width:" + (a.p - a.e[1]) + "px; padding-left:" + a.e[1] + "px;") : c.push("width:" + a.p + "px; text-align:center;")) : c.push("height:" + a.h + "px; line-height:" + a.h +
+            "px; width:" + a.p + "px; text-align:center;");
+        c.push("cursor:pointer; top:" + b.y + "px; left:" + b.x + "px; color:" + (a.M ? a.M : "black") + "; position:absolute; font-size:" + (a.N ? a.N : 11) + "px; font-family:Arial,sans-serif; font-weight:bold");
+        return c.join("")
     }
 
-})(window, document, Math);
+    window.MarkerClusterer = k;
+    k.prototype.addMarker = k.prototype.q;
+    k.prototype.addMarkers = k.prototype.C;
+    k.prototype.clearMarkers = k.prototype.R;
+    k.prototype.fitMapToMarkers = k.prototype.S;
+    k.prototype.getCalculator = k.prototype.H;
+    k.prototype.getGridSize = k.prototype.w;
+    k.prototype.getExtendedBounds = k.prototype.v;
+    k.prototype.getMap = k.prototype.getMap;
+    k.prototype.getMarkers = k.prototype.o;
+    k.prototype.getMaxZoom = k.prototype.I;
+    k.prototype.getStyles = k.prototype.z;
+    k.prototype.getTotalClusters = k.prototype.U;
+    k.prototype.getTotalMarkers = k.prototype.V;
+    k.prototype.redraw = k.prototype.i;
+    k.prototype.removeMarker = k.prototype.Y;
+    k.prototype.removeMarkers = k.prototype.Z;
+    k.prototype.resetViewport = k.prototype.m;
+    k.prototype.repaint = k.prototype.L;
+    k.prototype.setCalculator = k.prototype.$;
+    k.prototype.setGridSize = k.prototype.aa;
+    k.prototype.setMaxZoom = k.prototype.ba;
+    k.prototype.onAdd = k.prototype.onAdd;
+    k.prototype.draw = k.prototype.draw;
+    s.prototype.getCenter = s.prototype.getCenter;
+    s.prototype.getSize = s.prototype.T;
+    s.prototype.getMarkers = s.prototype.o;
+    t.prototype.onAdd = t.prototype.onAdd;
+    t.prototype.draw = t.prototype.draw;
+    t.prototype.onRemove = t.prototype.onRemove;
+})();
 /**
  * @license AngularJS v1.4.3
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -47938,10 +46266,26 @@ if (typeof jQuery === 'undefined') {
 
 
 })(window, window.angular);
+window.project_assets = {"info.html": "/assets/info-3756e3fb61545accffca71d28f28b7bea3377484c4b328cb4e962f204836fde3.html"};
+window.asset_path = function (logical_path) {
+    return window.project_assets[logical_path];
+};
 /**
  * Created by �������� on 28.08.2015.
  */
 
+
+function asset_path(name) {
+    assets = {
+        'bottle.png': '/assets/bottle-3c5f9a060846cc46bf30ecad99a07cc1a18859e7c7991b088012a30260b00f98.png',
+        'Alien.png': '/assets/Alien-23ed7e3d380b6467322c6740d54438a490e06bf541fff229f22ea9dd712e3d5e.png',
+        'drinks.png': '/assets/drinks-1e4e8c943d17f2157cc9114b30f8d9ffd3e939c113049b2ccb824e2ef4ed85f6.png',
+        'new.png': '/assets/new-053de3583ab069972e53dc312d224551c69220594d140e5ee1c7e0974761c8f6.png',
+        'info.html': '/assets/info-4b84a421331f8861ed77e43c23270097a5ddb55bf96ba0cb74d79dabfd491de5.html',
+        'new_point.html': '/assets/new_point-bfd6bf04e818658c7c2291d233cc0f51f4ff89c238a94b672252bb65a02803a4.html'
+    };
+    return assets[name];
+}
 var USER_POSITION = {lng: 59.996651699999994, lat: 30.1950724}
 function updateUserPosition() {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -47958,12 +46302,12 @@ setTimeout(function () {
  * Created by Геннадий on 28.08.2015.
  */
 
-function IndexController($compile, $scope, gmap, Point, Comment) {
+function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
     var $this = this;
     this.heading = 'Алкомап (альфа)';
     this.currentPoint = undefined;
     this.openedInfos = undefined;
-
+    this.user = User;
     var findPointInList = function (point) {
         var result = point;
         $this.points.forEach(function (item) {
@@ -47977,7 +46321,8 @@ function IndexController($compile, $scope, gmap, Point, Comment) {
         if ($this.openedInfos)
             $this.openedInfos.close();
         $this.openedInfos = window;
-        window.open(gmap, marker);
+        if (window)
+            window.open(gmap, marker);
     }
 
     var buildMarker = function (item) {
@@ -47986,27 +46331,41 @@ function IndexController($compile, $scope, gmap, Point, Comment) {
             label: item.name,
             title: item.description,
             map: gmap,
-            icon: '/assets/bottle-3c5f9a060846cc46bf30ecad99a07cc1a18859e7c7991b088012a30260b00f98.png'
+            icon: asset_path('bottle.png')
         });
 
-        var content = "<div class='info'>" +
-            "<span class='comment_user'>Название: </span>" +
-            "<span class='comment_user'>" + item.name + "</span><br>";
-        if (item.description)
-            content += "<span class='comment_user'>Описание: </span><span class='comment_user'>" + item.description + "</span><br>";
-        content += "<span class='comment_user'>Добавлено: </span>" +
-            "<span class='comment_user'>" + item.user.name + "</span>" +
-            "</div>";
-
+        //TODO: ужас
+        var content = '<div id="info" ng-include src="\'' + asset_path("info.html") + '\'" ng-show="controller.currentPoint"></div>';
         var infoWindow = new google.maps.InfoWindow({
             content: content
         });
+
+        infoWindow.addListener('domready', function () {
+            $scope.$apply(function () {
+                $compile(document.getElementById('info'))($scope);
+            });
+        });
+        infoWindow.addListener('closeclick', function () {
+            $this.points.push(item);
+            marker.setMap(null);
+            gmap.clusterer.addMarker(marker);
+            $this.currentPoint = undefined;
+            $scope.$apply();
+        });
+
         marker.addListener('click', function (event) {
             $this.currentPoint = findPointInList(item);
+            $this.points.splice($this.points.indexOf(item), 1);
+            gmap.clusterer.removeMarker(marker);
+            marker.setMap(gmap);
             closeOther(infoWindow, marker);
             $scope.$apply();
         });
+
+
         item.marker = marker;
+        gmap.clusterer.addMarker(marker);
+
         return marker
     };
     this.trackUser = function () {
@@ -48023,18 +46382,12 @@ function IndexController($compile, $scope, gmap, Point, Comment) {
             title: $scope.point.description,
             map: gmap,
             draggable: true,
-            icon: '/assets/drinks-1e4e8c943d17f2157cc9114b30f8d9ffd3e939c113049b2ccb824e2ef4ed85f6.png'
+            icon: asset_path('drinks.png')
         });
 
         $scope.addMarker = marker;
 
-        var content = "<div class='addBox'>" +
-            "<span class='comment_user'>Название: </span>" +
-            "<input type='text' class='comment_user' ng-model='point.name'><br>" +
-            "<span class='comment_user'>Описание: </span>" +
-            "<input type='text' class='comment_user' ng-model='point.description'><br>" +
-            "<button class='btn btn-default' ng-click='controller.addPoint()'>Сохранить</button>" +
-            "</div>";
+        var content = "<div class='addBox' ng-include='\"" + asset_path('new_point.html') + "\"'></div>";
         var infoWindow = new google.maps.InfoWindow({
             content: content
         });
@@ -48064,34 +46417,53 @@ function IndexController($compile, $scope, gmap, Point, Comment) {
     this.comment = function () {
         $scope.comment.point_id = $this.currentPoint.id;
         var comment = Comment.new($scope.comment, function (result) {
-            $this.currentPoint.comments.push(result);
+            $scope.comment.text = '';
+            $this.currentPoint.comments.unshift(result);
         });
 
     };
     this.centerForUser = function () {
         gmap.setCenter(USER_POSITION);
+        gmap.setZoom(14);
     };
-
-    var init = function () {
-
-        Point.index(function (result) {
+    this.showMarkers = function () {
+        var bounds = gmap.getBounds();
+        Point.index_optimised(bounds, function (result) {
+            gmap.clusterer.clearMarkers();
             $this.points = result;
             $this.points.forEach(function (item) {
-                buildMarker(item);
+                if (!(item.id == ($this.currentPoint ? $this.currentPoint.id : undefined)))
+                    buildMarker(item);
+                else
+                    console.log("drop");
             });
-            $this.currentPoint = $this.points[0];
-            $this.usersMarker = new google.maps.Marker({
-                position: USER_POSITION,
-                label: "Ето ты",
-                icon: {
-                    url: '/assets/Alien-23ed7e3d380b6467322c6740d54438a490e06bf541fff229f22ea9dd712e3d5e.png'
-                },
-                map: gmap
-            });
+        });
+    };
+    this.deleteComment = function (id) {
+        $http.delete('/comments/' + id);
+        $this.currentPoint.comments.forEach(function (item, index) {
+            if (item.id == id)
+                $this.currentPoint.comments.splice(index, 1);
+        });
+    };
+    this.pointRate = function (dir) {
+        Point.rate($this.currentPoint.id, dir, function (result) {
+
+        });
+    };
+    var init = function () {
+        gmap.addListener('idle', $this.showMarkers);
+
+        $this.usersMarker = new google.maps.Marker({
+            position: USER_POSITION,
+            label: "Ето ты",
+            icon: {
+                url: asset_path('Alien.png')
+            },
+            map: gmap
         });
         updateUserPosition();
         $this.centerForUser();
-        var myScroll = new IScroll('#comments_scroller');
         $this.trackUser();
     }();
 }
@@ -48101,7 +46473,7 @@ function IndexController($compile, $scope, gmap, Point, Comment) {
  */
 
 app = angular.module('alcomap', ['ngResource']);
-app.controller('IndexController', IndexController, ['$compile', '$scope', 'gmap', 'Point', 'Comment']);
+app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User']);
 app.factory('gmap', function () {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
@@ -48132,9 +46504,35 @@ app.factory('gmap', function () {
             "stylers": [{"visibility": "off"}]
         }, {"featureType": "water", "elementType": "all", "stylers": [{"color": "#46bcec"}, {"visibility": "on"}]}]
     });
+    var mc = new MarkerClusterer(map);
+    var clusterStyles = [
+        {
+            textColor: 'rgba(0, 161, 199, 0.62)',
+            url: asset_path('bottle.png'),
+            height: 32,
+            width: 32,
+            textSize: '43px'
+        },
+        {
+            textColor: 'rgba(0, 161, 199, 0.62)',
+            url: asset_path('bottle.png'),
+            height: 32,
+            width: 32,
+            textSize: '43px'
+        },
+        {
+            textColor: 'rgba(0, 161, 199, 0.62)',
+            url: asset_path('bottle.png'),
+            height: 32,
+            width: 32,
+            textSize: '43px'
+        }
+    ];
+    mc.setStyles(clusterStyles);
+    map.clusterer = mc;
     return map;
 });
-app.factory('Point', ['$resource', function ($resource) {
+app.factory('Point', ['$resource', '$http', function ($resource, $http) {
     var resource = $resource('/points/:id.:format', null, {
         'update': {
             method: 'put'
@@ -48155,6 +46553,13 @@ app.factory('Point', ['$resource', function ($resource) {
         },
         delete: function (id, accept, reject) {
             resource.delete({id: id, format: 'json'}).$promise.then(accept, reject);
+        },
+        index_optimised: function (bounds, accept, reject) {
+            $resource('/points.:format').query({bounds: bounds, format: 'json'}).$promise.then(accept, reject);
+
+        },
+        rate: function (pid, direction, accept, reject) {
+            $http.post('points/rate/' + pid, {direction: direction}).then(accept, reject);
         }
     }
 }]);
@@ -48182,6 +46587,9 @@ app.factory('Comment', ['$resource', function ($resource) {
         }
     }
 }]);
+app.factory('User', ['$resource', function ($resource) {
+    return $resource('/user').get();
+}]);
 app.run(['$http', function ($http) {
     $http.defaults.headers.common['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content');
 }]);
@@ -48197,6 +46605,8 @@ app.run(['$http', function ($http) {
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+
+
 
 
 

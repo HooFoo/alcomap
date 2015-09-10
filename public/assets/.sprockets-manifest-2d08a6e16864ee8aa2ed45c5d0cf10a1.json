@@ -112,13 +112,6 @@
       "digest": "05b145312af13a4bb23c636fe852b748d2fd8a11ecbb4b3ab79a1d32e36d574f",
       "integrity": "sha256-BbFFMSrxOkuyPGNv6FK3SNL9ihHsu0s6t5odMuNtV08="
     },
-    "application-d189b5ae16bf86c25b5ddfa4ae3885842c628fbe642ccbc626d7032fc994b725.js": {
-      "logical_path": "application.js",
-      "mtime": "2015-09-04T16:46:30+03:00",
-      "size": 1608517,
-      "digest": "d189b5ae16bf86c25b5ddfa4ae3885842c628fbe642ccbc626d7032fc994b725",
-      "integrity": "sha256-0Ym1rha/hsJbXd+krjiFhCxij75kLMvGJtcDL8mUtyU="
-    },
     "center-f2b555a668a966da5e65aed53f7eee3046c209bf7f39ffb240344a9a22157bca.png": {
       "logical_path": "center.png",
       "mtime": "2015-09-05T16:28:30+03:00",
@@ -133,26 +126,12 @@
       "digest": "053de3583ab069972e53dc312d224551c69220594d140e5ee1c7e0974761c8f6",
       "integrity": "sha256-BT3jWDqwaZcuU9wxLSJFUcaSIFlNFA5e4cfgl0dhyPY="
     },
-    "application-4aa1df446d31225a5ba557a3f99b6343888445e2ab1f3d70d66515cc3aef8237.js": {
-      "logical_path": "application.js",
-      "mtime": "2015-09-08T01:42:21+03:00",
-      "size": 1608579,
-      "digest": "4aa1df446d31225a5ba557a3f99b6343888445e2ab1f3d70d66515cc3aef8237",
-      "integrity": "sha256-SqHfRG0xIlpbpVej+ZtjQ4iEReKrHz1w1mUVzDrvgjc="
-    },
     "favicon-6e2e672896605ba210dfd26efa9a33464bdbb93bb4c4299dae548d7fb599bd44.png": {
       "logical_path": "favicon.png",
       "mtime": "2015-09-07T02:08:35+03:00",
       "size": 9598,
       "digest": "6e2e672896605ba210dfd26efa9a33464bdbb93bb4c4299dae548d7fb599bd44",
       "integrity": "sha256-bi5nKJZgW6IQ39Ju+pozRkvbuTu0xCmdrlSNf7WZvUQ="
-    },
-    "application-208cafb4e4606358c4076070b0b35bec2bd34df1705f1c0c28102c9e90cf9e6e.css": {
-      "logical_path": "application.css",
-      "mtime": "2015-09-08T00:04:58+03:00",
-      "size": 342191,
-      "digest": "208cafb4e4606358c4076070b0b35bec2bd34df1705f1c0c28102c9e90cf9e6e",
-      "integrity": "sha256-IIyvtORgY1jEB2BwsLNb7CvTTfFwXxwMKBAsnpDPnm4="
     },
     "apple-touch-icon-iphone-2db74db60ce82daafc3215328363cf50143732c396cf67d3912f17aabc456632.png": {
       "logical_path": "apple-touch-icon-iphone.png",
@@ -181,13 +160,6 @@
       "size": 8957,
       "digest": "6511d8ca8d8a0195d6b73485702a2b169a51d998d147a52d12be837471156101",
       "integrity": "sha256-ZRHYyo2KAZXWtzSFcCorFppR2ZjRR6UtEr6DdHEVYQE="
-    },
-    "application-81a0909d8d336a84709b09deddd5e058ab9a5d01dff6487eba81c555f4d3660c.css": {
-      "logical_path": "application.css",
-      "mtime": "2015-09-08T02:11:38+03:00",
-      "size": 342374,
-      "digest": "81a0909d8d336a84709b09deddd5e058ab9a5d01dff6487eba81c555f4d3660c",
-      "integrity": "sha256-gaCQnY0zaoRwmwne3dXgWKuaXQHf9kh+uoHFVfTTZgw="
     },
     "application-f15374435691d384513603b828c86e4b616e190eaaaefaba69c41ecfcd06ff9c.js": {
       "logical_path": "application.js",
@@ -230,12 +202,75 @@
       "size": 677196,
       "digest": "b97ad62d358da5e531f3016c93c8a47d26396f672eddbcb992593102ae0ff4a3",
       "integrity": "sha256-uXrWLTWNpeUx8wFsk8ikfSY5b2cu3by5klkxAq4P9KM="
+    },
+    "apple-touch-icon-iphone-a4915532289d793a94a3b8e9b5b51e3b4d185385964d5ae69487803cd4ec6732.png": {
+      "logical_path": "apple-touch-icon-iphone.png",
+      "mtime": "2015-09-09T14:09:29+03:00",
+      "size": 3570,
+      "digest": "a4915532289d793a94a3b8e9b5b51e3b4d185385964d5ae69487803cd4ec6732",
+      "integrity": "sha256-pJFVMiideTqUo7jptbUeO00YU4WWTVrmlIeAPNTsZzI="
+    },
+    "favicon-4d137ec81b983031ea86b54761bdf1c66ace9301f8eb68f6e1037931536433fb.png": {
+      "logical_path": "favicon.png",
+      "mtime": "2015-09-10T00:26:12+03:00",
+      "size": 1279,
+      "digest": "4d137ec81b983031ea86b54761bdf1c66ace9301f8eb68f6e1037931536433fb",
+      "integrity": "sha256-TRN+yBuYMDHqhrVHYb3xxmrOkwH462j24QN5MVNkM/s="
+    },
+    "touch-icon-ipad-retina-e6acf61e42545562fd16b46d0ce4667c55455d04323a6d406a8c942e18fbce30.png": {
+      "logical_path": "touch-icon-ipad-retina.png",
+      "mtime": "2015-09-09T14:10:15+03:00",
+      "size": 10591,
+      "digest": "e6acf61e42545562fd16b46d0ce4667c55455d04323a6d406a8c942e18fbce30",
+      "integrity": "sha256-5qz2HkJUVWL9FrRtDORmfFVFXQQyOm1AaoyULhj7zjA="
+    },
+    "touch-icon-ipad-27a7f5f8992b08392521c937b3742b12f87cf16e3fa83fcb40d8397591ec99c9.png": {
+      "logical_path": "touch-icon-ipad.png",
+      "mtime": "2015-09-09T14:09:55+03:00",
+      "size": 4464,
+      "digest": "27a7f5f8992b08392521c937b3742b12f87cf16e3fa83fcb40d8397591ec99c9",
+      "integrity": "sha256-J6f1+JkrCDklIck3s3QrEvh88W4/qD/LQNg5dZHsmck="
+    },
+    "touch-icon-iphone-retina-ce7e510bc12457295f26b28325601276d2178f6ad0e4d8eb6d5a12fa2c4ac9ea.png": {
+      "logical_path": "touch-icon-iphone-retina.png",
+      "mtime": "2015-09-09T14:10:39+03:00",
+      "size": 8118,
+      "digest": "ce7e510bc12457295f26b28325601276d2178f6ad0e4d8eb6d5a12fa2c4ac9ea",
+      "integrity": "sha256-zn5RC8EkVylfJrKDJWASdtIXj2rQ5NjrbVoS+ixKyeo="
+    },
+    "application-8626b6a298ef705e8198bdcf52338f1f4de43e64a82b81b28a0ec8cd7b4f947f.js": {
+      "logical_path": "application.js",
+      "mtime": "2015-09-11T01:21:17+03:00",
+      "size": 1569275,
+      "digest": "8626b6a298ef705e8198bdcf52338f1f4de43e64a82b81b28a0ec8cd7b4f947f",
+      "integrity": "sha256-hia2opjvcF6BmL3PUjOPH03kPmSoK4Gyig7IzXtPlH8="
+    },
+    "application-a14d68483e80bc1dcf9eb8642e006ad4a7c86c4715e3f4e4a49571d585ba8869.css": {
+      "logical_path": "application.css",
+      "mtime": "2015-09-11T01:12:42+03:00",
+      "size": 679068,
+      "digest": "a14d68483e80bc1dcf9eb8642e006ad4a7c86c4715e3f4e4a49571d585ba8869",
+      "integrity": "sha256-oU1oSD6AvB3PnrhkLgBq1KfIbEcV4/TkpJVx1YW6iGk="
+    },
+    "info-4b84a421331f8861ed77e43c23270097a5ddb55bf96ba0cb74d79dabfd491de5.html": {
+      "logical_path": "info.html",
+      "mtime": "2015-09-11T01:17:05+03:00",
+      "size": 715,
+      "digest": "4b84a421331f8861ed77e43c23270097a5ddb55bf96ba0cb74d79dabfd491de5",
+      "integrity": "sha256-S4SkITMfiGHtd+Q8IycAl6XdtVv5a6DLdNedq/1JHeU="
+    },
+    "new_point-bfd6bf04e818658c7c2291d233cc0f51f4ff89c238a94b672252bb65a02803a4.html": {
+      "logical_path": "new_point.html",
+      "mtime": "2015-09-11T01:18:49+03:00",
+      "size": 339,
+      "digest": "bfd6bf04e818658c7c2291d233cc0f51f4ff89c238a94b672252bb65a02803a4",
+      "integrity": "sha256-v9a/BOgYZYx8IpHSM8wPUfT/icI4qUtnIlK7ZaAoA6Q="
     }
   },
   "assets": {
     "bottle.png": "bottle-3c5f9a060846cc46bf30ecad99a07cc1a18859e7c7991b088012a30260b00f98.png",
-    "application.js": "application-04ce2fbae73e18a05d418f23c81525471b115d9358da8b6db3b38e26922c537c.js",
-    "application.css": "application-b97ad62d358da5e531f3016c93c8a47d26396f672eddbcb992593102ae0ff4a3.css",
+    "application.js": "application-8626b6a298ef705e8198bdcf52338f1f4de43e64a82b81b28a0ec8cd7b4f947f.js",
+    "application.css": "application-a14d68483e80bc1dcf9eb8642e006ad4a7c86c4715e3f4e4a49571d585ba8869.css",
     "bootstrap/glyphicons-halflings-regular.eot": "bootstrap/glyphicons-halflings-regular-13634da87d9e23f8c3ed9108ce1724d183a39ad072e73e1b3d8cbf646d2d0407.eot",
     "bootstrap/glyphicons-halflings-regular.svg": "bootstrap/glyphicons-halflings-regular-42f60659d265c1a3c30f9fa42abcbb56bd4a53af4d83d316d6dd7a36903c43e5.svg",
     "bootstrap/glyphicons-halflings-regular.ttf": "bootstrap/glyphicons-halflings-regular-e395044093757d82afcb138957d06a1ea9361bdcf0b442d06a18a8051af57456.ttf",
@@ -252,12 +287,14 @@
     "loader.gif": "loader-05b145312af13a4bb23c636fe852b748d2fd8a11ecbb4b3ab79a1d32e36d574f.gif",
     "center.png": "center-f2b555a668a966da5e65aed53f7eee3046c209bf7f39ffb240344a9a22157bca.png",
     "new.png": "new-053de3583ab069972e53dc312d224551c69220594d140e5ee1c7e0974761c8f6.png",
-    "favicon.png": "favicon-6e2e672896605ba210dfd26efa9a33464bdbb93bb4c4299dae548d7fb599bd44.png",
-    "apple-touch-icon-iphone.png": "apple-touch-icon-iphone-2db74db60ce82daafc3215328363cf50143732c396cf67d3912f17aabc456632.png",
-    "touch-icon-ipad-retina.png": "touch-icon-ipad-retina-3907c8b210a7af08e0aad3d4c06063c20f6d6b78e07590b66122c4a75971bf38.png",
-    "touch-icon-ipad.png": "touch-icon-ipad-30187e51c81edcd7d9e57e37d2d7c62881ae775116ad2083cf2bc27eae157c8b.png",
-    "touch-icon-iphone-retina.png": "touch-icon-iphone-retina-6511d8ca8d8a0195d6b73485702a2b169a51d998d147a52d12be837471156101.png",
+    "favicon.png": "favicon-4d137ec81b983031ea86b54761bdf1c66ace9301f8eb68f6e1037931536433fb.png",
+    "apple-touch-icon-iphone.png": "apple-touch-icon-iphone-a4915532289d793a94a3b8e9b5b51e3b4d185385964d5ae69487803cd4ec6732.png",
+    "touch-icon-ipad-retina.png": "touch-icon-ipad-retina-e6acf61e42545562fd16b46d0ce4667c55455d04323a6d406a8c942e18fbce30.png",
+    "touch-icon-ipad.png": "touch-icon-ipad-27a7f5f8992b08392521c937b3742b12f87cf16e3fa83fcb40d8397591ec99c9.png",
+    "touch-icon-iphone-retina.png": "touch-icon-iphone-retina-ce7e510bc12457295f26b28325601276d2178f6ad0e4d8eb6d5a12fa2c4ac9ea.png",
     "bg.mp4": "bg-da56e5227859c1f402a739ccbe5b61169eac78b9592e4dcbae5fb40e4d2c5a4d.mp4",
-    "bg.webm": "bg-a8a2677b21aa7759bba3e1d56cf6fcff13534147fb00b629d9e7186149b69b70.webm"
+    "bg.webm": "bg-a8a2677b21aa7759bba3e1d56cf6fcff13534147fb00b629d9e7186149b69b70.webm",
+    "info.html": "info-4b84a421331f8861ed77e43c23270097a5ddb55bf96ba0cb74d79dabfd491de5.html",
+    "new_point.html": "new_point-bfd6bf04e818658c7c2291d233cc0f51f4ff89c238a94b672252bb65a02803a4.html"
   }
 }
