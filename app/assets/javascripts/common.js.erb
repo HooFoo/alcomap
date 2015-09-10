@@ -11,7 +11,7 @@ function asset_path(name) {
         'info.html': '<%= asset_path "info.html" %>',
         'new_point.html': '<%= asset_path "new_point.html" %>'
     };
-    return assets[name];
+    return assets[name]||'none';
 }
 var USER_POSITION = {lng: 59.996651699999994, lat: 30.1950724}
 function updateUserPosition() {
