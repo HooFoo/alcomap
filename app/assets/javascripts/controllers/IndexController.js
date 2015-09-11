@@ -147,7 +147,8 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
     };
     this.pointRate = function (dir) {
         Point.rate($this.currentPoint.id, dir, function (result) {
-
+            if(result.rating)
+                $this.currentPoint.rating = result.rating;
         });
     };
     var init = function () {

@@ -166,14 +166,15 @@ textarea#name {
 .half_btn {
   display: block;
   text-align: center;
-  animation-name: blinking;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
+  //animation-name: blinking;
+  //animation-duration: 2s;
+  //animation-iteration-count: infinite;
   z-index: 3;
   left: 50%;
   margin-left: -60px;
   width: auto !important;
-
+  background-color: #FBFBFB;
+  border-radius: 4px;
 }
 
 a:hover {
@@ -183,11 +184,19 @@ a:hover {
 .half_btn_up {
   transform: translate(0px, -30px);
   -webkit-transform: translate(0px, -30px);
+  padding-bottom: 10px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+  border-right: 1px solid;
 }
 
 .half_btn_dn {
   -webkit-transform: translate(-34px, 23px);
   transform: translate(-34px, 23px);
+  border-bottom: 1px solid;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  padding-top: 8px;
 }
 
 @media (min-width: 992px) {
@@ -257,8 +266,8 @@ div.dropdown.ib {
   bottom: 0;
   width: 100%;
   text-align: right;
-  transform: translateY(29%);
-  -webkit-transform: translateY(29%);
+  transform: translateY(10%);
+  -webkit-transform: translateY(10%);
   border-top: 1px solid #CECECE;
   padding-bottom: 1px;
 }
@@ -266,7 +275,8 @@ div.dropdown.ib {
 .rating_box {
   display: inline-block;
 }
-.rating_box a{
+
+.rating_box a {
   font-size: 18px;
 }
 
@@ -277,14 +287,25 @@ div.dropdown.ib {
 .minus {
   margin-left: 5px
 }
-.added
-{
+
+.added {
   display: inline-block;
   left: 0;
   position: absolute;
   bottom: 6px;
 }
-#info
-{
+
+#info {
   min-width: 200px;
+  animation: info;
+  animation-duration: 0.5s;
+}
+
+@keyframes info {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

@@ -119,6 +119,9 @@ app.factory('Comment', ['$resource', function ($resource) {
 app.factory('User', ['$resource', function ($resource) {
     return $resource('/user').get();
 }]);
+//app.config(['$locationProvider',function($locationProvider){
+//    $locationProvider.html5Mode(true);
+//}]);
 app.run(['$http', function ($http) {
     $http.defaults.headers.common['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content');
 }]);
