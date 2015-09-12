@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :chat_messages, defaults: {format: :json}
   devise_for :users, controllers: {registrations: 'users/registrations',
                                    invitations: 'users/invitations'},
              path_names: {sign_up: ''}
