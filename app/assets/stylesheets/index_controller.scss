@@ -380,6 +380,7 @@ div.dropdown.ib {
   }
   100% {
     height: 50vh;
+    display: block;
   }
 }
 
@@ -406,6 +407,7 @@ div.dropdown.ib {
   -webkit-animation-timing-function: cubic-bezier;
   -webkit-animation-fill-mode: forwards;
   -webkit-animation-direction: reverse;
+  display: none;
 }
 .overflow_hidden
 {

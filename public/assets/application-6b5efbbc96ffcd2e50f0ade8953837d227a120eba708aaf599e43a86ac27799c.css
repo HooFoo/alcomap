@@ -440,9 +440,10 @@ div.dropdown.ib {
   }
   100% {
     height: 50vh;
+    display: block;
   }
 }
-/* line 386, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 387, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .deployed {
   animation: roll_down;
   animation-duration: 0.7s;
@@ -454,7 +455,7 @@ div.dropdown.ib {
   -webkit-animation-fill-mode: forwards;
 }
 
-/* line 397, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 398, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .undeployed {
   animation: roll_down;
   animation-duration: 0.7s;
@@ -466,9 +467,10 @@ div.dropdown.ib {
   -webkit-animation-timing-function: cubic-bezier;
   -webkit-animation-fill-mode: forwards;
   -webkit-animation-direction: reverse;
+  display: none;
 }
 
-/* line 410, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 412, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .overflow_hidden {
   overflow: hidden;
   width: 100%;
