@@ -45569,8 +45569,9 @@ function asset_path(name) {
         'Alien.png': '/assets/Alien-23ed7e3d380b6467322c6740d54438a490e06bf541fff229f22ea9dd712e3d5e.png',
         'drinks.png': '/assets/drinks-1e4e8c943d17f2157cc9114b30f8d9ffd3e939c113049b2ccb824e2ef4ed85f6.png',
         'new.png': '/assets/new-053de3583ab069972e53dc312d224551c69220594d140e5ee1c7e0974761c8f6.png',
-        'info.html': '/assets/info-4b84a421331f8861ed77e43c23270097a5ddb55bf96ba0cb74d79dabfd491de5.html',
-        'new_point.html': '/assets/new_point-bfd6bf04e818658c7c2291d233cc0f51f4ff89c238a94b672252bb65a02803a4.html'
+        'info.html': '/assets/info-5d5063d1537e7ecb3220b842c7c5f87c009ecbf8e26c150982598061d9e0f2a1.html',
+        'new_point.html': '/assets/new_point-bfd6bf04e818658c7c2291d233cc0f51f4ff89c238a94b672252bb65a02803a4.html',
+        'send_message.png': '/assets/send_message-58fa0559f449b875d8e86490c748c2ce91c550b55ed3873ac7c5d4b6a67b1382.png'
     };
     return assets[name]||'none';
 }
@@ -45586,16 +45587,76 @@ updateUserPosition();
 setTimeout(function () {
     $('p.alert').hide();
 }, 5800);
+function ChatController($scope, ChatMessage, User) {
+    var $this = this;
+    var scrollable = document.getElementById('messages');
+
+    this.messages = undefined;
+    this.lastUpdate = 0;
+    this.enabled = false;
+    this.user = User;
+
+    this.sendMessage = function () {
+        if ($this.chatMessage != '')
+            ChatMessage.new({message: $this.chatMessage}, function (result) {
+                $this.messages.push(result);
+                $this.chatMessage = '';
+                delayedScroll();
+            });
+    };
+    this.update = function () {
+        var id = $this.messages?$this.messages[$this.messages.length - 1].id:0;
+        ChatMessage.latest( id, function (result) {
+            if (result.data.length > 0) {
+                result.data.forEach(function (msg) {
+                    $this.messages.push(msg);
+                });
+                delayedScroll();
+            }
+        });
+
+        if ($this.messages)
+            $this.lastUpdate = $this.messages[$this.messages.length - 1].id;
+        setTimeout(function () {
+            $this.update();
+        }, 2500);
+    };
+    this.enable = function () {
+
+        // -> triggering reflow /* The actual magic */
+        // without this it wouldn't work. Try uncommenting the line and the transition won't be retriggered.
+        element = document.getElementById("chat_area");
+        element.offsetWidth = element.offsetWidth;
+        $this.enabled = !$this.enabled;
+    };
+    var init = function () {
+        ChatMessage.index(function (result) {
+            $this.messages = result;
+
+            delayedScroll();
+        });
+        setTimeout($this.update,2500);
+    };
+    var delayedScroll = function () {
+        setTimeout(function () {
+            scrollable.scrollTop = scrollable.scrollHeight;
+        }, 500);
+    }
+    init();
+}
+;
 /**
  * Created by Геннадий on 28.08.2015.
  */
 
 function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
     var $this = this;
+
     this.heading = 'Алкомап (альфа)';
     this.currentPoint = undefined;
     this.openedInfos = undefined;
     this.user = User;
+
     var findPointInList = function (point) {
         var result = point;
         $this.points.forEach(function (item) {
@@ -45609,7 +45670,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         if ($this.openedInfos)
             $this.openedInfos.close();
         $this.openedInfos = window;
-        if(window)
+        if (window)
             window.open(gmap, marker);
     }
 
@@ -45623,7 +45684,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         });
 
         //TODO: ужас
-        var content = '<div id="info" ng-include src="\'' + asset_path("info.html")+'\'" ng-show="controller.currentPoint"></div>';
+        var content = '<div id="info" ng-include src="\'' + asset_path("info.html") + '\'" ng-show="controller.currentPoint"></div>';
         var infoWindow = new google.maps.InfoWindow({
             content: content
         });
@@ -45633,6 +45694,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
                 $compile(document.getElementById('info'))($scope);
             });
         });
+
         infoWindow.addListener('closeclick', function () {
             $this.points.push(item);
             marker.setMap(null);
@@ -45661,6 +45723,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         if ($this.usersMarker) $this.usersMarker.setPosition(USER_POSITION);
         setTimeout($this.trackUser, 1000);
     };
+
     this.addPointDraggable = function () {
         $scope.point = {lat: gmap.getCenter().lat(), lng: gmap.getCenter().lng()};
 
@@ -45675,7 +45738,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
 
         $scope.addMarker = marker;
 
-        var content = "<div class='addBox' ng-include='\""+asset_path('new_point.html')+"\"'></div>";
+        var content = "<div class='addBox' ng-include='\"" + asset_path('new_point.html') + "\"'></div>";
         var infoWindow = new google.maps.InfoWindow({
             content: content
         });
@@ -45695,6 +45758,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
             $scope.$apply();
         })
     };
+
     this.addPoint = function () {
         var point = Point.new($scope.point, function (result) {
             var marker = buildMarker(result);
@@ -45702,6 +45766,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         $scope.addMarker.setMap(null);
         closeOther(undefined, undefined);
     };
+
     this.comment = function () {
         $scope.comment.point_id = $this.currentPoint.id;
         var comment = Comment.new($scope.comment, function (result) {
@@ -45710,10 +45775,12 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         });
 
     };
+
     this.centerForUser = function () {
         gmap.setCenter(USER_POSITION);
         gmap.setZoom(14);
     };
+
     this.showMarkers = function () {
         var bounds = gmap.getBounds();
         Point.index_optimised(bounds, function (result) {
@@ -45727,6 +45794,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
             });
         });
     };
+
     this.deleteComment = function (id) {
         $http.delete('/comments/' + id);
         $this.currentPoint.comments.forEach(function (item, index) {
@@ -45734,11 +45802,14 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
                 $this.currentPoint.comments.splice(index, 1);
         });
     };
+
     this.pointRate = function (dir) {
         Point.rate($this.currentPoint.id, dir, function (result) {
-
+            if (result.rating)
+                $this.currentPoint.rating = result.rating;
         });
     };
+
     var init = function () {
         gmap.addListener('idle', $this.showMarkers);
 
@@ -45762,6 +45833,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
 
 app = angular.module('alcomap', ['ngResource']);
 app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User']);
+app.controller('ChatController', ChatController, ['$scope',  'ChatMessage', 'User']);
 app.factory('gmap', function () {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
@@ -45770,27 +45842,42 @@ app.factory('gmap', function () {
             "featureType": "administrative",
             "elementType": "labels.text.fill",
             "stylers": [{"color": "#444444"}]
-        }, {"featureType": "landscape", "elementType": "all", "stylers": [{"color": "#f2f2f2"}]}, {
+        },
+            {
             "featureType": "poi",
-            "elementType": "all",
-            "stylers": [{"visibility": "off"}]
-        }, {
-            "featureType": "road",
-            "elementType": "all",
-            "stylers": [{"saturation": -100}, {"lightness": 45}]
-        }, {
-            "featureType": "road.highway",
-            "elementType": "all",
-            "stylers": [{"visibility": "simplified"}]
-        }, {
-            "featureType": "road.arterial",
-            "elementType": "labels.icon",
-            "stylers": [{"visibility": "off"}]
-        }, {
-            "featureType": "transit",
-            "elementType": "all",
-            "stylers": [{"visibility": "off"}]
-        }, {"featureType": "water", "elementType": "all", "stylers": [{"color": "#46bcec"}, {"visibility": "on"}]}]
+            "elementType": "geometry.fill",
+            "stylers": [{"color": "#999999"}]
+        },
+            {
+                "featureType": "landscape",
+                "elementType": "all",
+                "stylers": [{"color": "#f2f2f2"}]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "all",
+                "stylers": [{"visibility": "off"}]
+            }, {
+                "featureType": "road",
+                "elementType": "all",
+                "stylers": [{"saturation": -100}, {"lightness": 45}]
+            }, {
+                "featureType": "road.highway",
+                "elementType": "all",
+                "stylers": [{"visibility": "simplified"}]
+            }, {
+                "featureType": "road.arterial",
+                "elementType": "labels.icon",
+                "stylers": [{"visibility": "off"}]
+            }, {
+                "featureType": "transit",
+                "elementType": "all",
+                "stylers": [{"visibility": "off"}]
+            }, {
+                "featureType": "water",
+                "elementType": "all",
+                "stylers": [{"color": "#46bcec"}, {"visibility": "on"}]
+            }]
     });
     var mc = new MarkerClusterer(map);
     var clusterStyles = [
@@ -45820,64 +45907,76 @@ app.factory('gmap', function () {
     map.clusterer = mc;
     return map;
 });
-app.factory('Point', ['$resource', '$http', function ($resource, $http) {
-    var resource = $resource('/points/:id.:format', null, {
+app.factory('BackendResourse', ['$resource', '$http', function ($resource, $http, name) {
+    var resource = $resource('/' + name + '/:id.:format', null, {
         'update': {
             method: 'put'
         }
     });
-    return {
-        index: function (accept, reject) {
-            $resource('/points.:format').query({id: null, format: 'json'}).$promise.then(accept, reject);
-        },
-        show: function (id, accept, reject) {
-            resource.get({id: id, format: 'json'}).$promise.then(accept, reject);
-        },
-        edit: function (id, data, accept, reject) {
-            resource.update({id: id, format: 'json'}, data).$promise.then(accept, reject);
-        },
-        new: function (data, accept, reject) {
-            $resource('/points.:format').save({format: 'json'}, data).$promise.then(accept, reject);
-        },
-        delete: function (id, accept, reject) {
-            resource.delete({id: id, format: 'json'}).$promise.then(accept, reject);
-        },
-        index_optimised: function (bounds, accept, reject) {
-            $resource('/points.:format').query({bounds: bounds, format: 'json'}).$promise.then(accept, reject);
+    return function (name) {
+        return {
+            index: function (accept, reject) {
+                $resource('/' + name + '.:format').query({id: null, format: 'json'}).$promise.then(accept, reject);
+            },
+            show: function (id, accept, reject) {
+                resource.get({id: id, format: 'json'}).$promise.then(accept, reject);
+            },
+            edit: function (id, data, accept, reject) {
+                resource.update({id: id, format: 'json'}, data).$promise.then(accept, reject);
+            },
+            new: function (data, accept, reject) {
+                $resource('/' + name + '.:format').save({format: 'json'}, data).$promise.then(accept, reject);
+            },
+            delete: function (id, accept, reject) {
+                resource.delete({id: id, format: 'json'}).$promise.then(accept, reject);
+            }
+        }
+    }
+}]);
+app.factory('Point', ['$resource', 'BackendResourse', '$http', function ($resource, BackendResourse, $http) {
+    var obj = BackendResourse('points');
+    obj.index_optimised = function (bounds, accept, reject) {
+        $resource('/points.:format').query({bounds: bounds, format: 'json'}).$promise.then(accept, reject);
+    };
 
-        },
-        rate: function (pid, direction, accept, reject) {
-            $http.post('points/rate/' + pid, {direction: direction}).then(accept, reject);
-        }
-    }
+    obj.rate = function (pid, direction, accept, reject) {
+        $http.post('points/rate/' + pid, {direction: direction}).then(accept, reject);
+    };
+
+    return obj;
 }]);
-app.factory('Comment', ['$resource', function ($resource) {
-    var resource = $resource('/comments/:id.:format', null, {
-        'update': {
-            method: 'put'
-        }
-    });
-    return {
-        index: function (accept, reject) {
-            $resource('/comments.:format').query({id: null, format: 'json'}).$promise.then(accept, reject);
-        },
-        show: function (id, accept, reject) {
-            resource.get({id: id, format: 'json'}).$promise.then(accept, reject);
-        },
-        edit: function (id, data, accept, reject) {
-            resource.update({id: id, format: 'json'}, data).$promise.then(accept, reject);
-        },
-        new: function (data, accept, reject) {
-            $resource('/comments.:format').save({format: 'json'}, data).$promise.then(accept, reject);
-        },
-        delete: function (id, accept, reject) {
-            resource.delete({id: id, format: 'json'}).$promise.then(accept, reject);
-        }
-    }
+app.factory('Comment', ['$resource', 'BackendResourse', function ($resource, BackendResourse) {
+    var obj = BackendResourse('comments');
+    return obj;
+
 }]);
-app.factory('User', ['$resource', function ($resource) {
-    return $resource('/user').get();
+app.factory('ChatMessage', ['$resource','$http', 'BackendResourse', function ($resource, $http, BackendResourse) {
+    var obj = BackendResourse('chat_messages');
+    obj.latest = function (id, accept, reject) {
+        $http.post('chat_messages/latest/', {last_message_id: id}).then(accept, reject);
+    };
+    return obj;
+
 }]);
+app.service('User', ['$resource', function ($resource) {
+    var usr;
+    if(!usr)
+        usr = $resource('/user').get();
+    return usr;
+}]);
+app.directive('myEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 13) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.myEnter);
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
+});
 app.run(['$http', function ($http) {
     $http.defaults.headers.common['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content');
 }]);
