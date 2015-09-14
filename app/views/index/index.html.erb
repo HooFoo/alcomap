@@ -1,3 +1,22 @@
+<div class="wrapper" ng-class="controller.enabled?'deployed':'undeployed'" id="chat_area" ng-view ng-controller="ChatController as controller">
+  <div class="overflow_hidden">
+    <div id="messages" class="messages">
+      <div class="msg" ng-repeat="message in controller.messages track by $index">
+        <span class="msg_user" ng-class="message.username==controller.user.name?'msg_self':''">{{message.username}}:</span>
+        <span class="msg_text">{{message.message}}</span>
+      </div>
+    </div>
+    <div class="send_message row">
+      <input type="text" class="col-xs-11 col-sm-11 col-md-11 col-lg-11 chat_msg_box" ng-model="controller.chatMessage" my-enter="controller.sendMessage()"/>
+      <button class="col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-default snd_msg_btn" ng-click="controller.sendMessage()">
+        <img class="snd_msg_icon" src="<%= asset_path 'send_message.png' %>">
+      </button>
+    </div>
+  </div>
+    <div class="half_btn screen_label" ng-click="controller.enable()">
+      Алкочат!
+    </div>
+</div>
 <div class="wrapper" ng-view ng-controller="IndexController as controller">
   <div class="map_container">
     <div id="map_area" class="col-xs-12 col-sm-12 col-md-8 col-lg-8 nopadding">

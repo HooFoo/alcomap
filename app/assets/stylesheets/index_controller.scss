@@ -166,9 +166,7 @@ textarea#name {
 .half_btn {
   display: block;
   text-align: center;
-  //animation-name: blinking;
-  //animation-duration: 2s;
-  //animation-iteration-count: infinite;
+  cursor: pointer;
   z-index: 3;
   left: 50%;
   margin-left: -60px;
@@ -308,4 +306,110 @@ div.dropdown.ib {
   100% {
     opacity: 1;
   }
+}
+
+.snd_msg_icon {
+  width: 20px;
+  height: 20px;
+}
+
+.snd_msg_btn {
+  padding: 2px !important;
+  transform: translateY(-1px);
+  -webkit-transform: translateY(-1px);
+  height: 98%;
+}
+
+.screen_label {
+  position: absolute;
+  z-index: 4;
+  transform: translate(-50%, 0px);
+  -webkit-transform: translate(-50%, 0px);
+  border-bottom: 1px solid;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  padding-top: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 0;
+  display: block !important;
+}
+
+.chat_msg_box {
+  height: 98%;
+
+}
+
+.send_message {
+  padding-left: 16px;
+  padding-right: 16px;
+  height: 5vh;
+}
+
+#chat_area {
+  background-color: rgba(0, 0, 0, 0.55);
+  position: absolute;
+  z-index: 4;
+  left: 0px;
+  right: 0px;
+}
+
+.messages {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  height: 45vh;
+}
+
+.msg_text {
+  color: rgb(59, 255, 248);
+}
+
+.msg_user {
+  color: #f2f2f2;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.msg_self {
+  color: #DD91FB !important;
+}
+
+@keyframes roll_down {
+  0% {
+    height: 0vh;
+  }
+  100% {
+    height: 50vh;
+  }
+}
+
+.deployed
+{
+  animation: roll_down;
+  animation-duration: 0.7s;
+  animation-timing-function: cubic-bezier;
+  animation-fill-mode: forwards;
+  -webkit-animation: roll_down;
+  -webkit-animation-duration: 0.7s;
+  -webkit-animation-timing-function: cubic-bezier;
+  -webkit-animation-fill-mode: forwards;
+}
+.undeployed
+{
+  animation: roll_down;
+  animation-duration: 0.7s;
+  animation-timing-function: cubic-bezier;
+  animation-fill-mode: forwards;
+  animation-direction: reverse;
+  -webkit-animation: roll_down;
+  -webkit-animation-duration: 0.7s;
+  -webkit-animation-timing-function: cubic-bezier;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-direction: reverse;
+}
+.overflow_hidden
+{
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
 }

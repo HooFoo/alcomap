@@ -1,27 +1,45 @@
-<h2>И последнее:</h2>
-<div>
-  <h2>Прочти наши правила</h2>
-  Нужно написать о том, что это не совсем честно<br>
-  Что мы всех предупредили<br>
-  А еще про то, чтобы добавили на экран ярлык<br>
-  И я хотел еще какой-то один пункт
-
-</div>
 <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :put} do |f| %>
-    <%= devise_error_messages! %>
-    <%= f.hidden_field :invitation_token, class: 'form-control' %>
+    <div class="disclaimer">
+      <h2>И последнее:</h2>
 
-    <p><%= f.label :name %><br/>
-      <%= f.text_field :name, :required => true, class: 'form-control' %></p>
+      <div>
+        <h2>Прочитай это пожалуйста</h2>
+        Привет, это алкомап.<br>
+        Сейчас он довольно пустой и в нем почти нет ничего интересного.<br>
+        Самое интересное тут то, что ты можешь найти магазины, где продают алкоголь после 22:00.<br>
+        Но мне нравится его улучшать, так что просто заходи сюда, когда ты будешь под мухой, возможно тут появится
+        что-то очень интересное.<br>
+        А может быть ты даже найдешь друзей.<br>
+        И еще: сам понимаешь, это помогает обходить закон.<br>
+        Поэтому мы хотим чтобы тут не было левых людей.<br>
+        <span style="font-size: 2em; font-family: bold;"> Каждый может позвать троих друзей, обязательно их позови. Больше людей, больше точек, больше фана!</span>
+        <br>
+        А еще установи нас как приложение на телефон:<br>
 
-    <p><%= f.label :password %><br/>
-      <%= f.password_field :password, class: 'form-control' %></p>
+        <div class='centered'><%= image_tag 'ios_add.png', class: 'ios_add' %></div>
+        <br>
+        Никогда не знаешь когда тебе это пригодится.<br>
 
-    <p><%= f.label :password_confirmation %><br/>
-      <%= f.password_field :password_confirmation, class: 'form-control' %></p>
+        <h2><span style="color:red">И самое важное: </span>нашел магазин - добавь его на карту!</h2>
+        Это все, мы тебя предупреждали!
+      </div>
+    </div>
+    <div class="form_wrapper">
+      <%= devise_error_messages! %>
+      <%= f.hidden_field :invitation_token, class: 'form-control' %>
 
-    <p><%= f.label 'Я все понял' %><br/>
-      <%= f.check_box :nil?, :required => true, %></p>
+      <p><%= f.label :name %><br/>
+        <%= f.text_field :name, :required => true, class: 'form-control' %></p>
 
-    <p><%= f.submit 'Я готов', class: 'form-control' %></p>
+      <p><%= f.label :password %><br/>
+        <%= f.password_field :password, class: 'form-control' %></p>
+
+      <p><%= f.label :password_confirmation %><br/>
+        <%= f.password_field :password_confirmation, class: 'form-control' %></p>
+
+      <p><%= f.label 'Я все понял' %>
+        <%= f.check_box :nil?, :required => true %></p>
+
+      <p><%= f.submit 'Я готов', class: 'form-control' %></p>
+    </div>
 <% end %>

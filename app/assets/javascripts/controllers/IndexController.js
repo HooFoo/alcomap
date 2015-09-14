@@ -3,10 +3,12 @@
  */
 function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
     var $this = this;
+
     this.heading = 'Алкомап (альфа)';
     this.currentPoint = undefined;
     this.openedInfos = undefined;
     this.user = User;
+
     var findPointInList = function (point) {
         var result = point;
         $this.points.forEach(function (item) {
@@ -20,7 +22,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         if ($this.openedInfos)
             $this.openedInfos.close();
         $this.openedInfos = window;
-        if(window)
+        if (window)
             window.open(gmap, marker);
     }
 
@@ -34,7 +36,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         });
 
         //TODO: ужас
-        var content = '<div id="info" ng-include src="\'' + asset_path("info.html")+'\'" ng-show="controller.currentPoint"></div>';
+        var content = '<div id="info" ng-include src="\'' + asset_path("info.html") + '\'" ng-show="controller.currentPoint"></div>';
         var infoWindow = new google.maps.InfoWindow({
             content: content
         });
@@ -44,6 +46,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
                 $compile(document.getElementById('info'))($scope);
             });
         });
+
         infoWindow.addListener('closeclick', function () {
             $this.points.push(item);
             marker.setMap(null);
@@ -72,6 +75,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         if ($this.usersMarker) $this.usersMarker.setPosition(USER_POSITION);
         setTimeout($this.trackUser, 1000);
     };
+
     this.addPointDraggable = function () {
         $scope.point = {lat: gmap.getCenter().lat(), lng: gmap.getCenter().lng()};
 
@@ -86,7 +90,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
 
         $scope.addMarker = marker;
 
-        var content = "<div class='addBox' ng-include='\""+asset_path('new_point.html')+"\"'></div>";
+        var content = "<div class='addBox' ng-include='\"" + asset_path('new_point.html') + "\"'></div>";
         var infoWindow = new google.maps.InfoWindow({
             content: content
         });
@@ -106,6 +110,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
             $scope.$apply();
         })
     };
+
     this.addPoint = function () {
         var point = Point.new($scope.point, function (result) {
             var marker = buildMarker(result);
@@ -113,6 +118,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         $scope.addMarker.setMap(null);
         closeOther(undefined, undefined);
     };
+
     this.comment = function () {
         $scope.comment.point_id = $this.currentPoint.id;
         var comment = Comment.new($scope.comment, function (result) {
@@ -121,10 +127,12 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         });
 
     };
+
     this.centerForUser = function () {
         gmap.setCenter(USER_POSITION);
         gmap.setZoom(14);
     };
+
     this.showMarkers = function () {
         var bounds = gmap.getBounds();
         Point.index_optimised(bounds, function (result) {
@@ -138,6 +146,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
             });
         });
     };
+
     this.deleteComment = function (id) {
         $http.delete('/comments/' + id);
         $this.currentPoint.comments.forEach(function (item, index) {
@@ -145,12 +154,14 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
                 $this.currentPoint.comments.splice(index, 1);
         });
     };
+
     this.pointRate = function (dir) {
         Point.rate($this.currentPoint.id, dir, function (result) {
-            if(result.rating)
+            if (result.rating)
                 $this.currentPoint.rating = result.rating;
         });
     };
+
     var init = function () {
         gmap.addListener('idle', $this.showMarkers);
 

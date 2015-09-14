@@ -3,12 +3,26 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "bootstrap";
 
-#new_user {
+#new_user, #edit_user {
   position: absolute;
   left: 50%;
   transform: translate(-50%, 30vh);
+  -webkit-transform: translate(-50%, 30vh);
+  background: rgba(255, 255, 255, 0.81);
+  padding-left: 17px;
+  padding-right: 17px;
+  border-radius: 15px;
 }
-
+#edit_user
+{
+  transform: translate(-50%, 0) !important;
+  -webkit-transform: translate(-50%, 0) !important;
+}
+.ios_add
+{
+  max-width: 270px;
+  border-radius: 10px;
+}
 .is_overlay {
   display: block;
   width: 100%;
@@ -57,4 +71,21 @@
     height: 100%;
     object-fit: cover;
   }
+}
+.disclaimer
+{
+  text-align: justify;
+}
+.centered
+{
+  width: 100%;
+  text-align: center;
+}
+.form_wrapper
+{
+  border: 1px solid #B3B3B3;
+  border-radius: 4px;
+  padding: 5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }

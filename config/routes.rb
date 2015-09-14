@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   post 'users/invitation', to: 'users/invitations#update'
   post 'points/rate/:id', to: 'points#rate'
   get '/user', to: 'user#index', defaults: {format: :json}
+  post '/chat_messages/latest', to: 'chat_messages#latest', defaults: {format: :json}
   resources :comments, defaults: {format: :json}
   resources :points, defaults: {format: :json}
 
