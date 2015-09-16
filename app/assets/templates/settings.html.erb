@@ -1,0 +1,10 @@
+<div class='settings'>
+  <form class="form">
+    точки:
+    <div class="point_type" ng-repeat="(key,value) in controller.user.settings.points">
+      <span class="type_name">{{key}}</span><input type="checkbox" ng-model="controller.user.settings.points[key]">
+    </div>
+    <br>
+    <span>Показать меня: </span><input type="checkbox" ng-model="controller.user.settings.privacy.show_me">
+  </form>
+</div>

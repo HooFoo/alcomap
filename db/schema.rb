@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160828204417) do
+ActiveRecord::Schema.define(version: 20160828204418) do
 
   create_table "chat_messages", force: :cascade do |t|
     t.string   "message"
@@ -54,6 +54,15 @@ ActiveRecord::Schema.define(version: 20160828204417) do
 
   add_index "rated_points", ["point_id"], name: "index_rated_points_on_point_id"
   add_index "rated_points", ["user_id"], name: "index_rated_points_on_user_id"
+
+  create_table "settings", force: :cascade do |t|
+    t.string "json"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "settings", ["user_id"], name: "index_settings_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
