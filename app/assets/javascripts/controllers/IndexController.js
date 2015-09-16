@@ -4,7 +4,7 @@
 function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
     var $this = this;
 
-    this.heading = 'Алкомап (альфа)';
+    this.heading = 'Алкомап β';
     this.currentPoint = undefined;
     this.openedInfos = undefined;
     this.user = User;
@@ -157,6 +157,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
 
     this.pointRate = function (dir) {
         Point.rate($this.currentPoint.id, dir, function (result) {
+            console.log(result);
             if (result.rating)
                 $this.currentPoint.rating = result.rating;
         });

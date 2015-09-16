@@ -1,7 +1,11 @@
 <div class='info'>
-  <span class='comment_user'>Название: {{controller.currentPoint.name}}</span><br>
-  <span class='comment_user' ng-show="controller.currentPoint.description">Описание: {{controller.currentPoint.description}}</span><br ng-show="controller.currentPoint.description">
-  <span class='comment_user'>Добавил: {{controller.currentPoint.user.name}}</span>
+  <span class='comment_user'>{{controller.currentPoint.name}}</span><br>
+
+  <div ng-show="controller.currentPoint.description">
+    <span class="point_description_heading">Описание:</span>
+    <span class='point_description'>{{controller.currentPoint.description}}</span><br>
+  </div>
+  <span class='user_add'>Добавил: {{controller.currentPoint.user.name}}</span>
 </div>
 <div class='infobox_down'>
   <span class='added'>Добавлено: {{controller.currentPoint.created_at}}</span>

@@ -1,0 +1,26 @@
+#пусть будет
+
+ru:
+  devise:
+    failure:
+      invited: "Вы получили приглашение, примите его и закончите регистрацию."
+    invitations:
+      send_instructions: "Письмо с приглашением было отправлкно на: %{email}"
+      invitation_token_invalid: "Предотавленый токен приглашения не действителен!"
+      updated: "Пароль принят. Входим..."
+      updated_not_active: "Пароль успешно установлен."
+      no_invitations_remaining: "У вас закончились приглашения :("
+      invitation_removed: "Извините, но вы отписаны :("
+      new:
+        header: "Выслать приглашение"
+        submit_button: "Отправить"
+      edit:
+        header: "Завершите регистрацию"
+        submit_button: "Поехали!"
+    mailer:
+      invitation_instructions:
+        subject: "Кто-то позвал вас на Alkomap"
+        hello: "Привет %{email}"
+        someone_invited_you: "Кто-то позвал тебя сюда %{url}, ты можешь принять приглашение пройдя по ссылке."
+        accept: "Принять приглашение!"
+        ignore: "Если ты не хочешь - просто забей.<br />Аккаунт не будет создан пока ты не установишь на него пароль."

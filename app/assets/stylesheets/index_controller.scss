@@ -384,8 +384,7 @@ div.dropdown.ib {
   }
 }
 
-.deployed
-{
+.deployed {
   animation: roll_down;
   animation-duration: 0.7s;
   animation-timing-function: cubic-bezier;
@@ -395,8 +394,8 @@ div.dropdown.ib {
   -webkit-animation-timing-function: cubic-bezier;
   -webkit-animation-fill-mode: forwards;
 }
-.undeployed
-{
+
+.undeployed {
   animation: roll_down;
   animation-duration: 0.7s;
   animation-timing-function: cubic-bezier;
@@ -409,9 +408,22 @@ div.dropdown.ib {
   -webkit-animation-direction: reverse;
   display: none;
 }
-.overflow_hidden
-{
+
+.overflow_hidden {
   overflow: hidden;
   width: 100%;
   height: 100%;
+}
+
+.user_add {
+  font-size: 13px;
+  font-weight: lighter;
+}
+.point_description_heading{
+  font-size: 15px;
+  font-weight: bold;
+}
+.point_description
+{
+  font-size: 15px;
 }
