@@ -1,0 +1,44 @@
+{
+  "name": "Alkomap.ru",
+  "icons": [
+    {
+      "src": "/assets/apple-touch-icon-iphone-a4915532289d793a94a3b8e9b5b51e3b4d185385964d5ae69487803cd4ec6732.png",
+      "sizes": "36x36",
+      "type": "image/png",
+      "density": 0.75
+    },
+    {
+      "src": "/assets/apple-touch-icon-iphone-a4915532289d793a94a3b8e9b5b51e3b4d185385964d5ae69487803cd4ec6732.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "density": 1.0
+    },
+    {
+      "src": "/assets/touch-icon-ipad-27a7f5f8992b08392521c937b3742b12f87cf16e3fa83fcb40d8397591ec99c9.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "density": 1.5
+    },
+    {
+      "src": "/assets/touch-icon-iphone-retina-ce7e510bc12457295f26b28325601276d2178f6ad0e4d8eb6d5a12fa2c4ac9ea.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "density": 2.0
+    },
+    {
+      "src": "/assets/touch-icon-ipad-retina-e6acf61e42545562fd16b46d0ce4667c55455d04323a6d406a8c942e18fbce30.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "density": 3.0
+    },
+    {
+      "src": "/assets/touch-icon-ipad-retina-e6acf61e42545562fd16b46d0ce4667c55455d04323a6d406a8c942e18fbce30.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "density": 4.0
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portair"
+}
