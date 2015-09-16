@@ -1,10 +1,39 @@
 <div class='settings'>
-  <form class="form">
-    �����:
+  <div id="news">
+    <h4>Алкомап бэта</h4>
+    Алкомап запущен. Пока что все в тестовом режиме, пишите о проблемах и предложениях:<br>
+    <a href="mailto:lHooFool@gmail.com">lHooFool@gmail.com</a>
+  </div>
+  <form class="form hidden">
+    точки:
     <div class="point_type" ng-repeat="(key,value) in controller.user.settings.points">
       <span class="type_name">{{key}}</span><input type="checkbox" ng-model="controller.user.settings.points[key]">
     </div>
     <br>
-    <span>�������� ����: </span><input type="checkbox" ng-model="controller.user.settings.privacy.show_me">
+    <span>Показать меня: </span><input type="checkbox" ng-model="controller.user.settings.privacy.show_me">
   </form>
+  <div id="legend">
+    <h4 class="app_title">Легенда</h4>
+
+    <div class="ib">
+      <img src="<%= asset_path 'Alien.png' %>"> <span>Это ты</span>
+    </div>
+    <div class="ib">
+      <img src="<%= asset_path 'bottle.png' %>"> <span>Тут можно купить бухло ночью</span>
+    </div>
+    <div class="ib">
+      <img src="<%= asset_path 'event.png' %>"> <span>Тут произошло что-то прикольное, пока вы были пьяны.</span>
+    </div>
+    <div class="ib">
+      <img src="<%= asset_path 'message.png' %>"> <span>А тут кто-то поделился мыслями</span>
+    </div>
+  </div>
+  <br>
+
+  <div class="btn btn-default">
+    <a href="/users/invitation/new">Позвать друзей</a>
+  </div>
+  <div class="btn btn-default">
+    <a href="/users/sign_out">Выйти</a>
+  </div>
 </div>

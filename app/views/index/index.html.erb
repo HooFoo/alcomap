@@ -1,5 +1,5 @@
 <div class="wrapper" id="chat_area" ng-view ng-controller="ChatController as controller">
-  <div class="overflow_hidden undeployed" >
+  <div class="overflow_hidden undeployed">
     <div id="messages" class="messages">
       <div class="msg" ng-repeat="message in controller.messages track by $index">
         <span class="msg_user" ng-class="message.username==controller.user.name?'msg_self':''">{{message.username}}:</span>
@@ -13,9 +13,9 @@
       </button>
     </div>
   </div>
-    <div class="half_btn screen_label" ng-click="controller.enable()">
-      Алкочат!
-    </div>
+  <div class="half_btn screen_label" ng-click="controller.enable()">
+    Алкочат!
+  </div>
 </div>
 <div class="wrapper" ng-view ng-controller="IndexController as controller">
   <div class="map_container">
@@ -27,18 +27,23 @@
           <button class="ddt dropdown-toggle " type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <span class="caret"></span>
           </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <ul class="dropdown-menu" id="title-menu" aria-labelledby="dropdownMenu1">
             <li>
-              <a href="/users/invitation/new">Позвать друзей</a>
-            </li>
-            <li>
-              <a href="/users/sign_out">Ужас!</a>
+              <div id="settings" ng-include="'<%= asset_path "settings.html" %>'">
+              </div>
             </li>
           </ul>
         </div>
       </div>
       <div id="map"></div>
-      <div class="btn btn-default add_button" ng-click="controller.addPointDraggable()"><%= image_tag 'new.png' %></div>
+      <div class="dropup">
+        <div class="btn btn-default add_button dropdown-toggle" id="add_btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><%= image_tag 'new.png' %></div>
+        <ul class="dropdown-menu add_dropdown" role="menu" aria-labelledby="add_btn">
+          <li><a href="#" ng-click="controller.addPointDraggable('shop')">Магазин</a></li>
+          <li><a href="#" ng-click="controller.addPointDraggable('marker')">Событие</a></li>
+          <li><a href="#" ng-click="controller.addPointDraggable('message')">Сообщение</a></li>
+        </ul>
+      </div>
       <div class="btn btn-default center_btn" ng-click="controller.centerForUser()"><%= image_tag 'center.png' %></div>
     </div>
     <a target="_self" href="#comments" class="col-xs-12 col-sm-12  half_btn half_btn_up"> Комментарии </a>

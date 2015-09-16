@@ -5,4 +5,24 @@ class Point < ActiveRecord::Base
   validates :user, presence: true
   validates :lng, :lat, :name, presence: true
   validates :lng, :lat, numericality: true
+
+  def self.shops
+    where('point_type = "shop"')
+  end
+
+  def self.markers
+    where("point_type = 'marker' AND created_at >= ?", Date.today - 7)
+  end
+
+  def self.messages
+    where("point_type = 'message' AND created_at >= ?", DateTime.now-30.minutes)
+  end
+
+  def self.visible(coords)
+    where("lat <= #{coords['Da']['j']} and lat >= #{coords['Da']['A']} and lng <= #{coords['va']['A']} and lng >= #{coords['va']['j']}")
+  end
+
+  def self.mixed
+    where("(point_type = 'shop') or (point_type = 'message' AND created_at >= ?) or (point_type = 'marker' AND created_at >= ?)", DateTime.now-30.minutes, Date.today - 7)
+  end
 end

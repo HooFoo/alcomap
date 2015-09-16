@@ -32,9 +32,9 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
             label: item.name,
             title: item.description,
             map: gmap,
-            icon: asset_path('bottle.png')
+            icon: iconForPoint(item.point_type)
         });
-
+        console.log(item.point_type);
         var content = '<div id="info" ng-include src="\'' + asset_path("info.html") + '\'" ng-show="controller.currentPoint"></div>';
         var infoWindow = new google.maps.InfoWindow({
             content: content
@@ -75,8 +75,8 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         setTimeout($this.trackUser, 1000);
     };
 
-    this.addPointDraggable = function () {
-        $scope.point = {lat: gmap.getCenter().lat(), lng: gmap.getCenter().lng()};
+    this.addPointDraggable = function (type) {
+        $scope.point = {lat: gmap.getCenter().lat(), lng: gmap.getCenter().lng(), point_type: type};
 
         var marker = new google.maps.Marker({
             position: $scope.point,
@@ -84,7 +84,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
             title: $scope.point.description,
             map: gmap,
             draggable: true,
-            icon: asset_path('drinks.png')
+            icon: iconForPoint(type)
         });
 
         $scope.addMarker = marker;
@@ -167,7 +167,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
 
         $this.usersMarker = new google.maps.Marker({
             position: USER_POSITION,
-            label: "Ето ты",
+            label: "Ты здесь",
             icon: {
                 url: asset_path('Alien.png')
             },

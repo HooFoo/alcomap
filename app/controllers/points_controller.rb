@@ -18,7 +18,7 @@ class PointsController < InheritedResources::Base
     bounds = params[:bounds]
     unless bounds.nil?
       parsed = JSON.parse bounds
-      @points = Point.where("lat <= #{parsed['Da']['j']} and lat >= #{parsed['Da']['A']} and lng <= #{parsed['va']['A']} and lng >= #{parsed['va']['j']}")
+      @points = Point.mixed.visible parsed
     else
       super
     end
@@ -43,7 +43,6 @@ class PointsController < InheritedResources::Base
       rated.save
       if @point.rating <= -5
         @point.destroy
-        render json: nil
       end
     end
     render 'show.json'
@@ -52,7 +51,7 @@ class PointsController < InheritedResources::Base
   private
 
   def point_params
-    params.require(:point).permit(:lng, :lat, :name, :description, :user_id)
+    params.require(:point).permit(:lng, :lat, :name, :description, :point_type, :user_id)
   end
 end
 

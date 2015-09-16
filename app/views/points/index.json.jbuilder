@@ -3,6 +3,7 @@ json.array!(@points) do |point|
   json.created_at point.created_at.strftime("%d %b. %Y")
   json.url point_url(point, format: :json)
   json.user(point.user, :name)
+  json.point_type(point.point_type)
   json.comments (point.comments.reverse) do |comment|
     json.text comment.text
     json.id comment.id

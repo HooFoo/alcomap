@@ -11,7 +11,6 @@ function ChatController($scope, ChatMessage, User) {
     this.sendMessage = function () {
         if ($this.chatMessage != '')
             ChatMessage.new({message: $this.chatMessage}, function (result) {
-                $this.messages.push(result);
                 $this.chatMessage = '';
                 delayedScroll();
             });

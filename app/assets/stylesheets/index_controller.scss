@@ -427,3 +427,23 @@ div.dropdown.ib {
 {
   font-size: 15px;
 }
+
+.add_dropdown {
+  position: absolute;
+  right: 0;
+  width: auto;
+  left: auto !important;
+  transform: translate(-30px, -70px);
+}
+
+#title-menu {
+  max-width: 600px;
+  min-width: 300px;
+  width: 600px;
+  position: inherit;
+  transform: translate(0, 150px);
+}
+
+#settings {
+  text-align: center;
+}
