@@ -35,7 +35,6 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
             icon: asset_path('bottle.png')
         });
 
-        //TODO: ужас
         var content = '<div id="info" ng-include src="\'' + asset_path("info.html") + '\'" ng-show="controller.currentPoint"></div>';
         var infoWindow = new google.maps.InfoWindow({
             content: content
@@ -158,8 +157,8 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
     this.pointRate = function (dir) {
         Point.rate($this.currentPoint.id, dir, function (result) {
             console.log(result);
-            if (result.rating)
-                $this.currentPoint.rating = result.rating;
+            if (result.data.rating)
+                $this.currentPoint.rating = result.data.rating;
         });
     };
 
