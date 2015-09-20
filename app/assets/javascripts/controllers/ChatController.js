@@ -31,6 +31,7 @@ function ChatController($scope, ChatMessage, User) {
         setTimeout($this.update, 2500);
     };
     this.enable = function () {
+        delayedScroll();
         $this.enabled = !$this.enabled;
         container.toggleClass('deployed');
         container.toggleClass('undeployed');
@@ -38,15 +39,14 @@ function ChatController($scope, ChatMessage, User) {
     var init = function () {
         ChatMessage.index(function (result) {
             $this.messages = result;
-            delayedScroll();
         });
         setTimeout($this.update,2500);
 
     };
     var delayedScroll = function () {
         setTimeout(function () {
-            messages.animate({ scrollTop: messages[0].scrollHeight}, 400)
-        }, 500);
+            messages.animate({scrollTop: messages[0].scrollHeight})
+        }, 1000);
     };
     init();
 }

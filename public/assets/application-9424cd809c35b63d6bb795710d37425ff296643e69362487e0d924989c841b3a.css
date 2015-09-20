@@ -64,7 +64,7 @@
 
 /* line 38, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .info {
-  margin-bottom: 18px;
+  margin-bottom: 21px;
 }
 
 /* line 46, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
@@ -90,11 +90,11 @@
 .comments {
   background-color: rgba(249, 249, 249, 0.7);
   padding-top: 10px;
-  height: 88vh;
+  height: 85vh;
   overflow: auto;
   position: absolute;
   left: 0px;
-  top: 12vh;
+  top: 15vh;
   right: 0px;
   bottom: 0px;
   -webkit-overflow-scrolling: touch;
@@ -104,13 +104,13 @@
 .comment_form {
   background: rgba(249, 249, 249, 0.7);
   padding: 5px 10px;
-  height: 12vh;
+  height: 15vh;
 }
 
 /* line 82, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .comment_div {
-  margin: 0px 0px 15px 0px;
-  height: 100%;
+  margin: 0px 0px 0 0px !important;
+  height: 70%;
 }
 
 /* line 87, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
@@ -152,7 +152,7 @@
 
 /* line 119, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 textarea#name {
-  max-height: 43%;
+  max-height: 55%;
 }
 
 /* line 123, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
@@ -165,7 +165,7 @@ textarea#name {
   display: table;
 }
 
-/* line 133, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 132, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .loader::after {
   content: "";
   background-size: contain;
@@ -179,7 +179,7 @@ textarea#name {
   position: absolute;
 }
 
-/* line 147, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 146, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .loader > h1 {
   text-align: center;
   width: 100%;
@@ -187,21 +187,21 @@ textarea#name {
   vertical-align: middle;
 }
 
-/* line 154, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 153, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .invite_link {
   position: absolute;
   right: 4px;
   top: 6px;
 }
 
-/* line 160, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 159, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .log_out {
   position: absolute;
   bottom: 5px;
   right: 10px;
 }
 
-/* line 167, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 166, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .half_btn {
   display: block;
   text-align: center;
@@ -214,12 +214,12 @@ textarea#name {
   border-radius: 4px;
 }
 
-/* line 179, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 178, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 a:hover {
   background: transparent !important;
 }
 
-/* line 183, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 182, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .half_btn_up {
   transform: translate(0px, -30px);
   -webkit-transform: translate(0px, -30px);
@@ -229,7 +229,7 @@ a:hover {
   border-right: 1px solid;
 }
 
-/* line 192, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 191, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .half_btn_dn {
   -webkit-transform: translate(-34px, 23px);
   transform: translate(-34px, 23px);
@@ -240,9 +240,9 @@ a:hover {
 }
 
 @media (min-width: 992px) {
-  /* line 202, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+  /* line 201, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
   .half_btn {
-    display: none;
+    display: none !important;
   }
 }
 @keyframes blinking {
@@ -256,7 +256,8 @@ a:hover {
     opacity: 0.55;
   }
 }
-/* line 219, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+
+/* line 218, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .center_btn {
   transform: translate(-30px, -50vh);
   position: absolute;
@@ -267,7 +268,7 @@ a:hover {
   padding-bottom: 3px !important;
 }
 
-/* line 229, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 228, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .ddt {
   display: inline-block;
   padding: 0px;
@@ -287,25 +288,25 @@ a:hover {
   user-select: none;
 }
 
-/* line 248, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 247, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .ib {
   display: inline-block;
 }
 
-/* line 252, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 251, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 div.dropdown.ib {
   transform: translate(0px, -50%);
   -webkit-transform: translate(0px, -50%);
 }
 
-/* line 257, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 256, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .delete_comment {
   position: absolute;
   right: 11px;
   display: inline-block;
 }
 
-/* line 263, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 262, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .infobox_down {
   position: absolute;
   bottom: 0;
@@ -317,27 +318,27 @@ div.dropdown.ib {
   padding-bottom: 1px;
 }
 
-/* line 274, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 273, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .rating_box {
   display: inline-block;
 }
 
-/* line 278, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 277, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .rating_box a {
   font-size: 18px;
 }
 
-/* line 282, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 281, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .plus {
   margin-right: 5px;
 }
 
-/* line 286, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 285, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .minus {
   margin-left: 5px;
 }
 
-/* line 290, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 289, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .added {
   display: inline-block;
   left: 0;
@@ -345,7 +346,7 @@ div.dropdown.ib {
   bottom: 6px;
 }
 
-/* line 297, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 296, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #info {
   min-width: 200px;
   animation: info;
@@ -360,21 +361,20 @@ div.dropdown.ib {
     opacity: 1;
   }
 }
-/* line 312, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+
+/* line 311, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .snd_msg_icon {
   width: 20px;
   height: 20px;
 }
 
-/* line 317, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 316, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .snd_msg_btn {
   padding: 2px !important;
-  transform: translateY(-1px);
-  -webkit-transform: translateY(-1px);
   height: 98%;
 }
 
-/* line 324, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 321, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .screen_label {
   position: absolute;
   z-index: 4;
@@ -390,19 +390,19 @@ div.dropdown.ib {
   display: block !important;
 }
 
-/* line 339, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 336, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .chat_msg_box {
   height: 98%;
 }
 
-/* line 344, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 341, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .send_message {
   padding-left: 16px;
   padding-right: 16px;
   height: 5vh;
 }
 
-/* line 350, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 347, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #chat_area {
   background-color: rgba(0, 0, 0, 0.55);
   position: absolute;
@@ -411,26 +411,26 @@ div.dropdown.ib {
   right: 0px;
 }
 
-/* line 358, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 355, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .messages {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   height: 45vh;
 }
 
-/* line 364, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 361, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .msg_text {
   color: #3bfff8;
 }
 
-/* line 368, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 365, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .msg_user {
   color: #f2f2f2;
   margin-right: 5px;
   margin-left: 5px;
 }
 
-/* line 374, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 371, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .msg_self {
   color: #DD91FB !important;
 }
@@ -444,7 +444,8 @@ div.dropdown.ib {
     display: block;
   }
 }
-/* line 388, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+
+/* line 385, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .deployed {
   animation: roll_down;
   animation-duration: 0.7s;
@@ -456,7 +457,7 @@ div.dropdown.ib {
   -webkit-animation-fill-mode: forwards;
 }
 
-/* line 399, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 396, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .undeployed {
   animation: roll_down;
   animation-duration: 0.7s;
@@ -471,31 +472,31 @@ div.dropdown.ib {
   display: none;
 }
 
-/* line 413, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 410, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .overflow_hidden {
   overflow: hidden;
   width: 100%;
   height: 100%;
 }
 
-/* line 419, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 416, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .user_add {
   font-size: 13px;
   font-weight: lighter;
 }
 
-/* line 424, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 421, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .point_description_heading {
   font-size: 15px;
   font-weight: bold;
 }
 
-/* line 429, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 426, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .point_description {
   font-size: 15px;
 }
 
-/* line 433, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 430, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .add_dropdown {
   position: absolute;
   right: 0;
@@ -504,7 +505,7 @@ div.dropdown.ib {
   transform: translate(-30px, -70px);
 }
 
-/* line 441, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 438, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #title-menu {
   max-width: 600px;
   min-width: 300px;
@@ -513,25 +514,25 @@ div.dropdown.ib {
   transform: translate(0, 150px);
 }
 
-/* line 449, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 446, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #settings {
   text-align: center;
 }
 
-/* line 453, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 450, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .news_header {
   font-weight: bold;
   font-size: 1.5em;
 }
 
-/* line 458, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 455, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #news {
   text-align: center;
   background-color: rgba(249, 249, 249, 0.7);
   height: 100vh;
 }
 
-/* line 464, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 461, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #news_scroller {
   position: absolute;
   z-index: 1;
@@ -544,7 +545,7 @@ div.dropdown.ib {
   height: 95vh;
 }
 
-/* line 476, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 473, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .news {
   list-style-type: none;
   list-style-type: none;
@@ -557,20 +558,44 @@ div.dropdown.ib {
   border-radius: 4px;
 }
 
-/* line 488, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 485, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .news_user_name {
   font-weight: bold;
 }
 
-/* line 492, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 489, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .news_point_name {
   font-weight: bold;
   text-decoration: underline;
 }
 
-/* line 497, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 494, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #news_scroller > ul {
   padding-left: 3px;
+}
+
+/* line 498, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+.legend {
+  text-align: left;
+  padding-left: 15px;
+}
+
+/* line 503, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+.legend > div > span {
+  padding-left: 10px;
+}
+
+/* line 507, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+#comments {
+  border-left: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  height: 100vh;
+}
+
+/* line 513, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+.add_point_labels {
+  margin-bottom: 0px !important;
 }
 /* line 1, C:/Projects/alcomap/app/assets/stylesheets/scaffolds.scss */
 body {

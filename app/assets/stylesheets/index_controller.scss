@@ -36,7 +36,7 @@
 }
 
 .info {
-  margin-bottom: 18px;
+  margin-bottom: 21px;
 }
 
 .map_container {
@@ -63,11 +63,11 @@
 .comments {
   background-color: rgba(249, 249, 249, 0.7);
   padding-top: 10px;
-  height: 88vh;
+  height: 85vh;
   overflow: auto;
   position: absolute;
   left: 0px;
-  top: 12vh;
+  top: 15vh;
   right: 0px;
   bottom: 0px;
   -webkit-overflow-scrolling: touch;
@@ -76,12 +76,12 @@
 .comment_form {
   background: rgba(249, 249, 249, 0.7);
   padding: 5px 10px;
-  height: 12vh;
+  height: 15vh;
 }
 
 .comment_div {
-  margin: 0px 0px 15px 0px;
-  height: 100%;
+  margin: 0px 0px 0 0px !important;
+  height: 70%;
 }
 
 .comment {
@@ -117,7 +117,7 @@
 }
 
 textarea#name {
-  max-height: 43%;
+  max-height: 55%;
 }
 
 .loader {
@@ -127,7 +127,6 @@ textarea#name {
   z-index: 1000;
   text-align: center;
   display: table;
-
 }
 
 .loader::after {
@@ -200,7 +199,7 @@ a:hover {
 
 @media (min-width: 992px) {
   .half_btn {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -316,8 +315,6 @@ div.dropdown.ib {
 
 .snd_msg_btn {
   padding: 2px !important;
-  transform: translateY(-1px);
-  -webkit-transform: translateY(-1px);
   height: 98%;
 }
 
@@ -496,4 +493,24 @@ div.dropdown.ib {
 
 #news_scroller > ul {
   padding-left: 3px;
+}
+
+.legend {
+  text-align: left;
+  padding-left: 15px;
+}
+
+.legend > div > span {
+  padding-left: 10px;
+}
+
+#comments {
+  border-left: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  height: 100vh;
+}
+
+.add_point_labels {
+  margin-bottom: 0px !important;
 }

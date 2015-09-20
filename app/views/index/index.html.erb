@@ -13,7 +13,7 @@
       </button>
     </div>
   </div>
-  <div class="half_btn screen_label" ng-click="controller.enable()">
+  <div class="half_btn screen_label btn btn-default" ng-click="controller.enable()">
     Алкочат!
   </div>
 </div>
@@ -46,8 +46,9 @@
       </div>
       <div class="btn btn-default center_btn" ng-click="controller.centerForUser()"><%= image_tag 'center.png' %></div>
     </div>
-    <a target="_self" href="#comments" class="col-xs-12 col-sm-12  half_btn half_btn_up"> Комментарии </a>
-    <a target="_self" href="#map_area" class="col-xs-12 col-sm-12  half_btn half_btn_dn"> Карта </a>
+    <a target="_self" href="#comments" class="col-xs-12 col-sm-12  half_btn half_btn_up btn btn-default">
+      Комментарии </a>
+    <a target="_self" href="#map_area" class="col-xs-12 col-sm-12  half_btn half_btn_dn btn btn-default"> Карта </a>
 
     <div id="comments" class="col-xs-12 col-sm-12 col-md-4 col-lg-4 nopadding">
       <div ng-show="controller.currentPoint">
@@ -55,8 +56,9 @@
           <div class="form-group comment_div">
             <label for="name">Есть что сказать?</label>
             <textarea class="form-control" id="name" placeholder="..." ng-model="comment.text" ng-disabled="controller.currentPoint==undefined"></textarea>
-            <button class="send_comment btn btn-default" ng-click="controller.comment()" ng-disabled="controller.currentPoint==undefined">Отправить</button>
           </div>
+          <button class="send_comment btn btn-default" ng-click="controller.comment()" ng-disabled="controller.currentPoint==undefined">Отправить</button>
+
         </form>
         <div class="comments">
           <div id="comments_scroller">
