@@ -1,0 +1,7 @@
+<span class='comment_user'>Название: </span>
+<input type='text' class='comment_user' ng-model='point.name'><br>
+<div ng-hide="point.point_type == 'message'">
+  <span class='comment_user'>Описание: </span>
+  <input type='text' class='comment_user' ng-model='point.description'><br>
+</div>
+<button class='btn btn-default' ng-click='controller.addPoint()'>Сохранить</button>
