@@ -13,7 +13,7 @@ class ChatMessagesController < InheritedResources::Base
   end
 
   def latest
-    @chat_messages = ChatMessage.where("id > ?", params[:last_message_id])
+    @chat_messages = ChatMessage.where("id > ?", params[:id])
     render 'index'
   end
 

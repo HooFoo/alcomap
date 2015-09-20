@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :news, defaults: {format: :json}
   resources :settings, defaults: {format: :json}
   resources :chat_messages, defaults: {format: :json}
   devise_for :users, controllers: {registrations: 'users/registrations',
@@ -8,7 +9,8 @@ Rails.application.routes.draw do
   post 'users/invitation', to: 'users/invitations#update'
   post 'points/rate/:id', to: 'points#rate'
   get '/user', to: 'user#index', defaults: {format: :json}
-  post '/chat_messages/latest', to: 'chat_messages#latest', defaults: {format: :json}
+  get '/chat_messages/latest/:id', to: 'chat_messages#latest', defaults: {format: :json}
+  get '/news/latest/:id', to: 'news#latest', defaults: {format: :json}
   resources :comments, defaults: {format: :json}
   resources :points, defaults: {format: :json}
 

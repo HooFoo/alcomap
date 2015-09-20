@@ -34,7 +34,6 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
             map: gmap,
             icon: iconForPoint(item.point_type)
         });
-        console.log(item.point_type);
         var content = '<div id="info" ng-include src="\'' + asset_path("info.html") + '\'" ng-show="controller.currentPoint"></div>';
         var infoWindow = new google.maps.InfoWindow({
             content: content
@@ -65,6 +64,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
 
 
         item.marker = marker;
+        item.infowindow = infoWindow;
         gmap.clusterer.addMarker(marker);
 
         return marker
@@ -74,7 +74,33 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         if ($this.usersMarker) $this.usersMarker.setPosition(USER_POSITION);
         setTimeout($this.trackUser, 1000);
     };
-
+    this.styleForInfo = function () {
+        var style;
+        switch ($this.currentPoint.point_type) {
+            case "shop":
+            {
+                style = {
+                    infobox_down: ""
+                };
+                break;
+            }
+            case "marker":
+            {
+                style = {
+                    infobox_down: ""
+                };
+                break;
+            }
+            case "message":
+            {
+                style = {
+                    infobox_down: "hidden"
+                };
+                break;
+            }
+        }
+        return style;
+    };
     this.addPointDraggable = function (type) {
         $scope.point = {lat: gmap.getCenter().lat(), lng: gmap.getCenter().lng(), point_type: type};
 
@@ -140,8 +166,6 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
             $this.points.forEach(function (item) {
                 if (!(item.id == ($this.currentPoint ? $this.currentPoint.id : undefined)))
                     buildMarker(item);
-                else
-                    console.log("drop");
             });
         });
     };
@@ -156,12 +180,26 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
 
     this.pointRate = function (dir) {
         Point.rate($this.currentPoint.id, dir, function (result) {
-            console.log(result);
             if (result.data.rating)
                 $this.currentPoint.rating = result.data.rating;
         });
     };
+    this.setPointCurrent = function (point_id) {
+        google.maps.event.addListenerOnce(map, 'idle', function () {
+            $this.points.forEach(function (item) {
+                if (item.id == point_id) {
+                    google.maps.event.trigger(item.marker, 'click');
+                }
+            });
+        });
 
+    };
+
+    this.setCenter = function (lat, lng, point_id) {
+        gmap.setCenter({lat: lat, lng: lng});
+        if (point_id)
+            $this.setPointCurrent(point_id);
+    };
     var init = function () {
         gmap.addListener('idle', $this.showMarkers);
 

@@ -7,7 +7,7 @@
   </div>
   <span class='user_add'>Добавил: {{controller.currentPoint.user.name}}</span>
 </div>
-<div class='infobox_down'>
+<div class='infobox_down' ng-hide="controller.currentPoint.point_type == 'message'">
   <span class='added'>Добавлено: {{controller.currentPoint.created_at}}</span>
 
   <div class='rating_box'>

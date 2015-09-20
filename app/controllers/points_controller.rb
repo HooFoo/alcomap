@@ -2,16 +2,12 @@ class PointsController < InheritedResources::Base
 
   respond_to :json
 
-  def create(options={}, &block)
+  def create
     @point = build_resource
-
     @point.user = current_user
-
-    if create_resource(@point)
-      options[:location] ||= smart_resource_url
-    end
-
-    respond_with_dual_blocks(@point, options, &block)
+    @point.save
+    News.new(:user => current_user, :point => @point).save
+    render 'show'
   end
 
   def index(options={}, &block)

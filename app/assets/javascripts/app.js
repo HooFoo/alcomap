@@ -4,6 +4,7 @@
 app = angular.module('alcomap', ['ngResource']);
 app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User']);
 app.controller('ChatController', ChatController, ['$scope', 'ChatMessage', 'User']);
+app.controller('NewsController', NewsController, ['$scope', 'News', 'User']);
 app.factory('gmap', function () {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
@@ -123,7 +124,15 @@ app.factory('Comment', ['$resource', 'BackendResource', function ($resource, Bac
 app.factory('ChatMessage', ['$resource', '$http', 'BackendResource', function ($resource, $http, BackendResource) {
     var obj = BackendResource('chat_messages');
     obj.latest = function (id, accept, reject) {
-        $http.post('chat_messages/latest/', {last_message_id: id}).then(accept, reject);
+        $http.get('chat_messages/latest/' + id).then(accept, reject);
+    };
+    return obj;
+
+}]);
+app.factory('News', ['$resource', '$http', 'BackendResource', function ($resource, $http, BackendResource) {
+    var obj = BackendResource('news');
+    obj.latest = function (id, accept, reject) {
+        $http.get('news/latest/' + id).then(accept, reject);
     };
     return obj;
 

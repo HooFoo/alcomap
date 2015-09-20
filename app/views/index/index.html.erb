@@ -50,28 +50,42 @@
     <a target="_self" href="#map_area" class="col-xs-12 col-sm-12  half_btn half_btn_dn"> Карта </a>
 
     <div id="comments" class="col-xs-12 col-sm-12 col-md-4 col-lg-4 nopadding">
+      <div ng-show="controller.currentPoint">
+        <form class="comment_form">
+          <div class="form-group comment_div">
+            <label for="name">Есть что сказать?</label>
+            <textarea class="form-control" id="name" placeholder="..." ng-model="comment.text" ng-disabled="controller.currentPoint==undefined"></textarea>
+            <button class="send_comment btn btn-default" ng-click="controller.comment()" ng-disabled="controller.currentPoint==undefined">Отправить</button>
+          </div>
+        </form>
+        <div class="comments">
+          <div id="comments_scroller">
+            <ul>
+              <li class="comment" ng-repeat="comment in controller.currentPoint.comments track by $index">
+                <span class="comment_user">{{comment.user.name}}</span>
+                <span class="delete_comment" ng-hide="!(comment.user.id == controller.user.id)" ng-click="controller.deleteComment(comment.id)">X</span>
 
-      <form class="comment_form">
-        <div class="form-group comment_div">
-          <label for="name">Есть что сказать?</label>
-          <textarea class="form-control" id="name" placeholder="..." ng-model="comment.text" ng-disabled="controller.currentPoint==undefined"></textarea>
-          <button class="send_comment btn btn-default" ng-click="controller.comment()" ng-disabled="controller.currentPoint==undefined">Отправить</button>
+                <div class="comment_text"> {{comment.text}}</div>
+              </li>
+            </ul>
+          </div>
         </div>
-      </form>
+      </div>
+      <div id="news" ng-hide="controller.currentPoint" ng-controller="NewsController as news">
+        <span class="news_header"> Последние события </span>
 
-      <div class="comments">
-        <div id="comments_scroller">
+        <div id="news_scroller">
           <ul>
-            <li class="comment" ng-repeat="comment in controller.currentPoint.comments track by $index">
-              <span class="comment_user">{{comment.user.name}}</span>
-              <span class="delete_comment" ng-hide="!(comment.user.id == controller.user.id)" ng-click="controller.deleteComment(comment.id)">X</span>
+            <li class="news" ng-repeat="item in news.news track by $index">
+              <span class="news_user">Пользователь <span class="news_user_name">{{item.user.name}}</span></span>
 
-              <div class="comment_text"> {{comment.text}}</div>
+              <div class="news_text"> Добавил точку
+                <span class="news_point_name" ng-click="controller.setCenter(item.point.lat,item.point.lng,item.point.id)">{{item.point.name}}</span>
+              </div>
             </li>
           </ul>
         </div>
       </div>
-
     </div>
   </div>
 </div>
