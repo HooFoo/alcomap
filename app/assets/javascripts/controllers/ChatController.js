@@ -16,8 +16,8 @@ function ChatController($scope, ChatMessage, User) {
             });
     };
     this.update = function () {
-        var id = $this.messages?$this.messages[$this.messages.length - 1].id:0;
-        ChatMessage.latest( id, function (result) {
+        var id = $this.messages ? $this.messages[$this.messages.length - 1].id : 0;
+        ChatMessage.latest(id, function (result) {
             if (result.data.length > 0) {
                 result.data.forEach(function (msg) {
                     $this.messages.push(msg);
@@ -31,8 +31,9 @@ function ChatController($scope, ChatMessage, User) {
         setTimeout($this.update, 2500);
     };
     this.enable = function () {
-        delayedScroll();
         $this.enabled = !$this.enabled;
+        if ($this.enabled)
+            delayedScroll();
         container.toggleClass('deployed');
         container.toggleClass('undeployed');
     };
@@ -40,7 +41,7 @@ function ChatController($scope, ChatMessage, User) {
         ChatMessage.index(function (result) {
             $this.messages = result;
         });
-        setTimeout($this.update,2500);
+        setTimeout($this.update, 2500);
 
     };
     var delayedScroll = function () {

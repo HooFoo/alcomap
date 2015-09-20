@@ -1,5 +1,6 @@
 <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
-    <h2><%= t "devise.invitations.new.header" %></h2>
+    <a href="/" class="back btn">Назад</a>
+    <h2 class="title"><%= t "devise.invitations.new.header" %></h2>
 
     <%= devise_error_messages! %>
 
