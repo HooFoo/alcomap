@@ -10,6 +10,10 @@ class Point < ActiveRecord::Base
     where('point_type = "shop"')
   end
 
+  def self.bars
+    where('point_type = "bar"')
+  end
+
   def self.markers
     where("point_type = 'marker' AND created_at >= ?", Date.today - 7)
   end
@@ -23,6 +27,6 @@ class Point < ActiveRecord::Base
   end
 
   def self.mixed
-    where("(point_type = 'shop') or (point_type = 'message' AND created_at >= ?) or (point_type = 'marker' AND created_at >= ?)", DateTime.now-30.minutes, Date.today - 7)
+    where("(point_type = 'shop') or (point_type = 'bar') or (point_type = 'message' AND created_at >= ?) or (point_type = 'marker' AND created_at >= ?)", DateTime.now-30.minutes, Date.today - 7)
   end
 end

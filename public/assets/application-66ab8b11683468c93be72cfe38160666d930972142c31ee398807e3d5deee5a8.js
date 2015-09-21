@@ -45592,6 +45592,11 @@ function iconForPoint(type) {
             icon = asset_path('message.png');
             break;
         }
+        case 'bar':
+        {
+            icon = asset_path('drinks.png');
+            break;
+        }
     }
     return icon;
 }
@@ -45629,8 +45634,8 @@ function ChatController($scope, ChatMessage, User) {
             });
     };
     this.update = function () {
-        var id = $this.messages?$this.messages[$this.messages.length - 1].id:0;
-        ChatMessage.latest( id, function (result) {
+        var id = $this.messages ? $this.messages[$this.messages.length - 1].id : 0;
+        ChatMessage.latest(id, function (result) {
             if (result.data.length > 0) {
                 result.data.forEach(function (msg) {
                     $this.messages.push(msg);
@@ -45645,7 +45650,7 @@ function ChatController($scope, ChatMessage, User) {
     };
     this.enable = function () {
         $this.enabled = !$this.enabled;
-        if($this.enabled)
+        if ($this.enabled)
             delayedScroll();
         container.toggleClass('deployed');
         container.toggleClass('undeployed');
@@ -45654,13 +45659,13 @@ function ChatController($scope, ChatMessage, User) {
         ChatMessage.index(function (result) {
             $this.messages = result;
         });
-        setTimeout($this.update,2500);
+        setTimeout($this.update, 2500);
 
     };
     var delayedScroll = function () {
         setTimeout(function () {
             messages.animate({scrollTop: messages[0].scrollHeight})
-        }, 1000);
+        }, 300);
     };
     init();
 }
@@ -45889,8 +45894,19 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
  * Created by Геннадий on 18.09.2015.
  */
 
-function NewsController(News, User) {
+function NewsController(News, $scope) {
     var $this = this;
+
+    this.wordForPointType = function(type)
+    {
+        switch(type)
+        {
+            case "message": return "сообщение";
+            case "marker": return "событие";
+            case "shop": return "магазин";
+            case "bar": return "бар";
+        }
+    };
 
     this.update = function () {
         var id = $this.news ? $this.news[0].id : 0;
@@ -45908,6 +45924,7 @@ function NewsController(News, User) {
             $this.news = result;
         });
         setTimeout($this.update, 10000);
+        $scope.wordForPoinType = $this.wordForPointType;
     };
     init();
 }
@@ -45919,7 +45936,7 @@ function NewsController(News, User) {
 app = angular.module('alcomap', ['ngResource']);
 app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User']);
 app.controller('ChatController', ChatController, ['$scope', 'ChatMessage', 'User']);
-app.controller('NewsController', NewsController, ['$scope', 'News', 'User']);
+app.controller('NewsController', NewsController, ['News','$scope' ]);
 app.factory('gmap', function () {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,

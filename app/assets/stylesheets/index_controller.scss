@@ -440,6 +440,10 @@ div.dropdown.ib {
   width: auto;
   position: inherit;
   transform: translate(0, 150px);
+  -webkit-transform: translate(0, 150px);
+  max-height: 72vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 #settings {

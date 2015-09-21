@@ -40,6 +40,7 @@
         <div class="btn btn-default add_button dropdown-toggle" id="add_btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><%= image_tag 'new.png' %></div>
         <ul class="dropdown-menu add_dropdown" role="menu" aria-labelledby="add_btn">
           <li><a href="#" ng-click="controller.addPointDraggable('shop')">Магазин</a></li>
+          <li><a href="#" ng-click="controller.addPointDraggable('bar')">Бар</a></li>
           <li><a href="#" ng-click="controller.addPointDraggable('marker')">Событие</a></li>
           <li><a href="#" ng-click="controller.addPointDraggable('message')">Сообщение</a></li>
         </ul>
@@ -81,7 +82,7 @@
             <li class="news" ng-repeat="item in news.news track by $index">
               <span class="news_user">Пользователь <span class="news_user_name">{{item.user.name}}</span></span>
 
-              <div class="news_text"> Добавил точку
+              <div class="news_text" ng-init="type = wordForPointType(item.point.point_type)"> Добавил точку
                 <span class="news_point_name" ng-click="controller.setCenter(item.point.lat,item.point.lng,item.point.id)">{{item.point.name}}</span>
               </div>
             </li>

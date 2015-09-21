@@ -4,7 +4,7 @@
 app = angular.module('alcomap', ['ngResource']);
 app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User']);
 app.controller('ChatController', ChatController, ['$scope', 'ChatMessage', 'User']);
-app.controller('NewsController', NewsController, ['$scope', 'News', 'User']);
+app.controller('NewsController', NewsController, ['News','$scope' ]);
 app.factory('gmap', function () {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,

@@ -37,9 +37,19 @@
   bottom: 0;
   left: 0;
   overflow: hidden;
-
 }
 
+@media (max-width: 1024px) {
+  #trailer
+  {
+    display: none;
+  }
+  #new_user , #edit_user
+  {
+    border: 1px solid #CCCCCC;
+
+  }
+}
 #trailer > video {
   position: absolute;
   top: 0;

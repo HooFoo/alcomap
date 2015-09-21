@@ -1,8 +1,19 @@
 /**
  * Created by Геннадий on 18.09.2015.
  */
-function NewsController(News, User) {
+function NewsController(News, $scope) {
     var $this = this;
+
+    this.wordForPointType = function(type)
+    {
+        switch(type)
+        {
+            case "message": return "сообщение";
+            case "marker": return "событие";
+            case "shop": return "магазин";
+            case "bar": return "бар";
+        }
+    };
 
     this.update = function () {
         var id = $this.news ? $this.news[0].id : 0;
@@ -20,6 +31,7 @@ function NewsController(News, User) {
             $this.news = result;
         });
         setTimeout($this.update, 10000);
+        $scope.wordForPoinType = $this.wordForPointType;
     };
     init();
 }

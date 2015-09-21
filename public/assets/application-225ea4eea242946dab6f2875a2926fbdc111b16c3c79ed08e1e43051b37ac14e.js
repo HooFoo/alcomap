@@ -14042,7 +14042,7 @@ if (typeof jQuery === 'undefined') {
   };
 
   // A mostly-internal function to generate callbacks that can be applied
-	// to each element in a collection, returning the desired result — either
+  // to each element in a collection, returning the desired result — either
   // identity, an arbitrary callback, a property matcher, or a property accessor.
   var cb = function(value, context, argCount) {
     if (value == null) return _.identity;
@@ -14306,7 +14306,7 @@ if (typeof jQuery === 'undefined') {
   };
 
   // Shuffle a collection, using the modern version of the
-	// [Fisher-Yates shuffle](http://en.wikipedia.org/wiki/Fisher–Yates_shuffle).
+  // [Fisher-Yates shuffle](http://en.wikipedia.org/wiki/Fisher–Yates_shuffle).
   _.shuffle = function(obj) {
     var set = isArrayLike(obj) ? obj : _.values(obj);
     var length = set.length;
@@ -26032,7 +26032,7 @@ function $HttpProvider() {
      *
      *
      * ## General usage
-	 * The `$http` service is a function which takes a single argument — a configuration object —
+     * The `$http` service is a function which takes a single argument — a configuration object —
      * that is used to generate an HTTP request and returns  a {@link ng.$q promise}
      * with two $http specific methods: `success` and `error`.
      *
@@ -26064,7 +26064,7 @@ function $HttpProvider() {
      *
      *
      * Since the returned value of calling the $http function is a `promise`, you can also use
-	 * the `then` method to register callbacks, and these callbacks will receive a single argument –
+     * the `then` method to register callbacks, and these callbacks will receive a single argument –
      * an object representing the response. See the API signature and type info below for more
      * details.
      *
@@ -26384,24 +26384,24 @@ function $HttpProvider() {
      * @param {object} config Object describing the request to be made and how it should be
      *    processed. The object has following properties:
      *
-	 *    - **method** – `{string}` – HTTP method (e.g. 'GET', 'POST', etc)
-	 *    - **url** – `{string}` – Absolute or relative URL of the resource that is being requested.
-	 *    - **params** – `{Object.<string|Object>}` – Map of strings or objects which will be serialized
+     *    - **method** – `{string}` – HTTP method (e.g. 'GET', 'POST', etc)
+     *    - **url** – `{string}` – Absolute or relative URL of the resource that is being requested.
+     *    - **params** – `{Object.<string|Object>}` – Map of strings or objects which will be serialized
      *      with the `paramSerializer` and appended as GET parameters.
-	 *    - **data** – `{string|Object}` – Data to be sent as the request message data.
-	 *    - **headers** – `{Object}` – Map of strings or functions which return strings representing
+     *    - **data** – `{string|Object}` – Data to be sent as the request message data.
+     *    - **headers** – `{Object}` – Map of strings or functions which return strings representing
      *      HTTP headers to send to the server. If the return value of a function is null, the
      *      header will not be sent. Functions accept a config object as an argument.
-	 *    - **xsrfHeaderName** – `{string}` – Name of HTTP header to populate with the XSRF token.
-	 *    - **xsrfCookieName** – `{string}` – Name of cookie containing the XSRF token.
-	 *    - **transformRequest** –
-	 *      `{function(data, headersGetter)|Array.<function(data, headersGetter)>}` –
+     *    - **xsrfHeaderName** – `{string}` – Name of HTTP header to populate with the XSRF token.
+     *    - **xsrfCookieName** – `{string}` – Name of cookie containing the XSRF token.
+     *    - **transformRequest** –
+     *      `{function(data, headersGetter)|Array.<function(data, headersGetter)>}` –
      *      transform function or an array of such functions. The transform function takes the http
      *      request body and headers and returns its transformed (typically serialized) version.
      *      See {@link ng.$http#overriding-the-default-transformations-per-request
      *      Overriding the Default Transformations}
-	 *    - **transformResponse** –
-	 *      `{function(data, headersGetter, status)|Array.<function(data, headersGetter, status)>}` –
+     *    - **transformResponse** –
+     *      `{function(data, headersGetter, status)|Array.<function(data, headersGetter, status)>}` –
      *      transform function or an array of such functions. The transform function takes the http
      *      response body, headers and status and returns its transformed (typically deserialized) version.
      *      See {@link ng.$http#overriding-the-default-transformations-per-request
@@ -26413,11 +26413,11 @@ function $HttpProvider() {
      *      by registering it as a {@link auto.$provide#service service}.
      *      The default serializer is the {@link $httpParamSerializer $httpParamSerializer};
      *      alternatively, you can use the {@link $httpParamSerializerJQLike $httpParamSerializerJQLike}
-	 *    - **cache** – `{boolean|Cache}` – If true, a default $http cache will be used to cache the
+     *    - **cache** – `{boolean|Cache}` – If true, a default $http cache will be used to cache the
      *      GET request, otherwise if a cache instance built with
      *      {@link ng.$cacheFactory $cacheFactory}, this cache will be used for
      *      caching.
-	 *    - **timeout** – `{number|Promise}` – timeout in milliseconds, or {@link ng.$q promise}
+     *    - **timeout** – `{number|Promise}` – timeout in milliseconds, or {@link ng.$q promise}
      *      that should abort the request when resolved.
      *    - **withCredentials** - `{boolean}` - whether to set the `withCredentials` flag on the
      *      XHR object. See [requests with credentials](https://developer.mozilla.org/docs/Web/HTTP/Access_control_CORS#Requests_with_credentials)
@@ -26433,12 +26433,12 @@ function $HttpProvider() {
      *   these functions are destructured representation of the response object passed into the
      *   `then` method. The response object has these properties:
      *
-	 *   - **data** – `{string|Object}` – The response body transformed with the transform
+     *   - **data** – `{string|Object}` – The response body transformed with the transform
      *     functions.
-	 *   - **status** – `{number}` – HTTP status code of the response.
-	 *   - **headers** – `{function([headerName])}` – Header getter function.
-	 *   - **config** – `{Object}` – The configuration object that was used to generate the request.
-	 *   - **statusText** – `{string}` – HTTP status text of the response.
+     *   - **status** – `{number}` – HTTP status code of the response.
+     *   - **headers** – `{function([headerName])}` – Header getter function.
+     *   - **config** – `{Object}` – The configuration object that was used to generate the request.
+     *   - **statusText** – `{string}` – HTTP status text of the response.
      *
      * @property {Array.<Object>} pendingRequests Array of config objects for currently pending
      *   requests. This is primarily meant to be used for debugging purposes.
@@ -33625,9 +33625,9 @@ function $SceProvider() {
      * @param {string} expression String expression to compile.
      * @returns {function(context, locals)} a function which represents the compiled expression:
      *
-	 *    * `context` – `{object}` – an object against which any expressions embedded in the strings
+     *    * `context` – `{object}` – an object against which any expressions embedded in the strings
      *      are evaluated against (typically a scope object).
-	 *    * `locals` – `{object=}` – local variables context object, useful for overriding values in
+     *    * `locals` – `{object=}` – local variables context object, useful for overriding values in
      *      `context`.
      */
     sce.parseAs = function sceParseAs(type, expr) {
@@ -33665,7 +33665,7 @@ function $SceProvider() {
      * @name $sce#trustAsHtml
      *
      * @description
-	 * Shorthand method.  `$sce.trustAsHtml(value)` →
+     * Shorthand method.  `$sce.trustAsHtml(value)` →
      *     {@link ng.$sceDelegate#trustAs `$sceDelegate.trustAs($sce.HTML, value)`}
      *
      * @param {*} value The value to trustAs.
@@ -33680,7 +33680,7 @@ function $SceProvider() {
      * @name $sce#trustAsUrl
      *
      * @description
-	 * Shorthand method.  `$sce.trustAsUrl(value)` →
+     * Shorthand method.  `$sce.trustAsUrl(value)` →
      *     {@link ng.$sceDelegate#trustAs `$sceDelegate.trustAs($sce.URL, value)`}
      *
      * @param {*} value The value to trustAs.
@@ -33695,7 +33695,7 @@ function $SceProvider() {
      * @name $sce#trustAsResourceUrl
      *
      * @description
-	 * Shorthand method.  `$sce.trustAsResourceUrl(value)` →
+     * Shorthand method.  `$sce.trustAsResourceUrl(value)` →
      *     {@link ng.$sceDelegate#trustAs `$sceDelegate.trustAs($sce.RESOURCE_URL, value)`}
      *
      * @param {*} value The value to trustAs.
@@ -33710,7 +33710,7 @@ function $SceProvider() {
      * @name $sce#trustAsJs
      *
      * @description
-	 * Shorthand method.  `$sce.trustAsJs(value)` →
+     * Shorthand method.  `$sce.trustAsJs(value)` →
      *     {@link ng.$sceDelegate#trustAs `$sceDelegate.trustAs($sce.JS, value)`}
      *
      * @param {*} value The value to trustAs.
@@ -33743,7 +33743,7 @@ function $SceProvider() {
      * @name $sce#getTrustedHtml
      *
      * @description
-	 * Shorthand method.  `$sce.getTrustedHtml(value)` →
+     * Shorthand method.  `$sce.getTrustedHtml(value)` →
      *     {@link ng.$sceDelegate#getTrusted `$sceDelegate.getTrusted($sce.HTML, value)`}
      *
      * @param {*} value The value to pass to `$sce.getTrusted`.
@@ -33755,7 +33755,7 @@ function $SceProvider() {
      * @name $sce#getTrustedCss
      *
      * @description
-	 * Shorthand method.  `$sce.getTrustedCss(value)` →
+     * Shorthand method.  `$sce.getTrustedCss(value)` →
      *     {@link ng.$sceDelegate#getTrusted `$sceDelegate.getTrusted($sce.CSS, value)`}
      *
      * @param {*} value The value to pass to `$sce.getTrusted`.
@@ -33767,7 +33767,7 @@ function $SceProvider() {
      * @name $sce#getTrustedUrl
      *
      * @description
-	 * Shorthand method.  `$sce.getTrustedUrl(value)` →
+     * Shorthand method.  `$sce.getTrustedUrl(value)` →
      *     {@link ng.$sceDelegate#getTrusted `$sceDelegate.getTrusted($sce.URL, value)`}
      *
      * @param {*} value The value to pass to `$sce.getTrusted`.
@@ -33779,7 +33779,7 @@ function $SceProvider() {
      * @name $sce#getTrustedResourceUrl
      *
      * @description
-	 * Shorthand method.  `$sce.getTrustedResourceUrl(value)` →
+     * Shorthand method.  `$sce.getTrustedResourceUrl(value)` →
      *     {@link ng.$sceDelegate#getTrusted `$sceDelegate.getTrusted($sce.RESOURCE_URL, value)`}
      *
      * @param {*} value The value to pass to `$sceDelegate.getTrusted`.
@@ -33791,7 +33791,7 @@ function $SceProvider() {
      * @name $sce#getTrustedJs
      *
      * @description
-	 * Shorthand method.  `$sce.getTrustedJs(value)` →
+     * Shorthand method.  `$sce.getTrustedJs(value)` →
      *     {@link ng.$sceDelegate#getTrusted `$sceDelegate.getTrusted($sce.JS, value)`}
      *
      * @param {*} value The value to pass to `$sce.getTrusted`.
@@ -33803,15 +33803,15 @@ function $SceProvider() {
      * @name $sce#parseAsHtml
      *
      * @description
-	 * Shorthand method.  `$sce.parseAsHtml(expression string)` →
+     * Shorthand method.  `$sce.parseAsHtml(expression string)` →
      *     {@link ng.$sce#parseAs `$sce.parseAs($sce.HTML, value)`}
      *
      * @param {string} expression String expression to compile.
      * @returns {function(context, locals)} a function which represents the compiled expression:
      *
-	 *    * `context` – `{object}` – an object against which any expressions embedded in the strings
+     *    * `context` – `{object}` – an object against which any expressions embedded in the strings
      *      are evaluated against (typically a scope object).
-	 *    * `locals` – `{object=}` – local variables context object, useful for overriding values in
+     *    * `locals` – `{object=}` – local variables context object, useful for overriding values in
      *      `context`.
      */
 
@@ -33820,15 +33820,15 @@ function $SceProvider() {
      * @name $sce#parseAsCss
      *
      * @description
-	 * Shorthand method.  `$sce.parseAsCss(value)` →
+     * Shorthand method.  `$sce.parseAsCss(value)` →
      *     {@link ng.$sce#parseAs `$sce.parseAs($sce.CSS, value)`}
      *
      * @param {string} expression String expression to compile.
      * @returns {function(context, locals)} a function which represents the compiled expression:
      *
-	 *    * `context` – `{object}` – an object against which any expressions embedded in the strings
+     *    * `context` – `{object}` – an object against which any expressions embedded in the strings
      *      are evaluated against (typically a scope object).
-	 *    * `locals` – `{object=}` – local variables context object, useful for overriding values in
+     *    * `locals` – `{object=}` – local variables context object, useful for overriding values in
      *      `context`.
      */
 
@@ -33837,15 +33837,15 @@ function $SceProvider() {
      * @name $sce#parseAsUrl
      *
      * @description
-	 * Shorthand method.  `$sce.parseAsUrl(value)` →
+     * Shorthand method.  `$sce.parseAsUrl(value)` →
      *     {@link ng.$sce#parseAs `$sce.parseAs($sce.URL, value)`}
      *
      * @param {string} expression String expression to compile.
      * @returns {function(context, locals)} a function which represents the compiled expression:
      *
-	 *    * `context` – `{object}` – an object against which any expressions embedded in the strings
+     *    * `context` – `{object}` – an object against which any expressions embedded in the strings
      *      are evaluated against (typically a scope object).
-	 *    * `locals` – `{object=}` – local variables context object, useful for overriding values in
+     *    * `locals` – `{object=}` – local variables context object, useful for overriding values in
      *      `context`.
      */
 
@@ -33854,15 +33854,15 @@ function $SceProvider() {
      * @name $sce#parseAsResourceUrl
      *
      * @description
-	 * Shorthand method.  `$sce.parseAsResourceUrl(value)` →
+     * Shorthand method.  `$sce.parseAsResourceUrl(value)` →
      *     {@link ng.$sce#parseAs `$sce.parseAs($sce.RESOURCE_URL, value)`}
      *
      * @param {string} expression String expression to compile.
      * @returns {function(context, locals)} a function which represents the compiled expression:
      *
-	 *    * `context` – `{object}` – an object against which any expressions embedded in the strings
+     *    * `context` – `{object}` – an object against which any expressions embedded in the strings
      *      are evaluated against (typically a scope object).
-	 *    * `locals` – `{object=}` – local variables context object, useful for overriding values in
+     *    * `locals` – `{object=}` – local variables context object, useful for overriding values in
      *      `context`.
      */
 
@@ -33871,15 +33871,15 @@ function $SceProvider() {
      * @name $sce#parseAsJs
      *
      * @description
-	 * Shorthand method.  `$sce.parseAsJs(value)` →
+     * Shorthand method.  `$sce.parseAsJs(value)` →
      *     {@link ng.$sce#parseAs `$sce.parseAs($sce.JS, value)`}
      *
      * @param {string} expression String expression to compile.
      * @returns {function(context, locals)} a function which represents the compiled expression:
      *
-	 *    * `context` – `{object}` – an object against which any expressions embedded in the strings
+     *    * `context` – `{object}` – an object against which any expressions embedded in the strings
      *      are evaluated against (typically a scope object).
-	 *    * `locals` – `{object=}` – local variables context object, useful for overriding values in
+     *    * `locals` – `{object=}` – local variables context object, useful for overriding values in
      *      `context`.
      */
 
@@ -45570,7 +45570,7 @@ function asset_path(name) {
         'drinks.png': '/assets/drinks-1e4e8c943d17f2157cc9114b30f8d9ffd3e939c113049b2ccb824e2ef4ed85f6.png',
         'new.png': '/assets/new-053de3583ab069972e53dc312d224551c69220594d140e5ee1c7e0974761c8f6.png',
         'info.html': '/assets/info-f37532b09cf55840686758b1f8ba8bca1af21d888056b9ae5794f08e835394c6.html',
-		'new_point.html': '/assets/new_point-549f56c8c6db6db0455db409c80e4b2e5ad1c41412e6d25ee7a753ca55bd6024.html',
+        'new_point.html': '/assets/new_point-20828da8d813bcf97b062b273747356e7dc34a51d327ebe33a040e485f16207c.html',
         'send_message.png': '/assets/send_message-58fa0559f449b875d8e86490c748c2ce91c550b55ed3873ac7c5d4b6a67b1382.png',
         'event.png': '/assets/event-c4db32a00df3b3d4e9f4cb9eed09c3b90d8a4c9ea3abc25bf50002462cc08981.png',
         'message.png': '/assets/message-3e14147184f4ea22317ca69d10a9f75356ae4a1c76c185fa709ceb72184e2556.png'
@@ -45590,6 +45590,11 @@ function iconForPoint(type) {
         case 'message':
         {
             icon = asset_path('message.png');
+            break;
+        }
+        case 'bar':
+        {
+            icon = asset_path('drinks.png');
             break;
         }
     }
@@ -45629,8 +45634,8 @@ function ChatController($scope, ChatMessage, User) {
             });
     };
     this.update = function () {
-        var id = $this.messages?$this.messages[$this.messages.length - 1].id:0;
-        ChatMessage.latest( id, function (result) {
+        var id = $this.messages ? $this.messages[$this.messages.length - 1].id : 0;
+        ChatMessage.latest(id, function (result) {
             if (result.data.length > 0) {
                 result.data.forEach(function (msg) {
                     $this.messages.push(msg);
@@ -45644,8 +45649,9 @@ function ChatController($scope, ChatMessage, User) {
         setTimeout($this.update, 2500);
     };
     this.enable = function () {
-		delayedScroll();
         $this.enabled = !$this.enabled;
+        if ($this.enabled)
+            delayedScroll();
         container.toggleClass('deployed');
         container.toggleClass('undeployed');
     };
@@ -45653,13 +45659,13 @@ function ChatController($scope, ChatMessage, User) {
         ChatMessage.index(function (result) {
             $this.messages = result;
         });
-        setTimeout($this.update,2500);
+        setTimeout($this.update, 2500);
 
     };
     var delayedScroll = function () {
         setTimeout(function () {
-			messages.animate({scrollTop: messages[0].scrollHeight})
-		}, 1000);
+            messages.animate({scrollTop: messages[0].scrollHeight})
+        }, 300);
     };
     init();
 }
@@ -45671,7 +45677,7 @@ function ChatController($scope, ChatMessage, User) {
 function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
     var $this = this;
 
-	this.heading = 'Алкомап β';
+    this.heading = 'Алкомап β';
     this.currentPoint = undefined;
     this.openedInfos = undefined;
     this.user = User;
@@ -45872,7 +45878,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
 
         $this.usersMarker = new google.maps.Marker({
             position: USER_POSITION,
-			label: "Ты здесь",
+            label: "Ты здесь",
             icon: {
                 url: asset_path('Alien.png')
             },
@@ -45890,6 +45896,17 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
 
 function NewsController(News, User) {
     var $this = this;
+
+    this.wordForPointType = function(type)
+    {
+        switch(type)
+        {
+            case "message": return "���������";
+            case "marker": return "�������";
+            case "shop": return "�������";
+            case "bar": return "���";
+        }
+    };
 
     this.update = function () {
         var id = $this.news ? $this.news[0].id : 0;

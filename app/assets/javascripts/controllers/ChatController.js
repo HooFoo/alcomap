@@ -47,7 +47,7 @@ function ChatController($scope, ChatMessage, User) {
     var delayedScroll = function () {
         setTimeout(function () {
             messages.animate({scrollTop: messages[0].scrollHeight})
-        }, 1000);
+        }, 300);
     };
     init();
 }

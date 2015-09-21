@@ -508,27 +508,31 @@ div.dropdown.ib {
   width: auto;
   position: inherit;
   transform: translate(0, 150px);
+  -webkit-transform: translate(0, 150px);
+  max-height: 72vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* line 445, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 449, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #settings {
   text-align: center;
 }
 
-/* line 449, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 453, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .news_header {
   font-weight: bold;
   font-size: 1.5em;
 }
 
-/* line 454, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 458, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #news {
   text-align: center;
   background-color: rgba(249, 249, 249, 0.7);
   height: 100vh;
 }
 
-/* line 460, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 464, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #news_scroller {
   position: absolute;
   z-index: 1;
@@ -541,7 +545,7 @@ div.dropdown.ib {
   height: 95vh;
 }
 
-/* line 472, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 476, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .news {
   list-style-type: none;
   list-style-type: none;
@@ -554,34 +558,34 @@ div.dropdown.ib {
   border-radius: 4px;
 }
 
-/* line 484, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 488, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .news_user_name {
   font-weight: bold;
 }
 
-/* line 488, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 492, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .news_point_name {
   font-weight: bold;
   text-decoration: underline;
 }
 
-/* line 493, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 497, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #news_scroller > ul {
   padding-left: 3px;
 }
 
-/* line 497, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 501, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .legend {
   text-align: left;
   padding-left: 15px;
 }
 
-/* line 502, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 506, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .legend > div > span {
   padding-left: 10px;
 }
 
-/* line 506, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 510, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #comments {
   border-left: 1px solid rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
@@ -589,7 +593,7 @@ div.dropdown.ib {
   height: 100vh;
 }
 
-/* line 513, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 517, C:/Projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .add_point_labels {
   margin-bottom: 0px !important;
 }
@@ -9485,7 +9489,18 @@ button.close {
   overflow: hidden;
 }
 
-/* line 43, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
+@media (max-width: 1024px) {
+  /* line 43, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
+  #trailer {
+    display: none;
+  }
+
+  /* line 47, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
+  #new_user, #edit_user {
+    border: 1px solid #CCCCCC;
+  }
+}
+/* line 53, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
 #trailer > video {
   position: absolute;
   top: 0;
@@ -9495,14 +9510,14 @@ button.close {
 }
 
 @media (min-aspect-ratio: 16 / 9) {
-  /* line 52, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
+  /* line 62, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
   #trailer > video {
     height: 300%;
     top: -100%;
   }
 }
 @media (max-aspect-ratio: 16 / 9) {
-  /* line 59, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
+  /* line 69, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
   #trailer > video {
     width: 300%;
     left: -100%;
@@ -9510,7 +9525,7 @@ button.close {
 }
 /* Если есть поддержка object-fit (Chrome/Chrome для Android, Safari в iOS 8 и Opera), используем его: */
 @supports (object-fit: cover) {
-  /* line 67, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
+  /* line 77, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
   #trailer > video {
     top: 0;
     left: 0;
@@ -9519,18 +9534,18 @@ button.close {
     object-fit: cover;
   }
 }
-/* line 75, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
+/* line 85, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
 .disclaimer {
   text-align: justify;
 }
 
-/* line 79, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
+/* line 89, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
 .centered {
   width: 100%;
   text-align: center;
 }
 
-/* line 84, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
+/* line 94, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
 .form_wrapper {
   border: 1px solid #B3B3B3;
   border-radius: 4px;
@@ -9539,14 +9554,14 @@ button.close {
   margin-top: 5px;
 }
 
-/* line 92, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
+/* line 102, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
 .back {
   width: 100%;
   text-align: left !important;
   padding-left: 0 !important;
 }
 
-/* line 98, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
+/* line 108, C:/Projects/alcomap/app/assets/stylesheets/users.scss */
 .title {
   margin-top: 0;
 }
