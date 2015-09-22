@@ -20,6 +20,11 @@ function ChatController($scope, ChatMessage, User) {
         ChatMessage.latest(id, function (result) {
             if (result.data.length > 0) {
                 result.data.forEach(function (msg) {
+                    if(msg.message.indexOf($this.user.name)>-1) {
+                        var audio = new Audio(asset_path('alert.mp3'));
+                        audio.play();
+                        msg.marked = true;
+                    }
                     $this.messages.push(msg);
                     delayedScroll();
                 });
@@ -36,6 +41,10 @@ function ChatController($scope, ChatMessage, User) {
             delayedScroll();
         container.toggleClass('deployed');
         container.toggleClass('undeployed');
+    };
+    this.selectUser = function (name) {
+        console.log('select '+name);
+        $this.chatMessage = name+", " ;
     };
     var init = function () {
         ChatMessage.index(function (result) {

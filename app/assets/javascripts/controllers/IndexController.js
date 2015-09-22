@@ -192,7 +192,15 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
                 }
             });
         });
+    };
 
+    this.deletePoint = function()
+    {
+        $http.delete('/points/' + $this.currentPoint.id);
+        gmap.clusterer.removeMarker($this.currentPoint.marker);
+        $this.currentPoint.marker.setMap(null);
+        $this.currentPoint = undefined;
+        closeOther(undefined,undefined)
     };
 
     this.setCenter = function (lat, lng, point_id) {

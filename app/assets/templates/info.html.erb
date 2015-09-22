@@ -5,7 +5,13 @@
     <span class="point_description_heading">Описание:</span>
     <span class='point_description'>{{controller.currentPoint.description}}</span><br>
   </div>
-  <span class='user_add'>Добавил: {{controller.currentPoint.user.name}}</span>
+  <div>
+    <span class='user_add'>Добавил: {{controller.currentPoint.user.name}}</span>
+
+    <div class="point_wrap">
+      <span class="delete_point" ng-show="controller.currentPoint.editable" ng-click="controller.deletePoint()">Удалить</span>
+    </div>
+  </div>
 </div>
 <div class='infobox_down' ng-hide="controller.currentPoint.point_type == 'message'">
   <span class='added'>Добавлено: {{controller.currentPoint.created_at}}</span>

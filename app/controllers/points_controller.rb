@@ -12,13 +12,19 @@ class PointsController < InheritedResources::Base
 
   def index(options={}, &block)
     bounds = params[:bounds]
-    unless bounds.nil?
+    if bounds.nil?
+      super
+    else
       parsed = JSON.parse bounds
       @points = Point.mixed.visible parsed
-    else
+    end
+  end
+
+  def destroy
+    @point = Point.find(params[:id])
+    if @point.user == current_user
       super
     end
-
   end
 
   def rate

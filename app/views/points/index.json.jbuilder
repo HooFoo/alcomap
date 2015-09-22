@@ -4,6 +4,8 @@ json.array!(@points) do |point|
   json.url point_url(point, format: :json)
   json.user(point.user, :name)
   json.point_type(point.point_type)
+  json.editable (point.user == current_user)
+
   json.comments (point.comments.reverse) do |comment|
     json.text comment.text
     json.id comment.id
