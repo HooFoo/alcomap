@@ -21,7 +21,7 @@
 //= require angular-resource
 
 
-//= require common
+//= require_tree ./common
 
 //= require_tree ./controllers
 //= require app

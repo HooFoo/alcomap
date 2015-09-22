@@ -53,14 +53,14 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
             $scope.$apply();
         });
 
-        marker.addListener('click', function (event) {
+        marker.openInfo = function (event) {
             $this.currentPoint = findPointInList(item);
             $this.points.splice($this.points.indexOf(item), 1);
             gmap.clusterer.removeMarker(marker);
             marker.setMap(gmap);
             closeOther(infoWindow, marker);
-            $scope.$apply();
-        });
+        };
+        marker.addListener('click', marker.openInfo);
 
 
         item.marker = marker;
@@ -167,6 +167,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
                 if (!(item.id == ($this.currentPoint ? $this.currentPoint.id : undefined)))
                     buildMarker(item);
             });
+            $this.fire('onpointsloaded');
         });
     };
 
@@ -185,13 +186,21 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         });
     };
     this.setPointCurrent = function (point_id) {
-        google.maps.event.addListenerOnce(map, 'idle', function () {
+        var handler = function(){$this.setPointCurrent(point_id)};
+        var was_set = false;
+
+        if($this.points)
             $this.points.forEach(function (item) {
                 if (item.id == point_id) {
-                    google.maps.event.trigger(item.marker, 'click');
+                    was_set = true;
+                    item.marker.openInfo();
                 }
             });
-        });
+        if(!was_set)
+        {
+            $this.addListenerOnce('onpointsloaded', handler);
+        }
+
     };
 
     this.deletePoint = function()
@@ -209,6 +218,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
             $this.setPointCurrent(point_id);
     };
     var init = function () {
+        EventTarget.apply($this);
         gmap.addListener('idle', $this.showMarkers);
 
         $this.usersMarker = new google.maps.Marker({
@@ -224,3 +234,5 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         $this.trackUser();
     }();
 }
+IndexController.prototype = new EventTarget();
+IndexController.prototype.constructor = IndexController;

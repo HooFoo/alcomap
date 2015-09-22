@@ -43,7 +43,6 @@ function ChatController($scope, ChatMessage, User) {
         container.toggleClass('undeployed');
     };
     this.selectUser = function (name) {
-        console.log('select '+name);
         $this.chatMessage = name+", " ;
     };
     var init = function () {
