@@ -1,85 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ff93d683-874e-4cb0-9edc-ec7b955db34a" name="Default" comment="Point">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/images/24.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/images/CreditCard.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/images/beer.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/images/elite.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/images/hard.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20160828204422_point_extention.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20160828204424_create_media.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/views/media/edit.html.erb_spec.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/views/media/index.html.erb_spec.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/media/index.json.jbuilder" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/stylesheets/media.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controllers/media_controller.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/controllers/media_controller_spec.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/helpers/media_helper.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/helpers/media_helper_spec.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/routing/media_routing_spec.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/requests/media_spec.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/medium.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/models/medium_spec.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/views/media/new.html.erb_spec.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/views/media/show.html.erb_spec.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/media/show.json.jbuilder" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\.sprockets-manifest-76d17132a4eba121bfd152bc3363b60e.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\Alien-23ed7e3d380b6467322c6740d54438a490e06bf541fff229f22ea9dd712e3d5e.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\airport-1480552fe4f3f251ae88352add52fa9947e1909ead7470949e177081d4fa2241.ttf" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\airport-b4814971b8c558d18eec1b3daed8316dc79e16bd966d4a5cc8f7e2d3e8812009.woff" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\airport-c825a2a3babab75fac2e2a8da6b7246682cb51fa40198911c95defa15b05f4d1.eot" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\alert-9bdc9c0c1c74c3b1f605c61def3013273a78c0b62e8cc12ce9268da4c8bcf478.mp3" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\anahit-regular-3e9f7551e67f0963e32b40996f558e6e58304c648be468f038b294c9574cd84d.woff" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\anahit-regular-73bf00e713552de0df7b103371f6adff2e466a8686a0291e9a71b921ce0471c9.eot" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\anahit-regular-d9c33fb4d43b1d8798b83c0da5d14d36aacb3aa8b622b496edddff98fec38481.ttf" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\apple-touch-icon-iphone-a4915532289d793a94a3b8e9b5b51e3b4d185385964d5ae69487803cd4ec6732.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\application-225ea4eea242946dab6f2875a2926fbdc111b16c3c79ed08e1e43051b37ac14e.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\application-440b1847f200505e832cbd693412dd416242346bf3db904aed973c2ee3521d91.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\application-66ab8b11683468c93be72cfe38160666d930972142c31ee398807e3d5deee5a8.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\application-70adc911060d63a172f29e3560ade8e9d8cbf58123471d0d06b96eda95be914c.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\application-a328e032ace45fe4f4b318d79fdd04c5e57ab1915e9ac195de84036fec3de1d9.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bg-a8a2677b21aa7759bba3e1d56cf6fcff13534147fb00b629d9e7186149b69b70.webm" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bg-da56e5227859c1f402a739ccbe5b61169eac78b9592e4dcbae5fb40e4d2c5a4d.mp4" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bottle-3c5f9a060846cc46bf30ecad99a07cc1a18859e7c7991b088012a30260b00f98.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\center-f2b555a668a966da5e65aed53f7eee3046c209bf7f39ffb240344a9a22157bca.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\drinks-1e4e8c943d17f2157cc9114b30f8d9ffd3e939c113049b2ccb824e2ef4ed85f6.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\event-c4db32a00df3b3d4e9f4cb9eed09c3b90d8a4c9ea3abc25bf50002462cc08981.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\favicon-4d137ec81b983031ea86b54761bdf1c66ace9301f8eb68f6e1037931536433fb.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\info-79232ac85d467ccdb92d311dc895e904784a4c73a51cb6014c793ad8cffa15fd.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\info-f37532b09cf55840686758b1f8ba8bca1af21d888056b9ae5794f08e835394c6.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\ios_add-502ec3ce24af885399ad1c2c5eb7c948501c185353c7ed817fab235ba2ce66a2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\manifest-7f03c746b3ce63b505c77f1940d1e3940c2669acfabad68ab0406c68f67915d5.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\message-3e14147184f4ea22317ca69d10a9f75356ae4a1c76c185fa709ceb72184e2556.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\new-053de3583ab069972e53dc312d224551c69220594d140e5ee1c7e0974761c8f6.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\new_point-20828da8d813bcf97b062b273747356e7dc34a51d327ebe33a040e485f16207c.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\send_message-58fa0559f449b875d8e86490c748c2ce91c550b55ed3873ac7c5d4b6a67b1382.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\settings-a1b63c4186887636774b3814520f8dd629edaf4bd2169dbcc64c0dc449f7168d.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\touch-icon-ipad-27a7f5f8992b08392521c937b3742b12f87cf16e3fa83fcb40d8397591ec99c9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\touch-icon-ipad-retina-e6acf61e42545562fd16b46d0ce4667c55455d04323a6d406a8c942e18fbce30.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\touch-icon-iphone-retina-ce7e510bc12457295f26b28325601276d2178f6ad0e4d8eb6d5a12fa2c4ac9ea.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/controllers/ChatController.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/controllers/ChatController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/controllers/IndexController.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/controllers/IndexController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/alcomap.iml" afterPath="$PROJECT_DIR$/.idea/alcomap.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/app.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/comment.rb" afterPath="$PROJECT_DIR$/app/models/comment.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/points/create.json.jbuilder" afterPath="$PROJECT_DIR$/app/views/points/create.json.jbuilder" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/points/index.json.jbuilder" afterPath="$PROJECT_DIR$/app/views/points/index.json.jbuilder" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/index_controller.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/index_controller.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/templates/info.html.erb" afterPath="$PROJECT_DIR$/app/assets/templates/info.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/users/invitations/new.html.erb" afterPath="$PROJECT_DIR$/app/views/users/invitations/new.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/templates/new_point.html.erb" afterPath="$PROJECT_DIR$/app/assets/templates/new_point.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/news.rb" afterPath="$PROJECT_DIR$/app/models/news.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/point.rb" afterPath="$PROJECT_DIR$/app/models/point.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/points_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/points_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/templates/settings.html.erb" afterPath="$PROJECT_DIR$/app/assets/templates/settings.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/points/show.json.jbuilder" afterPath="$PROJECT_DIR$/app/views/points/show.json.jbuilder" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/user.rb" afterPath="$PROJECT_DIR$/app/models/user.rb" />
+    <list default="true" id="ff93d683-874e-4cb0-9edc-ec7b955db34a" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20160828204422_point_extention.rb" afterPath="$PROJECT_DIR$/db/migrate/20160828204422_point_extention.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="alcomap.iws" />
@@ -173,11 +96,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IndexController.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="IndexController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/controllers/IndexController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.28337237">
-              <caret line="100" column="9" selection-start-line="100" selection-start-column="9" selection-end-line="100" selection-end-column="9" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="95" column="25" selection-start-line="95" selection-start-column="25" selection-end-line="95" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="20160828204422_point_extention.rb" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/db/migrate/20160828204422_point_extention.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.27868852">
+              <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -298,7 +231,6 @@
         <option value="$PROJECT_DIR$/app/models/user.rb" />
         <option value="$PROJECT_DIR$/app/controllers/media_controller.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20160828204424_create_media.rb" />
-        <option value="$PROJECT_DIR$/db/migrate/20160828204422_point_extention.rb" />
         <option value="$PROJECT_DIR$/app/views/points/index.json.jbuilder" />
         <option value="$PROJECT_DIR$/app/views/points/create.json.jbuilder" />
         <option value="$PROJECT_DIR$/app/views/points/show.json.jbuilder" />
@@ -309,6 +241,7 @@
         <option value="$PROJECT_DIR$/app/assets/stylesheets/index_controller.scss" />
         <option value="$PROJECT_DIR$/app/controllers/points_controller.rb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/controllers/IndexController.js" />
+        <option value="$PROJECT_DIR$/db/migrate/20160828204422_point_extention.rb" />
       </list>
     </option>
   </component>
@@ -425,6 +358,38 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alcomap" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alcomap" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alcomap" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alcomap" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="migrate" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1050,7 +1015,13 @@
       <option name="project" value="LOCAL" />
       <updated>1442963327361</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Point attributes">
+      <created>1443045202311</created>
+      <option name="number" value="00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1443045202311</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -1103,7 +1074,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/alcomap" />
     </ignored-roots>
-    <MESSAGE value="test secret key" />
     <MESSAGE value="PG ref migration fix" />
     <MESSAGE value="Point addition works&#10;" />
     <MESSAGE value="precompilled assets for heroku" />
@@ -1128,7 +1098,8 @@
     <MESSAGE value="Bars&#10;Visual Fixes" />
     <MESSAGE value="chat improvement&#10;rosal points" />
     <MESSAGE value="Show point info on click" />
-    <option name="LAST_COMMIT_MESSAGE" value="Show point info on click" />
+    <MESSAGE value="Point attributes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Point attributes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1429,19 +1400,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db/migrate/20160828204422_point_extention.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
-          <caret line="14" column="33" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="33" />
-          <caret line="13" column="32" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="32" />
-          <caret line="12" column="32" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="32" />
-          <caret line="11" column="40" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="40" />
-          <caret line="10" column="38" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/points/show.json.jbuilder">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.31850117">
@@ -1574,8 +1532,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/controllers/IndexController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28337237">
-          <caret line="100" column="9" selection-start-line="100" selection-start-column="9" selection-end-line="100" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="95" column="25" selection-start-line="95" selection-start-column="25" selection-end-line="95" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/migrate/20160828204422_point_extention.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27868852">
+          <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
           <folding />
         </state>
       </provider>

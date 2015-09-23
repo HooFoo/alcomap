@@ -5,7 +5,7 @@ class PointExtention < ActiveRecord::Migration
     add_column :points, :beer, :boolean, :default => true
     add_column :points, :hard, :boolean, :default => true
     add_column :points, :elite, :boolean, :default => false
-    Point.where("name == 'Росал'").update_all(:elite => true, :cardAccepted => true)
+    Point.where("name = 'Росал'").update_all(:elite => true, :cardAccepted => true)
   end
   def down
     remove_column :points, :isFulltime, :boolean
