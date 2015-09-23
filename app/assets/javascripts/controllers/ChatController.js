@@ -44,6 +44,7 @@ function ChatController($scope, ChatMessage, User) {
     };
     this.selectUser = function (name) {
         $this.chatMessage = name+", " ;
+        $('input.chat_msg_box').focus();
     };
     var init = function () {
         ChatMessage.index(function (result) {

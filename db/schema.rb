@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160828204421) do
+ActiveRecord::Schema.define(version: 20160828204424) do
 
   create_table "_points_old_20150916", force: :cascade do |t|
     t.float    "lng"
@@ -43,6 +43,19 @@ ActiveRecord::Schema.define(version: 20160828204421) do
   add_index "comments", ["point_id"], name: "index_comments_on_point_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
+  create_table "media", force: :cascade do |t|
+    t.integer  "comment_id"
+    t.integer  "point_id"
+    t.integer  "user_id"
+    t.binary   "bin"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "media", ["comment_id"], name: "index_media_on_comment_id"
+  add_index "media", ["point_id"], name: "index_media_on_point_id"
+  add_index "media", ["user_id"], name: "index_media_on_user_id"
+
   create_table "news", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "point_id"
@@ -58,11 +71,16 @@ ActiveRecord::Schema.define(version: 20160828204421) do
     t.float    "lat"
     t.string   "name"
     t.string   "description"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.integer  "user_id"
-    t.integer  "rating",      default: 0
+    t.integer  "rating",       default: 0
     t.string   "point_type"
+    t.boolean  "isFulltime",   default: true
+    t.boolean  "cardAccepted", default: false
+    t.boolean  "beer",         default: true
+    t.boolean  "hard",         default: true
+    t.boolean  "elite",        default: false
   end
 
   add_index "points", ["user_id"], name: "index_points_on_user_id"

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :media
   resources :news, defaults: {format: :json}
   resources :settings, defaults: {format: :json}
   resources :chat_messages, defaults: {format: :json}

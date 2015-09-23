@@ -53,7 +53,7 @@ class PointsController < InheritedResources::Base
   private
 
   def point_params
-    params.require(:point).permit(:lng, :lat, :name, :description, :point_type, :user_id)
+    params.require(:point).permit(:lng, :lat, :name, :description, :point_type, :user_id, :isFulltime, :cardAccepted, :beer, :hard, :elite)
   end
 end
 

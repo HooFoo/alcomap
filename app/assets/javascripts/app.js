@@ -182,4 +182,11 @@ app.directive('myEnter', function () {
 });
 app.run(['$http', function ($http) {
     $http.defaults.headers.common['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content');
+    $('body').keypress(function(event)
+    {
+        switch(event.which)
+        {
+            case 96: {$('.screen_label').trigger('click'); break;}
+        }
+    })
 }]);

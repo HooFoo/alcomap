@@ -1,6 +1,7 @@
 class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :point
+  has_many :media
   validates :text, presence: true
   validates :user, presence: true
   validates :point, presence: true

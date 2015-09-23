@@ -102,7 +102,16 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         return style;
     };
     this.addPointDraggable = function (type) {
-        $scope.point = {lat: gmap.getCenter().lat(), lng: gmap.getCenter().lng(), point_type: type};
+        $scope.point = {
+            lat: gmap.getCenter().lat(),
+            lng: gmap.getCenter().lng(),
+            point_type: type,
+            isFulltime: true,
+            cardAccepted: false,
+            beer: true,
+            hard: false,
+            elite: false
+        };
 
         var marker = new google.maps.Marker({
             position: $scope.point,
@@ -137,6 +146,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
     };
 
     this.addPoint = function () {
+        console.log($scope.point);
         var point = Point.new($scope.point, function (result) {
             var marker = buildMarker(result);
         });
@@ -186,30 +196,30 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         });
     };
     this.setPointCurrent = function (point_id) {
-        var handler = function(){$this.setPointCurrent(point_id)};
+        var handler = function () {
+            $this.setPointCurrent(point_id)
+        };
         var was_set = false;
 
-        if($this.points)
+        if ($this.points)
             $this.points.forEach(function (item) {
                 if (item.id == point_id) {
                     was_set = true;
                     item.marker.openInfo();
                 }
             });
-        if(!was_set)
-        {
+        if (!was_set) {
             $this.addListenerOnce('onpointsloaded', handler);
         }
 
     };
 
-    this.deletePoint = function()
-    {
+    this.deletePoint = function () {
         $http.delete('/points/' + $this.currentPoint.id);
         gmap.clusterer.removeMarker($this.currentPoint.marker);
         $this.currentPoint.marker.setMap(null);
         $this.currentPoint = undefined;
-        closeOther(undefined,undefined)
+        closeOther(undefined, undefined)
     };
 
     this.setCenter = function (lat, lng, point_id) {
@@ -230,8 +240,8 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
             map: gmap
         });
         updateUserPosition();
-        $this.centerForUser();
         $this.trackUser();
+        setTimeout($this.centerForUser(), 1500);
     }();
 }
 IndexController.prototype = new EventTarget();

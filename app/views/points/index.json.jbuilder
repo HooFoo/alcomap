@@ -1,5 +1,5 @@
 json.array!(@points) do |point|
-  json.extract! point, :id, :lng, :lat, :name, :rating, :description, :user_id
+  json.extract! point, :id, :lng, :lat, :name, :rating, :description, :isFulltime, :cardAccepted, :beer, :hard, :elite
   json.created_at point.created_at.strftime("%d %b. %Y")
   json.url point_url(point, format: :json)
   json.user(point.user, :name)

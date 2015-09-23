@@ -1,4 +1,4 @@
-json.extract! @point, :id, :lng, :lat, :name, :rating, :description, :updated_at
+json.extract! @point, :id, :lng, :lat, :name, :rating, :description, :updated_at, :isFulltime, :cardAccepted, :beer, :hard, :elite
 json.url point_url(@point, format: :json)
 json.user(@point.user, :name)
 json.created_at @point.created_at.strftime("%d %b. %Y")

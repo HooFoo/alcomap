@@ -11,4 +11,5 @@ class User < ActiveRecord::Base
   has_many :rated_points
   has_many :chat_messages
   has_one :setting
+  has_many :media
 end
