@@ -20,7 +20,7 @@ function ChatController($scope, ChatMessage, User) {
         ChatMessage.latest(id, function (result) {
             if (result.data.length > 0) {
                 result.data.forEach(function (msg) {
-                    if(msg.message.indexOf($this.user.name)>-1) {
+                    if(msg.message && msg.message.indexOf($this.user.name)>-1) {
                         var audio = new Audio(asset_path('alert.mp3'));
                         audio.play();
                         msg.marked = true;
@@ -47,10 +47,14 @@ function ChatController($scope, ChatMessage, User) {
         $('input.chat_msg_box').focus();
     };
     var init = function () {
+
+        EventTarget.apply($this);
+        $this.addListenerOnce('messagesloaded',$this.update);
         ChatMessage.index(function (result) {
             $this.messages = result;
+            //ждем пока отрисуется
+            setTimeout(function(){$this.fire('messagesloaded')})
         });
-        setTimeout($this.update, 2500);
 
     };
     var delayedScroll = function () {
@@ -60,3 +64,5 @@ function ChatController($scope, ChatMessage, User) {
     };
     init();
 }
+ChatController.prototype = new EventTarget();
+ChatController.prototype.constructor = ChatController;

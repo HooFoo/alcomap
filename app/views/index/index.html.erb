@@ -86,6 +86,8 @@
               <div class="news_text" ng-init="type = wordForPointType(item.point.point_type)"> Добавил точку
                 <span class="news_point_name" ng-click="controller.setCenter(item.point.lat,item.point.lng,item.point.id)">{{item.point.name}}</span>
               </div>
+              <span class="news_timestamp">{{item.created_at}}</span>
+
             </li>
           </ul>
         </div>
