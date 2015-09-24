@@ -52,7 +52,7 @@ function ChatController($scope, ChatMessage, User) {
         $this.addListenerOnce('messagesloaded',$this.update);
         ChatMessage.index(function (result) {
             $this.messages = result;
-            //ждем пока отрисуется
+            //Р¶РґРµРј РїРѕРєР° РѕС‚СЂРёСЃСѓРµС‚СЃСЏ
             setTimeout(function(){$this.fire('messagesloaded')})
         });
 
