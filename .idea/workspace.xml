@@ -2,53 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ff93d683-874e-4cb0-9edc-ec7b955db34a" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\.sprockets-manifest-a853459627680cc9b2af5eaa77124161.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\24-224e513c3f3010e9d20a8e6472c3fbc57eea6d07389d0e13892e2dafa39aea65.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\Alien-23ed7e3d380b6467322c6740d54438a490e06bf541fff229f22ea9dd712e3d5e.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\CreditCard-0ef517a2c1c489af8205760a0d00634293a7d06a4e0587f95be6f1db5d1651f5.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\airport-1480552fe4f3f251ae88352add52fa9947e1909ead7470949e177081d4fa2241.ttf" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\airport-b4814971b8c558d18eec1b3daed8316dc79e16bd966d4a5cc8f7e2d3e8812009.woff" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\airport-c825a2a3babab75fac2e2a8da6b7246682cb51fa40198911c95defa15b05f4d1.eot" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\alert-9bdc9c0c1c74c3b1f605c61def3013273a78c0b62e8cc12ce9268da4c8bcf478.mp3" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\anahit-regular-3e9f7551e67f0963e32b40996f558e6e58304c648be468f038b294c9574cd84d.woff" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\anahit-regular-73bf00e713552de0df7b103371f6adff2e466a8686a0291e9a71b921ce0471c9.eot" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\anahit-regular-d9c33fb4d43b1d8798b83c0da5d14d36aacb3aa8b622b496edddff98fec38481.ttf" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\apple-touch-icon-iphone-a4915532289d793a94a3b8e9b5b51e3b4d185385964d5ae69487803cd4ec6732.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\application-ac3e9a63c3802f3c1937403992c565ce52e93ffbc6e19f06657991ca7828806f.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\application-bf68745981749d697d34b8672841695a5343eb452902931cf127faa42e9911c6.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\beer-6897b550a326062c123b58cc7488ed054dbb33532710c42f5509614dfad8193f.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bg-a8a2677b21aa7759bba3e1d56cf6fcff13534147fb00b629d9e7186149b69b70.webm" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bg-da56e5227859c1f402a739ccbe5b61169eac78b9592e4dcbae5fb40e4d2c5a4d.mp4" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bootstrap\glyphicons-halflings-regular-13634da87d9e23f8c3ed9108ce1724d183a39ad072e73e1b3d8cbf646d2d0407.eot" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bootstrap\glyphicons-halflings-regular-42f60659d265c1a3c30f9fa42abcbb56bd4a53af4d83d316d6dd7a36903c43e5.svg" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bootstrap\glyphicons-halflings-regular-a26394f7ede100ca118eff2eda08596275a9839b959c226e15439557a5a80742.woff" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bootstrap\glyphicons-halflings-regular-e395044093757d82afcb138957d06a1ea9361bdcf0b442d06a18a8051af57456.ttf" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bootstrap\glyphicons-halflings-regular-fe185d11a49676890d47bb783312a0cda5a44c4039214094e7957b4c040ef11c.woff2" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bottle-3c5f9a060846cc46bf30ecad99a07cc1a18859e7c7991b088012a30260b00f98.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\center-f2b555a668a966da5e65aed53f7eee3046c209bf7f39ffb240344a9a22157bca.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\drinks-1e4e8c943d17f2157cc9114b30f8d9ffd3e939c113049b2ccb824e2ef4ed85f6.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\elite-6562a12a0042f0013993b75673e067be3f968779a6fbedfd97d40a9048111d23.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\event-c4db32a00df3b3d4e9f4cb9eed09c3b90d8a4c9ea3abc25bf50002462cc08981.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\favicon-4d137ec81b983031ea86b54761bdf1c66ace9301f8eb68f6e1037931536433fb.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\hard-f199e9219c2d7437033ea84d61f8d5fee8923833a03e50874417b5ae31be9d00.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\info-a6a554708432dc53ce47021dd071699f7a894dd4f337f9e70d2dfabf2720687c.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\ios_add-502ec3ce24af885399ad1c2c5eb7c948501c185353c7ed817fab235ba2ce66a2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\manifest-7f03c746b3ce63b505c77f1940d1e3940c2669acfabad68ab0406c68f67915d5.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\message-3e14147184f4ea22317ca69d10a9f75356ae4a1c76c185fa709ceb72184e2556.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\new-053de3583ab069972e53dc312d224551c69220594d140e5ee1c7e0974761c8f6.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\new_point-566fd2f6b2ea7761b341b6a9bcad81c2a91580cc11efe57cdda022266e239475.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\send_message-58fa0559f449b875d8e86490c748c2ce91c550b55ed3873ac7c5d4b6a67b1382.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\settings-7d52f137712ac7fb6572825ae0fdcbc4c7fef557b74bcefcf28a9d4972580eaa.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\touch-icon-ipad-27a7f5f8992b08392521c937b3742b12f87cf16e3fa83fcb40d8397591ec99c9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\touch-icon-ipad-retina-e6acf61e42545562fd16b46d0ce4667c55455d04323a6d406a8c942e18fbce30.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\touch-icon-iphone-retina-ce7e510bc12457295f26b28325601276d2178f6ad0e4d8eb6d5a12fa2c4ac9ea.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/controllers/ChatController.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/controllers/ChatController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/index/index.html.erb" afterPath="$PROJECT_DIR$/app/views/index/index.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/chat_messages/index.json.jbuilder" afterPath="$PROJECT_DIR$/app/views/chat_messages/index.json.jbuilder" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/news/index.json.jbuilder" afterPath="$PROJECT_DIR$/app/views/news/index.json.jbuilder" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/index_controller.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/index_controller.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/templates/settings.html.erb" afterPath="$PROJECT_DIR$/app/assets/templates/settings.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/chat_messages/show.json.jbuilder" afterPath="$PROJECT_DIR$/app/views/chat_messages/show.json.jbuilder" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="alcomap.iws" />
@@ -64,7 +17,7 @@
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/alcomap@db_migrate__alcomap.coverage" NAME="db:migrate: alcomap Coverage Results" MODIFIED="1443016090794" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
-    <SUITE FILE_PATH="coverage/alcomap@assets_precompile__alcomap.coverage" NAME="assets:precompile: alcomap Coverage Results" MODIFIED="1443046011856" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
+    <SUITE FILE_PATH="coverage/alcomap@assets_precompile__alcomap.coverage" NAME="assets:precompile: alcomap Coverage Results" MODIFIED="1443105885599" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
     <SUITE FILE_PATH="coverage/alcomap@Rails_console__alcomap.coverage" NAME="Rails console: alcomap Coverage Results" MODIFIED="1443015542706" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
     <SUITE FILE_PATH="coverage/alcomap@db_drop__alcomap.coverage" NAME="db:drop: alcomap Coverage Results" MODIFIED="1441153061309" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
     <SUITE FILE_PATH="coverage/alcomap@assets_clean_keep___alcomap.coverage" NAME="assets:clean[keep]: alcomap Coverage Results" MODIFIED="1442963137853" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
@@ -319,24 +272,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="alcomap" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="alcomap" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="db" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -527,7 +462,7 @@
       <recent name="C:\Projects\alcomap\app\views\layouts" />
     </key>
   </component>
-  <component name="RunManager" selected="Rake.assets:clobber: alcomap">
+  <component name="RunManager" selected="Rake.assets:precompile: alcomap">
     <configuration default="false" name="Rails console: alcomap" type="IrbRunConfigurationType" factoryName="IRB console" temporary="true">
       <module name="alcomap" />
       <IRB_RUN_CONFIG NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
@@ -1043,7 +978,13 @@
       <option name="project" value="LOCAL" />
       <updated>1443046173216</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Chat fixes, UI fixes">
+      <created>1443105658309</created>
+      <option name="number" value="00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1443105658309</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -1065,9 +1006,9 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3139183" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24508321" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24508321" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32890856" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32890856" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32890856" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -1096,7 +1037,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/alcomap" />
     </ignored-roots>
-    <MESSAGE value="precompilled assets for heroku" />
     <MESSAGE value="Looks more pretty" />
     <MESSAGE value="ui fixes&#10;anti_span fixes" />
     <MESSAGE value="Rating //not working!&#10;fixes" />
@@ -1121,7 +1061,8 @@
     <MESSAGE value="Point attributes" />
     <MESSAGE value="Points attr migration fix" />
     <MESSAGE value="assets" />
-    <option name="LAST_COMMIT_MESSAGE" value="assets" />
+    <MESSAGE value="Chat fixes, UI fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Chat fixes, UI fixes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
