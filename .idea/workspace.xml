@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ff93d683-874e-4cb0-9edc-ec7b955db34a" name="Default" comment="utf">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/application-056627a677c98bf8416b6c0b5b3776000193848e271876d4a9c45b6dd7253f2b.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/.sprockets-manifest-b5b71cd88cc629cefcc90a7496322407.json" afterPath="$PROJECT_DIR$/public/assets/.sprockets-manifest-b5b71cd88cc629cefcc90a7496322407.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/controllers/ChatController.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/controllers/ChatController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
+    <list default="true" id="ff93d683-874e-4cb0-9edc-ec7b955db34a" name="Default" comment="">
+      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\.sprockets-manifest-b5b71cd88cc629cefcc90a7496322407.json" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\application-3fc42b9868c7fa809a3f66bbc5ac3eb95b011a875db5a3231a06eb4635f9b937.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\application-5cf80babffa59e98b49ce7d5c5b073952b027afe5e37efb074e9bf52e7b7e239.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="alcomap.iws" />
@@ -21,14 +20,14 @@
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/alcomap@db_migrate__alcomap.coverage" NAME="db:migrate: alcomap Coverage Results" MODIFIED="1443016090794" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
-    <SUITE FILE_PATH="coverage/alcomap@assets_precompile__alcomap.coverage" NAME="assets:precompile: alcomap Coverage Results" MODIFIED="1443109458708" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
+    <SUITE FILE_PATH="coverage/alcomap@assets_precompile__alcomap.coverage" NAME="assets:precompile: alcomap Coverage Results" MODIFIED="1443110004336" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
     <SUITE FILE_PATH="coverage/alcomap@Rails_console__alcomap.coverage" NAME="Rails console: alcomap Coverage Results" MODIFIED="1443015542706" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
     <SUITE FILE_PATH="coverage/alcomap@db_drop__alcomap.coverage" NAME="db:drop: alcomap Coverage Results" MODIFIED="1441153061309" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
     <SUITE FILE_PATH="coverage/alcomap@assets_clean_keep___alcomap.coverage" NAME="assets:clean[keep]: alcomap Coverage Results" MODIFIED="1443106488650" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
     <SUITE FILE_PATH="coverage/alcomap@Production__alcomap.coverage" NAME="Production: alcomap Coverage Results" MODIFIED="1440794597565" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
     <SUITE FILE_PATH="coverage/alcomap@db_rollback__alcomap.coverage" NAME="db:rollback: alcomap Coverage Results" MODIFIED="1443016048997" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
     <SUITE FILE_PATH="coverage/alcomap@Development__alcomap.coverage" NAME="Development: alcomap Coverage Results" MODIFIED="1442518424941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
-    <SUITE FILE_PATH="coverage/alcomap@assets_clobber__alcomap.coverage" NAME="assets:clobber: alcomap Coverage Results" MODIFIED="1443104548765" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
+    <SUITE FILE_PATH="coverage/alcomap@assets_clobber__alcomap.coverage" NAME="assets:clobber: alcomap Coverage Results" MODIFIED="1443109981641" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
     <SUITE FILE_PATH="coverage/alcomap@Development__alcomap__.coverage" NAME="Development: alcomap штеукфд туецщкл Coverage Results" MODIFIED="1443109184959" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
     <SUITE FILE_PATH="coverage/alcomap@IRB_console__alcomap.coverage" NAME="IRB console: alcomap Coverage Results" MODIFIED="1443015454713" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
   </component>
@@ -78,48 +77,7 @@
     <favorites_list name="alcomap" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="index.json.jbuilder" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/news/index.json.jbuilder">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ChatController.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/controllers/ChatController.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.2833724">
-              <caret line="67" column="38" selection-start-line="67" selection-start-column="38" selection-end-line="67" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="common.js.erb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/common/common.js.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="55" column="24" selection-start-line="55" selection-start-column="24" selection-end-line="55" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IndexController.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/controllers/IndexController.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="242" column="6" selection-start-line="242" selection-start-column="6" selection-end-line="242" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -857,8 +815,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Rake.assets:clean[keep]: alcomap" />
-        <item index="1" class="java.lang.String" itemvalue="Rake.assets:clobber: alcomap" />
+        <item index="0" class="java.lang.String" itemvalue="Rake.assets:clobber: alcomap" />
+        <item index="1" class="java.lang.String" itemvalue="Rake.assets:clean[keep]: alcomap" />
         <item index="2" class="java.lang.String" itemvalue="Rake.db:migrate: alcomap" />
         <item index="3" class="java.lang.String" itemvalue="Rake.db:rollback: alcomap" />
         <item index="4" class="java.lang.String" itemvalue="IRB console.Rails console: alcomap" />
@@ -1101,7 +1059,13 @@
       <option name="project" value="LOCAL" />
       <updated>1443106526010</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="utf-8 fix">
+      <created>1443109645129</created>
+      <option name="number" value="00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1443109645129</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -1128,8 +1092,8 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32890856" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24508321" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32890856" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24508321" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32890856" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1154,7 +1118,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/alcomap" />
     </ignored-roots>
-    <MESSAGE value="ui fixes&#10;anti_span fixes" />
     <MESSAGE value="Rating //not working!&#10;fixes" />
     <MESSAGE value="Rating, templates" />
     <MESSAGE value="Assets" />
@@ -1179,7 +1142,8 @@
     <MESSAGE value="assets" />
     <MESSAGE value="Chat fixes, UI fixes" />
     <MESSAGE value="User_pos fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="User_pos fix" />
+    <MESSAGE value="utf-8 fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="utf-8 fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1194,13 +1158,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/README.rdoc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.11460674">
-          <caret line="3" column="57" selection-start-line="3" selection-start-column="57" selection-end-line="3" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db/migrate/20160828204419_add_point_type.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.38202247">
@@ -1592,14 +1549,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/news/index.json.jbuilder">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/controllers/IndexController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1616,10 +1565,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/assets/application-056627a677c98bf8416b6c0b5b3776000193848e271876d4a9c45b6dd7253f2b.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35831383">
+          <caret line="39292" column="3" selection-start-line="39292" selection-start-column="3" selection-end-line="39292" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/controllers/ChatController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.2833724">
           <caret line="67" column="38" selection-start-line="67" selection-start-column="38" selection-end-line="67" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/news/index.json.jbuilder">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31850117">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding />
         </state>
       </provider>
