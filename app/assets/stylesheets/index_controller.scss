@@ -517,33 +517,61 @@ div.dropdown.ib {
 .add_point_labels {
   margin-bottom: 0px !important;
 }
-.delete_point
-{
+
+.delete_point {
   border: 1px solid #c2c2c2;
   border-radius: 5px;
   padding: 2px;
 }
-.point_wrap
-{
+
+.point_wrap {
   width: auto;
   float: right;
 }
-.timestamp
-{
-  color:#c2c2c2;
+
+.timestamp {
+  color: #c2c2c2;
 }
-.highlight
-{
+
+.highlight {
   color: #E7FF6E;
 }
-.point_attr_icon
-{
+
+.point_attr_icon {
   width: 23px;
 }
+
 .point_attrs_inputs {
   margin: 0px 3px;
 }
-.news_timestamp
-{
+
+.news_timestamp {
   font-size: 9px;
+}
+.news_timestamp_my {
+  text-align: left;
+}
+
+.news_opts {
+  position: absolute;
+  right: 0;
+  top: 6px;
+}
+
+.my_text {
+  vertical-align: text-bottom;
+}
+.news_text
+{
+  margin-bottom: 5px;
+}
+.news_bottom
+{
+  text-align: left;
+}
+.news_buttons
+{
+  display: inline-block;
+  position: relative;
+  float: right;
 }

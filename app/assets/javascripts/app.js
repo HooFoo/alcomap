@@ -2,9 +2,9 @@
  * Created by Геннадий on 28.08.2015.
  */
 app = angular.module('alcomap', ['ngResource']);
-app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User']);
-app.controller('ChatController', ChatController, ['$scope', 'ChatMessage', 'User']);
-app.controller('NewsController', NewsController, ['News','$scope' ]);
+app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User','ControllersProvider']);
+app.controller('ChatController', ChatController, ['$scope', 'ChatMessage', 'User','ControllersProvider']);
+app.controller('NewsController', NewsController, ['News', '$scope','ControllersProvider']);
 app.factory('gmap', function () {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
@@ -79,27 +79,28 @@ app.factory('gmap', function () {
     return map;
 });
 app.factory('BackendResource', ['$resource', '$http', function ($resource, $http, name) {
-    var resource = $resource('/' + name + '/:id.:format', null, {
-        'update': {
-            method: 'put'
-        }
-    });
+
     return function (name) {
         return {
+            resource: $resource('/' + name + '/:id.:format', null, {
+                'update': {
+                    method: 'put'
+                }
+            }),
             index: function (accept, reject) {
                 $resource('/' + name + '.:format').query({id: null, format: 'json'}).$promise.then(accept, reject);
             },
             show: function (id, accept, reject) {
-                resource.get({id: id, format: 'json'}).$promise.then(accept, reject);
+                this.resource.get({id: id, format: 'json'}).$promise.then(accept, reject);
             },
             edit: function (id, data, accept, reject) {
-                resource.update({id: id, format: 'json'}, data).$promise.then(accept, reject);
+                this.resource.update({id: id, format: 'json'}, data).$promise.then(accept, reject);
             },
             new: function (data, accept, reject) {
                 $resource('/' + name + '.:format').save({format: 'json'}, data).$promise.then(accept, reject);
             },
             delete: function (id, accept, reject) {
-                resource.delete({id: id, format: 'json'}).$promise.then(accept, reject);
+                this.resource.delete({id: id, format: 'json'}).$promise.then(accept, reject);
             }
         }
     }
@@ -131,6 +132,10 @@ app.factory('ChatMessage', ['$resource', '$http', 'BackendResource', function ($
 }]);
 app.factory('News', ['$resource', '$http', 'BackendResource', function ($resource, $http, BackendResource) {
     var obj = BackendResource('news');
+    obj.indexMy = function (accept, reject) {
+        $resource('news/my' + name + '.:format').query({id: null, format: 'json'}).$promise.then(accept, reject);
+
+    };
     obj.latest = function (id, accept, reject) {
         $http.get('news/latest/' + id).then(accept, reject);
     };
@@ -180,13 +185,22 @@ app.directive('myEnter', function () {
         });
     };
 });
+app.service('ControllersProvider',function(){
+   return{
+       chat:undefined,
+       news:undefined,
+       index:undefined
+   }
+});
 app.run(['$http', function ($http) {
     $http.defaults.headers.common['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content');
-    $('body').keypress(function(event)
-    {
-        switch(event.which)
-        {
-            case 96: {$('.screen_label').trigger('click'); break;}
+    $('body').keypress(function (event) {
+        switch (event.which) {
+            case 96:
+            {
+                $('.screen_label').trigger('click');
+                break;
+            }
         }
     })
 }]);

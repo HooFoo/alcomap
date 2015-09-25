@@ -1,4 +1,4 @@
-function ChatController($scope, ChatMessage, User) {
+function ChatController($scope, ChatMessage, User, ControllersProvider) {
     var $this = this;
     var container = $('.overflow_hidden');
     var messages = $('#messages');
@@ -20,7 +20,7 @@ function ChatController($scope, ChatMessage, User) {
         ChatMessage.latest(id, function (result) {
             if (result.data.length > 0) {
                 result.data.forEach(function (msg) {
-                    if(msg.message && msg.message.indexOf($this.user.name)>-1) {
+                    if (msg.message && msg.message.indexOf($this.user.name) > -1) {
                         var audio = new Audio(asset_path('alert.mp3'));
                         audio.play();
                         msg.marked = true;
@@ -43,17 +43,19 @@ function ChatController($scope, ChatMessage, User) {
         container.toggleClass('undeployed');
     };
     this.selectUser = function (name) {
-        $this.chatMessage = name+", " ;
+        $this.chatMessage = name + ", ";
         $('input.chat_msg_box').focus();
     };
     var init = function () {
-
+        ControllersProvider.chat = $this;
         EventTarget.apply($this);
-        $this.addListenerOnce('messagesloaded',$this.update);
+        $this.addListenerOnce('messagesloaded', $this.update);
         ChatMessage.index(function (result) {
             $this.messages = result;
             //ждем пока отрисуется
-            setTimeout(function(){$this.fire('messagesloaded')})
+            setTimeout(function () {
+                $this.fire('messagesloaded')
+            })
         });
 
     };

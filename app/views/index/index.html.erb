@@ -78,7 +78,11 @@
       <div id="news" ng-hide="controller.currentPoint" ng-controller="NewsController as news">
         <span class="news_header"> Последние события </span>
 
-        <div id="news_scroller">
+        <div class="news_opts">
+          <span class="my_text">мое</span>
+          <input type="checkbox" ng-model="news.onlyMy" ng-click="news.onlyMyChanged()">
+        </div>
+        <div id="news_scroller" class="animated fadeIn">
           <ul>
             <li class="news" ng-repeat="item in news.news track by $index">
               <span class="news_user">Пользователь <span class="news_user_name">{{item.user.name}}</span></span>
@@ -86,9 +90,20 @@
               <div class="news_text" ng-init="type = wordForPointType(item.point.point_type)"> Добавил точку
                 <span class="news_point_name" ng-click="controller.setCenter(item.point.lat,item.point.lng,item.point.id)">{{item.point.name}}</span>
               </div>
-              <span class="news_timestamp">{{item.created_at}}</span>
-
+              <div ng-class="news.onlyMy?'news_bottom':''">
+                  <span class="news_timestamp">{{item.created_at}}</span>
+                <div class="news_buttons" ng-show="news.onlyMy">
+                  <span class="delete_point" ng-click="controller.editPoint(item.point.id)">Изменить</span>
+                  <span class="delete_point" ng-click="controller.deletePoint(item.point.id)">Удалить</span>
+                </div>
+              </div>
             </li>
+            <li ng-show="news.onlyMy">
+              <div class="more" ng-click="news.more()">
+                <span>Еще </span>
+              </div>
+            </li>
+
           </ul>
         </div>
       </div>

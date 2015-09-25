@@ -1,10 +1,14 @@
-class NewsController < InheritedResources::Base
+class NewsController < ApplicationController
 
   respond_to :json
-  actions only: [:index]
 
   def index
     @news = News.all.reverse_order.limit 50
+  end
+
+  def my
+    @news = News.where('user_id = ?',current_user.id).offset(params[:shift]).reverse_order.limit 50
+    render 'index'
   end
 
   def latest

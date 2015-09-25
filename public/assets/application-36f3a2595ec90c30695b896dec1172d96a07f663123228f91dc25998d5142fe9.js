@@ -45632,7 +45632,7 @@ function asset_path(name) {
         'Alien.png': '/assets/Alien-23ed7e3d380b6467322c6740d54438a490e06bf541fff229f22ea9dd712e3d5e.png',
         'drinks.png': '/assets/drinks-1e4e8c943d17f2157cc9114b30f8d9ffd3e939c113049b2ccb824e2ef4ed85f6.png',
         'new.png': '/assets/new-053de3583ab069972e53dc312d224551c69220594d140e5ee1c7e0974761c8f6.png',
-        'info.html': '/assets/info-a6a554708432dc53ce47021dd071699f7a894dd4f337f9e70d2dfabf2720687c.html',
+        'info.html': '/assets/info-8af46d4e9bebd0e76df611a9acfd43491c311106974755711454b31882565e75.html',
         'new_point.html': '/assets/new_point-566fd2f6b2ea7761b341b6a9bcad81c2a91580cc11efe57cdda022266e239475.html',
         'send_message.png': '/assets/send_message-58fa0559f449b875d8e86490c748c2ce91c550b55ed3873ac7c5d4b6a67b1382.png',
         'event.png': '/assets/event-c4db32a00df3b3d4e9f4cb9eed09c3b90d8a4c9ea3abc25bf50002462cc08981.png',
@@ -45664,9 +45664,7 @@ function iconForPoint(type) {
     }
     return icon;
 }
-var USER_POSITION = localStorage.getItem('USER_POSITION');
-if(!USER_POSITION)
-    USER_POSITION={lat: 59.996651699999994, lng: 30.1950724}
+var USER_POSITION = localStorage.getItem('USER_POSITION')?localStorage.getItem('USER_POSITION'):{lat: 59.996651699999994, lng: 30.1950724};
 function updateUserPosition() {
     navigator.geolocation.getCurrentPosition(function (position) {
         USER_POSITION = {lat: position.coords.latitude, lng: position.coords.longitude};
@@ -45679,11 +45677,20 @@ updateUserPosition();
 setTimeout(function () {
     $('p.alert').hide();
 }, 5800);
-
+wordForPointType = function(type)
+{
+    switch(type)
+    {
+        case "message": return "ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ";
+        case "marker": return "ÑÐ¾Ð±Ñ‹Ñ‚Ð¸Ðµ";
+        case "shop": return "Ð¼Ð°Ð³Ð°Ð·Ð¸Ð½";
+        case "bar": return "Ð±Ð°Ñ€";
+    }
+};
 //TODO: Ð¿Ñ€Ð¾Ñ‚ÐµÑÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ!
 //$(document).on('touchstart',function(e){ e.preventDefault(); });
-//$(document).on('touchmove',function(e){ e.preventDefault(); });
-function ChatController($scope, ChatMessage, User) {
+$(document).on('touchmove',function(e){ e.preventDefault(); });
+function ChatController($scope, ChatMessage, User, ControllersProvider) {
     var $this = this;
     var container = $('.overflow_hidden');
     var messages = $('#messages');
@@ -45705,7 +45712,7 @@ function ChatController($scope, ChatMessage, User) {
         ChatMessage.latest(id, function (result) {
             if (result.data.length > 0) {
                 result.data.forEach(function (msg) {
-                    if(msg.message && msg.message.indexOf($this.user.name)>-1) {
+                    if (msg.message && msg.message.indexOf($this.user.name) > -1) {
                         var audio = new Audio(asset_path('alert.mp3'));
                         audio.play();
                         msg.marked = true;
@@ -45728,17 +45735,19 @@ function ChatController($scope, ChatMessage, User) {
         container.toggleClass('undeployed');
     };
     this.selectUser = function (name) {
-        $this.chatMessage = name+", " ;
+        $this.chatMessage = name + ", ";
         $('input.chat_msg_box').focus();
     };
     var init = function () {
-
+        ControllersProvider.chat = $this;
         EventTarget.apply($this);
-        $this.addListenerOnce('messagesloaded',$this.update);
+        $this.addListenerOnce('messagesloaded', $this.update);
         ChatMessage.index(function (result) {
             $this.messages = result;
-            //æäåì ïîêà îòðèñóåòñÿ
-            setTimeout(function(){$this.fire('messagesloaded')})
+            //Ð¶Ð´ÐµÐ¼ Ð¿Ð¾ÐºÐ° Ð¾Ñ‚Ñ€Ð¸ÑÑƒÐµÑ‚ÑÑ
+            setTimeout(function () {
+                $this.fire('messagesloaded')
+            })
         });
 
     };
@@ -45755,13 +45764,14 @@ ChatController.prototype.constructor = ChatController;
  * Created by Ð“ÐµÐ½Ð½Ð°Ð´Ð¸Ð¹ on 28.08.2015.
  */
 
-function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
+function IndexController($compile, $scope, $http, gmap, Point, Comment, User,ControllersProvider) {
     var $this = this;
 
     this.heading = 'ÐÐ»ÐºÐ¾Ð¼Ð°Ð¿ Î²';
     this.currentPoint = undefined;
     this.openedInfos = undefined;
     this.user = User;
+    $this.points = [];
 
     var findPointInList = function (point) {
         var result = point;
@@ -45771,7 +45781,21 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         });
         return result;
     };
-
+    function extractPoint(resource){
+        return {
+            id:resource.id,
+            lat:resource.lat,
+            lng:resource.lng,
+            name:resource.name,
+            point_type:resource.point_type,
+            description:resource.description,
+            isFulltime:resource.isFulltime,
+            cardAccepted:resource.cardAccepted,
+            beer:resource.beer,
+            hard:resource.hard,
+            elite:resource.elite
+        }
+    }
     function closeOther(window, marker) {
         if ($this.openedInfos)
             $this.openedInfos.close();
@@ -45855,8 +45879,24 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         }
         return style;
     };
-    this.addPointDraggable = function (type) {
-        $scope.point = {
+
+    this.editPoint = function (id) {
+        var point = undefined;
+        this.points.forEach(function (item) {
+            if (item.id == id)
+                point = item;
+        })
+        if (point)
+            $this.addPointDraggable(point.point_type, point)
+        else
+            $this.setPointCurrent(id);
+    };
+    this.addPointDraggable = function (type, point) {
+        if (point)
+            $this.isEditing = true;
+        else
+            $this.isEditing = false;
+        $scope.point = point ? point : {
             lat: gmap.getCenter().lat(),
             lng: gmap.getCenter().lng(),
             point_type: type,
@@ -45900,12 +45940,18 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
     };
 
     this.addPoint = function () {
-        console.log($scope.point);
-        var point = Point.new($scope.point, function (result) {
-            var marker = buildMarker(result);
-        });
+        if ($this.isEditing) {
+            var point = Point.edit($scope.point.id,extractPoint($scope.point), function (result) {
+                var marker = buildMarker(result);
+            });
+        }
+        else
+            var point = Point.new($scope.point, function (result) {
+                var marker = buildMarker(result);
+            });
         $scope.addMarker.setMap(null);
         closeOther(undefined, undefined);
+        $this.showMarkers();
     };
 
     this.comment = function () {
@@ -45968,12 +46014,18 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
 
     };
 
-    this.deletePoint = function () {
-        $http.delete('/points/' + $this.currentPoint.id);
-        gmap.clusterer.removeMarker($this.currentPoint.marker);
-        $this.currentPoint.marker.setMap(null);
-        $this.currentPoint = undefined;
-        closeOther(undefined, undefined)
+    this.deletePoint = function (id) {
+        $http.delete('/points/' + id);
+        $this.points.forEach(function(item){
+            if(item.id==id)
+            {
+                gmap.clusterer.removeMarker(item.marker);
+                item.marker.setMap(null);
+                item = undefined;
+                closeOther(undefined, undefined)
+            }
+        });
+        ControllersProvider.news.removeNewsForPoint(id);
     };
 
     this.setCenter = function (lat, lng, point_id) {
@@ -45984,7 +46036,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
     var init = function () {
         EventTarget.apply($this);
         gmap.addListener('idle', $this.showMarkers);
-
+        ControllersProvider.index = $this;
         $this.usersMarker = new google.maps.Marker({
             position: USER_POSITION,
             label: "Ð¢Ñ‹ Ð·Ð´ÐµÑÑŒ",
@@ -46004,37 +46056,66 @@ IndexController.prototype.constructor = IndexController;
  * Created by Ãåííàäèé on 18.09.2015.
  */
 
-function NewsController(News, $scope) {
+function NewsController(News, $scope, ControllersProvider) {
     var $this = this;
+    this.onlyMy = false;
 
-    this.wordForPointType = function(type)
-    {
-        switch(type)
-        {
-            case "message": return "ñîîáùåíèå";
-            case "marker": return "ñîáûòèå";
-            case "shop": return "ìàãàçèí";
-            case "bar": return "áàð";
+    this.onlyMyChanged = function () {
+        if ($this.onlyMy) {
+            $('#news_scroller').toggleClass(' fadeIn fadeOut');
+            News.indexMy(function (result) {
+                $this.news = result;
+                $('#news_scroller').toggleClass(' fadeIn fadeOut');
+            });
+            this.stopUpdate = true;
         }
+        else {
+            $('#news_scroller').toggleClass(' fadeIn fadeOut');
+            News.index(function (result) {
+                $this.news = result;
+                $('#news_scroller').toggleClass(' fadeIn fadeOut');
+
+            });
+            this.stopUpdate = false;
+        }
+    };
+    this.more = function () {
+        News.indexMy($this.news.length, function (result) {
+            result.forEach(function (item) {
+                $this.news.push(item);
+            });
+        });
     };
 
     this.update = function () {
-        var id = $this.news ? $this.news[0].id : 0;
-        News.latest(id, function (result) {
-            if (result.data.length > 0) {
-                result.data.forEach(function (msg) {
-                    $this.news.unshift(msg);
-                });
-            }
-        });
+        if (!$this.stopUpdate) {
+            var id = $this.news ? $this.news[0].id : 0;
+            News.latest(id, function (result) {
+                if (result.data.length > 0) {
+                    result.data.forEach(function (msg) {
+                        $this.news.unshift(msg);
+                    });
+                }
+            });
+        }
         setTimeout($this.update, 10000);
     };
+    this.removeNewsForPoint = function(point_id)
+    {
+      $this.news.forEach(function(item){
+          if(item.point.id==point_id)
+          {
+              $this.news.splice($this.news.indexOf(item),1);
+          }
+      })
+    };
+
     var init = function () {
+        ControllersProvider.news = $this;
         News.index(function (result) {
             $this.news = result;
         });
         setTimeout($this.update, 10000);
-        $scope.wordForPoinType = $this.wordForPointType;
     };
     init();
 }
@@ -46044,9 +46125,9 @@ function NewsController(News, $scope) {
  */
 
 app = angular.module('alcomap', ['ngResource']);
-app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User']);
-app.controller('ChatController', ChatController, ['$scope', 'ChatMessage', 'User']);
-app.controller('NewsController', NewsController, ['News','$scope' ]);
+app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User','ControllersProvider']);
+app.controller('ChatController', ChatController, ['$scope', 'ChatMessage', 'User','ControllersProvider']);
+app.controller('NewsController', NewsController, ['News', '$scope','ControllersProvider']);
 app.factory('gmap', function () {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
@@ -46121,27 +46202,28 @@ app.factory('gmap', function () {
     return map;
 });
 app.factory('BackendResource', ['$resource', '$http', function ($resource, $http, name) {
-    var resource = $resource('/' + name + '/:id.:format', null, {
-        'update': {
-            method: 'put'
-        }
-    });
+
     return function (name) {
         return {
+            resource: $resource('/' + name + '/:id.:format', null, {
+                'update': {
+                    method: 'put'
+                }
+            }),
             index: function (accept, reject) {
                 $resource('/' + name + '.:format').query({id: null, format: 'json'}).$promise.then(accept, reject);
             },
             show: function (id, accept, reject) {
-                resource.get({id: id, format: 'json'}).$promise.then(accept, reject);
+                this.resource.get({id: id, format: 'json'}).$promise.then(accept, reject);
             },
             edit: function (id, data, accept, reject) {
-                resource.update({id: id, format: 'json'}, data).$promise.then(accept, reject);
+                this.resource.update({id: id, format: 'json'}, data).$promise.then(accept, reject);
             },
             new: function (data, accept, reject) {
                 $resource('/' + name + '.:format').save({format: 'json'}, data).$promise.then(accept, reject);
             },
             delete: function (id, accept, reject) {
-                resource.delete({id: id, format: 'json'}).$promise.then(accept, reject);
+                this.resource.delete({id: id, format: 'json'}).$promise.then(accept, reject);
             }
         }
     }
@@ -46173,6 +46255,10 @@ app.factory('ChatMessage', ['$resource', '$http', 'BackendResource', function ($
 }]);
 app.factory('News', ['$resource', '$http', 'BackendResource', function ($resource, $http, BackendResource) {
     var obj = BackendResource('news');
+    obj.indexMy = function (accept, reject) {
+        $resource('news/my' + name + '.:format').query({id: null, format: 'json'}).$promise.then(accept, reject);
+
+    };
     obj.latest = function (id, accept, reject) {
         $http.get('news/latest/' + id).then(accept, reject);
     };
@@ -46222,13 +46308,22 @@ app.directive('myEnter', function () {
         });
     };
 });
+app.service('ControllersProvider',function(){
+   return{
+       chat:undefined,
+       news:undefined,
+       index:undefined
+   }
+});
 app.run(['$http', function ($http) {
     $http.defaults.headers.common['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content');
-    $('body').keypress(function(event)
-    {
-        switch(event.which)
-        {
-            case 96: {$('.screen_label').trigger('click'); break;}
+    $('body').keypress(function (event) {
+        switch (event.which) {
+            case 96:
+            {
+                $('.screen_label').trigger('click');
+                break;
+            }
         }
     })
 }]);

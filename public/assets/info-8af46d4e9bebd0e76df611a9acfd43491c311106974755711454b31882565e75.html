@@ -1,0 +1,26 @@
+<div class='info'>
+  <span class='comment_user'>{{controller.currentPoint.name}}</span><br>
+  <div class="pointattrs" ng-hide="controller.currentPoint.point_type == 'message' || controller.currentPoint.point_type == 'marker' ">
+    <div class="ib" ng-show="controller.currentPoint.isFulltime" title="Круглосуточно"><img class="point_attr_icon" src="/assets/24-224e513c3f3010e9d20a8e6472c3fbc57eea6d07389d0e13892e2dafa39aea65.png" alt="24 224e513c3f3010e9d20a8e6472c3fbc57eea6d07389d0e13892e2dafa39aea65" /></div>
+    <div class="ib" ng-show="controller.currentPoint.cardAccepted" title="Оплата картой"><img class="point_attr_icon" src="/assets/CreditCard-0ef517a2c1c489af8205760a0d00634293a7d06a4e0587f95be6f1db5d1651f5.png" alt="Creditcard 0ef517a2c1c489af8205760a0d00634293a7d06a4e0587f95be6f1db5d1651f5" /></div>
+    <div class="ib" ng-show="controller.currentPoint.beer" title="Пиво"><img class="point_attr_icon" src="/assets/beer-6897b550a326062c123b58cc7488ed054dbb33532710c42f5509614dfad8193f.png" alt="Beer 6897b550a326062c123b58cc7488ed054dbb33532710c42f5509614dfad8193f" /></div>
+    <div class="ib" ng-show="controller.currentPoint.hard" title="Крепкое"><img class="point_attr_icon" src="/assets/hard-f199e9219c2d7437033ea84d61f8d5fee8923833a03e50874417b5ae31be9d00.png" alt="Hard f199e9219c2d7437033ea84d61f8d5fee8923833a03e50874417b5ae31be9d00" /></div>
+    <div class="ib" ng-show="controller.currentPoint.elite" title="Хороший алкоголь"><img class="point_attr_icon" src="/assets/elite-6562a12a0042f0013993b75673e067be3f968779a6fbedfd97d40a9048111d23.png" alt="Elite 6562a12a0042f0013993b75673e067be3f968779a6fbedfd97d40a9048111d23" /></div>
+  </div>
+  <div ng-show="controller.currentPoint.description">
+    <span class="point_description_heading">Описание:</span>
+    <span class='point_description'>{{controller.currentPoint.description}}</span><br>
+  </div>
+  <div>
+    <span class='user_add'>Добавил: {{controller.currentPoint.user.name}}</span>
+  </div>
+</div>
+<div class='infobox_down' ng-hide="controller.currentPoint.point_type == 'message'">
+  <span class='added'>Добавлено: {{controller.currentPoint.created_at}}</span>
+
+  <div class='rating_box'>
+    <a href='javascript:void(0);' class='plus' ng-click='controller.pointRate(true)'>+</a>
+    <span class='rating'>{{controller.currentPoint.rating}}</span>
+    <a href='javascript:void(0);' class='minus' ng-click='controller.pointRate(false)'>-</a>
+  </div>
+</div>

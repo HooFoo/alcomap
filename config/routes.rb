@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   resources :media
-  resources :news, defaults: {format: :json}
   resources :settings, defaults: {format: :json}
   resources :chat_messages, defaults: {format: :json}
   devise_for :users, controllers: {registrations: 'users/registrations',
@@ -12,6 +11,8 @@ Rails.application.routes.draw do
   get '/user', to: 'user#index', defaults: {format: :json}
   get '/chat_messages/latest/:id', to: 'chat_messages#latest', defaults: {format: :json}
   get '/news/latest/:id', to: 'news#latest', defaults: {format: :json}
+  get '/news', to: 'news#index', defaults: {format: :json}
+  get '/news/my/(:shift)', to: 'news#my', defaults: {shift: 0, format: :json}
   resources :comments, defaults: {format: :json}
   resources :points, defaults: {format: :json}
 

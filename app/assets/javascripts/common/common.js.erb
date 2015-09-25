@@ -40,9 +40,7 @@ function iconForPoint(type) {
     }
     return icon;
 }
-var USER_POSITION = localStorage.getItem('USER_POSITION');
-if(!USER_POSITION)
-    USER_POSITION={lat: 59.996651699999994, lng: 30.1950724}
+var USER_POSITION = localStorage.getItem('USER_POSITION')?localStorage.getItem('USER_POSITION'):{lat: 59.996651699999994, lng: 30.1950724};
 function updateUserPosition() {
     navigator.geolocation.getCurrentPosition(function (position) {
         USER_POSITION = {lat: position.coords.latitude, lng: position.coords.longitude};
@@ -55,7 +53,16 @@ updateUserPosition();
 setTimeout(function () {
     $('p.alert').hide();
 }, 5800);
-
+wordForPointType = function(type)
+{
+    switch(type)
+    {
+        case "message": return "сообщение";
+        case "marker": return "событие";
+        case "shop": return "магазин";
+        case "bar": return "бар";
+    }
+};
 //TODO: протестировать!
 //$(document).on('touchstart',function(e){ e.preventDefault(); });
-//$(document).on('touchmove',function(e){ e.preventDefault(); });
+$(document).on('touchmove',function(e){ e.preventDefault(); });

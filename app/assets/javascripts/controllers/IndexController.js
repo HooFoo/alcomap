@@ -1,13 +1,14 @@
 /**
  * Created by Геннадий on 28.08.2015.
  */
-function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
+function IndexController($compile, $scope, $http, gmap, Point, Comment, User,ControllersProvider) {
     var $this = this;
 
     this.heading = 'Алкомап β';
     this.currentPoint = undefined;
     this.openedInfos = undefined;
     this.user = User;
+    $this.points = [];
 
     var findPointInList = function (point) {
         var result = point;
@@ -17,7 +18,21 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         });
         return result;
     };
-
+    function extractPoint(resource){
+        return {
+            id:resource.id,
+            lat:resource.lat,
+            lng:resource.lng,
+            name:resource.name,
+            point_type:resource.point_type,
+            description:resource.description,
+            isFulltime:resource.isFulltime,
+            cardAccepted:resource.cardAccepted,
+            beer:resource.beer,
+            hard:resource.hard,
+            elite:resource.elite
+        }
+    }
     function closeOther(window, marker) {
         if ($this.openedInfos)
             $this.openedInfos.close();
@@ -101,8 +116,24 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
         }
         return style;
     };
-    this.addPointDraggable = function (type) {
-        $scope.point = {
+
+    this.editPoint = function (id) {
+        var point = undefined;
+        this.points.forEach(function (item) {
+            if (item.id == id)
+                point = item;
+        })
+        if (point)
+            $this.addPointDraggable(point.point_type, point)
+        else
+            $this.setPointCurrent(id);
+    };
+    this.addPointDraggable = function (type, point) {
+        if (point)
+            $this.isEditing = true;
+        else
+            $this.isEditing = false;
+        $scope.point = point ? point : {
             lat: gmap.getCenter().lat(),
             lng: gmap.getCenter().lng(),
             point_type: type,
@@ -146,12 +177,18 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
     };
 
     this.addPoint = function () {
-        console.log($scope.point);
-        var point = Point.new($scope.point, function (result) {
-            var marker = buildMarker(result);
-        });
+        if ($this.isEditing) {
+            var point = Point.edit($scope.point.id,extractPoint($scope.point), function (result) {
+                var marker = buildMarker(result);
+            });
+        }
+        else
+            var point = Point.new($scope.point, function (result) {
+                var marker = buildMarker(result);
+            });
         $scope.addMarker.setMap(null);
         closeOther(undefined, undefined);
+        $this.showMarkers();
     };
 
     this.comment = function () {
@@ -214,12 +251,18 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
 
     };
 
-    this.deletePoint = function () {
-        $http.delete('/points/' + $this.currentPoint.id);
-        gmap.clusterer.removeMarker($this.currentPoint.marker);
-        $this.currentPoint.marker.setMap(null);
-        $this.currentPoint = undefined;
-        closeOther(undefined, undefined)
+    this.deletePoint = function (id) {
+        $http.delete('/points/' + id);
+        $this.points.forEach(function(item){
+            if(item.id==id)
+            {
+                gmap.clusterer.removeMarker(item.marker);
+                item.marker.setMap(null);
+                item = undefined;
+                closeOther(undefined, undefined)
+            }
+        });
+        ControllersProvider.news.removeNewsForPoint(id);
     };
 
     this.setCenter = function (lat, lng, point_id) {
@@ -230,7 +273,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User) {
     var init = function () {
         EventTarget.apply($this);
         gmap.addListener('idle', $this.showMarkers);
-
+        ControllersProvider.index = $this;
         $this.usersMarker = new google.maps.Marker({
             position: USER_POSITION,
             label: "Ты здесь",

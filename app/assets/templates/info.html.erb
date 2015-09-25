@@ -1,11 +1,11 @@
 <div class='info'>
   <span class='comment_user'>{{controller.currentPoint.name}}</span><br>
   <div class="pointattrs" ng-hide="controller.currentPoint.point_type == 'message' || controller.currentPoint.point_type == 'marker' ">
-    <%= image_tag '24.png', size: 16, class: 'point_attr_icon', :data => { :ng_show => 'controller.currentPoint.isFulltime'} %>
-    <%= image_tag 'CreditCard.png', size: 16, class: 'point_attr_icon', :data => { :ng_show => 'controller.currentPoint.cardAccepted'} %>
-    <%= image_tag 'beer.png', size: 16, class: 'point_attr_icon', :data => { :ng_show => 'controller.currentPoint.beer'} %>
-    <%= image_tag 'hard.png', size: 16, class: 'point_attr_icon', :data => { :ng_show => 'controller.currentPoint.hard'} %>
-    <%= image_tag 'elite.png', size: 16, class: 'point_attr_icon', :data => { :ng_show => 'controller.currentPoint.elite'} %>
+    <div class="ib" ng-show="controller.currentPoint.isFulltime" title="Круглосуточно"><%= image_tag '24.png', size: 16, class: 'point_attr_icon' %></div>
+    <div class="ib" ng-show="controller.currentPoint.cardAccepted" title="Оплата картой"><%= image_tag 'CreditCard.png', size: 16, class: 'point_attr_icon' %></div>
+    <div class="ib" ng-show="controller.currentPoint.beer" title="Пиво"><%= image_tag 'beer.png', size: 16, class: 'point_attr_icon' %></div>
+    <div class="ib" ng-show="controller.currentPoint.hard" title="Крепкое"><%= image_tag 'hard.png', size: 16, class: 'point_attr_icon' %></div>
+    <div class="ib" ng-show="controller.currentPoint.elite" title="Хороший алкоголь"><%= image_tag 'elite.png', size: 16, class: 'point_attr_icon'%></div>
   </div>
   <div ng-show="controller.currentPoint.description">
     <span class="point_description_heading">Описание:</span>
@@ -13,9 +13,6 @@
   </div>
   <div>
     <span class='user_add'>Добавил: {{controller.currentPoint.user.name}}</span>
-    <div class="point_wrap">
-      <span class="delete_point" ng-show="controller.currentPoint.editable" ng-click="controller.deletePoint()">Удалить</span>
-    </div>
   </div>
 </div>
 <div class='infobox_down' ng-hide="controller.currentPoint.point_type == 'message'">
