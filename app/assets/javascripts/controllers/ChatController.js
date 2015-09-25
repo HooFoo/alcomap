@@ -9,7 +9,7 @@ function ChatController($scope, ChatMessage, User, ControllersProvider) {
     this.user = User;
 
     this.sendMessage = function () {
-        if ($this.chatMessage != '')
+        if ($this.chatMessage.trim() != '')
             ChatMessage.new({message: $this.chatMessage}, function (result) {
                 $this.chatMessage = '';
                 delayedScroll();
@@ -55,7 +55,7 @@ function ChatController($scope, ChatMessage, User, ControllersProvider) {
             //ждем пока отрисуется
             setTimeout(function () {
                 $this.fire('messagesloaded')
-            })
+            },2000)
         });
 
     };

@@ -548,6 +548,7 @@ div.dropdown.ib {
 .news_timestamp {
   font-size: 9px;
 }
+
 .news_timestamp_my {
   text-align: left;
 }
@@ -561,17 +562,57 @@ div.dropdown.ib {
 .my_text {
   vertical-align: text-bottom;
 }
-.news_text
-{
+
+.news_text {
   margin-bottom: 5px;
 }
-.news_bottom
-{
+
+.news_bottom {
   text-align: left;
 }
-.news_buttons
-{
+
+.news_buttons {
   display: inline-block;
   position: relative;
   float: right;
+}
+
+.icon_shop {
+  background-image: asset_url('bottle.png');
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  opacity: 0.7;
+  background-size: contain;
+  right:8px;
+}
+
+.icon_bar {
+  background-image: asset_url('drinks.png');
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  opacity: 0.7;
+  background-size: contain;
+  right:8px;
+}
+
+.icon_marker {
+  background-image: asset_url('event.png');
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  opacity: 0.7;
+  background-size: contain;
+  right:8px;
+}
+
+.icon_message {
+  background-image: asset_url('message.png');
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  opacity: 0.7;
+  background-size: contain;
+  right:8px;
 }

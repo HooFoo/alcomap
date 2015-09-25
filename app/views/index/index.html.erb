@@ -85,11 +85,13 @@
         <div id="news_scroller" class="animated fadeIn">
           <ul>
             <li class="news" ng-repeat="item in news.news track by $index">
+              <div ng-class="'icon_'+item.point.point_type"></div>
               <span class="news_user">Пользователь <span class="news_user_name">{{item.user.name}}</span></span>
 
               <div class="news_text" ng-init="type = wordForPointType(item.point.point_type)"> Добавил точку
                 <span class="news_point_name" ng-click="controller.setCenter(item.point.lat,item.point.lng,item.point.id)">{{item.point.name}}</span>
               </div>
+
               <div ng-class="news.onlyMy?'news_bottom':''">
                   <span class="news_timestamp">{{item.created_at}}</span>
                 <div class="news_buttons" ng-show="news.onlyMy">
