@@ -63,7 +63,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
         infoWindow.addListener('closeclick', function () {
             $this.points.push(item);
             marker.setMap(null);
-            gmap.clusterer.addMarker(marker);
+            gmap.addMarker(marker,item.point_type);
             $this.currentPoint = undefined;
             $scope.$apply();
         });
@@ -71,7 +71,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
         marker.openInfo = function (event) {
             $this.currentPoint = findPointInList(item);
             $this.points.splice($this.points.indexOf(item), 1);
-            gmap.clusterer.removeMarker(marker);
+            gmap.removeMarker(marker,item.point_type);
             marker.setMap(gmap);
             closeOther(infoWindow, marker);
         };
@@ -80,7 +80,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
 
         item.marker = marker;
         item.infowindow = infoWindow;
-        gmap.clusterer.addMarker(marker);
+        gmap.addMarker(marker,item.point_type);
 
         return marker
     };
@@ -208,7 +208,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
     this.showMarkers = function () {
         var bounds = gmap.getBounds();
         Point.index_optimised(bounds, function (result) {
-            gmap.clusterer.clearMarkers();
+            gmap.clearMarkers();
             $this.points = result;
             $this.points.forEach(function (item) {
                 if (!(item.id == ($this.currentPoint ? $this.currentPoint.id : undefined)))
@@ -256,7 +256,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
         $this.points.forEach(function(item){
             if(item.id==id)
             {
-                gmap.clusterer.removeMarker(item.marker);
+                gmap.removeMarker(item.marker,item.point_type);
                 item.marker.setMap(null);
                 item = undefined;
                 closeOther(undefined, undefined)

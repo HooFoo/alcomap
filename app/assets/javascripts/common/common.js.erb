@@ -17,22 +17,24 @@ function asset_path(name) {
     };
     return assets[name]||'none';
 }
+var POINT_TYPES ={shop:'shop',bar:'bar',event:'marker',message:'message'};
+
 function iconForPoint(type) {
     var icon = asset_path('bottle.png');
     switch (type) {
-        case 'shop':
+        case POINT_TYPES.shop:
             break;
-        case 'marker':
+        case POINT_TYPES.event:
         {
             icon = asset_path('event.png');
             break;
         }
-        case 'message':
+        case POINT_TYPES.message:
         {
             icon = asset_path('message.png');
             break;
         }
-        case 'bar':
+        case POINT_TYPES.bar:
         {
             icon = asset_path('drinks.png');
             break;

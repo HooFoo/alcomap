@@ -2,9 +2,9 @@
  * Created by Геннадий on 28.08.2015.
  */
 app = angular.module('alcomap', ['ngResource']);
-app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User','ControllersProvider']);
-app.controller('ChatController', ChatController, ['$scope', 'ChatMessage', 'User','ControllersProvider']);
-app.controller('NewsController', NewsController, ['News', '$scope','ControllersProvider']);
+app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User', 'ControllersProvider']);
+app.controller('ChatController', ChatController, ['$scope', 'ChatMessage', 'User', 'ControllersProvider']);
+app.controller('NewsController', NewsController, ['News', '$scope', 'ControllersProvider']);
 app.factory('gmap', function () {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
@@ -50,32 +50,59 @@ app.factory('gmap', function () {
                 "stylers": [{"color": "#46bcec"}, {"visibility": "on"}]
             }]
     });
-    var mc = new MarkerClusterer(map);
-    var clusterStyles = [
-        {
-            textColor: 'rgba(0, 161, 199, 0.62)',
-            url: asset_path('bottle.png'),
-            height: 32,
-            width: 32,
-            textSize: '43px'
-        },
-        {
-            textColor: 'rgba(0, 161, 199, 0.62)',
-            url: asset_path('bottle.png'),
-            height: 32,
-            width: 32,
-            textSize: '43px'
-        },
-        {
-            textColor: 'rgba(0, 161, 199, 0.62)',
-            url: asset_path('bottle.png'),
-            height: 32,
-            width: 32,
-            textSize: '43px'
-        }
-    ];
-    mc.setStyles(clusterStyles);
-    map.clusterer = mc;
+
+    function mcFactory(point_type) {
+        var styles = [
+            {
+                textColor: 'rgb(30, 153, 204)',
+                url: iconForPoint(point_type),
+                height: 32,
+                width: 32,
+                textSize: 20
+            },
+            {
+                textColor: 'rgb(30, 153, 204)',
+                url: iconForPoint(point_type),
+                height: 42,
+                width: 42,
+                textSize: 25
+            },
+            {
+                textColor: 'rgb(30, 153, 204)',
+                url: iconForPoint(point_type),
+                height: 52,
+                width: 52,
+                textSize: 28
+            }
+        ];
+        var mc = new MarkerClusterer(map);
+        mc.setStyles(styles);
+        return mc;
+    }
+
+    var clusterers = [];
+    clusterers[POINT_TYPES.shop] = mcFactory(POINT_TYPES.shop);
+    clusterers[POINT_TYPES.bar] =mcFactory(POINT_TYPES.bar);
+    clusterers[POINT_TYPES.message] = mcFactory(POINT_TYPES.message);
+    clusterers[POINT_TYPES.event] = mcFactory(POINT_TYPES.event);
+
+
+
+    map.addMarker = function(marker,type)
+    {
+        clusterers[type].addMarker(marker)
+    };
+    map.removeMarker = function(marker,type)
+    {
+        clusterers[type].removeMarker(marker)
+    };
+    map.clearMarkers = function()
+    {
+        clusterers[POINT_TYPES.shop].clearMarkers();
+        clusterers[POINT_TYPES.bar].clearMarkers();
+        clusterers[POINT_TYPES.message].clearMarkers();
+        clusterers[POINT_TYPES.event].clearMarkers();
+    };
     return map;
 });
 app.factory('BackendResource', ['$resource', '$http', function ($resource, $http, name) {
@@ -185,12 +212,12 @@ app.directive('myEnter', function () {
         });
     };
 });
-app.service('ControllersProvider',function(){
-   return{
-       chat:undefined,
-       news:undefined,
-       index:undefined
-   }
+app.service('ControllersProvider', function () {
+    return {
+        chat: undefined,
+        news: undefined,
+        index: undefined
+    }
 });
 app.run(['$http', function ($http) {
     $http.defaults.headers.common['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content');
