@@ -1,9 +1,10 @@
 <div class="wrapper" id="chat_area" ng-view ng-controller="ChatController as controller">
   <div class="overflow_hidden undeployed">
+    <div class="online">Онлайн: {{controller.online}}</div>
     <div id="messages" class="messages">
       <div class="msg" ng-repeat="message in controller.messages track by $index">
         <span class="timestamp">[{{message.created_at}}]</span>
-        <span class="msg_user" ng-click="controller.selectUser(message.username)" ng-class="message.username==controller.user.name?'msg_self':''">{{message.username}}:</span>
+        <span class="msg_user" ng-click="controller.selectUser(message.username)" ng-class="message.username==controller.user.data.name?'msg_self':''">{{message.username}}:</span>
         <span class="msg_text" ng-class="message.marked?'highlight':''">{{message.message}}</span>
       </div>
     </div>
@@ -24,13 +25,13 @@
       <div class="title_wrapper">
         <h1 ng-model="controller.heading" class="app_tittle">{{controller.heading}}</h1>
 
-        <div class="dropdown ib">
-          <button class="ddt dropdown-toggle " type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <div class="dropdown">
+          <button class="ddt dropdown-toggle title_dropdown" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" id="title-menu" aria-labelledby="dropdownMenu1">
             <li>
-              <div id="settings" ng-include="'<%= asset_path "settings.html" %>'">
+              <div id="help" ng-include="'<%= asset_path "help.html" %>'">
               </div>
             </li>
           </ul>
@@ -44,6 +45,14 @@
           <li><a href="#" ng-click="controller.addPointDraggable('bar')">Бар</a></li>
           <li><a href="#" ng-click="controller.addPointDraggable('marker')">Событие</a></li>
           <li><a href="#" ng-click="controller.addPointDraggable('message')">Сообщение</a></li>
+        </ul>
+      </div>
+      <div class="dropdown">
+        <div class="btn btn-default settings_button dropdown-toggle" id="settings_btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><%= image_tag 'settings.png' %></div>
+        <ul class="dropdown-menu settings_dropdown" role="menu" aria-labelledby="settings_btn">
+          <li>
+            <%= render 'settings' %>
+          </li>
         </ul>
       </div>
       <div class="btn btn-default center_btn" ng-click="controller.centerForUser()"><%= image_tag 'center.png' %></div>

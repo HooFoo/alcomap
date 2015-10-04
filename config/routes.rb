@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   get 'index_controller/index'
   post 'users/invitation', to: 'users/invitations#update'
   post 'points/rate/:id', to: 'points#rate'
+  post 'points/get_points', to: 'points#get_points'
   get '/user', to: 'user#index', defaults: {format: :json}
+  get '/user/onlinecount', to: 'user#online_count', defaults: {format: :json}
   get '/chat_messages/latest/:id', to: 'chat_messages#latest', defaults: {format: :json}
   get '/news/latest/:id', to: 'news#latest', defaults: {format: :json}
   get '/news', to: 'news#index', defaults: {format: :json}

@@ -7,6 +7,7 @@ function ChatController($scope, ChatMessage, User, ControllersProvider) {
     this.lastUpdate = 0;
     this.enabled = false;
     this.user = User;
+    this.online = 0;
 
     this.sendMessage = function () {
         if ($this.chatMessage.trim() != '')
@@ -20,8 +21,9 @@ function ChatController($scope, ChatMessage, User, ControllersProvider) {
         ChatMessage.latest(id, function (result) {
             if (result.data.length > 0) {
                 result.data.forEach(function (msg) {
-                    if (msg.message && msg.message.indexOf($this.user.name) > -1) {
+                    if (msg.message && msg.message.indexOf($this.user.data.name) > -1) {
                         var audio = new Audio(asset_path('alert.mp3'));
+                        audio.volume = 0.5;
                         audio.play();
                         msg.marked = true;
                     }
@@ -30,7 +32,9 @@ function ChatController($scope, ChatMessage, User, ControllersProvider) {
                 });
             }
         });
-
+        User.online_count(function(result){
+                $this.online = result.data.value;
+        });
         if ($this.messages)
             $this.lastUpdate = $this.messages[$this.messages.length - 1].id;
         setTimeout($this.update, 2500);

@@ -5,7 +5,7 @@ ru:
     failure:
       invited: "Вы получили приглашение, примите его и закончите регистрацию."
     invitations:
-      send_instructions: "Письмо с приглашением было отправлкно на: %{email}"
+      send_instructions: "Письмо с приглашением было отправлено на: %{email}"
       invitation_token_invalid: "Предотавленый токен приглашения не действителен!"
       updated: "Пароль принят. Входим..."
       updated_not_active: "Пароль успешно установлен."

@@ -8,6 +8,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
     this.currentPoint = undefined;
     this.openedInfos = undefined;
     this.user = User;
+    this.settings = {shops:true,bars:true,markers:true,messages:true}
     $this.points = [];
 
     var findPointInList = function (point) {
@@ -207,9 +208,18 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
 
     this.showMarkers = function () {
         var bounds = gmap.getBounds();
-        Point.index_optimised(bounds, function (result) {
+        //Point.index_optimised(bounds, function (result) {
+        //    gmap.clearMarkers();
+        //    $this.points = result;
+        //    $this.points.forEach(function (item) {
+        //        if (!(item.id == ($this.currentPoint ? $this.currentPoint.id : undefined)))
+        //            buildMarker(item);
+        //    });
+        //    $this.fire('onpointsloaded');
+        //});
+        Point.getPoints(bounds,$this.settings, function (result) {
             gmap.clearMarkers();
-            $this.points = result;
+            $this.points = result.data;
             $this.points.forEach(function (item) {
                 if (!(item.id == ($this.currentPoint ? $this.currentPoint.id : undefined)))
                     buildMarker(item);

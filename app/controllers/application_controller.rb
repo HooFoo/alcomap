@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   respond_to :json, :html
   layout :layout_by_resource
+  after_filter :user_activity
 
   protected
 
@@ -15,4 +16,12 @@ class ApplicationController < ActionController::Base
       'application'
     end
   end
+
+
+  private
+
+  def user_activity
+    current_user.try :touch
+  end
+
 end

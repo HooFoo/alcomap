@@ -13,6 +13,7 @@
 .app_tittle {
   font-family: 'Airport', monospace;
   display: inline-block;
+  margin: 0px;
 }
 
 .title_wrapper {
@@ -22,6 +23,7 @@
   transform: translate(-50%, 35px);
   -webkit-transform: translate(-50%, 35px);
   z-index: 1;
+  width: 100%;
 }
 
 .comment_user {
@@ -220,6 +222,15 @@ a:hover {
   position: absolute;
   right: 0;
   -webkit-transform: translate(-30px, -50vh);
+  padding: 4px !important;
+  padding-left: 2px !important;
+  padding-bottom: 3px !important;
+}
+#settings_btn {
+  transform: translate(24px, -50vh);
+  position: absolute;
+  left: 0;
+  -webkit-transform: translate(24px, -50vh);
   padding: 4px !important;
   padding-left: 2px !important;
   padding-bottom: 3px !important;
@@ -436,17 +447,16 @@ div.dropdown.ib {
 }
 
 #title-menu {
-  max-width: 600px;
-  width: auto;
-  position: inherit;
-  transform: translate(0, 150px);
-  -webkit-transform: translate(0, 150px);
-  max-height: 72vh;
+  width: 83%;
+  position: absolute;
+  transform: translate(10%, -4%);
+  -webkit-transform: translate(10%, -4%);
+  height: 84vh;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-#settings {
+#help {
   text-align: center;
 }
 
@@ -619,4 +629,26 @@ div.dropdown.ib {
 .cluster
 {
   background-size: contain;
+}
+#settings
+{
+  padding: 5px 10px 5px 6px;
+  text-align: center;
+}
+.settings_dropdown
+{
+  transform: translate(69px,-50vh);
+  -webkit-transform: translate(69px,-50vh);
+  width: 80%;
+  text-align: center;
+}
+.title_dropdown
+{
+  transform: translateY(-60%);
+}
+.online
+{
+  position: absolute;
+  right: 20px;
+  color: rgba(255, 255, 255, 0.4);
 }

@@ -12,7 +12,6 @@ class NewsController < ApplicationController
   end
 
   def latest
-    puts params[:id]
     @news = News.where("id > ?", params[:id])
     render 'index'
   end

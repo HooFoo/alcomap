@@ -82,22 +82,18 @@ app.factory('gmap', function () {
 
     var clusterers = [];
     clusterers[POINT_TYPES.shop] = mcFactory(POINT_TYPES.shop);
-    clusterers[POINT_TYPES.bar] =mcFactory(POINT_TYPES.bar);
+    clusterers[POINT_TYPES.bar] = mcFactory(POINT_TYPES.bar);
     clusterers[POINT_TYPES.message] = mcFactory(POINT_TYPES.message);
     clusterers[POINT_TYPES.event] = mcFactory(POINT_TYPES.event);
 
 
-
-    map.addMarker = function(marker,type)
-    {
+    map.addMarker = function (marker, type) {
         clusterers[type].addMarker(marker)
     };
-    map.removeMarker = function(marker,type)
-    {
+    map.removeMarker = function (marker, type) {
         clusterers[type].removeMarker(marker)
     };
-    map.clearMarkers = function()
-    {
+    map.clearMarkers = function () {
         clusterers[POINT_TYPES.shop].clearMarkers();
         clusterers[POINT_TYPES.bar].clearMarkers();
         clusterers[POINT_TYPES.message].clearMarkers();
@@ -137,6 +133,9 @@ app.factory('Point', ['$resource', 'BackendResource', '$http', function ($resour
     obj.index_optimised = function (bounds, accept, reject) {
         $resource('/points.:format').query({bounds: bounds, format: 'json'}).$promise.then(accept, reject);
     };
+    obj.getPoints = function (bounds,settings, accept, reject) {
+        $http.post('/points/get_points',{bounds: bounds, settings:settings}).then(accept, reject);
+    };
 
     obj.rate = function (pid, direction, accept, reject) {
         $http.post('points/rate/' + pid, {direction: direction}).then(accept, reject);
@@ -169,10 +168,14 @@ app.factory('News', ['$resource', '$http', 'BackendResource', function ($resourc
     return obj;
 
 }]);
-app.service('User', ['$resource', function ($resource) {
-    var usr;
-    if (!usr)
-        usr = $resource('/user').get();
+app.service('User', ['$resource', '$http', function ($resource, $http) {
+    var usr = {
+        online_count: function (accept) {
+            $http.get('user/onlinecount/').then(accept);
+        }
+    };
+    usr.data = $resource('/user').get();
+
     return usr;
 }]);
 app.service('Settings', ['BackendResource', function (BackendResource) {

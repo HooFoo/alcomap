@@ -12,4 +12,16 @@ class User < ActiveRecord::Base
   has_many :chat_messages
   has_one :setting
   has_many :media
+
+  def self.online
+    where('updated_at > ?', 20.seconds.ago)
+  end
+
+  def self.online_count
+    where({:updated_at => 20.seconds.ago..Time.now}).count
+  end
+
+  def online?
+    updated_at < 20.seconds
+  end
 end

@@ -47,7 +47,18 @@ class PointsController < InheritedResources::Base
         @point.destroy
       end
     end
-    render 'show.json'
+    render 'show'
+  end
+
+  def get_points
+    bounds = params[:bounds]
+    settings =  params[:settings]
+    @points = []
+    @points.concat Point.shops(bounds).to_a if settings[:shops]
+    @points.concat Point.bars(bounds).to_a if settings[:bars]
+    @points.concat Point.messages(bounds).to_a if settings[:messages]
+    @points.concat Point.markers(bounds).to_a if settings[:markers]
+    render 'index.json'
   end
 
   private
