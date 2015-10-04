@@ -1,14 +1,14 @@
 /**
  * Created by Геннадий on 28.08.2015.
  */
-function IndexController($compile, $scope, $http, gmap, Point, Comment, User,ControllersProvider) {
+function IndexController($compile, $scope, $http, gmap, Point, Comment, User, ControllersProvider) {
     var $this = this;
 
     this.heading = 'Алкомап β';
     this.currentPoint = undefined;
     this.openedInfos = undefined;
     this.user = User;
-    this.settings = {shops:true,bars:true,markers:true,messages:true}
+    this.settings = {};
     $this.points = [];
 
     var findPointInList = function (point) {
@@ -19,21 +19,23 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
         });
         return result;
     };
-    function extractPoint(resource){
+
+    function extractPoint(resource) {
         return {
-            id:resource.id,
-            lat:resource.lat,
-            lng:resource.lng,
-            name:resource.name,
-            point_type:resource.point_type,
-            description:resource.description,
-            isFulltime:resource.isFulltime,
-            cardAccepted:resource.cardAccepted,
-            beer:resource.beer,
-            hard:resource.hard,
-            elite:resource.elite
+            id: resource.id,
+            lat: resource.lat,
+            lng: resource.lng,
+            name: resource.name,
+            point_type: resource.point_type,
+            description: resource.description,
+            isFulltime: resource.isFulltime,
+            cardAccepted: resource.cardAccepted,
+            beer: resource.beer,
+            hard: resource.hard,
+            elite: resource.elite
         }
     }
+
     function closeOther(window, marker) {
         if ($this.openedInfos)
             $this.openedInfos.close();
@@ -64,7 +66,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
         infoWindow.addListener('closeclick', function () {
             $this.points.push(item);
             marker.setMap(null);
-            gmap.addMarker(marker,item.point_type);
+            gmap.addMarker(marker, item.point_type);
             $this.currentPoint = undefined;
             $scope.$apply();
         });
@@ -72,7 +74,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
         marker.openInfo = function (event) {
             $this.currentPoint = findPointInList(item);
             $this.points.splice($this.points.indexOf(item), 1);
-            gmap.removeMarker(marker,item.point_type);
+            gmap.removeMarker(marker, item.point_type);
             marker.setMap(gmap);
             closeOther(infoWindow, marker);
         };
@@ -81,7 +83,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
 
         item.marker = marker;
         item.infowindow = infoWindow;
-        gmap.addMarker(marker,item.point_type);
+        gmap.addMarker(marker, item.point_type);
 
         return marker
     };
@@ -179,7 +181,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
 
     this.addPoint = function () {
         if ($this.isEditing) {
-            var point = Point.edit($scope.point.id,extractPoint($scope.point), function (result) {
+            var point = Point.edit($scope.point.id, extractPoint($scope.point), function (result) {
                 var marker = buildMarker(result);
             });
         }
@@ -217,7 +219,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
         //    });
         //    $this.fire('onpointsloaded');
         //});
-        Point.getPoints(bounds,$this.settings, function (result) {
+        Point.getPoints(bounds, $this.settings, function (result) {
             gmap.clearMarkers();
             $this.points = result.data;
             $this.points.forEach(function (item) {
@@ -263,10 +265,9 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
 
     this.deletePoint = function (id) {
         $http.delete('/points/' + id);
-        $this.points.forEach(function(item){
-            if(item.id==id)
-            {
-                gmap.removeMarker(item.marker,item.point_type);
+        $this.points.forEach(function (item) {
+            if (item.id == id) {
+                gmap.removeMarker(item.marker, item.point_type);
                 item.marker.setMap(null);
                 item = undefined;
                 closeOther(undefined, undefined)
@@ -282,6 +283,15 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
     };
     var init = function () {
         EventTarget.apply($this);
+        $scope.$watch('controller.settings', function (newValue, oldValue) {
+            console.log(newValue, oldValue);
+            localStorage.setItem('settings', JSON.stringify(newValue));
+            $this.showMarkers();
+        }, true);
+        $this.settings = localStorage.getItem('settings') ?
+            JSON.parse(localStorage.getItem('settings')) :
+            {shops: true, bars: true, markers: true, messages: true};
+        console.log($this.settings);
         gmap.addListener('idle', $this.showMarkers);
         ControllersProvider.index = $this;
         $this.usersMarker = new google.maps.Marker({

@@ -45641,22 +45641,24 @@ function asset_path(name) {
     };
     return assets[name]||'none';
 }
+var POINT_TYPES ={shop:'shop',bar:'bar',event:'marker',message:'message'};
+
 function iconForPoint(type) {
     var icon = asset_path('bottle.png');
     switch (type) {
-        case 'shop':
+        case POINT_TYPES.shop:
             break;
-        case 'marker':
+        case POINT_TYPES.event:
         {
             icon = asset_path('event.png');
             break;
         }
-        case 'message':
+        case POINT_TYPES.message:
         {
             icon = asset_path('message.png');
             break;
         }
-        case 'bar':
+        case POINT_TYPES.bar:
         {
             icon = asset_path('drinks.png');
             break;
@@ -45700,6 +45702,7 @@ function ChatController($scope, ChatMessage, User, ControllersProvider) {
     this.lastUpdate = 0;
     this.enabled = false;
     this.user = User;
+    this.online = 0;
 
     this.sendMessage = function () {
         if ($this.chatMessage.trim() != '')
@@ -45713,8 +45716,9 @@ function ChatController($scope, ChatMessage, User, ControllersProvider) {
         ChatMessage.latest(id, function (result) {
             if (result.data.length > 0) {
                 result.data.forEach(function (msg) {
-                    if (msg.message && msg.message.indexOf($this.user.name) > -1) {
+                    if (msg.message && msg.message.indexOf($this.user.data.name) > -1) {
                         var audio = new Audio(asset_path('alert.mp3'));
+                        audio.volume = 0.5;
                         audio.play();
                         msg.marked = true;
                     }
@@ -45723,7 +45727,9 @@ function ChatController($scope, ChatMessage, User, ControllersProvider) {
                 });
             }
         });
-
+        User.online_count(function(result){
+                $this.online = result.data.value;
+        });
         if ($this.messages)
             $this.lastUpdate = $this.messages[$this.messages.length - 1].id;
         setTimeout($this.update, 2500);
@@ -45765,13 +45771,14 @@ ChatController.prototype.constructor = ChatController;
  * Created by Геннадий on 28.08.2015.
  */
 
-function IndexController($compile, $scope, $http, gmap, Point, Comment, User,ControllersProvider) {
+function IndexController($compile, $scope, $http, gmap, Point, Comment, User, ControllersProvider) {
     var $this = this;
 
     this.heading = 'Алкомап β';
     this.currentPoint = undefined;
     this.openedInfos = undefined;
     this.user = User;
+    this.settings = {};
     $this.points = [];
 
     var findPointInList = function (point) {
@@ -45782,21 +45789,23 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
         });
         return result;
     };
-    function extractPoint(resource){
+
+    function extractPoint(resource) {
         return {
-            id:resource.id,
-            lat:resource.lat,
-            lng:resource.lng,
-            name:resource.name,
-            point_type:resource.point_type,
-            description:resource.description,
-            isFulltime:resource.isFulltime,
-            cardAccepted:resource.cardAccepted,
-            beer:resource.beer,
-            hard:resource.hard,
-            elite:resource.elite
+            id: resource.id,
+            lat: resource.lat,
+            lng: resource.lng,
+            name: resource.name,
+            point_type: resource.point_type,
+            description: resource.description,
+            isFulltime: resource.isFulltime,
+            cardAccepted: resource.cardAccepted,
+            beer: resource.beer,
+            hard: resource.hard,
+            elite: resource.elite
         }
     }
+
     function closeOther(window, marker) {
         if ($this.openedInfos)
             $this.openedInfos.close();
@@ -45827,7 +45836,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
         infoWindow.addListener('closeclick', function () {
             $this.points.push(item);
             marker.setMap(null);
-            gmap.clusterer.addMarker(marker);
+            gmap.addMarker(marker, item.point_type);
             $this.currentPoint = undefined;
             $scope.$apply();
         });
@@ -45835,7 +45844,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
         marker.openInfo = function (event) {
             $this.currentPoint = findPointInList(item);
             $this.points.splice($this.points.indexOf(item), 1);
-            gmap.clusterer.removeMarker(marker);
+            gmap.removeMarker(marker, item.point_type);
             marker.setMap(gmap);
             closeOther(infoWindow, marker);
         };
@@ -45844,7 +45853,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
 
         item.marker = marker;
         item.infowindow = infoWindow;
-        gmap.clusterer.addMarker(marker);
+        gmap.addMarker(marker, item.point_type);
 
         return marker
     };
@@ -45942,7 +45951,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
 
     this.addPoint = function () {
         if ($this.isEditing) {
-            var point = Point.edit($scope.point.id,extractPoint($scope.point), function (result) {
+            var point = Point.edit($scope.point.id, extractPoint($scope.point), function (result) {
                 var marker = buildMarker(result);
             });
         }
@@ -45971,9 +45980,18 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
 
     this.showMarkers = function () {
         var bounds = gmap.getBounds();
-        Point.index_optimised(bounds, function (result) {
-            gmap.clusterer.clearMarkers();
-            $this.points = result;
+        //Point.index_optimised(bounds, function (result) {
+        //    gmap.clearMarkers();
+        //    $this.points = result;
+        //    $this.points.forEach(function (item) {
+        //        if (!(item.id == ($this.currentPoint ? $this.currentPoint.id : undefined)))
+        //            buildMarker(item);
+        //    });
+        //    $this.fire('onpointsloaded');
+        //});
+        Point.getPoints(bounds, $this.settings, function (result) {
+            gmap.clearMarkers();
+            $this.points = result.data;
             $this.points.forEach(function (item) {
                 if (!(item.id == ($this.currentPoint ? $this.currentPoint.id : undefined)))
                     buildMarker(item);
@@ -46017,10 +46035,9 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
 
     this.deletePoint = function (id) {
         $http.delete('/points/' + id);
-        $this.points.forEach(function(item){
-            if(item.id==id)
-            {
-                gmap.clusterer.removeMarker(item.marker);
+        $this.points.forEach(function (item) {
+            if (item.id == id) {
+                gmap.removeMarker(item.marker, item.point_type);
                 item.marker.setMap(null);
                 item = undefined;
                 closeOther(undefined, undefined)
@@ -46036,6 +46053,15 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
     };
     var init = function () {
         EventTarget.apply($this);
+        $scope.$watch('controller.settings', function (newValue, oldValue) {
+            console.log(newValue, oldValue);
+            localStorage.setItem('settings', JSON.stringify(newValue));
+            $this.showMarkers();
+        }, true);
+        $this.settings = localStorage.getItem('settings') ?
+            JSON.parse(localStorage.getItem('settings')) :
+            {shops: true, bars: true, markers: true, messages: true};
+        console.log($this.settings);
         gmap.addListener('idle', $this.showMarkers);
         ControllersProvider.index = $this;
         $this.usersMarker = new google.maps.Marker({
@@ -46126,9 +46152,9 @@ function NewsController(News, $scope, ControllersProvider) {
  */
 
 app = angular.module('alcomap', ['ngResource']);
-app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User','ControllersProvider']);
-app.controller('ChatController', ChatController, ['$scope', 'ChatMessage', 'User','ControllersProvider']);
-app.controller('NewsController', NewsController, ['News', '$scope','ControllersProvider']);
+app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User', 'ControllersProvider']);
+app.controller('ChatController', ChatController, ['$scope', 'ChatMessage', 'User', 'ControllersProvider']);
+app.controller('NewsController', NewsController, ['News', '$scope', 'ControllersProvider']);
 app.factory('gmap', function () {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
@@ -46174,32 +46200,55 @@ app.factory('gmap', function () {
                 "stylers": [{"color": "#46bcec"}, {"visibility": "on"}]
             }]
     });
-    var mc = new MarkerClusterer(map);
-    var clusterStyles = [
-        {
-            textColor: 'rgba(0, 161, 199, 0.62)',
-            url: asset_path('bottle.png'),
-            height: 32,
-            width: 32,
-            textSize: '43px'
-        },
-        {
-            textColor: 'rgba(0, 161, 199, 0.62)',
-            url: asset_path('bottle.png'),
-            height: 32,
-            width: 32,
-            textSize: '43px'
-        },
-        {
-            textColor: 'rgba(0, 161, 199, 0.62)',
-            url: asset_path('bottle.png'),
-            height: 32,
-            width: 32,
-            textSize: '43px'
-        }
-    ];
-    mc.setStyles(clusterStyles);
-    map.clusterer = mc;
+
+    function mcFactory(point_type) {
+        var styles = [
+            {
+                textColor: 'rgb(30, 153, 204)',
+                url: iconForPoint(point_type),
+                height: 32,
+                width: 32,
+                textSize: 20
+            },
+            {
+                textColor: 'rgb(30, 153, 204)',
+                url: iconForPoint(point_type),
+                height: 42,
+                width: 42,
+                textSize: 25
+            },
+            {
+                textColor: 'rgb(30, 153, 204)',
+                url: iconForPoint(point_type),
+                height: 52,
+                width: 52,
+                textSize: 28
+            }
+        ];
+        var mc = new MarkerClusterer(map);
+        mc.setStyles(styles);
+        return mc;
+    }
+
+    var clusterers = [];
+    clusterers[POINT_TYPES.shop] = mcFactory(POINT_TYPES.shop);
+    clusterers[POINT_TYPES.bar] = mcFactory(POINT_TYPES.bar);
+    clusterers[POINT_TYPES.message] = mcFactory(POINT_TYPES.message);
+    clusterers[POINT_TYPES.event] = mcFactory(POINT_TYPES.event);
+
+
+    map.addMarker = function (marker, type) {
+        clusterers[type].addMarker(marker)
+    };
+    map.removeMarker = function (marker, type) {
+        clusterers[type].removeMarker(marker)
+    };
+    map.clearMarkers = function () {
+        clusterers[POINT_TYPES.shop].clearMarkers();
+        clusterers[POINT_TYPES.bar].clearMarkers();
+        clusterers[POINT_TYPES.message].clearMarkers();
+        clusterers[POINT_TYPES.event].clearMarkers();
+    };
     return map;
 });
 app.factory('BackendResource', ['$resource', '$http', function ($resource, $http, name) {
@@ -46234,6 +46283,9 @@ app.factory('Point', ['$resource', 'BackendResource', '$http', function ($resour
     obj.index_optimised = function (bounds, accept, reject) {
         $resource('/points.:format').query({bounds: bounds, format: 'json'}).$promise.then(accept, reject);
     };
+    obj.getPoints = function (bounds,settings, accept, reject) {
+        $http.post('/points/get_points',{bounds: bounds, settings:settings}).then(accept, reject);
+    };
 
     obj.rate = function (pid, direction, accept, reject) {
         $http.post('points/rate/' + pid, {direction: direction}).then(accept, reject);
@@ -46266,10 +46318,14 @@ app.factory('News', ['$resource', '$http', 'BackendResource', function ($resourc
     return obj;
 
 }]);
-app.service('User', ['$resource', function ($resource) {
-    var usr;
-    if (!usr)
-        usr = $resource('/user').get();
+app.service('User', ['$resource', '$http', function ($resource, $http) {
+    var usr = {
+        online_count: function (accept) {
+            $http.get('user/onlinecount/').then(accept);
+        }
+    };
+    usr.data = $resource('/user').get();
+
     return usr;
 }]);
 app.service('Settings', ['BackendResource', function (BackendResource) {
@@ -46309,12 +46365,12 @@ app.directive('myEnter', function () {
         });
     };
 });
-app.service('ControllersProvider',function(){
-   return{
-       chat:undefined,
-       news:undefined,
-       index:undefined
-   }
+app.service('ControllersProvider', function () {
+    return {
+        chat: undefined,
+        news: undefined,
+        index: undefined
+    }
 });
 app.run(['$http', function ($http) {
     $http.defaults.headers.common['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content');
