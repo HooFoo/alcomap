@@ -41,8 +41,8 @@
 }
 
 .map_container {
-  height: 100vh;
-  overflow: hidden;
+  height: 100vh !important;
+  overflow: hidden !important;
 }
 
 .add_button {
@@ -74,7 +74,11 @@
   bottom: 0px;
   -webkit-overflow-scrolling: touch;
 }
-
+.point_close{
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}
 .comment_form {
   background: rgba(249, 249, 249, 0.7);
   padding: 5px 10px;

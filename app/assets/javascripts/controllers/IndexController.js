@@ -67,13 +67,14 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
             });
         });
 
-        infoWindow.addListener('closeclick', function () {
+        infoWindow.onClose = function () {
             $this.points.push(item);
             marker.setMap(null);
             gmap.addMarker(marker, item.point_type);
             $this.currentPoint = undefined;
-            $scope.$apply();
-        });
+            //$scope.$apply();
+        };
+        infoWindow.addListener('closeclick', infoWindow.onClose);
 
         marker.openInfo = function (event) {
             $this.currentPoint = findPointInList(item);
@@ -183,6 +184,12 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
         })
     };
 
+    this.closePoint = function()
+    {
+        $this.openedInfos.onClose();
+        closeOther(undefined,undefined);
+    };
+
     this.addPoint = function () {
         if ($this.isEditing) {
             var point = Point.edit($scope.point.id, extractPoint($scope.point), function (result) {
@@ -214,15 +221,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
 
     this.showMarkers = function () {
         var bounds = gmap.getBounds();
-        //Point.index_optimised(bounds, function (result) {
-        //    gmap.clearMarkers();
-        //    $this.points = result;
-        //    $this.points.forEach(function (item) {
-        //        if (!(item.id == ($this.currentPoint ? $this.currentPoint.id : undefined)))
-        //            buildMarker(item);
-        //    });
-        //    $this.fire('onpointsloaded');
-        //});
+
         Point.getPoints(bounds, $this.settings, function (result) {
             gmap.clearMarkers();
             $this.points = result.data;
