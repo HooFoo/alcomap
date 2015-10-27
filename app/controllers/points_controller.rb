@@ -3,7 +3,8 @@ class PointsController < InheritedResources::Base
   respond_to :json
 
   def create
-    @point = build_resource
+    process_picture
+    @point = Point.new point_params
     @point.user = current_user
     @point.save
     News.new(:user => current_user, :point => @point).save
@@ -15,8 +16,7 @@ class PointsController < InheritedResources::Base
     if bounds.nil?
       super
     else
-      parsed = JSON.parse bounds
-      @points = Point.mixed.visible parsed
+      get_points
     end
   end
 
@@ -63,8 +63,19 @@ class PointsController < InheritedResources::Base
 
   private
 
+  def process_picture
+    if params[:point] && params[:picture]
+      puts params[:picture].inspect
+      data = StringIO.new(Base64.decode64(params[:picture][:data]))
+      data.class.class_eval { attr_accessor :original_filename, :content_type }
+      data.original_filename = params[:point][:picture][:filename]
+      data.content_type = params[:point][:picture][:content_type]
+      params[:point][:picture] = data
+    end
+  end
+  
   def point_params
-    params.require(:point).permit(:lng, :lat, :name, :description, :point_type, :user_id, :isFulltime, :cardAccepted, :beer, :hard, :elite)
+    params.require(:point).permit(:lng, :lat, :name, :description, :point_type, :isFulltime, :cardAccepted, :beer, :hard, :elite, :picture => [:data, :filename])
   end
 end
 

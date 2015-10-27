@@ -75,6 +75,10 @@
       <column name="beer" sqlType="BOOLEAN" precision="2000000000" scale="10" nullable="true" jdbcType="4" def="J3Qn"/>
       <column name="hard" sqlType="BOOLEAN" precision="2000000000" scale="10" nullable="true" jdbcType="4" def="J3Qn"/>
       <column name="elite" sqlType="BOOLEAN" precision="2000000000" scale="10" nullable="true" jdbcType="4" def="J2Yn"/>
+      <column name="picture_file_name" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="picture_content_type" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="picture_file_size" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
+      <column name="picture_updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <primary-key columns="id"/>
       <index name="index_points_on_user_id" unique="true" columns="user_id"/>
     </table>

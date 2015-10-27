@@ -32,7 +32,11 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
             cardAccepted: resource.cardAccepted,
             beer: resource.beer,
             hard: resource.hard,
-            elite: resource.elite
+            elite: resource.elite,
+            picture: {
+                data: resource.picture.link,
+                filename: resource.picture.name
+            }
         }
     }
 
@@ -186,7 +190,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
             });
         }
         else
-            var point = Point.new($scope.point, function (result) {
+            var point = Point.new(extractPoint($scope.point), function (result) {
                 var marker = buildMarker(result);
             });
         $scope.addMarker.setMap(null);

@@ -7,6 +7,13 @@ class Point < ActiveRecord::Base
   validates :user, presence: true
   validates :lng, :lat, :name, presence: true
   validates :lng, :lat, numericality: true
+  # validates_attachment_presence :picture, presence: false,
+  #                               content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] },
+  #                               less_than: 1.megabytes
+
+
+  has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/missing.png"
+  validates_attachment_content_type :picture, content_type: /\Aimage\/.*\Z/
 
   def self.shops(coords)
     where("lat <= #{coords['Da']['j']} and lat >= #{coords['Da']['A']} and lng <= #{coords['va']['A']} and lng >= #{coords['va']['j']} and point_type = 'shop'")

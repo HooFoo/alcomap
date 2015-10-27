@@ -5,13 +5,10 @@ class CommentsController < InheritedResources::Base
     @comment = build_resource
     @comment.point = Point.find(params[:point_id])
     @comment.user = current_user
-
-
-    if create_resource(@comment)
-      options[:location] ||= smart_resource_url
-    end
-
-    respond_with_dual_blocks(@comment, options, &block)
+    image = Paperclip.io_adapters.for(params[:picture])
+    image.original_filename = "something.gif"
+    @comment.picture = image
+    @comment.save
   end
 
   def destroy
@@ -24,7 +21,7 @@ class CommentsController < InheritedResources::Base
   private
 
   def comment_params
-    params.require(:comment).permit(:text)
+    params.require(:comment).permit(:text,:picture)
   end
 end
 

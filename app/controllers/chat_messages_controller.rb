@@ -4,7 +4,7 @@ class ChatMessagesController < InheritedResources::Base
 
   def create
     @chat_message = ChatMessage.new :message => params[:message],
-                              :user => current_user
+                                    :user => current_user
     @chat_message.save
     if ChatMessage.count > 50
       ChatMessage.first.destroy
@@ -13,14 +13,16 @@ class ChatMessagesController < InheritedResources::Base
   end
 
   def latest
-    @chat_messages = ChatMessage.where("id > ?", params[:id])
+    Rails.logger.silence do
+      @chat_messages = ChatMessage.where("id > ?", params[:id])
+    end
     render 'index'
   end
 
   private
 
-    def chat_message_params
-      params.require(:chat_message).permit()
-    end
+  def chat_message_params
+    params.require(:chat_message).permit()
+  end
 end
 

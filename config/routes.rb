@@ -7,7 +7,7 @@ Rails.application.routes.draw do
              path_names: {sign_up: ''}
   get 'index_controller/index'
   post 'users/invitation', to: 'users/invitations#update'
-  post 'points/rate/:id', to: 'points#rate'
+  post 'points/rate/:id', to: 'points#rate', defaults: {format: :json}
   post 'points/get_points', to: 'points#get_points'
   get '/user', to: 'user#index', defaults: {format: :json}
   get '/user/onlinecount', to: 'user#online_count', defaults: {format: :json}
