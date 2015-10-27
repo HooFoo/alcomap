@@ -45633,7 +45633,7 @@ function asset_path(name) {
         'drinks.png': '/assets/drinks-1e4e8c943d17f2157cc9114b30f8d9ffd3e939c113049b2ccb824e2ef4ed85f6.png',
         'new.png': '/assets/new-053de3583ab069972e53dc312d224551c69220594d140e5ee1c7e0974761c8f6.png',
         'info.html': '/assets/info-8af46d4e9bebd0e76df611a9acfd43491c311106974755711454b31882565e75.html',
-        'new_point.html': '/assets/new_point-566fd2f6b2ea7761b341b6a9bcad81c2a91580cc11efe57cdda022266e239475.html',
+        'new_point.html': '/assets/new_point-80c7407027583ed10a02cbb3746e790fca97fc601e9cd9c2e49d99be7d215ac9.html',
         'send_message.png': '/assets/send_message-58fa0559f449b875d8e86490c748c2ce91c550b55ed3873ac7c5d4b6a67b1382.png',
         'event.png': '/assets/event-c4db32a00df3b3d4e9f4cb9eed09c3b90d8a4c9ea3abc25bf50002462cc08981.png',
         'message.png': '/assets/message-16587aba29954e736c2e04ada8098275194ed06fe71b930704e7673985d167cd.png',
@@ -45702,6 +45702,7 @@ function ChatController($scope, ChatMessage, User, ControllersProvider) {
     this.lastUpdate = 0;
     this.enabled = false;
     this.user = User;
+    this.online = 0;
 
     this.sendMessage = function () {
         if ($this.chatMessage.trim() != '')
@@ -45715,7 +45716,7 @@ function ChatController($scope, ChatMessage, User, ControllersProvider) {
         ChatMessage.latest(id, function (result) {
             if (result.data.length > 0) {
                 result.data.forEach(function (msg) {
-                    if (msg.message && msg.message.indexOf($this.user.name) > -1) {
+                    if (msg.message && msg.message.indexOf($this.user.data.name) > -1) {
                         var audio = new Audio(asset_path('alert.mp3'));
                         audio.volume = 0.5;
                         audio.play();
@@ -45726,7 +45727,9 @@ function ChatController($scope, ChatMessage, User, ControllersProvider) {
                 });
             }
         });
-
+        User.online_count(function(result){
+                $this.online = result.data.value;
+        });
         if ($this.messages)
             $this.lastUpdate = $this.messages[$this.messages.length - 1].id;
         setTimeout($this.update, 2500);
@@ -45768,13 +45771,14 @@ ChatController.prototype.constructor = ChatController;
  * Created by Геннадий on 28.08.2015.
  */
 
-function IndexController($compile, $scope, $http, gmap, Point, Comment, User,ControllersProvider) {
+function IndexController($compile, $scope, $http, gmap, Point, Comment, User, ControllersProvider) {
     var $this = this;
 
     this.heading = 'Алкомап β';
     this.currentPoint = undefined;
     this.openedInfos = undefined;
     this.user = User;
+    this.settings = {};
     $this.points = [];
 
     var findPointInList = function (point) {
@@ -45785,21 +45789,27 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
         });
         return result;
     };
-    function extractPoint(resource){
+
+    function extractPoint(resource) {
         return {
-            id:resource.id,
-            lat:resource.lat,
-            lng:resource.lng,
-            name:resource.name,
-            point_type:resource.point_type,
-            description:resource.description,
-            isFulltime:resource.isFulltime,
-            cardAccepted:resource.cardAccepted,
-            beer:resource.beer,
-            hard:resource.hard,
-            elite:resource.elite
+            id: resource.id,
+            lat: resource.lat,
+            lng: resource.lng,
+            name: resource.name,
+            point_type: resource.point_type,
+            description: resource.description,
+            isFulltime: resource.isFulltime,
+            cardAccepted: resource.cardAccepted,
+            beer: resource.beer,
+            hard: resource.hard,
+            elite: resource.elite//,
+            //picture: {
+            //    data: resource.picture.link,
+            //    filename: resource.picture.name
+            //}
         }
     }
+
     function closeOther(window, marker) {
         if ($this.openedInfos)
             $this.openedInfos.close();
@@ -45830,7 +45840,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
         infoWindow.addListener('closeclick', function () {
             $this.points.push(item);
             marker.setMap(null);
-            gmap.addMarker(marker,item.point_type);
+            gmap.addMarker(marker, item.point_type);
             $this.currentPoint = undefined;
             $scope.$apply();
         });
@@ -45838,7 +45848,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
         marker.openInfo = function (event) {
             $this.currentPoint = findPointInList(item);
             $this.points.splice($this.points.indexOf(item), 1);
-            gmap.removeMarker(marker,item.point_type);
+            gmap.removeMarker(marker, item.point_type);
             marker.setMap(gmap);
             closeOther(infoWindow, marker);
         };
@@ -45847,7 +45857,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
 
         item.marker = marker;
         item.infowindow = infoWindow;
-        gmap.addMarker(marker,item.point_type);
+        gmap.addMarker(marker, item.point_type);
 
         return marker
     };
@@ -45945,12 +45955,12 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
 
     this.addPoint = function () {
         if ($this.isEditing) {
-            var point = Point.edit($scope.point.id,extractPoint($scope.point), function (result) {
+            var point = Point.edit($scope.point.id, extractPoint($scope.point), function (result) {
                 var marker = buildMarker(result);
             });
         }
         else
-            var point = Point.new($scope.point, function (result) {
+            var point = Point.new(extractPoint($scope.point), function (result) {
                 var marker = buildMarker(result);
             });
         $scope.addMarker.setMap(null);
@@ -45974,9 +45984,18 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
 
     this.showMarkers = function () {
         var bounds = gmap.getBounds();
-        Point.index_optimised(bounds, function (result) {
+        //Point.index_optimised(bounds, function (result) {
+        //    gmap.clearMarkers();
+        //    $this.points = result;
+        //    $this.points.forEach(function (item) {
+        //        if (!(item.id == ($this.currentPoint ? $this.currentPoint.id : undefined)))
+        //            buildMarker(item);
+        //    });
+        //    $this.fire('onpointsloaded');
+        //});
+        Point.getPoints(bounds, $this.settings, function (result) {
             gmap.clearMarkers();
-            $this.points = result;
+            $this.points = result.data;
             $this.points.forEach(function (item) {
                 if (!(item.id == ($this.currentPoint ? $this.currentPoint.id : undefined)))
                     buildMarker(item);
@@ -46020,10 +46039,9 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
 
     this.deletePoint = function (id) {
         $http.delete('/points/' + id);
-        $this.points.forEach(function(item){
-            if(item.id==id)
-            {
-                gmap.removeMarker(item.marker,item.point_type);
+        $this.points.forEach(function (item) {
+            if (item.id == id) {
+                gmap.removeMarker(item.marker, item.point_type);
                 item.marker.setMap(null);
                 item = undefined;
                 closeOther(undefined, undefined)
@@ -46039,6 +46057,15 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User,Con
     };
     var init = function () {
         EventTarget.apply($this);
+        $scope.$watch('controller.settings', function (newValue, oldValue) {
+            console.log(newValue, oldValue);
+            localStorage.setItem('settings', JSON.stringify(newValue));
+            $this.showMarkers();
+        }, true);
+        $this.settings = localStorage.getItem('settings') ?
+            JSON.parse(localStorage.getItem('settings')) :
+            {shops: true, bars: true, markers: true, messages: true};
+        console.log($this.settings);
         gmap.addListener('idle', $this.showMarkers);
         ControllersProvider.index = $this;
         $this.usersMarker = new google.maps.Marker({
@@ -46209,22 +46236,18 @@ app.factory('gmap', function () {
 
     var clusterers = [];
     clusterers[POINT_TYPES.shop] = mcFactory(POINT_TYPES.shop);
-    clusterers[POINT_TYPES.bar] =mcFactory(POINT_TYPES.bar);
+    clusterers[POINT_TYPES.bar] = mcFactory(POINT_TYPES.bar);
     clusterers[POINT_TYPES.message] = mcFactory(POINT_TYPES.message);
     clusterers[POINT_TYPES.event] = mcFactory(POINT_TYPES.event);
 
 
-
-    map.addMarker = function(marker,type)
-    {
+    map.addMarker = function (marker, type) {
         clusterers[type].addMarker(marker)
     };
-    map.removeMarker = function(marker,type)
-    {
+    map.removeMarker = function (marker, type) {
         clusterers[type].removeMarker(marker)
     };
-    map.clearMarkers = function()
-    {
+    map.clearMarkers = function () {
         clusterers[POINT_TYPES.shop].clearMarkers();
         clusterers[POINT_TYPES.bar].clearMarkers();
         clusterers[POINT_TYPES.message].clearMarkers();
@@ -46264,6 +46287,9 @@ app.factory('Point', ['$resource', 'BackendResource', '$http', function ($resour
     obj.index_optimised = function (bounds, accept, reject) {
         $resource('/points.:format').query({bounds: bounds, format: 'json'}).$promise.then(accept, reject);
     };
+    obj.getPoints = function (bounds,settings, accept, reject) {
+        $http.post('/points/get_points',{bounds: bounds, settings:settings}).then(accept, reject);
+    };
 
     obj.rate = function (pid, direction, accept, reject) {
         $http.post('points/rate/' + pid, {direction: direction}).then(accept, reject);
@@ -46296,10 +46322,14 @@ app.factory('News', ['$resource', '$http', 'BackendResource', function ($resourc
     return obj;
 
 }]);
-app.service('User', ['$resource', function ($resource) {
-    var usr;
-    if (!usr)
-        usr = $resource('/user').get();
+app.service('User', ['$resource', '$http', function ($resource, $http) {
+    var usr = {
+        online_count: function (accept) {
+            $http.get('user/onlinecount/').then(accept);
+        }
+    };
+    usr.data = $resource('/user').get();
+
     return usr;
 }]);
 app.service('Settings', ['BackendResource', function (BackendResource) {
@@ -46339,6 +46369,24 @@ app.directive('myEnter', function () {
         });
     };
 });
+app.directive("fileread", [function () {
+    return {
+        scope: {
+            fileread: "="
+        },
+        link: function (scope, element, attributes) {
+            element.bind("change", function (changeEvent) {
+                var reader = new FileReader();
+                reader.onload = function (loadEvent) {
+                    scope.$apply(function () {
+                        scope.fileread = loadEvent.target.result;
+                    });
+                }
+                reader.readAsDataURL(changeEvent.target.files[0]);
+            });
+        }
+    }
+}]);
 app.service('ControllersProvider', function () {
     return {
         chat: undefined,
