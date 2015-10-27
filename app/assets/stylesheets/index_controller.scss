@@ -41,7 +41,8 @@
 }
 
 .map_container {
-
+  height: 100vh;
+  overflow: hidden;
 }
 
 .add_button {
@@ -190,12 +191,13 @@ a:hover {
 }
 
 .half_btn_dn {
-  -webkit-transform: translate(-34px, 23px);
-  transform: translate(-34px, 23px);
+  -webkit-transform: translate(0px, 34px);
+  transform: translate(0px, 34px);
   border-bottom: 1px solid;
   border-left: 1px solid;
   border-right: 1px solid;
   padding-top: 8px;
+  left: 10px;
 }
 
 @media (min-width: 992px) {

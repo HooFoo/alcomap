@@ -32,11 +32,11 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
             cardAccepted: resource.cardAccepted,
             beer: resource.beer,
             hard: resource.hard,
-            elite: resource.elite,
-            picture: {
-                data: resource.picture.link,
-                filename: resource.picture.name
-            }
+            elite: resource.elite//,
+            //picture: {
+            //    data: resource.picture.link,
+            //    filename: resource.picture.name
+            //}
         }
     }
 

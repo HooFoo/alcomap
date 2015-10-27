@@ -66,7 +66,7 @@ class PointsController < InheritedResources::Base
   def process_picture
     if params[:point] && params[:picture]
       puts params[:picture].inspect
-      data = StringIO.new(Base64.decode64(params[:picture][:data]))
+      data = Т.new(Base64.decode64(params[:picture][:data]))
       data.class.class_eval { attr_accessor :original_filename, :content_type }
       data.original_filename = params[:point][:picture][:filename]
       data.content_type = params[:point][:picture][:content_type]
