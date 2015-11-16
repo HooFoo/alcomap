@@ -208,6 +208,14 @@ a:hover {
   .half_btn {
     display: none !important;
   }
+  #news
+  {
+    padding-top: 25px;
+  }
+  .padding_mobile
+  {
+    padding-top: 25px;
+  }
 }
 
 @keyframes blinking {
@@ -452,13 +460,14 @@ div.dropdown.ib {
 }
 
 #title-menu {
-  width: 83%;
+  width: 80vw;
   position: absolute;
-  transform: translate(10%, -4%);
-  -webkit-transform: translate(10%, -4%);
+  transform: translate(42%, -4%);
+  -webkit-transform: translate(42%, -4%);
   height: 84vh;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+  max-width: 900px;
 }
 
 #help {
