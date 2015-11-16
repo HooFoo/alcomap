@@ -2,50 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ff93d683-874e-4cb0-9edc-ec7b955db34a" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\.sprockets-manifest-e775110db3a61061bc830c63bcdb977f.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\24-224e513c3f3010e9d20a8e6472c3fbc57eea6d07389d0e13892e2dafa39aea65.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\Alien-23ed7e3d380b6467322c6740d54438a490e06bf541fff229f22ea9dd712e3d5e.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\CreditCard-0ef517a2c1c489af8205760a0d00634293a7d06a4e0587f95be6f1db5d1651f5.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\airport-1480552fe4f3f251ae88352add52fa9947e1909ead7470949e177081d4fa2241.ttf" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\airport-b4814971b8c558d18eec1b3daed8316dc79e16bd966d4a5cc8f7e2d3e8812009.woff" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\airport-c825a2a3babab75fac2e2a8da6b7246682cb51fa40198911c95defa15b05f4d1.eot" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\alert-9bdc9c0c1c74c3b1f605c61def3013273a78c0b62e8cc12ce9268da4c8bcf478.mp3" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\anahit-regular-3e9f7551e67f0963e32b40996f558e6e58304c648be468f038b294c9574cd84d.woff" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\anahit-regular-73bf00e713552de0df7b103371f6adff2e466a8686a0291e9a71b921ce0471c9.eot" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\anahit-regular-d9c33fb4d43b1d8798b83c0da5d14d36aacb3aa8b622b496edddff98fec38481.ttf" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\apple-touch-icon-iphone-a4915532289d793a94a3b8e9b5b51e3b4d185385964d5ae69487803cd4ec6732.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\application-0b1b03a2fa5e182b5572fd2258ce4b64e100b4f3261d7454b2973b642c4715f0.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\application-f8ee320e92bd3aa23af4c43d377660026bfab7bf7c2ac66377346aa052d619b1.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\beer-6897b550a326062c123b58cc7488ed054dbb33532710c42f5509614dfad8193f.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bg-a8a2677b21aa7759bba3e1d56cf6fcff13534147fb00b629d9e7186149b69b70.webm" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bg-da56e5227859c1f402a739ccbe5b61169eac78b9592e4dcbae5fb40e4d2c5a4d.mp4" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bootstrap\glyphicons-halflings-regular-13634da87d9e23f8c3ed9108ce1724d183a39ad072e73e1b3d8cbf646d2d0407.eot" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bootstrap\glyphicons-halflings-regular-42f60659d265c1a3c30f9fa42abcbb56bd4a53af4d83d316d6dd7a36903c43e5.svg" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bootstrap\glyphicons-halflings-regular-a26394f7ede100ca118eff2eda08596275a9839b959c226e15439557a5a80742.woff" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bootstrap\glyphicons-halflings-regular-e395044093757d82afcb138957d06a1ea9361bdcf0b442d06a18a8051af57456.ttf" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bootstrap\glyphicons-halflings-regular-fe185d11a49676890d47bb783312a0cda5a44c4039214094e7957b4c040ef11c.woff2" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\bottle-3c5f9a060846cc46bf30ecad99a07cc1a18859e7c7991b088012a30260b00f98.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\center-f2b555a668a966da5e65aed53f7eee3046c209bf7f39ffb240344a9a22157bca.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\drinks-1e4e8c943d17f2157cc9114b30f8d9ffd3e939c113049b2ccb824e2ef4ed85f6.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\elite-6562a12a0042f0013993b75673e067be3f968779a6fbedfd97d40a9048111d23.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\event-c4db32a00df3b3d4e9f4cb9eed09c3b90d8a4c9ea3abc25bf50002462cc08981.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\favicon-4d137ec81b983031ea86b54761bdf1c66ace9301f8eb68f6e1037931536433fb.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\hard-f199e9219c2d7437033ea84d61f8d5fee8923833a03e50874417b5ae31be9d00.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\help-8f3ccb9e8a1cf7114d0739241c876446e91d34c2d21f45e908276abfc943ef5f.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\info-8af46d4e9bebd0e76df611a9acfd43491c311106974755711454b31882565e75.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\ios_add-502ec3ce24af885399ad1c2c5eb7c948501c185353c7ed817fab235ba2ce66a2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\manifest-7f03c746b3ce63b505c77f1940d1e3940c2669acfabad68ab0406c68f67915d5.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\message-16587aba29954e736c2e04ada8098275194ed06fe71b930704e7673985d167cd.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\new-053de3583ab069972e53dc312d224551c69220594d140e5ee1c7e0974761c8f6.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\new_point-80c7407027583ed10a02cbb3746e790fca97fc601e9cd9c2e49d99be7d215ac9.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\send_message-58fa0559f449b875d8e86490c748c2ce91c550b55ed3873ac7c5d4b6a67b1382.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\settings-6be7d744bf1b9891aa95e65bc26f63344e84136206b43c80b93555a03c76d757.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\touch-icon-ipad-27a7f5f8992b08392521c937b3742b12f87cf16e3fa83fcb40d8397591ec99c9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\touch-icon-ipad-retina-e6acf61e42545562fd16b46d0ce4667c55455d04323a6d406a8c942e18fbce30.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Projects\alcomap\public\assets\touch-icon-iphone-retina-ce7e510bc12457295f26b28325601276d2178f6ad0e4d8eb6d5a12fa2c4ac9ea.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/alcomap.iml" afterPath="$PROJECT_DIR$/.idea/alcomap.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/common/common.js.erb" afterPath="$PROJECT_DIR$/app/assets/javascripts/common/common.js.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/index/index.html.erb" afterPath="$PROJECT_DIR$/app/views/index/index.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/bootstrap/glyphicons-halflings-regular-13634da87d9e23f8c3ed9108ce1724d183a39ad072e73e1b3d8cbf646d2d0407.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/bootstrap/glyphicons-halflings-regular-a26394f7ede100ca118eff2eda08596275a9839b959c226e15439557a5a80742.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/bootstrap/glyphicons-halflings-regular-e395044093757d82afcb138957d06a1ea9361bdcf0b442d06a18a8051af57456.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/bootstrap/glyphicons-halflings-regular-fe185d11a49676890d47bb783312a0cda5a44c4039214094e7957b4c040ef11c.woff2" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/.sprockets-manifest-2775f27d9ab9f3efd336985cb34c5829.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/application-2edcf308e9a20c4e6511b2c8581587cda4c0ddcd138129a7cac7f98ba8ac50cd.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/application-6063518975cbe2de8b9d6d85ed54665d66ff5616bb06082c7d37b3c4cb53328b.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/application-8bff4e0527a232b882ae2c92e33c1f8162ff40be9f4031ae715d0c1ef8d4a565.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/bootstrap/glyphicons-halflings-regular-42f60659d265c1a3c30f9fa42abcbb56bd4a53af4d83d316d6dd7a36903c43e5.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/help-8f3ccb9e8a1cf7114d0739241c876446e91d34c2d21f45e908276abfc943ef5f.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/info-8af46d4e9bebd0e76df611a9acfd43491c311106974755711454b31882565e75.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/new_point-80c7407027583ed10a02cbb3746e790fca97fc601e9cd9c2e49d99be7d215ac9.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/index_controller.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/index_controller.scss" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -62,7 +30,7 @@
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/alcomap@db_migrate__alcomap.coverage" NAME="db:migrate: alcomap Coverage Results" MODIFIED="1444338982097" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
-    <SUITE FILE_PATH="coverage/alcomap@assets_precompile__alcomap.coverage" NAME="assets:precompile: alcomap Coverage Results" MODIFIED="1447692291548" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
+    <SUITE FILE_PATH="coverage/alcomap@assets_precompile__alcomap.coverage" NAME="assets:precompile: alcomap Coverage Results" MODIFIED="1447692634036" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
     <SUITE FILE_PATH="coverage/alcomap@assets_environment__alcomap.coverage" NAME="assets:environment: alcomap Coverage Results" MODIFIED="1445981886232" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
     <SUITE FILE_PATH="coverage/alcomap@Rails_console__alcomap.coverage" NAME="Rails console: alcomap Coverage Results" MODIFIED="1443915892648" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
     <SUITE FILE_PATH="coverage/alcomap@db_drop__alcomap.coverage" NAME="db:drop: alcomap Coverage Results" MODIFIED="1441153061309" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="alcomap" />
@@ -134,17 +102,27 @@
       <file leaf-file-name="index_controller.scss" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/index_controller.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.3636363">
-              <caret line="457" column="23" selection-start-line="457" selection-start-column="23" selection-end-line="457" selection-end-column="23" />
+            <state vertical-scroll-proportion="-5.1454544">
+              <caret line="383" column="1" selection-start-line="383" selection-start-column="1" selection-end-line="383" selection-end-column="1" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html.erb" pinned="false" current-in-tab="true">
+      <file leaf-file-name="application-6063518975cbe2de8b9d6d85ed54665d66ff5616bb06082c7d37b3c4cb53328b.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/assets/application-6063518975cbe2de8b9d6d85ed54665d66ff5616bb06082c7d37b3c4cb53328b.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.2853717">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html.erb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/index/index.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5959079">
+            <state vertical-scroll-proportion="-8.961538">
               <caret line="45" column="57" selection-start-line="45" selection-start-column="57" selection-end-line="45" selection-end-column="57" />
               <folding>
                 <element signature="n#div#0;n#div#1;n#div#0;n#div#1;n#!!top" expanded="false" />
@@ -179,16 +157,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="9" column="23" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="application.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/application.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="2" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -894,12 +862,6 @@
       <option name="number" value="Default" />
       <updated>1440790392929</updated>
     </task>
-    <task id="LOCAL-00003" summary="Added form">
-      <created>1440817175104</created>
-      <option name="number" value="00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1440817175104</updated>
-    </task>
     <task id="LOCAL-00004" summary="Added form">
       <created>1440818067457</created>
       <option name="number" value="00004" />
@@ -1188,7 +1150,13 @@
       <option name="project" value="LOCAL" />
       <updated>1445981959708</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="Визуальные исправления">
+      <created>1447692381420</created>
+      <option name="number" value="00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1447692381420</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -1202,14 +1170,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32448378" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32890856" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.64992154" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24960753" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12556732" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12556732" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3961136" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34365782" sideWeight="0.4969743" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1220,7 +1189,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32884902" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1264,7 +1232,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/alcomap" />
     </ignored-roots>
-    <MESSAGE value="assets&#10;" />
     <MESSAGE value="settings (incomplete)" />
     <MESSAGE value="Different points type" />
     <MESSAGE value="News" />
@@ -1289,7 +1256,8 @@
     <MESSAGE value="Images - not working!" />
     <MESSAGE value="Без картинок, улучшения и багфиксы" />
     <MESSAGE value="Ассеты" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ассеты" />
+    <MESSAGE value="Визуальные исправления" />
+    <option name="LAST_COMMIT_MESSAGE" value="Визуальные исправления" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1309,13 +1277,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/views/points/create.json.jbuilder">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.044496488">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="dbDummy://dbtable:/940e03c8/4bb881de-66c2-47bd-b522-a7c32bdd2a9c/..media">
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1670,22 +1631,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/index_controller.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.3636363">
-          <caret line="457" column="23" selection-start-line="457" selection-start-column="23" selection-end-line="457" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/index/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5959079">
+        <state vertical-scroll-proportion="-8.961538">
           <caret line="45" column="57" selection-start-line="45" selection-start-column="57" selection-end-line="45" selection-end-column="57" />
           <folding>
             <element signature="n#div#0;n#div#1;n#div#0;n#div#1;n#!!top" expanded="false" />
             <element signature="n#div#1;n#div#1;n#div#0;n#div#1;n#!!top" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/index_controller.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.1454544">
+          <caret line="383" column="1" selection-start-line="383" selection-start-column="1" selection-end-line="383" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/assets/application-6063518975cbe2de8b9d6d85ed54665d66ff5616bb06082c7d37b3c4cb53328b.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.2853717">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

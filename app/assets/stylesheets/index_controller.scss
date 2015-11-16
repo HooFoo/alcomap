@@ -74,11 +74,13 @@
   bottom: 0px;
   -webkit-overflow-scrolling: touch;
 }
-.point_close{
+
+.point_close {
   position: absolute;
   right: 10px;
   cursor: pointer;
 }
+
 .comment_form {
   background: rgba(249, 249, 249, 0.7);
   padding: 5px 10px;
@@ -208,12 +210,10 @@ a:hover {
   .half_btn {
     display: none !important;
   }
-  #news
-  {
+  #news {
     padding-top: 25px;
   }
-  .padding_mobile
-  {
+  .padding_mobile {
     padding-top: 25px;
   }
 }
@@ -239,6 +239,7 @@ a:hover {
   padding-left: 2px !important;
   padding-bottom: 3px !important;
 }
+
 #settings_btn {
   transform: translate(24px, -50vh);
   position: absolute;
@@ -608,7 +609,7 @@ div.dropdown.ib {
   position: absolute;
   opacity: 0.7;
   background-size: contain;
-  right:8px;
+  right: 8px;
 }
 
 .icon_bar {
@@ -618,7 +619,7 @@ div.dropdown.ib {
   position: absolute;
   opacity: 0.7;
   background-size: contain;
-  right:8px;
+  right: 8px;
 }
 
 .icon_marker {
@@ -628,7 +629,7 @@ div.dropdown.ib {
   position: absolute;
   opacity: 0.7;
   background-size: contain;
-  right:8px;
+  right: 8px;
 }
 
 .icon_message {
@@ -638,30 +639,30 @@ div.dropdown.ib {
   position: absolute;
   opacity: 0.7;
   background-size: contain;
-  right:8px;
+  right: 8px;
 }
-.cluster
-{
+
+.cluster {
   background-size: contain;
 }
-#settings
-{
+
+#settings {
   padding: 5px 10px 5px 6px;
   text-align: center;
 }
-.settings_dropdown
-{
-  transform: translate(69px,-50vh);
-  -webkit-transform: translate(69px,-50vh);
+
+.settings_dropdown {
+  transform: translate(69px, -50vh);
+  -webkit-transform: translate(69px, -50vh);
   width: 80%;
   text-align: center;
 }
-.title_dropdown
-{
+
+.title_dropdown {
   transform: translateY(-60%);
 }
-.online
-{
+
+.online {
   position: absolute;
   right: 20px;
   color: rgba(255, 255, 255, 0.4);
