@@ -210,6 +210,8 @@ a:hover {
   .half_btn {
     display: none !important;
   }
+}
+@media (max-width: 992px) {
   #news {
     padding-top: 25px;
   }
@@ -463,8 +465,8 @@ div.dropdown.ib {
 #title-menu {
   width: 80vw;
   position: absolute;
-  transform: translate(42%, -4%);
-  -webkit-transform: translate(42%, -4%);
+  transform: translate(-42%, -2%);
+  -webkit-transform: translate(-42%, -2%);
   height: 84vh;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
