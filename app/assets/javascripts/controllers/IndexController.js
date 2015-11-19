@@ -184,10 +184,9 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
         })
     };
 
-    this.closePoint = function()
-    {
+    this.closePoint = function () {
         $this.openedInfos.onClose();
-        closeOther(undefined,undefined);
+        closeOther(undefined, undefined);
     };
 
     this.addPoint = function () {
@@ -220,9 +219,19 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
     };
 
     this.showMarkers = function () {
-        var bounds = gmap.getBounds();
+        var bounds = gmap.getBounds()
+        var parsed = {
+            sw: {
+                lat: bounds.getSouthWest().lat(),
+                lng: bounds.getSouthWest().lng()
+            },
+            ne: {
+                lat: bounds.getNorthEast().lat(),
+                lng: bounds.getNorthEast().lng()
+            }
+        };
 
-        Point.getPoints(bounds, $this.settings, function (result) {
+        Point.getPoints(parsed, $this.settings, function (result) {
             gmap.clearMarkers();
             $this.points = result.data;
             $this.points.forEach(function (item) {
@@ -293,7 +302,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
         }, true);
         $this.settings = localStorage.getItem('settings') ?
             JSON.parse(localStorage.getItem('settings')) :
-            {shops: true, bars: true, markers: true, messages: true};
+        {shops: true, bars: true, markers: true, messages: true};
         console.log($this.settings);
         gmap.addListener('idle', $this.showMarkers);
         ControllersProvider.index = $this;

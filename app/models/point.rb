@@ -16,26 +16,26 @@ class Point < ActiveRecord::Base
   validates_attachment_content_type :picture, content_type: /\Aimage\/.*\Z/
 
   def self.shops(coords)
-    where("lat <= #{coords['Da']['j']} and lat >= #{coords['Da']['A']} and lng <= #{coords['va']['A']} and lng >= #{coords['va']['j']} and point_type = 'shop'")
+    where("lat <= #{coords['ne']['lat']} and lat >= #{coords['sw']['lat']} and lng <= #{coords['ne']['lng']} and lng >= #{coords['sw']['lng']} and point_type = 'shop'")
   end
 
   def self.bars(coords)
-    where("lat <= #{coords['Da']['j']} and lat >= #{coords['Da']['A']} and lng <= #{coords['va']['A']} and lng >= #{coords['va']['j']} and point_type = 'bar'")
+    where("lat <= #{coords['ne']['lat']} and lat >= #{coords['sw']['lat']} and lng <= #{coords['ne']['lng']} and lng >= #{coords['sw']['lng']} and point_type = 'bar'")
   end
 
   def self.markers(coords)
-    where("lat <= #{coords['Da']['j']} and lat >= #{coords['Da']['A']} and lng <= #{coords['va']['A']} and lng >= #{coords['va']['j']} and point_type = 'marker' AND created_at >= ?", Date.today - 7)
+    where("lat <= #{coords['ne']['lat']} and lat >= #{coords['sw']['lat']} and lng <= #{coords['ne']['lng']} and lng >= #{coords['sw']['lng']} and point_type = 'marker' AND created_at >= ?", Date.today - 7)
   end
 
   def self.messages(coords)
-    where("lat <= #{coords['Da']['j']} and lat >= #{coords['Da']['A']} and lng <= #{coords['va']['A']} and lng >= #{coords['va']['j']} and point_type = 'message' AND created_at >= ?", DateTime.now-30.minutes)
+    where("lat <= #{coords['ne']['lat']} and lat >= #{coords['sw']['lat']} and lng <= #{coords['ne']['lng']} and lng >= #{coords['sw']['lng']} and point_type = 'message' AND created_at >= ?", DateTime.now-30.minutes)
   end
 
   def self.visible(coords)
-    where("lat <= #{coords['Da']['j']} and lat >= #{coords['Da']['A']} and lng <= #{coords['va']['A']} and lng >= #{coords['va']['j']}")
+    where("lat <= #{coords['ne']['lat']} and lat >= #{coords['sw']['lat']} and lng <= #{coords['ne']['lng']} and lng >= #{coords['sw']['lng']}")
   end
 
   def self.mixed(coords)
-    where("lat <= #{coords['Da']['j']} and lat >= #{coords['Da']['A']} and lng <= #{coords['va']['A']} and lng >= #{coords['va']['j']} and (point_type = 'shop') or (point_type = 'bar') or (point_type = 'message' AND created_at >= ?) or (point_type = 'marker' AND created_at >= ?)", DateTime.now-30.minutes, Date.today - 7)
+    where("lat <= #{coords['ne']['lat']} and lat >= #{coords['sw']['lat']} and lng <= #{coords['ne']['lng']} and lng >= #{coords['sw']['lng']} and (point_type = 'shop') or (point_type = 'bar') or (point_type = 'message' AND created_at >= ?) or (point_type = 'marker' AND created_at >= ?)", DateTime.now-30.minutes, Date.today - 7)
   end
 end
