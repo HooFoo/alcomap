@@ -97,11 +97,11 @@
 .comments {
   background-color: rgba(249, 249, 249, 0.7);
   padding-top: 10px;
-  height: 85vh;
+  height: 80vh;
   overflow: auto;
   position: absolute;
   left: 0px;
-  top: 15vh;
+  top: 10vh;
   right: 0px;
   bottom: 0px;
   -webkit-overflow-scrolling: touch;
