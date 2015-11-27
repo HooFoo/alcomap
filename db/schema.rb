@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160828204424) do
+ActiveRecord::Schema.define(version: 20160828204425) do
 
   create_table "_points_old_20150916", force: :cascade do |t|
     t.float    "lng"
