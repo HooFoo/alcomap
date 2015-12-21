@@ -5,9 +5,9 @@ class CommentsController < InheritedResources::Base
     @comment = build_resource
     @comment.point = Point.find(params[:point_id])
     @comment.user = current_user
-    image = Paperclip.io_adapters.for(params[:picture])
-    image.original_filename = "something.gif"
-    @comment.picture = image
+    #image = Paperclip.io_adapters.for(params[:picture])
+    #image.original_filename = "something.gif"
+    #@comment.picture = image
     @comment.save
   end
 

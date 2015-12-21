@@ -1,7 +1,7 @@
 #encoding: utf-8
 class TestData < ActiveRecord::Migration
   def change
-    user = User.new :name => 'HooFoo',
+    user = User.new :name => 'Влажная Ватрушка',
                     :email => 'adm@adm.ru',
                     :password => 'adm',
                     :password_confirmation => 'adm',

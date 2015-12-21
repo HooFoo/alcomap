@@ -12,8 +12,8 @@ class Point < ActiveRecord::Base
   #                               less_than: 1.megabytes
 
 
-  has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/missing.png"
-  validates_attachment_content_type :picture, content_type: /\Aimage\/.*\Z/
+  #has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/missing.png"
+  #validates_attachment_content_type :picture, content_type: /\Aimage\/.*\Z/
 
   def self.shops(coords)
     where("lat <= #{coords['ne']['lat']} and lat >= #{coords['sw']['lat']} and lng <= #{coords['ne']['lng']} and lng >= #{coords['sw']['lng']} and point_type = 'shop'")
