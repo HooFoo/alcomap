@@ -1,15 +1,14 @@
-<div class="forms_wrapper">
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <H1>Alcomap.ru DEMO</H1>
     <h2>Вход</h2>
     <div class="field">
       <%= f.label "Почта" %><br/>
-      <%= f.email_field :email, autofocus: true, class: 'form-control', :value => 'test@test.com'  %>
+      <%= f.email_field :email, autofocus: true, class: 'form-control', value: 'test@test.com'  %>
     </div>
 
     <div class="field">
       <%= f.label "Пароль" %><br/>
-      <%= f.password_field :password, autocomplete: "off", class: 'form-control', :value => 'test' %>
+      <%= f.password_field :password, autocomplete: "off", class: 'form-control', value: 'test' %>
     </div>
 
       <% if devise_mapping.rememberable? -%>
