@@ -1,21 +1,21 @@
 #encoding: utf-8
 class TestData < ActiveRecord::Migration
   def change
-    user = User.new :name => 'Влажная Ватрушка',
-                    :email => 'adm@adm.ru',
-                    :password => 'adm',
-                    :password_confirmation => 'adm',
+    user = User.new :name => 'Test User',
+                    :email => 'test@test.com',
+                    :password => 'test',
+                    :password_confirmation => 'test',
                     :admin => true
     user.save
 
     point = Point.new :lng => 30.396,
                       :lat => 59.983,
-                      :name => 'Мой кругляк',
-                      :description => '24 часа у арки',
+                      :name => 'Test shop',
+                      :description => 'maybe here',
                       :user => user
     point.save
 
-    comment = Comment.new :text => 'Внатуре класс!',
+    comment = Comment.new :text => 'Test comment!',
                           :user => user,
                           :point => point
 

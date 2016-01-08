@@ -3,7 +3,7 @@ class PointsController < InheritedResources::Base
   respond_to :json
 
   def create
-    process_picture
+    #process_picture
     @point = Point.new point_params
     @point.user = current_user
     if @point.save!
