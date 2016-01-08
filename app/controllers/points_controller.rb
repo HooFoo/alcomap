@@ -6,8 +6,9 @@ class PointsController < InheritedResources::Base
     process_picture
     @point = Point.new point_params
     @point.user = current_user
-    @point.save
-    News.new(:user => current_user, :point => @point).save
+    if @point.save!
+      News.new(:user => current_user, :point => @point).save
+    end
     render 'show'
   end
 

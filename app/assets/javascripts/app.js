@@ -25,6 +25,11 @@ app.factory('gmap', function () {
                 "stylers": [{"color": "#f2f2f2"}]
             },
             {
+                "featureType": "landscape",
+                "elementType": "geometry.stroke",
+                "stylers": [{"color": "#7C7C7C"}]
+            },
+            {
                 "featureType": "poi",
                 "elementType": "all",
                 "stylers": [{"visibility": "off"}]
@@ -54,21 +59,21 @@ app.factory('gmap', function () {
     function mcFactory(point_type) {
         var styles = [
             {
-                textColor: 'rgb(30, 153, 204)',
+                textColor: '#22A7F0',
                 url: iconForPoint(point_type),
                 height: 32,
                 width: 32,
                 textSize: 20
             },
             {
-                textColor: 'rgb(30, 153, 204)',
+                textColor: '#22A7F0',
                 url: iconForPoint(point_type),
                 height: 42,
                 width: 42,
                 textSize: 25
             },
             {
-                textColor: 'rgb(30, 153, 204)',
+                textColor: '#22A7F0',
                 url: iconForPoint(point_type),
                 height: 52,
                 width: 52,

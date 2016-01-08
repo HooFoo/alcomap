@@ -219,27 +219,30 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
     };
 
     this.showMarkers = function () {
-        var bounds = gmap.getBounds()
-        var parsed = {
-            sw: {
-                lat: bounds.getSouthWest().lat(),
-                lng: bounds.getSouthWest().lng()
-            },
-            ne: {
-                lat: bounds.getNorthEast().lat(),
-                lng: bounds.getNorthEast().lng()
-            }
-        };
+        var bounds = gmap.getBounds();
+        if(bounds) {
+            var parsed = {
+                sw: {
+                    lat: bounds.getSouthWest().lat(),
+                    lng: bounds.getSouthWest().lng()
+                },
+                ne: {
+                    lat: bounds.getNorthEast().lat(),
+                    lng: bounds.getNorthEast().lng()
+                }
+            };
 
-        Point.getPoints(parsed, $this.settings, function (result) {
-            gmap.clearMarkers();
-            $this.points = result.data;
-            $this.points.forEach(function (item) {
-                if (!(item.id == ($this.currentPoint ? $this.currentPoint.id : undefined)))
-                    buildMarker(item);
+
+            Point.getPoints(parsed, $this.settings, function (result) {
+                gmap.clearMarkers();
+                $this.points = result.data;
+                $this.points.forEach(function (item) {
+                    if (!(item.id == ($this.currentPoint ? $this.currentPoint.id : undefined)))
+                        buildMarker(item);
+                });
+                $this.fire('onpointsloaded');
             });
-            $this.fire('onpointsloaded');
-        });
+        }
     };
 
     this.deleteComment = function (id) {
@@ -290,20 +293,19 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
 
     this.setCenter = function (lat, lng, point_id) {
         gmap.setCenter({lat: lat, lng: lng});
+        gmap.setZoom(14);
         if (point_id)
             $this.setPointCurrent(point_id);
     };
     var init = function () {
         EventTarget.apply($this);
         $scope.$watch('controller.settings', function (newValue, oldValue) {
-            console.log(newValue, oldValue);
             localStorage.setItem('settings', JSON.stringify(newValue));
             $this.showMarkers();
         }, true);
         $this.settings = localStorage.getItem('settings') ?
             JSON.parse(localStorage.getItem('settings')) :
         {shops: true, bars: true, markers: true, messages: true};
-        console.log($this.settings);
         gmap.addListener('idle', $this.showMarkers);
         ControllersProvider.index = $this;
         $this.usersMarker = new google.maps.Marker({
