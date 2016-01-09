@@ -13,18 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20160828204425) do
 
-  create_table "_points_old_20150916", force: :cascade do |t|
-    t.float    "lng"
-    t.float    "lat"
-    t.string   "name"
-    t.string   "description"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "user_id"
-    t.integer  "rating",      default: 0
-    t.string   "type"
-  end
-
   create_table "chat_messages", force: :cascade do |t|
     t.string   "message"
     t.integer  "user_id"
@@ -123,7 +111,6 @@ ActiveRecord::Schema.define(version: 20160828204425) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.integer  "invitations_count",      default: 0
-    t.datetime "last_seen"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
