@@ -51,7 +51,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
     var buildMarker = function (item) {
         var marker = new google.maps.Marker({
             position: {lng: item.lng, lat: item.lat},
-            title: item.description,
+            title: item.name,
             map: gmap,
             icon: iconForPoint(item.point_type)
         });
