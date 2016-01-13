@@ -50,6 +50,11 @@ app.factory('gmap', function () {
                 "elementType": "all",
                 "stylers": [{"visibility": "off"}]
             }, {
+                "featureType": "transit.station",
+                "elementType": "all",
+                "stylers": [{"visibility": "on",
+                    "color":"#FF22CC"}]
+            }, {
                 "featureType": "water",
                 "elementType": "all",
                 "stylers": [{"color": "#46bcec"}, {"visibility": "on"}]

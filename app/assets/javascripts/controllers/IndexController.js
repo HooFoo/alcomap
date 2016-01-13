@@ -4,7 +4,7 @@
 function IndexController($compile, $scope, $http, gmap, Point, Comment, User, ControllersProvider) {
     var $this = this;
 
-    this.heading = 'Алкомап β';
+    this.heading = 'Алкомап';
     this.currentPoint = undefined;
     this.openedInfos = undefined;
     this.user = User;

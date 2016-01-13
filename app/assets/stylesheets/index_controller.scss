@@ -684,3 +684,63 @@ div.dropdown.ib {
   max-width: 300px;
   max-height: 300px;
 }
+.help_btn
+{
+  position: absolute;
+  display: inline-block;
+  right: 0px;
+  transform: translate(150%, -33px);
+  -webkit-transform: translate(150%, -33px);
+  border: 1px solid rgb(124, 124, 124);
+  border-radius: 13px;
+  height: 25px;
+  width: 25px;
+  font-size: 1em;
+  background-color: rgb(251, 251, 251);
+  color: rgb(124, 124, 124);
+  text-align: center;
+  line-height: 25px;
+  opacity: 0.35;
+}
+@keyframes helpFadeIn {
+  0%{
+    opacity: 0.35;
+  }
+  100%
+  {
+    opacity: 1;
+  }
+}
+.help_btn:hover
+{
+  animation: helpFadeIn 0.5s both;
+}
+@keyframes rollOut {
+  0%{
+    opacity: 0.1;
+  }
+  100%
+  {
+    opacity: 1;
+
+  }
+}
+.dropdown.roll_out.open
+{
+  animation: rollOut 1s both;
+}
+.usefull > img
+{
+  width: 70%
+}
+.phone_add > img
+{
+  width: 45%;
+  height: 533px;
+}
+.phone_add
+{
+  width: 80%;
+  transform: translateX(12.5%);
+  -webkit-transform: translateX(12.5%);
+}
