@@ -1,4 +1,4 @@
-function ChatController($scope, ChatMessage, User, ControllersProvider) {
+function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
     var $this = this;
     var container = $('.overflow_hidden');
     var messages = $('#messages');
@@ -26,14 +26,15 @@ function ChatController($scope, ChatMessage, User, ControllersProvider) {
                         audio.volume = 0.5;
                         audio.play();
                         msg.marked = true;
+                        msg.message = $this.prepareMessage(msg.message);
                     }
                     $this.messages.push(msg);
                     delayedScroll();
                 });
             }
         });
-        User.online_count(function(result){
-                $this.online = result.data.value;
+        User.online_count(function (result) {
+            $this.online = result.data.value;
         });
         if ($this.messages)
             $this.lastUpdate = $this.messages[$this.messages.length - 1].id;
@@ -46,6 +47,9 @@ function ChatController($scope, ChatMessage, User, ControllersProvider) {
         container.toggleClass('deployed');
         container.toggleClass('undeployed');
     };
+    this.prepareMessage = function (text) {
+        return prepareMessage(text,"chat_link","chat_image");
+    };
     this.selectUser = function (name) {
         $this.chatMessage = name + ", ";
         $('input.chat_msg_box').focus();
@@ -56,10 +60,13 @@ function ChatController($scope, ChatMessage, User, ControllersProvider) {
         $this.addListenerOnce('messagesloaded', $this.update);
         ChatMessage.index(function (result) {
             $this.messages = result;
+            $this.messages.forEach(function (msg) {
+                msg.message = $this.prepareMessage(msg.message);
+            });
             //ждем пока отрисуется
             setTimeout(function () {
                 $this.fire('messagesloaded')
-            },2000)
+            }, 2000)
         });
 
     };

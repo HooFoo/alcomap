@@ -1,0 +1,21 @@
+<div class="wrapper" id="chat_area" ng-view ng-controller="ChatController as controller">
+    <div class="overflow_hidden undeployed">
+        <div class="online">Онлайн: {{controller.online}}</div>
+        <div id="messages" class="messages">
+            <div class="msg" ng-repeat="message in controller.messages track by $index">
+                <span class="timestamp">[{{message.created_at}}]</span>
+                <span class="msg_user" ng-click="controller.selectUser(message.username)" ng-class="message.username==controller.user.data.name?'msg_self':''">{{message.username}}:</span>
+                <span class="msg_text" ng-class="message.marked?'highlight':''" ng-bind-html="message.message"></span>
+            </div>
+        </div>
+        <div class="send_message row">
+            <input type="text" class="col-xs-11 col-sm-11 col-md-11 col-lg-11 chat_msg_box" autofocus ng-model="controller.chatMessage" my-enter="controller.sendMessage()"/>
+            <button class="col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-default snd_msg_btn" ng-click="controller.sendMessage()">
+                <img class="snd_msg_icon" src="<%= asset_path 'send_message.png' %>">
+            </button>
+        </div>
+    </div>
+    <div class="half_btn screen_label btn btn-default" ng-click="controller.enable()">
+        Алкочат!
+    </div>
+</div>

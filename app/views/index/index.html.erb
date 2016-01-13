@@ -1,24 +1,4 @@
-<div class="wrapper" id="chat_area" ng-view ng-controller="ChatController as controller">
-  <div class="overflow_hidden undeployed">
-    <div class="online">Онлайн: {{controller.online}}</div>
-    <div id="messages" class="messages">
-      <div class="msg" ng-repeat="message in controller.messages track by $index">
-        <span class="timestamp">[{{message.created_at}}]</span>
-        <span class="msg_user" ng-click="controller.selectUser(message.username)" ng-class="message.username==controller.user.data.name?'msg_self':''">{{message.username}}:</span>
-        <span class="msg_text" ng-class="message.marked?'highlight':''">{{message.message}}</span>
-      </div>
-    </div>
-    <div class="send_message row">
-      <input type="text" class="col-xs-11 col-sm-11 col-md-11 col-lg-11 chat_msg_box" autofocus ng-model="controller.chatMessage" my-enter="controller.sendMessage()"/>
-      <button class="col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-default snd_msg_btn" ng-click="controller.sendMessage()">
-        <img class="snd_msg_icon" src="<%= asset_path 'send_message.png' %>">
-      </button>
-    </div>
-  </div>
-  <div class="half_btn screen_label btn btn-default" ng-click="controller.enable()">
-    Алкочат!
-  </div>
-</div>
+<%= render 'chat' %>
 <div class="wrapper" ng-view ng-controller="IndexController as controller">
   <div class="map_container">
     <div id="map_area" class="col-xs-12 col-sm-12 col-md-8 col-lg-8 nopadding">
@@ -79,7 +59,7 @@
                 <span class="comment_user">{{comment.user.name}}</span>
                 <span class="delete_comment" ng-hide="!(comment.user.id == controller.user.id)" ng-click="controller.deleteComment(comment.id)">X</span>
 
-                <div class="comment_text"> {{comment.text}}</div>
+                <div class="comment_text" ng-bind-html="controller.prepareMessage(comment.text)"></div>
               </li>
             </ul>
           </div>
@@ -103,7 +83,7 @@
               </div>
 
               <div ng-class="news.onlyMy?'news_bottom':''">
-                  <span class="news_timestamp">{{item.created_at}}</span>
+                <span class="news_timestamp">{{item.created_at}}</span>
                 <div class="news_buttons" ng-show="news.onlyMy">
                   <span class="delete_point" ng-click="controller.editPoint(item.point.id)">Изменить</span>
                   <span class="delete_point" ng-click="controller.deletePoint(item.point.id)">Удалить</span>

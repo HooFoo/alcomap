@@ -1,9 +1,9 @@
 /**
- * Created by Геннадий on 28.08.2015.
+ * Created by пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ on 28.08.2015.
  */
-app = angular.module('alcomap', ['ngResource']);
+app = angular.module('alcomap', ['ngResource','ngSanitize']);
 app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User', 'ControllersProvider']);
-app.controller('ChatController', ChatController, ['$scope', 'ChatMessage', 'User', 'ControllersProvider']);
+app.controller('ChatController', ChatController, ['$scope','$sce', 'ChatMessage', 'User', 'ControllersProvider']);
 app.controller('NewsController', NewsController, ['News', '$scope', 'ControllersProvider']);
 app.factory('gmap', function () {
     var map = new google.maps.Map(document.getElementById('map'), {
