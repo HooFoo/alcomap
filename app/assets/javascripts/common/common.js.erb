@@ -66,6 +66,31 @@ wordForPointType = function(type)
         case "bar": return "бар";
     }
 };
-//TODO: протестировать!
-//$(document).on('touchstart',function(e){ e.preventDefault(); });
-//$(document).on('touchmove',function(e){ e.preventDefault(); });
+
+function imageTag(url,class_name)
+{
+  return "<a target='_blank' href='"+url+"' class='"+class_name+"'>"+"<img src='"+url+"' class='"+class_name+"'/>"+"</a>";
+}
+function linkTag(url,class_name)
+{
+  return "<a target='_blank' href='"+url+"' class='"+class_name+"'>"+url+"</a>";
+}
+prepareMessage = function (text, link_class, img_class) {
+  var links =
+      text.match(/(((ftp|http|https):\/\/)|(\/)|(..\/))(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g);
+  if (links) {
+    links.forEach(function (link) {
+      var image = text.match(/(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g);
+      if(image)
+      {
+        text = text.replace(image, imageTag(image, img_class));
+      }
+      else
+      {
+        text = text.replace(link, linkTag(link, link_class));
+      }
+    });
+
+  }
+  return text;
+};

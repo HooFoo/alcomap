@@ -15506,1002 +15506,6 @@ if (typeof jQuery === 'undefined') {
     });
   }
 }.call(this));
-(function() {
-  this.Gmaps = {
-    build: function(type, options) {
-      var model;
-      if (options == null) {
-        options = {};
-      }
-      model = _.isFunction(options.handler) ? options.handler : Gmaps.Objects.Handler;
-      return new model(type, options);
-    },
-    Builders: {},
-    Objects: {},
-    Google: {
-      Objects: {},
-      Builders: {}
-    }
-  };
-
-}).call(this);
-(function() {
-  var moduleKeywords,
-    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
-
-  moduleKeywords = ['extended', 'included'];
-
-  this.Gmaps.Base = (function() {
-    function Base() {}
-
-    Base.extend = function(obj) {
-      var key, ref, value;
-      for (key in obj) {
-        value = obj[key];
-        if (indexOf.call(moduleKeywords, key) < 0) {
-          this[key] = value;
-        }
-      }
-      if ((ref = obj.extended) != null) {
-        ref.apply(this);
-      }
-      return this;
-    };
-
-    Base.include = function(obj) {
-      var key, ref, value;
-      for (key in obj) {
-        value = obj[key];
-        if (indexOf.call(moduleKeywords, key) < 0) {
-          this.prototype[key] = value;
-        }
-      }
-      if ((ref = obj.included) != null) {
-        ref.apply(this);
-      }
-      return this;
-    };
-
-    return Base;
-
-  })();
-
-}).call(this);
-(function() {
-  this.Gmaps.Objects.BaseBuilder = (function() {
-    function BaseBuilder() {}
-
-    BaseBuilder.prototype.build = function() {
-      return new (this.model_class())(this.serviceObject);
-    };
-
-    BaseBuilder.prototype.before_init = function() {};
-
-    BaseBuilder.prototype.after_init = function() {};
-
-    BaseBuilder.prototype.addListener = function(action, fn) {
-      return this.primitives().addListener(this.getServiceObject(), action, fn);
-    };
-
-    BaseBuilder.prototype.getServiceObject = function() {
-      return this.serviceObject;
-    };
-
-    BaseBuilder.prototype.primitives = function() {
-      return this.constructor.PRIMITIVES;
-    };
-
-    BaseBuilder.prototype.model_class = function() {
-      return this.constructor.OBJECT;
-    };
-
-    return BaseBuilder;
-
-  })();
-
-}).call(this);
-(function() {
-  this.Gmaps.Objects.Builders = function(builderClass, objectClass, primitivesProvider) {
-    return {
-      build: function(args, provider_options, internal_options) {
-        var builder;
-        objectClass.PRIMITIVES = primitivesProvider;
-        builderClass.OBJECT = objectClass;
-        builderClass.PRIMITIVES = primitivesProvider;
-        builder = new builderClass(args, provider_options, internal_options);
-        return builder.build();
-      }
-    };
-  };
-
-}).call(this);
-(function() {
-  this.Gmaps.Objects.Handler = (function() {
-    function Handler(type, options) {
-      this.type = type;
-      if (options == null) {
-        options = {};
-      }
-      this.setPrimitives(options);
-      this.setOptions(options);
-      this._cacheAllBuilders();
-      this.resetBounds();
-    }
-
-    Handler.prototype.buildMap = function(options, onMapLoad) {
-      if (onMapLoad == null) {
-        onMapLoad = function() {};
-      }
-      return this.map = this._builder('Map').build(options, (function(_this) {
-        return function() {
-          _this._createClusterer();
-          return onMapLoad();
-        };
-      })(this));
-    };
-
-    Handler.prototype.addMarkers = function(markers_data, provider_options) {
-      return _.map(markers_data, (function(_this) {
-        return function(marker_data) {
-          return _this.addMarker(marker_data, provider_options);
-        };
-      })(this));
-    };
-
-    Handler.prototype.addMarker = function(marker_data, provider_options) {
-      var marker;
-      marker = this._builder('Marker').build(marker_data, provider_options, this.marker_options);
-      marker.setMap(this.getMap());
-      this.clusterer.addMarker(marker);
-      return marker;
-    };
-
-    Handler.prototype.addCircles = function(circles_data, provider_options) {
-      return _.map(circles_data, (function(_this) {
-        return function(circle_data) {
-          return _this.addCircle(circle_data, provider_options);
-        };
-      })(this));
-    };
-
-    Handler.prototype.addCircle = function(circle_data, provider_options) {
-      return this._addResource('circle', circle_data, provider_options);
-    };
-
-    Handler.prototype.addPolylines = function(polylines_data, provider_options) {
-      return _.map(polylines_data, (function(_this) {
-        return function(polyline_data) {
-          return _this.addPolyline(polyline_data, provider_options);
-        };
-      })(this));
-    };
-
-    Handler.prototype.addPolyline = function(polyline_data, provider_options) {
-      return this._addResource('polyline', polyline_data, provider_options);
-    };
-
-    Handler.prototype.addPolygons = function(polygons_data, provider_options) {
-      return _.map(polygons_data, (function(_this) {
-        return function(polygon_data) {
-          return _this.addPolygon(polygon_data, provider_options);
-        };
-      })(this));
-    };
-
-    Handler.prototype.addPolygon = function(polygon_data, provider_options) {
-      return this._addResource('polygon', polygon_data, provider_options);
-    };
-
-    Handler.prototype.addKmls = function(kmls_data, provider_options) {
-      return _.map(kmls_data, (function(_this) {
-        return function(kml_data) {
-          return _this.addKml(kml_data, provider_options);
-        };
-      })(this));
-    };
-
-    Handler.prototype.addKml = function(kml_data, provider_options) {
-      return this._addResource('kml', kml_data, provider_options);
-    };
-
-    Handler.prototype.removeMarkers = function(gem_markers) {
-      return _.map(gem_markers, (function(_this) {
-        return function(gem_marker) {
-          return _this.removeMarker(gem_marker);
-        };
-      })(this));
-    };
-
-    Handler.prototype.removeMarker = function(gem_marker) {
-      gem_marker.clear();
-      return this.clusterer.removeMarker(gem_marker);
-    };
-
-    Handler.prototype.fitMapToBounds = function() {
-      return this.map.fitToBounds(this.bounds.getServiceObject());
-    };
-
-    Handler.prototype.getMap = function() {
-      return this.map.getServiceObject();
-    };
-
-    Handler.prototype.setOptions = function(options) {
-      this.marker_options = _.extend(this._default_marker_options(), options.markers);
-      this.builders = _.extend(this._default_builders(), options.builders);
-      return this.models = _.extend(this._default_models(), options.models);
-    };
-
-    Handler.prototype.resetBounds = function() {
-      return this.bounds = this._builder('Bound').build();
-    };
-
-    Handler.prototype.setPrimitives = function(options) {
-      return this.primitives = options.primitives === void 0 ? this._rootModule().Primitives() : _.isFunction(options.primitives) ? options.primitives() : options.primitives;
-    };
-
-    Handler.prototype.currentInfowindow = function() {
-      return this.builders.Marker.CURRENT_INFOWINDOW;
-    };
-
-    Handler.prototype._addResource = function(resource_name, resource_data, provider_options) {
-      var resource;
-      resource = this._builder(resource_name).build(resource_data, provider_options);
-      resource.setMap(this.getMap());
-      return resource;
-    };
-
-    Handler.prototype._cacheAllBuilders = function() {
-      var that;
-      that = this;
-      return _.each(['Bound', 'Circle', 'Clusterer', 'Kml', 'Map', 'Marker', 'Polygon', 'Polyline'], function(kind) {
-        return that._builder(kind);
-      });
-    };
-
-    Handler.prototype._clusterize = function() {
-      return _.isObject(this.marker_options.clusterer);
-    };
-
-    Handler.prototype._createClusterer = function() {
-      return this.clusterer = this._builder('Clusterer').build({
-        map: this.getMap()
-      }, this.marker_options.clusterer);
-    };
-
-    Handler.prototype._default_marker_options = function() {
-      return _.clone({
-        singleInfowindow: true,
-        maxRandomDistance: 0,
-        clusterer: {
-          maxZoom: 5,
-          gridSize: 50
-        }
-      });
-    };
-
-    Handler.prototype._builder = function(name) {
-      var name1;
-      name = this._capitalize(name);
-      if (this[name1 = "__builder" + name] == null) {
-        this[name1] = Gmaps.Objects.Builders(this.builders[name], this.models[name], this.primitives);
-      }
-      return this["__builder" + name];
-    };
-
-    Handler.prototype._default_models = function() {
-      var models;
-      models = _.clone(this._rootModule().Objects);
-      if (this._clusterize()) {
-        return models;
-      } else {
-        models.Clusterer = Gmaps.Objects.NullClusterer;
-        return models;
-      }
-    };
-
-    Handler.prototype._capitalize = function(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    };
-
-    Handler.prototype._default_builders = function() {
-      return _.clone(this._rootModule().Builders);
-    };
-
-    Handler.prototype._rootModule = function() {
-      if (this.__rootModule == null) {
-        this.__rootModule = Gmaps[this.type];
-      }
-      return this.__rootModule;
-    };
-
-    return Handler;
-
-  })();
-
-}).call(this);
-(function() {
-  this.Gmaps.Objects.NullClusterer = (function() {
-    function NullClusterer() {}
-
-    NullClusterer.prototype.addMarkers = function() {};
-
-    NullClusterer.prototype.addMarker = function() {};
-
-    NullClusterer.prototype.clear = function() {};
-
-    NullClusterer.prototype.removeMarker = function() {};
-
-    return NullClusterer;
-
-  })();
-
-}).call(this);
-(function() {
-  this.Gmaps.Google.Objects.Common = {
-    getServiceObject: function() {
-      return this.serviceObject;
-    },
-    setMap: function(map) {
-      return this.getServiceObject().setMap(map);
-    },
-    clear: function() {
-      return this.getServiceObject().setMap(null);
-    },
-    show: function() {
-      return this.getServiceObject().setVisible(true);
-    },
-    hide: function() {
-      return this.getServiceObject().setVisible(false);
-    },
-    isVisible: function() {
-      return this.getServiceObject().getVisible();
-    },
-    primitives: function() {
-      return this.constructor.PRIMITIVES;
-    }
-  };
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Builders.Bound = (function(superClass) {
-    extend(Bound, superClass);
-
-    function Bound(options) {
-      this.before_init();
-      this.serviceObject = new (this.primitives().latLngBounds);
-      this.after_init();
-    }
-
-    return Bound;
-
-  })(Gmaps.Objects.BaseBuilder);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Builders.Circle = (function(superClass) {
-    extend(Circle, superClass);
-
-    function Circle(args, provider_options) {
-      this.args = args;
-      this.provider_options = provider_options != null ? provider_options : {};
-      this.before_init();
-      this.serviceObject = this.create_circle();
-      this.after_init();
-    }
-
-    Circle.prototype.create_circle = function() {
-      return new (this.primitives().circle)(this.circle_options());
-    };
-
-    Circle.prototype.circle_options = function() {
-      var base_options;
-      base_options = {
-        center: new (this.primitives().latLng)(this.args.lat, this.args.lng),
-        radius: this.args.radius
-      };
-      return _.defaults(base_options, this.provider_options);
-    };
-
-    return Circle;
-
-  })(Gmaps.Objects.BaseBuilder);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Builders.Clusterer = (function(superClass) {
-    extend(Clusterer, superClass);
-
-    function Clusterer(args, options) {
-      this.args = args;
-      this.options = options;
-      this.before_init();
-      this.serviceObject = new (this.primitives().clusterer)(this.args.map, [], this.options);
-      this.after_init();
-    }
-
-    return Clusterer;
-
-  })(Gmaps.Objects.BaseBuilder);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Builders.Kml = (function(superClass) {
-    extend(Kml, superClass);
-
-    function Kml(args, provider_options) {
-      this.args = args;
-      this.provider_options = provider_options != null ? provider_options : {};
-      this.before_init();
-      this.serviceObject = this.create_kml();
-      this.after_init();
-    }
-
-    Kml.prototype.create_kml = function() {
-      return new (this.primitives().kml)(this.args.url, this.kml_options());
-    };
-
-    Kml.prototype.kml_options = function() {
-      var base_options;
-      base_options = {};
-      return _.defaults(base_options, this.provider_options);
-    };
-
-    return Kml;
-
-  })(Gmaps.Objects.BaseBuilder);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Builders.Map = (function(superClass) {
-    extend(Map, superClass);
-
-    function Map(options, onMapLoad) {
-      var provider_options;
-      this.before_init();
-      provider_options = _.extend(this.default_options(), options.provider);
-      this.internal_options = options.internal;
-      this.serviceObject = new (this.primitives().map)(document.getElementById(this.internal_options.id), provider_options);
-      this.on_map_load(onMapLoad);
-      this.after_init();
-    }
-
-    Map.prototype.build = function() {
-      return new (this.model_class())(this.serviceObject, this.primitives());
-    };
-
-    Map.prototype.on_map_load = function(onMapLoad) {
-      return this.primitives().addListenerOnce(this.serviceObject, 'idle', onMapLoad);
-    };
-
-    Map.prototype.default_options = function() {
-      return {
-        mapTypeId: this.primitives().mapTypes('ROADMAP'),
-        center: new (this.primitives().latLng)(0, 0),
-        zoom: 8
-      };
-    };
-
-    return Map;
-
-  })(Gmaps.Objects.BaseBuilder);
-
-}).call(this);
-(function() {
-  var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Builders.Marker = (function(superClass) {
-    extend(Marker, superClass);
-
-    Marker.CURRENT_INFOWINDOW = void 0;
-
-    Marker.CACHE_STORE = {};
-
-    function Marker(args, provider_options, internal_options) {
-      this.args = args;
-      this.provider_options = provider_options != null ? provider_options : {};
-      this.internal_options = internal_options != null ? internal_options : {};
-      this.infowindow_binding = bind(this.infowindow_binding, this);
-      this.before_init();
-      this.create_marker();
-      this.create_infowindow_on_click();
-      this.after_init();
-    }
-
-    Marker.prototype.build = function() {
-      return this.marker = new (this.model_class())(this.serviceObject);
-    };
-
-    Marker.prototype.create_marker = function() {
-      return this.serviceObject = new (this.primitives().marker)(this.marker_options());
-    };
-
-    Marker.prototype.create_infowindow = function() {
-      if (!_.isString(this.args.infowindow)) {
-        return null;
-      }
-      return new (this.primitives().infowindow)({
-        content: this.args.infowindow
-      });
-    };
-
-    Marker.prototype.marker_options = function() {
-      var base_options, coords;
-      coords = this._randomized_coordinates();
-      base_options = {
-        title: this.args.marker_title,
-        position: new (this.primitives().latLng)(coords[0], coords[1]),
-        icon: this._get_picture('picture'),
-        shadow: this._get_picture('shadow')
-      };
-      return _.extend(this.provider_options, base_options);
-    };
-
-    Marker.prototype.create_infowindow_on_click = function() {
-      return this.addListener('click', this.infowindow_binding);
-    };
-
-    Marker.prototype.infowindow_binding = function() {
-      var base;
-      if (this._should_close_infowindow()) {
-        this.constructor.CURRENT_INFOWINDOW.close();
-      }
-      this.marker.panTo();
-      if (this.infowindow == null) {
-        this.infowindow = this.create_infowindow();
-      }
-      if (this.infowindow == null) {
-        return;
-      }
-      this.infowindow.open(this.getServiceObject().getMap(), this.getServiceObject());
-      if ((base = this.marker).infowindow == null) {
-        base.infowindow = this.infowindow;
-      }
-      return this.constructor.CURRENT_INFOWINDOW = this.infowindow;
-    };
-
-    Marker.prototype._get_picture = function(picture_name) {
-      if (!_.isObject(this.args[picture_name]) || !_.isString(this.args[picture_name].url)) {
-        return null;
-      }
-      return this._create_or_retrieve_image(this._picture_args(picture_name));
-    };
-
-    Marker.prototype._create_or_retrieve_image = function(picture_args) {
-      if (this.constructor.CACHE_STORE[picture_args.url] === void 0) {
-        this.constructor.CACHE_STORE[picture_args.url] = new (this.primitives().markerImage)(picture_args.url, picture_args.size, picture_args.origin, picture_args.anchor, picture_args.scaledSize);
-      }
-      return this.constructor.CACHE_STORE[picture_args.url];
-    };
-
-    Marker.prototype._picture_args = function(picture_name) {
-      return {
-        url: this.args[picture_name].url,
-        anchor: this._createImageAnchorPosition(this.args[picture_name].anchor),
-        size: new (this.primitives().size)(this.args[picture_name].width, this.args[picture_name].height),
-        scaledSize: null,
-        origin: null
-      };
-    };
-
-    Marker.prototype._createImageAnchorPosition = function(anchorLocation) {
-      if (!_.isArray(anchorLocation)) {
-        return null;
-      }
-      return new (this.primitives().point)(anchorLocation[0], anchorLocation[1]);
-    };
-
-    Marker.prototype._should_close_infowindow = function() {
-      return this.internal_options.singleInfowindow && (this.constructor.CURRENT_INFOWINDOW != null);
-    };
-
-    Marker.prototype._randomized_coordinates = function() {
-      var Lat, Lng, dx, dy, random;
-      if (!_.isNumber(this.internal_options.maxRandomDistance)) {
-        return [this.args.lat, this.args.lng];
-      }
-      random = function() {
-        return Math.random() * 2 - 1;
-      };
-      dx = this.internal_options.maxRandomDistance * random();
-      dy = this.internal_options.maxRandomDistance * random();
-      Lat = parseFloat(this.args.lat) + (180 / Math.PI) * (dy / 6378137);
-      Lng = parseFloat(this.args.lng) + (90 / Math.PI) * (dx / 6378137) / Math.cos(this.args.lat);
-      return [Lat, Lng];
-    };
-
-    return Marker;
-
-  })(Gmaps.Objects.BaseBuilder);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Builders.Polygon = (function(superClass) {
-    extend(Polygon, superClass);
-
-    function Polygon(args, provider_options) {
-      this.args = args;
-      this.provider_options = provider_options != null ? provider_options : {};
-      this.before_init();
-      this.serviceObject = this.create_polygon();
-      this.after_init();
-    }
-
-    Polygon.prototype.create_polygon = function() {
-      return new (this.primitives().polygon)(this.polygon_options());
-    };
-
-    Polygon.prototype.polygon_options = function() {
-      var base_options;
-      base_options = {
-        path: this._build_path()
-      };
-      return _.defaults(base_options, this.provider_options);
-    };
-
-    Polygon.prototype._build_path = function() {
-      return _.map(this.args, (function(_this) {
-        return function(arg) {
-          return new (_this.primitives().latLng)(arg.lat, arg.lng);
-        };
-      })(this));
-    };
-
-    return Polygon;
-
-  })(Gmaps.Objects.BaseBuilder);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Builders.Polyline = (function(superClass) {
-    extend(Polyline, superClass);
-
-    function Polyline(args, provider_options) {
-      this.args = args;
-      this.provider_options = provider_options != null ? provider_options : {};
-      this.before_init();
-      this.serviceObject = this.create_polyline();
-      this.after_init();
-    }
-
-    Polyline.prototype.create_polyline = function() {
-      return new (this.primitives().polyline)(this.polyline_options());
-    };
-
-    Polyline.prototype.polyline_options = function() {
-      var base_options;
-      base_options = {
-        path: this._build_path()
-      };
-      return _.defaults(base_options, this.provider_options);
-    };
-
-    Polyline.prototype._build_path = function() {
-      return _.map(this.args, (function(_this) {
-        return function(arg) {
-          return new (_this.primitives().latLng)(arg.lat, arg.lng);
-        };
-      })(this));
-    };
-
-    return Polyline;
-
-  })(Gmaps.Objects.BaseBuilder);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Objects.Bound = (function(superClass) {
-    extend(Bound, superClass);
-
-    Bound.include(Gmaps.Google.Objects.Common);
-
-    function Bound(serviceObject) {
-      this.serviceObject = serviceObject;
-    }
-
-    Bound.prototype.extendWith = function(array_or_object) {
-      var collection;
-      collection = _.isArray(array_or_object) ? array_or_object : [array_or_object];
-      return _.each(collection, (function(_this) {
-        return function(object) {
-          return object.updateBounds(_this);
-        };
-      })(this));
-    };
-
-    Bound.prototype.extend = function(value) {
-      return this.getServiceObject().extend(this.primitives().latLngFromPosition(value));
-    };
-
-    return Bound;
-
-  })(Gmaps.Base);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Objects.Circle = (function(superClass) {
-    extend(Circle, superClass);
-
-    Circle.include(Gmaps.Google.Objects.Common);
-
-    function Circle(serviceObject) {
-      this.serviceObject = serviceObject;
-    }
-
-    Circle.prototype.updateBounds = function(bounds) {
-      bounds.extend(this.getServiceObject().getBounds().getNorthEast());
-      return bounds.extend(this.getServiceObject().getBounds().getSouthWest());
-    };
-
-    return Circle;
-
-  })(Gmaps.Base);
-
-}).call(this);
-(function() {
-  this.Gmaps.Google.Objects.Clusterer = (function() {
-    function Clusterer(serviceObject) {
-      this.serviceObject = serviceObject;
-    }
-
-    Clusterer.prototype.addMarkers = function(markers) {
-      return _.each(markers, (function(_this) {
-        return function(marker) {
-          return _this.addMarker(marker);
-        };
-      })(this));
-    };
-
-    Clusterer.prototype.addMarker = function(marker) {
-      return this.getServiceObject().addMarker(marker.getServiceObject());
-    };
-
-    Clusterer.prototype.clear = function() {
-      return this.getServiceObject().clearMarkers();
-    };
-
-    Clusterer.prototype.removeMarker = function(marker) {
-      return this.getServiceObject().removeMarker(marker.getServiceObject());
-    };
-
-    Clusterer.prototype.getServiceObject = function() {
-      return this.serviceObject;
-    };
-
-    return Clusterer;
-
-  })();
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Objects.Kml = (function(superClass) {
-    extend(Kml, superClass);
-
-    function Kml(serviceObject) {
-      this.serviceObject = serviceObject;
-    }
-
-    Kml.prototype.updateBounds = function(bounds) {};
-
-    Kml.prototype.setMap = function(map) {
-      return this.getServiceObject().setMap(map);
-    };
-
-    Kml.prototype.getServiceObject = function() {
-      return this.serviceObject;
-    };
-
-    Kml.prototype.primitives = function() {
-      return this.constructor.PRIMITIVES;
-    };
-
-    return Kml;
-
-  })(Gmaps.Base);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Objects.Map = (function(superClass) {
-    extend(Map, superClass);
-
-    function Map(serviceObject) {
-      this.serviceObject = serviceObject;
-    }
-
-    Map.prototype.getServiceObject = function() {
-      return this.serviceObject;
-    };
-
-    Map.prototype.centerOn = function(position) {
-      return this.getServiceObject().setCenter(this.primitives().latLngFromPosition(position));
-    };
-
-    Map.prototype.fitToBounds = function(boundsObject) {
-      if (!boundsObject.isEmpty()) {
-        return this.getServiceObject().fitBounds(boundsObject);
-      }
-    };
-
-    Map.prototype.primitives = function() {
-      return this.constructor.PRIMITIVES;
-    };
-
-    return Map;
-
-  })(Gmaps.Base);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Objects.Marker = (function(superClass) {
-    extend(Marker, superClass);
-
-    Marker.include(Gmaps.Google.Objects.Common);
-
-    function Marker(serviceObject) {
-      this.serviceObject = serviceObject;
-    }
-
-    Marker.prototype.updateBounds = function(bounds) {
-      return bounds.extend(this.getServiceObject().position);
-    };
-
-    Marker.prototype.panTo = function() {
-      return this.getServiceObject().getMap().panTo(this.getServiceObject().getPosition());
-    };
-
-    return Marker;
-
-  })(Gmaps.Base);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Objects.Polygon = (function(superClass) {
-    extend(Polygon, superClass);
-
-    Polygon.include(Gmaps.Google.Objects.Common);
-
-    function Polygon(serviceObject) {
-      this.serviceObject = serviceObject;
-    }
-
-    Polygon.prototype.updateBounds = function(bounds) {
-      var i, len, ll, ref, results;
-      ref = this.serviceObject.getPath().getArray();
-      results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        ll = ref[i];
-        results.push(bounds.extend(ll));
-      }
-      return results;
-    };
-
-    return Polygon;
-
-  })(Gmaps.Base);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Objects.Polyline = (function(superClass) {
-    extend(Polyline, superClass);
-
-    Polyline.include(Gmaps.Google.Objects.Common);
-
-    function Polyline(serviceObject) {
-      this.serviceObject = serviceObject;
-    }
-
-    Polyline.prototype.updateBounds = function(bounds) {
-      var i, len, ll, ref, results;
-      ref = this.serviceObject.getPath().getArray();
-      results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        ll = ref[i];
-        results.push(bounds.extend(ll));
-      }
-      return results;
-    };
-
-    return Polyline;
-
-  })(Gmaps.Base);
-
-}).call(this);
-(function() {
-  this.Gmaps.Google.Primitives = function() {
-    var factory;
-    factory = {
-      point: google.maps.Point,
-      size: google.maps.Size,
-      circle: google.maps.Circle,
-      latLng: google.maps.LatLng,
-      latLngBounds: google.maps.LatLngBounds,
-      map: google.maps.Map,
-      mapTypez: google.maps.MapTypeId,
-      markerImage: google.maps.MarkerImage,
-      marker: google.maps.Marker,
-      infowindow: google.maps.InfoWindow,
-      listener: google.maps.event.addListener,
-      clusterer: MarkerClusterer,
-      listenerOnce: google.maps.event.addListenerOnce,
-      polyline: google.maps.Polyline,
-      polygon: google.maps.Polygon,
-      kml: google.maps.KmlLayer,
-      addListener: function(object, event_name, fn) {
-        return factory.listener(object, event_name, fn);
-      },
-      addListenerOnce: function(object, event_name, fn) {
-        return factory.listenerOnce(object, event_name, fn);
-      },
-      mapTypes: function(type) {
-        return factory.mapTypez[type];
-      },
-      latLngFromPosition: function(position) {
-        if (_.isArray(position)) {
-          return new factory.latLng(position[0], position[1]);
-        } else {
-          if (_.isNumber(position.lat) && _.isNumber(position.lng)) {
-            return new factory.latLng(position.lat, position.lng);
-          } else {
-            if (_.isFunction(position.getServiceObject)) {
-              return position.getServiceObject().getPosition();
-            } else {
-              return position;
-            }
-          }
-        }
-      }
-    };
-    return factory;
-  };
-
-}).call(this);
-(function() {
-
-
-}).call(this);
 (function(){var d=null;function e(a){return function(b){this[a]=b}}function h(a){return function(){return this[a]}}var j;
 function k(a,b,c){this.extend(k,google.maps.OverlayView);this.c=a;this.a=[];this.f=[];this.ca=[53,56,66,78,90];this.j=[];this.A=!1;c=c||{};this.g=c.gridSize||60;this.l=c.minimumClusterSize||2;this.J=c.maxZoom||d;this.j=c.styles||[];this.X=c.imagePath||this.Q;this.W=c.imageExtension||this.P;this.O=!0;if(c.zoomOnClick!=void 0)this.O=c.zoomOnClick;this.r=!1;if(c.averageCenter!=void 0)this.r=c.averageCenter;l(this);this.setMap(a);this.K=this.c.getZoom();var f=this;google.maps.event.addListener(this.c,
 "zoom_changed",function(){var a=f.c.getZoom();if(f.K!=a)f.K=a,f.m()});google.maps.event.addListener(this.c,"idle",function(){f.i()});b&&b.length&&this.C(b,!1)}j=k.prototype;j.Q="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m";j.P="png";j.extend=function(a,b){return function(a){for(var b in a.prototype)this.prototype[b]=a.prototype[b];return this}.apply(a,[b])};j.onAdd=function(){if(!this.A)this.A=!0,n(this)};j.draw=function(){};
@@ -45558,6 +44562,690 @@ angular.module('ngResource', ['ng']).
 
 
 })(window, window.angular);
+/**
+ * @license AngularJS v1.4.3
+ * (c) 2010-2015 Google, Inc. http://angularjs.org
+ * License: MIT
+ */
+
+(function(window, angular, undefined) {'use strict';
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *     Any commits to this file should be reviewed with security in mind.  *
+ *   Changes to this file can potentially create security vulnerabilities. *
+ *          An approval from 2 Core members with history of modifying      *
+ *                         this file is required.                          *
+ *                                                                         *
+ *  Does the change somehow allow for arbitrary javascript to be executed? *
+ *    Or allows for someone to change the prototype of built-in objects?   *
+ *     Or gives undesired access to variables likes document or window?    *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+var $sanitizeMinErr = angular.$$minErr('$sanitize');
+
+/**
+ * @ngdoc module
+ * @name ngSanitize
+ * @description
+ *
+ * # ngSanitize
+ *
+ * The `ngSanitize` module provides functionality to sanitize HTML.
+ *
+ *
+ * <div doc-module-components="ngSanitize"></div>
+ *
+ * See {@link ngSanitize.$sanitize `$sanitize`} for usage.
+ */
+
+/*
+ * HTML Parser By Misko Hevery (misko@hevery.com)
+ * based on:  HTML Parser By John Resig (ejohn.org)
+ * Original code by Erik Arvidsson, Mozilla Public License
+ * http://erik.eae.net/simplehtmlparser/simplehtmlparser.js
+ *
+ * // Use like so:
+ * htmlParser(htmlString, {
+ *     start: function(tag, attrs, unary) {},
+ *     end: function(tag) {},
+ *     chars: function(text) {},
+ *     comment: function(text) {}
+ * });
+ *
+ */
+
+
+/**
+ * @ngdoc service
+ * @name $sanitize
+ * @kind function
+ *
+ * @description
+ *   The input is sanitized by parsing the HTML into tokens. All safe tokens (from a whitelist) are
+ *   then serialized back to properly escaped html string. This means that no unsafe input can make
+ *   it into the returned string, however, since our parser is more strict than a typical browser
+ *   parser, it's possible that some obscure input, which would be recognized as valid HTML by a
+ *   browser, won't make it through the sanitizer. The input may also contain SVG markup.
+ *   The whitelist is configured using the functions `aHrefSanitizationWhitelist` and
+ *   `imgSrcSanitizationWhitelist` of {@link ng.$compileProvider `$compileProvider`}.
+ *
+ * @param {string} html HTML input.
+ * @returns {string} Sanitized HTML.
+ *
+ * @example
+   <example module="sanitizeExample" deps="angular-sanitize.js">
+   <file name="index.html">
+     <script>
+         angular.module('sanitizeExample', ['ngSanitize'])
+           .controller('ExampleController', ['$scope', '$sce', function($scope, $sce) {
+             $scope.snippet =
+               '<p style="color:blue">an html\n' +
+               '<em onmouseover="this.textContent=\'PWN3D!\'">click here</em>\n' +
+               'snippet</p>';
+             $scope.deliberatelyTrustDangerousSnippet = function() {
+               return $sce.trustAsHtml($scope.snippet);
+             };
+           }]);
+     </script>
+     <div ng-controller="ExampleController">
+        Snippet: <textarea ng-model="snippet" cols="60" rows="3"></textarea>
+       <table>
+         <tr>
+           <td>Directive</td>
+           <td>How</td>
+           <td>Source</td>
+           <td>Rendered</td>
+         </tr>
+         <tr id="bind-html-with-sanitize">
+           <td>ng-bind-html</td>
+           <td>Automatically uses $sanitize</td>
+           <td><pre>&lt;div ng-bind-html="snippet"&gt;<br/>&lt;/div&gt;</pre></td>
+           <td><div ng-bind-html="snippet"></div></td>
+         </tr>
+         <tr id="bind-html-with-trust">
+           <td>ng-bind-html</td>
+           <td>Bypass $sanitize by explicitly trusting the dangerous value</td>
+           <td>
+           <pre>&lt;div ng-bind-html="deliberatelyTrustDangerousSnippet()"&gt;
+&lt;/div&gt;</pre>
+           </td>
+           <td><div ng-bind-html="deliberatelyTrustDangerousSnippet()"></div></td>
+         </tr>
+         <tr id="bind-default">
+           <td>ng-bind</td>
+           <td>Automatically escapes</td>
+           <td><pre>&lt;div ng-bind="snippet"&gt;<br/>&lt;/div&gt;</pre></td>
+           <td><div ng-bind="snippet"></div></td>
+         </tr>
+       </table>
+       </div>
+   </file>
+   <file name="protractor.js" type="protractor">
+     it('should sanitize the html snippet by default', function() {
+       expect(element(by.css('#bind-html-with-sanitize div')).getInnerHtml()).
+         toBe('<p>an html\n<em>click here</em>\nsnippet</p>');
+     });
+
+     it('should inline raw snippet if bound to a trusted value', function() {
+       expect(element(by.css('#bind-html-with-trust div')).getInnerHtml()).
+         toBe("<p style=\"color:blue\">an html\n" +
+              "<em onmouseover=\"this.textContent='PWN3D!'\">click here</em>\n" +
+              "snippet</p>");
+     });
+
+     it('should escape snippet without any filter', function() {
+       expect(element(by.css('#bind-default div')).getInnerHtml()).
+         toBe("&lt;p style=\"color:blue\"&gt;an html\n" +
+              "&lt;em onmouseover=\"this.textContent='PWN3D!'\"&gt;click here&lt;/em&gt;\n" +
+              "snippet&lt;/p&gt;");
+     });
+
+     it('should update', function() {
+       element(by.model('snippet')).clear();
+       element(by.model('snippet')).sendKeys('new <b onclick="alert(1)">text</b>');
+       expect(element(by.css('#bind-html-with-sanitize div')).getInnerHtml()).
+         toBe('new <b>text</b>');
+       expect(element(by.css('#bind-html-with-trust div')).getInnerHtml()).toBe(
+         'new <b onclick="alert(1)">text</b>');
+       expect(element(by.css('#bind-default div')).getInnerHtml()).toBe(
+         "new &lt;b onclick=\"alert(1)\"&gt;text&lt;/b&gt;");
+     });
+   </file>
+   </example>
+ */
+function $SanitizeProvider() {
+  this.$get = ['$$sanitizeUri', function($$sanitizeUri) {
+    return function(html) {
+      var buf = [];
+      htmlParser(html, htmlSanitizeWriter(buf, function(uri, isImage) {
+        return !/^unsafe/.test($$sanitizeUri(uri, isImage));
+      }));
+      return buf.join('');
+    };
+  }];
+}
+
+function sanitizeText(chars) {
+  var buf = [];
+  var writer = htmlSanitizeWriter(buf, angular.noop);
+  writer.chars(chars);
+  return buf.join('');
+}
+
+
+// Regular Expressions for parsing tags and attributes
+var START_TAG_REGEXP =
+       /^<((?:[a-zA-Z])[\w:-]*)((?:\s+[\w:-]+(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)\s*(>?)/,
+  END_TAG_REGEXP = /^<\/\s*([\w:-]+)[^>]*>/,
+  ATTR_REGEXP = /([\w:-]+)(?:\s*=\s*(?:(?:"((?:[^"])*)")|(?:'((?:[^'])*)')|([^>\s]+)))?/g,
+  BEGIN_TAG_REGEXP = /^</,
+  BEGING_END_TAGE_REGEXP = /^<\//,
+  COMMENT_REGEXP = /<!--(.*?)-->/g,
+  DOCTYPE_REGEXP = /<!DOCTYPE([^>]*?)>/i,
+  CDATA_REGEXP = /<!\[CDATA\[(.*?)]]>/g,
+  SURROGATE_PAIR_REGEXP = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g,
+  // Match everything outside of normal chars and " (quote character)
+  NON_ALPHANUMERIC_REGEXP = /([^\#-~| |!])/g;
+
+
+// Good source of info about elements and attributes
+// http://dev.w3.org/html5/spec/Overview.html#semantics
+// http://simon.html5.org/html-elements
+
+// Safe Void Elements - HTML5
+// http://dev.w3.org/html5/spec/Overview.html#void-elements
+var voidElements = makeMap("area,br,col,hr,img,wbr");
+
+// Elements that you can, intentionally, leave open (and which close themselves)
+// http://dev.w3.org/html5/spec/Overview.html#optional-tags
+var optionalEndTagBlockElements = makeMap("colgroup,dd,dt,li,p,tbody,td,tfoot,th,thead,tr"),
+    optionalEndTagInlineElements = makeMap("rp,rt"),
+    optionalEndTagElements = angular.extend({},
+                                            optionalEndTagInlineElements,
+                                            optionalEndTagBlockElements);
+
+// Safe Block Elements - HTML5
+var blockElements = angular.extend({}, optionalEndTagBlockElements, makeMap("address,article," +
+        "aside,blockquote,caption,center,del,dir,div,dl,figure,figcaption,footer,h1,h2,h3,h4,h5," +
+        "h6,header,hgroup,hr,ins,map,menu,nav,ol,pre,script,section,table,ul"));
+
+// Inline Elements - HTML5
+var inlineElements = angular.extend({}, optionalEndTagInlineElements, makeMap("a,abbr,acronym,b," +
+        "bdi,bdo,big,br,cite,code,del,dfn,em,font,i,img,ins,kbd,label,map,mark,q,ruby,rp,rt,s," +
+        "samp,small,span,strike,strong,sub,sup,time,tt,u,var"));
+
+// SVG Elements
+// https://wiki.whatwg.org/wiki/Sanitization_rules#svg_Elements
+// Note: the elements animate,animateColor,animateMotion,animateTransform,set are intentionally omitted.
+// They can potentially allow for arbitrary javascript to be executed. See #11290
+var svgElements = makeMap("circle,defs,desc,ellipse,font-face,font-face-name,font-face-src,g,glyph," +
+        "hkern,image,linearGradient,line,marker,metadata,missing-glyph,mpath,path,polygon,polyline," +
+        "radialGradient,rect,stop,svg,switch,text,title,tspan,use");
+
+// Special Elements (can contain anything)
+var specialElements = makeMap("script,style");
+
+var validElements = angular.extend({},
+                                   voidElements,
+                                   blockElements,
+                                   inlineElements,
+                                   optionalEndTagElements,
+                                   svgElements);
+
+//Attributes that have href and hence need to be sanitized
+var uriAttrs = makeMap("background,cite,href,longdesc,src,usemap,xlink:href");
+
+var htmlAttrs = makeMap('abbr,align,alt,axis,bgcolor,border,cellpadding,cellspacing,class,clear,' +
+    'color,cols,colspan,compact,coords,dir,face,headers,height,hreflang,hspace,' +
+    'ismap,lang,language,nohref,nowrap,rel,rev,rows,rowspan,rules,' +
+    'scope,scrolling,shape,size,span,start,summary,tabindex,target,title,type,' +
+    'valign,value,vspace,width');
+
+// SVG attributes (without "id" and "name" attributes)
+// https://wiki.whatwg.org/wiki/Sanitization_rules#svg_Attributes
+var svgAttrs = makeMap('accent-height,accumulate,additive,alphabetic,arabic-form,ascent,' +
+    'baseProfile,bbox,begin,by,calcMode,cap-height,class,color,color-rendering,content,' +
+    'cx,cy,d,dx,dy,descent,display,dur,end,fill,fill-rule,font-family,font-size,font-stretch,' +
+    'font-style,font-variant,font-weight,from,fx,fy,g1,g2,glyph-name,gradientUnits,hanging,' +
+    'height,horiz-adv-x,horiz-origin-x,ideographic,k,keyPoints,keySplines,keyTimes,lang,' +
+    'marker-end,marker-mid,marker-start,markerHeight,markerUnits,markerWidth,mathematical,' +
+    'max,min,offset,opacity,orient,origin,overline-position,overline-thickness,panose-1,' +
+    'path,pathLength,points,preserveAspectRatio,r,refX,refY,repeatCount,repeatDur,' +
+    'requiredExtensions,requiredFeatures,restart,rotate,rx,ry,slope,stemh,stemv,stop-color,' +
+    'stop-opacity,strikethrough-position,strikethrough-thickness,stroke,stroke-dasharray,' +
+    'stroke-dashoffset,stroke-linecap,stroke-linejoin,stroke-miterlimit,stroke-opacity,' +
+    'stroke-width,systemLanguage,target,text-anchor,to,transform,type,u1,u2,underline-position,' +
+    'underline-thickness,unicode,unicode-range,units-per-em,values,version,viewBox,visibility,' +
+    'width,widths,x,x-height,x1,x2,xlink:actuate,xlink:arcrole,xlink:role,xlink:show,xlink:title,' +
+    'xlink:type,xml:base,xml:lang,xml:space,xmlns,xmlns:xlink,y,y1,y2,zoomAndPan', true);
+
+var validAttrs = angular.extend({},
+                                uriAttrs,
+                                svgAttrs,
+                                htmlAttrs);
+
+function makeMap(str, lowercaseKeys) {
+  var obj = {}, items = str.split(','), i;
+  for (i = 0; i < items.length; i++) {
+    obj[lowercaseKeys ? angular.lowercase(items[i]) : items[i]] = true;
+  }
+  return obj;
+}
+
+
+/**
+ * @example
+ * htmlParser(htmlString, {
+ *     start: function(tag, attrs, unary) {},
+ *     end: function(tag) {},
+ *     chars: function(text) {},
+ *     comment: function(text) {}
+ * });
+ *
+ * @param {string} html string
+ * @param {object} handler
+ */
+function htmlParser(html, handler) {
+  if (typeof html !== 'string') {
+    if (html === null || typeof html === 'undefined') {
+      html = '';
+    } else {
+      html = '' + html;
+    }
+  }
+  var index, chars, match, stack = [], last = html, text;
+  stack.last = function() { return stack[stack.length - 1]; };
+
+  while (html) {
+    text = '';
+    chars = true;
+
+    // Make sure we're not in a script or style element
+    if (!stack.last() || !specialElements[stack.last()]) {
+
+      // Comment
+      if (html.indexOf("<!--") === 0) {
+        // comments containing -- are not allowed unless they terminate the comment
+        index = html.indexOf("--", 4);
+
+        if (index >= 0 && html.lastIndexOf("-->", index) === index) {
+          if (handler.comment) handler.comment(html.substring(4, index));
+          html = html.substring(index + 3);
+          chars = false;
+        }
+      // DOCTYPE
+      } else if (DOCTYPE_REGEXP.test(html)) {
+        match = html.match(DOCTYPE_REGEXP);
+
+        if (match) {
+          html = html.replace(match[0], '');
+          chars = false;
+        }
+      // end tag
+      } else if (BEGING_END_TAGE_REGEXP.test(html)) {
+        match = html.match(END_TAG_REGEXP);
+
+        if (match) {
+          html = html.substring(match[0].length);
+          match[0].replace(END_TAG_REGEXP, parseEndTag);
+          chars = false;
+        }
+
+      // start tag
+      } else if (BEGIN_TAG_REGEXP.test(html)) {
+        match = html.match(START_TAG_REGEXP);
+
+        if (match) {
+          // We only have a valid start-tag if there is a '>'.
+          if (match[4]) {
+            html = html.substring(match[0].length);
+            match[0].replace(START_TAG_REGEXP, parseStartTag);
+          }
+          chars = false;
+        } else {
+          // no ending tag found --- this piece should be encoded as an entity.
+          text += '<';
+          html = html.substring(1);
+        }
+      }
+
+      if (chars) {
+        index = html.indexOf("<");
+
+        text += index < 0 ? html : html.substring(0, index);
+        html = index < 0 ? "" : html.substring(index);
+
+        if (handler.chars) handler.chars(decodeEntities(text));
+      }
+
+    } else {
+      // IE versions 9 and 10 do not understand the regex '[^]', so using a workaround with [\W\w].
+      html = html.replace(new RegExp("([\\W\\w]*)<\\s*\\/\\s*" + stack.last() + "[^>]*>", 'i'),
+        function(all, text) {
+          text = text.replace(COMMENT_REGEXP, "$1").replace(CDATA_REGEXP, "$1");
+
+          if (handler.chars) handler.chars(decodeEntities(text));
+
+          return "";
+      });
+
+      parseEndTag("", stack.last());
+    }
+
+    if (html == last) {
+      throw $sanitizeMinErr('badparse', "The sanitizer was unable to parse the following block " +
+                                        "of html: {0}", html);
+    }
+    last = html;
+  }
+
+  // Clean up any remaining tags
+  parseEndTag();
+
+  function parseStartTag(tag, tagName, rest, unary) {
+    tagName = angular.lowercase(tagName);
+    if (blockElements[tagName]) {
+      while (stack.last() && inlineElements[stack.last()]) {
+        parseEndTag("", stack.last());
+      }
+    }
+
+    if (optionalEndTagElements[tagName] && stack.last() == tagName) {
+      parseEndTag("", tagName);
+    }
+
+    unary = voidElements[tagName] || !!unary;
+
+    if (!unary) {
+      stack.push(tagName);
+    }
+
+    var attrs = {};
+
+    rest.replace(ATTR_REGEXP,
+      function(match, name, doubleQuotedValue, singleQuotedValue, unquotedValue) {
+        var value = doubleQuotedValue
+          || singleQuotedValue
+          || unquotedValue
+          || '';
+
+        attrs[name] = decodeEntities(value);
+    });
+    if (handler.start) handler.start(tagName, attrs, unary);
+  }
+
+  function parseEndTag(tag, tagName) {
+    var pos = 0, i;
+    tagName = angular.lowercase(tagName);
+    if (tagName) {
+      // Find the closest opened tag of the same type
+      for (pos = stack.length - 1; pos >= 0; pos--) {
+        if (stack[pos] == tagName) break;
+      }
+    }
+
+    if (pos >= 0) {
+      // Close all the open elements, up the stack
+      for (i = stack.length - 1; i >= pos; i--)
+        if (handler.end) handler.end(stack[i]);
+
+      // Remove the open elements from the stack
+      stack.length = pos;
+    }
+  }
+}
+
+var hiddenPre=document.createElement("pre");
+/**
+ * decodes all entities into regular string
+ * @param value
+ * @returns {string} A string with decoded entities.
+ */
+function decodeEntities(value) {
+  if (!value) { return ''; }
+
+  hiddenPre.innerHTML = value.replace(/</g,"&lt;");
+  // innerText depends on styling as it doesn't display hidden elements.
+  // Therefore, it's better to use textContent not to cause unnecessary reflows.
+  return hiddenPre.textContent;
+}
+
+/**
+ * Escapes all potentially dangerous characters, so that the
+ * resulting string can be safely inserted into attribute or
+ * element text.
+ * @param value
+ * @returns {string} escaped text
+ */
+function encodeEntities(value) {
+  return value.
+    replace(/&/g, '&amp;').
+    replace(SURROGATE_PAIR_REGEXP, function(value) {
+      var hi = value.charCodeAt(0);
+      var low = value.charCodeAt(1);
+      return '&#' + (((hi - 0xD800) * 0x400) + (low - 0xDC00) + 0x10000) + ';';
+    }).
+    replace(NON_ALPHANUMERIC_REGEXP, function(value) {
+      return '&#' + value.charCodeAt(0) + ';';
+    }).
+    replace(/</g, '&lt;').
+    replace(/>/g, '&gt;');
+}
+
+/**
+ * create an HTML/XML writer which writes to buffer
+ * @param {Array} buf use buf.jain('') to get out sanitized html string
+ * @returns {object} in the form of {
+ *     start: function(tag, attrs, unary) {},
+ *     end: function(tag) {},
+ *     chars: function(text) {},
+ *     comment: function(text) {}
+ * }
+ */
+function htmlSanitizeWriter(buf, uriValidator) {
+  var ignore = false;
+  var out = angular.bind(buf, buf.push);
+  return {
+    start: function(tag, attrs, unary) {
+      tag = angular.lowercase(tag);
+      if (!ignore && specialElements[tag]) {
+        ignore = tag;
+      }
+      if (!ignore && validElements[tag] === true) {
+        out('<');
+        out(tag);
+        angular.forEach(attrs, function(value, key) {
+          var lkey=angular.lowercase(key);
+          var isImage = (tag === 'img' && lkey === 'src') || (lkey === 'background');
+          if (validAttrs[lkey] === true &&
+            (uriAttrs[lkey] !== true || uriValidator(value, isImage))) {
+            out(' ');
+            out(key);
+            out('="');
+            out(encodeEntities(value));
+            out('"');
+          }
+        });
+        out(unary ? '/>' : '>');
+      }
+    },
+    end: function(tag) {
+        tag = angular.lowercase(tag);
+        if (!ignore && validElements[tag] === true) {
+          out('</');
+          out(tag);
+          out('>');
+        }
+        if (tag == ignore) {
+          ignore = false;
+        }
+      },
+    chars: function(chars) {
+        if (!ignore) {
+          out(encodeEntities(chars));
+        }
+      }
+  };
+}
+
+
+// define ngSanitize module and register $sanitize service
+angular.module('ngSanitize', []).provider('$sanitize', $SanitizeProvider);
+
+/* global sanitizeText: false */
+
+/**
+ * @ngdoc filter
+ * @name linky
+ * @kind function
+ *
+ * @description
+ * Finds links in text input and turns them into html links. Supports http/https/ftp/mailto and
+ * plain email address links.
+ *
+ * Requires the {@link ngSanitize `ngSanitize`} module to be installed.
+ *
+ * @param {string} text Input text.
+ * @param {string} target Window (_blank|_self|_parent|_top) or named frame to open links in.
+ * @returns {string} Html-linkified text.
+ *
+ * @usage
+   <span ng-bind-html="linky_expression | linky"></span>
+ *
+ * @example
+   <example module="linkyExample" deps="angular-sanitize.js">
+     <file name="index.html">
+       <script>
+         angular.module('linkyExample', ['ngSanitize'])
+           .controller('ExampleController', ['$scope', function($scope) {
+             $scope.snippet =
+               'Pretty text with some links:\n'+
+               'http://angularjs.org/,\n'+
+               'mailto:us@somewhere.org,\n'+
+               'another@somewhere.org,\n'+
+               'and one more: ftp://127.0.0.1/.';
+             $scope.snippetWithTarget = 'http://angularjs.org/';
+           }]);
+       </script>
+       <div ng-controller="ExampleController">
+       Snippet: <textarea ng-model="snippet" cols="60" rows="3"></textarea>
+       <table>
+         <tr>
+           <td>Filter</td>
+           <td>Source</td>
+           <td>Rendered</td>
+         </tr>
+         <tr id="linky-filter">
+           <td>linky filter</td>
+           <td>
+             <pre>&lt;div ng-bind-html="snippet | linky"&gt;<br>&lt;/div&gt;</pre>
+           </td>
+           <td>
+             <div ng-bind-html="snippet | linky"></div>
+           </td>
+         </tr>
+         <tr id="linky-target">
+          <td>linky target</td>
+          <td>
+            <pre>&lt;div ng-bind-html="snippetWithTarget | linky:'_blank'"&gt;<br>&lt;/div&gt;</pre>
+          </td>
+          <td>
+            <div ng-bind-html="snippetWithTarget | linky:'_blank'"></div>
+          </td>
+         </tr>
+         <tr id="escaped-html">
+           <td>no filter</td>
+           <td><pre>&lt;div ng-bind="snippet"&gt;<br>&lt;/div&gt;</pre></td>
+           <td><div ng-bind="snippet"></div></td>
+         </tr>
+       </table>
+     </file>
+     <file name="protractor.js" type="protractor">
+       it('should linkify the snippet with urls', function() {
+         expect(element(by.id('linky-filter')).element(by.binding('snippet | linky')).getText()).
+             toBe('Pretty text with some links: http://angularjs.org/, us@somewhere.org, ' +
+                  'another@somewhere.org, and one more: ftp://127.0.0.1/.');
+         expect(element.all(by.css('#linky-filter a')).count()).toEqual(4);
+       });
+
+       it('should not linkify snippet without the linky filter', function() {
+         expect(element(by.id('escaped-html')).element(by.binding('snippet')).getText()).
+             toBe('Pretty text with some links: http://angularjs.org/, mailto:us@somewhere.org, ' +
+                  'another@somewhere.org, and one more: ftp://127.0.0.1/.');
+         expect(element.all(by.css('#escaped-html a')).count()).toEqual(0);
+       });
+
+       it('should update', function() {
+         element(by.model('snippet')).clear();
+         element(by.model('snippet')).sendKeys('new http://link.');
+         expect(element(by.id('linky-filter')).element(by.binding('snippet | linky')).getText()).
+             toBe('new http://link.');
+         expect(element.all(by.css('#linky-filter a')).count()).toEqual(1);
+         expect(element(by.id('escaped-html')).element(by.binding('snippet')).getText())
+             .toBe('new http://link.');
+       });
+
+       it('should work with the target property', function() {
+        expect(element(by.id('linky-target')).
+            element(by.binding("snippetWithTarget | linky:'_blank'")).getText()).
+            toBe('http://angularjs.org/');
+        expect(element(by.css('#linky-target a')).getAttribute('target')).toEqual('_blank');
+       });
+     </file>
+   </example>
+ */
+angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
+  var LINKY_URL_REGEXP =
+        /((ftp|https?):\/\/|(www\.)|(mailto:)?[A-Za-z0-9._%+-]+@)\S*[^\s.;,(){}<>"”’]/i,
+      MAILTO_REGEXP = /^mailto:/i;
+
+  return function(text, target) {
+    if (!text) return text;
+    var match;
+    var raw = text;
+    var html = [];
+    var url;
+    var i;
+    while ((match = raw.match(LINKY_URL_REGEXP))) {
+      // We can not end in these as they are sometimes found at the end of the sentence
+      url = match[0];
+      // if we did not match ftp/http/www/mailto then assume mailto
+      if (!match[2] && !match[4]) {
+        url = (match[3] ? 'http://' : 'mailto:') + url;
+      }
+      i = match.index;
+      addText(raw.substr(0, i));
+      addLink(url, match[0].replace(MAILTO_REGEXP, ''));
+      raw = raw.substring(i + match[0].length);
+    }
+    addText(raw);
+    return $sanitize(html.join(''));
+
+    function addText(text) {
+      if (!text) {
+        return;
+      }
+      html.push(sanitizeText(text));
+    }
+
+    function addLink(url, text) {
+      html.push('<a ');
+      if (angular.isDefined(target)) {
+        html.push('target="',
+                  target,
+                  '" ');
+      }
+      html.push('href="',
+                url.replace(/"/g, '&quot;'),
+                '">');
+      addText(text);
+      html.push('</a>');
+    }
+  };
+}]);
+
+
+})(window, window.angular);
 //Copyright (c) 2010 Nicholas C. Zakas. All rights reserved.
 //MIT License
 
@@ -45690,10 +45378,35 @@ wordForPointType = function(type)
         case "bar": return "бар";
     }
 };
-//TODO: протестировать!
-//$(document).on('touchstart',function(e){ e.preventDefault(); });
-//$(document).on('touchmove',function(e){ e.preventDefault(); });
-function ChatController($scope, ChatMessage, User, ControllersProvider) {
+
+function imageTag(url,class_name)
+{
+  return "<a target='_blank' href='"+url+"' class='"+class_name+"'>"+"<img src='"+url+"' class='"+class_name+"'/>"+"</a>";
+}
+function linkTag(url,class_name)
+{
+  return "<a target='_blank' href='"+url+"' class='"+class_name+"'>"+url+"</a>";
+}
+prepareMessage = function (text, link_class, img_class) {
+  var links =
+      text.match(/(((ftp|http|https):\/\/)|(\/)|(..\/))(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g);
+  if (links) {
+    links.forEach(function (link) {
+      var image = text.match(/(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g);
+      if(image)
+      {
+        text = text.replace(image, imageTag(image, img_class));
+      }
+      else
+      {
+        text = text.replace(link, linkTag(link, link_class));
+      }
+    });
+
+  }
+  return text;
+};
+function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
     var $this = this;
     var container = $('.overflow_hidden');
     var messages = $('#messages');
@@ -45721,14 +45434,15 @@ function ChatController($scope, ChatMessage, User, ControllersProvider) {
                         audio.volume = 0.5;
                         audio.play();
                         msg.marked = true;
+                        msg.message = $this.prepareMessage(msg.message);
                     }
                     $this.messages.push(msg);
                     delayedScroll();
                 });
             }
         });
-        User.online_count(function(result){
-                $this.online = result.data.value;
+        User.online_count(function (result) {
+            $this.online = result.data.value;
         });
         if ($this.messages)
             $this.lastUpdate = $this.messages[$this.messages.length - 1].id;
@@ -45741,6 +45455,9 @@ function ChatController($scope, ChatMessage, User, ControllersProvider) {
         container.toggleClass('deployed');
         container.toggleClass('undeployed');
     };
+    this.prepareMessage = function (text) {
+        return prepareMessage(text,"chat_link","chat_image");
+    };
     this.selectUser = function (name) {
         $this.chatMessage = name + ", ";
         $('input.chat_msg_box').focus();
@@ -45751,10 +45468,13 @@ function ChatController($scope, ChatMessage, User, ControllersProvider) {
         $this.addListenerOnce('messagesloaded', $this.update);
         ChatMessage.index(function (result) {
             $this.messages = result;
+            $this.messages.forEach(function (msg) {
+                msg.message = $this.prepareMessage(msg.message);
+            });
             //ждем пока отрисуется
             setTimeout(function () {
                 $this.fire('messagesloaded')
-            },2000)
+            }, 2000)
         });
 
     };
@@ -45774,7 +45494,7 @@ ChatController.prototype.constructor = ChatController;
 function IndexController($compile, $scope, $http, gmap, Point, Comment, User, ControllersProvider) {
     var $this = this;
 
-    this.heading = 'Алкомап β';
+    this.heading = 'Алкомап';
     this.currentPoint = undefined;
     this.openedInfos = undefined;
     this.user = User;
@@ -45821,8 +45541,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
     var buildMarker = function (item) {
         var marker = new google.maps.Marker({
             position: {lng: item.lng, lat: item.lat},
-            label: item.name,
-            title: item.description,
+            title: item.name,
             map: gmap,
             icon: iconForPoint(item.point_type)
         });
@@ -45865,7 +45584,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
     this.trackUser = function () {
         updateUserPosition();
         if ($this.usersMarker) $this.usersMarker.setPosition(USER_POSITION);
-        setTimeout($this.trackUser, 1000);
+        setTimeout($this.trackUser, 2000);
     };
     this.styleForInfo = function () {
         var style;
@@ -45900,17 +45619,14 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
         this.points.forEach(function (item) {
             if (item.id == id)
                 point = item;
-        })
+        });
         if (point)
             $this.addPointDraggable(point.point_type, point)
         else
             $this.setPointCurrent(id);
     };
     this.addPointDraggable = function (type, point) {
-        if (point)
-            $this.isEditing = true;
-        else
-            $this.isEditing = false;
+        $this.isEditing = !!point;
         $scope.point = point ? point : {
             lat: gmap.getCenter().lat(),
             lng: gmap.getCenter().lng(),
@@ -45989,27 +45705,30 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
     };
 
     this.showMarkers = function () {
-        var bounds = gmap.getBounds()
-        var parsed = {
-            sw: {
-                lat: bounds.getSouthWest().lat(),
-                lng: bounds.getSouthWest().lng()
-            },
-            ne: {
-                lat: bounds.getNorthEast().lat(),
-                lng: bounds.getNorthEast().lng()
-            }
-        };
+        var bounds = gmap.getBounds();
+        if(bounds) {
+            var parsed = {
+                sw: {
+                    lat: bounds.getSouthWest().lat(),
+                    lng: bounds.getSouthWest().lng()
+                },
+                ne: {
+                    lat: bounds.getNorthEast().lat(),
+                    lng: bounds.getNorthEast().lng()
+                }
+            };
 
-        Point.getPoints(parsed, $this.settings, function (result) {
-            gmap.clearMarkers();
-            $this.points = result.data;
-            $this.points.forEach(function (item) {
-                if (!(item.id == ($this.currentPoint ? $this.currentPoint.id : undefined)))
-                    buildMarker(item);
+
+            Point.getPoints(parsed, $this.settings, function (result) {
+                gmap.clearMarkers();
+                $this.points = result.data;
+                $this.points.forEach(function (item) {
+                    if (!(item.id == ($this.currentPoint ? $this.currentPoint.id : undefined)))
+                        buildMarker(item);
+                });
+                $this.fire('onpointsloaded');
             });
-            $this.fire('onpointsloaded');
-        });
+        }
     };
 
     this.deleteComment = function (id) {
@@ -46037,6 +45756,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
                 if (item.id == point_id) {
                     was_set = true;
                     item.marker.openInfo();
+                    item.comment
                 }
             });
         if (!was_set) {
@@ -46044,7 +45764,9 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
         }
 
     };
-
+    this.prepareMessage = function (text) {
+        return prepareMessage(text,"comment_link","comment_image");
+    };
     this.deletePoint = function (id) {
         $http.delete('/points/' + id);
         $this.points.forEach(function (item) {
@@ -46060,20 +45782,19 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
 
     this.setCenter = function (lat, lng, point_id) {
         gmap.setCenter({lat: lat, lng: lng});
+        gmap.setZoom(14);
         if (point_id)
             $this.setPointCurrent(point_id);
     };
     var init = function () {
         EventTarget.apply($this);
         $scope.$watch('controller.settings', function (newValue, oldValue) {
-            console.log(newValue, oldValue);
             localStorage.setItem('settings', JSON.stringify(newValue));
             $this.showMarkers();
         }, true);
         $this.settings = localStorage.getItem('settings') ?
             JSON.parse(localStorage.getItem('settings')) :
         {shops: true, bars: true, markers: true, messages: true};
-        console.log($this.settings);
         gmap.addListener('idle', $this.showMarkers);
         ControllersProvider.index = $this;
         $this.usersMarker = new google.maps.Marker({
@@ -46160,12 +45881,12 @@ function NewsController(News, $scope, ControllersProvider) {
 }
 ;
 /**
- * Created by �������� on 28.08.2015.
+ * Created by �������� on 28.08.2015.
  */
 
-app = angular.module('alcomap', ['ngResource']);
+app = angular.module('alcomap', ['ngResource','ngSanitize']);
 app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User', 'ControllersProvider']);
-app.controller('ChatController', ChatController, ['$scope', 'ChatMessage', 'User', 'ControllersProvider']);
+app.controller('ChatController', ChatController, ['$scope','$sce', 'ChatMessage', 'User', 'ControllersProvider']);
 app.controller('NewsController', NewsController, ['News', '$scope', 'ControllersProvider']);
 app.factory('gmap', function () {
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -46185,6 +45906,11 @@ app.factory('gmap', function () {
                 "featureType": "landscape",
                 "elementType": "all",
                 "stylers": [{"color": "#f2f2f2"}]
+            },
+            {
+                "featureType": "landscape",
+                "elementType": "geometry.stroke",
+                "stylers": [{"color": "#7C7C7C"}]
             },
             {
                 "featureType": "poi",
@@ -46207,30 +45933,53 @@ app.factory('gmap', function () {
                 "elementType": "all",
                 "stylers": [{"visibility": "off"}]
             }, {
+                "featureType": "transit.station",
+                "elementType": "all",
+                "stylers": [{"visibility": "on",
+                    "color":"#FF22CC"}]
+            }, {
                 "featureType": "water",
                 "elementType": "all",
                 "stylers": [{"color": "#46bcec"}, {"visibility": "on"}]
             }]
     });
+    // Create the search box and link it to the UI element.
+    var input = document.getElementById('search_field');
+    var searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-    function mcFactory(point_type) {
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', function() {
+        searchBox.setBounds(map.getBounds());
+    });
+    searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+            return;
+        }
+        map.setZoom(14);
+        map.setCenter(places[0].geometry.location);
+    });
+
+        function mcFactory(point_type) {
         var styles = [
             {
-                textColor: 'rgb(30, 153, 204)',
+                textColor: '#22A7F0',
                 url: iconForPoint(point_type),
                 height: 32,
                 width: 32,
                 textSize: 20
             },
             {
-                textColor: 'rgb(30, 153, 204)',
+                textColor: '#22A7F0',
                 url: iconForPoint(point_type),
                 height: 42,
                 width: 42,
                 textSize: 25
             },
             {
-                textColor: 'rgb(30, 153, 204)',
+                textColor: '#22A7F0',
                 url: iconForPoint(point_type),
                 height: 52,
                 width: 52,

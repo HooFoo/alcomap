@@ -4,7 +4,7 @@
 function IndexController($compile, $scope, $http, gmap, Point, Comment, User, ControllersProvider) {
     var $this = this;
 
-    this.heading = 'Алкомап β';
+    this.heading = 'Алкомап';
     this.currentPoint = undefined;
     this.openedInfos = undefined;
     this.user = User;
@@ -94,7 +94,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
     this.trackUser = function () {
         updateUserPosition();
         if ($this.usersMarker) $this.usersMarker.setPosition(USER_POSITION);
-        setTimeout($this.trackUser, 1000);
+        setTimeout($this.trackUser, 2000);
     };
     this.styleForInfo = function () {
         var style;
@@ -129,17 +129,14 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
         this.points.forEach(function (item) {
             if (item.id == id)
                 point = item;
-        })
+        });
         if (point)
             $this.addPointDraggable(point.point_type, point)
         else
             $this.setPointCurrent(id);
     };
     this.addPointDraggable = function (type, point) {
-        if (point)
-            $this.isEditing = true;
-        else
-            $this.isEditing = false;
+        $this.isEditing = !!point;
         $scope.point = point ? point : {
             lat: gmap.getCenter().lat(),
             lng: gmap.getCenter().lng(),
@@ -269,6 +266,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
                 if (item.id == point_id) {
                     was_set = true;
                     item.marker.openInfo();
+                    item.comment
                 }
             });
         if (!was_set) {
@@ -276,7 +274,9 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
         }
 
     };
-
+    this.prepareMessage = function (text) {
+        return prepareMessage(text,"comment_link","comment_image");
+    };
     this.deletePoint = function (id) {
         $http.delete('/points/' + id);
         $this.points.forEach(function (item) {
