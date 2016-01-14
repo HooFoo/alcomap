@@ -46,10 +46,6 @@
 }
 
 .add_button {
-  transform: translate(10px, -70px);
-  position: absolute;
-  left: 0;
-  -webkit-transform: translate(10px, -70px);
 
 }
 
@@ -184,16 +180,8 @@ a:hover {
 }
 
 .half_btn_up {
-  transform: translate(-50%, 0px);
-  -webkit-transform: translate(-50%, 0px);
-  padding-bottom: 10px;
-  border-top: 1px solid;
-  border-left: 1px solid;
-  border-right: 1px solid;
-  display: inline-block!important;
-  position: absolute!important;
-  bottom: 0;
-  left: 50vw;
+  padding: 0px 6px !important;
+
 }
 
 .half_btn_dn {
@@ -214,6 +202,11 @@ a:hover {
   }
 }
 @media (max-width: 992px) {
+  #buttons
+  {
+    bottom: 3px;
+    left: 3px;
+  }
   #news {
     padding-top: 30px;
   }
@@ -239,23 +232,11 @@ a:hover {
 }
 
 .center_btn {
-  transform: translate(-10px, -50vh);
-  position: absolute;
-  right: 0;
-  -webkit-transform: translate(-10px, -50vh);
-  padding: 4px !important;
-  padding-left: 2px !important;
-  padding-bottom: 3px !important;
+
 }
 
 #settings_btn {
-  transform: translate(10px, -50vh);
-  position: absolute;
-  left: 0;
-  -webkit-transform: translate(10px, -50vh);
-  padding: 4px !important;
-  padding-left: 2px !important;
-  padding-bottom: 3px !important;
+
 }
 
 .ddt {
@@ -465,19 +446,18 @@ div.dropdown.ib {
   position: absolute;
   left: 0px !important;
   width: auto;
-  transform: translate(10px, -70px);
-  -webkit-transform: translate(10px, -70px);
+  transform: translate(0px, -5px);
+  -webkit-transform: translate(0px, -5px);
 }
 
 #title-menu {
-  width: 80vw;
+  width: 285px;
   position: absolute;
-  transform: translate(-30%, -2%);
-  -webkit-transform: translate(-30%, -2%);
-  height: 84vh;
+  transform: translate(0, 0);
+  -webkit-transform: translate(-215px, -5px);
+  height: 80vh;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  max-width: 900px;
 }
 
 #help {
@@ -662,14 +642,13 @@ div.dropdown.ib {
 }
 
 .settings_dropdown {
-  transform: translate(69px, -50vh);
-  -webkit-transform: translate(69px, -50vh);
-  width: 80%;
+  transform: translate(-80px, -5px);
+  -webkit-transform: translate(-80px, -5px);
+  width: 380px;
   text-align: center;
 }
 
 .title_dropdown {
-  transform: translateY(-60%);
 }
 
 .online {
@@ -689,35 +668,9 @@ div.dropdown.ib {
 }
 .help_btn
 {
-  position: absolute;
-  display: inline-block;
-  right: 0px;
-  transform: translate(150%, -33px);
-  -webkit-transform: translate(150%, -33px);
-  border: 1px solid rgb(124, 124, 124);
-  border-radius: 13px;
-  height: 25px;
-  width: 25px;
-  font-size: 1em;
-  background-color: rgb(251, 251, 251);
-  color: rgb(124, 124, 124);
-  text-align: center;
-  line-height: 25px;
-  opacity: 0.35;
+
 }
-@keyframes helpFadeIn {
-  0%{
-    opacity: 0.35;
-  }
-  100%
-  {
-    opacity: 1;
-  }
-}
-.help_btn:hover
-{
-  animation: helpFadeIn 0.5s both;
-}
+
 @keyframes rollOut {
   0%{
     opacity: 0.1;
@@ -732,14 +685,23 @@ div.dropdown.ib {
 {
   animation: rollOut 1s both;
 }
-.usefull > img
+.usefull
+{
+  list-style-type:none;
+  padding-left: 0px;
+  margin-top: 5px;
+}
+.usefull > li > * > img
 {
   width: 70%
 }
+.usefull > li
+{
+}
 .phone_add > img
 {
-  width: 45%;
-  height: 533px;
+  width: 100%;
+
 }
 .phone_add
 {
@@ -767,4 +729,40 @@ div.dropdown.ib {
 #search_field:focus
 {
   width:300px;
+}
+#buttons
+{
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid #A9A9A9;
+  border-radius: 2px;
+  z-index:3;
+  display: flex;
+  padding: 5px;
+}
+#buttons > div
+{
+  margin:0px 5px;
+}
+.chat_link
+{
+  color: black;
+}
+.menu_entry
+{
+  height: 20px;
+  padding-top: 20px;
+  transform: translateY(-20px);
+  transition: height 1s ease;
+  overflow: hidden;
+}
+.menu_entry:hover
+{
+  height: auto;
+}
+.menu_entry > img
+{
+  max-width: 250px;
 }

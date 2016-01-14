@@ -13,7 +13,8 @@ function asset_path(name) {
         'send_message.png': '<%= asset_path "send_message.png" %>',
         'event.png': '<%= asset_path "event.png" %>',
         'message.png': '<%= asset_path "message.png" %>',
-        'alert.mp3': '<%= asset_path "alert.mp3" %>'
+        'alert.mp3': '<%= asset_path "alert.mp3" %>',
+        'message_notify.jpg': '<%= asset_path "message_notify.jpg" %>'
     };
     return assets[name]||'none';
 }
@@ -94,4 +95,4 @@ prepareMessage = function (text, link_class, img_class) {
   }
   return text;
 };
-//smooth scrolling
+Notification.requestPermission();

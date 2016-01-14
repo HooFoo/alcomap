@@ -1,13 +1,42 @@
 <%= render 'chat' %>
 <div class="wrapper" ng-view ng-controller="IndexController as controller">
   <div id="map_container">
+
     <div id="map_area" class="col-xs-12 col-sm-12 col-md-8 col-lg-8 nopadding">
       <div class="title_wrapper">
         <h1 ng-model="controller.heading" class="app_tittle">{{controller.heading}}</h1>
-
-        <div class="dropdown roll_out">
-          <button class=" help_btn ddt dropdown-toggle title_dropdown" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <span class="">?</span>
+      </div>
+      <div id="map"></div>
+      <input id="search_field" type="text" placeholder="Поиск"/>
+      <div id="buttons">
+        <div class="dropup">
+          <div class="btn btn-default add_button dropdown-toggle" id="add_btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <%= image_tag 'new.png' %>
+          </div>
+          <ul class="dropdown-menu add_dropdown" role="menu" aria-labelledby="add_btn">
+            <li><a href="#" ng-click="controller.addPointDraggable('shop')">Магазин</a></li>
+            <li><a href="#" ng-click="controller.addPointDraggable('bar')">Бар</a></li>
+            <li><a href="#" ng-click="controller.addPointDraggable('marker')">Событие</a></li>
+            <li><a href="#" ng-click="controller.addPointDraggable('message')">Сообщение</a></li>
+            <li><a href="#" ng-click="controller.addPointDraggable('message')">Свое положение</a></li>
+          </ul>
+        </div>
+        <div class="dropup">
+          <div class="btn btn-default settings_button dropdown-toggle" id="settings_btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <%= image_tag 'settings.png' %>
+          </div>
+          <ul class="dropdown-menu settings_dropdown" role="menu" aria-labelledby="settings_btn">
+            <li>
+              <%= render 'settings' %>
+            </li>
+          </ul>
+        </div>
+        <div class="btn btn-default center_btn" ng-click="controller.centerForUser()">
+          <%= image_tag 'center.png' %>
+        </div>
+        <div class="dropup roll_out">
+          <button class=" help_btn btn btn-default dropdown-toggle title_dropdown" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <%= image_tag 'help.png' %>
           </button>
           <ul class="dropdown-menu" id="title-menu" aria-labelledby="dropdownMenu1">
             <li>
@@ -16,30 +45,11 @@
             </li>
           </ul>
         </div>
+        <div scroll-to="comments" container-id="map_container" duration="500" class="col-xs-12 col-sm-12  half_btn_up btn btn-default">
+        <%= image_tag 'down.png' %>
+        </div>
       </div>
-      <div id="map"></div>
-      <div class="dropup">
-        <div class="btn btn-default add_button dropdown-toggle" id="add_btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><%= image_tag 'new.png' %></div>
-        <ul class="dropdown-menu add_dropdown" role="menu" aria-labelledby="add_btn">
-          <li><a href="#" ng-click="controller.addPointDraggable('shop')">Магазин</a></li>
-          <li><a href="#" ng-click="controller.addPointDraggable('bar')">Бар</a></li>
-          <li><a href="#" ng-click="controller.addPointDraggable('marker')">Событие</a></li>
-          <li><a href="#" ng-click="controller.addPointDraggable('message')">Сообщение</a></li>
-        </ul>
-      </div>
-      <div class="dropdown">
-        <div class="btn btn-default settings_button dropdown-toggle" id="settings_btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><%= image_tag 'settings.png' %></div>
-        <ul class="dropdown-menu settings_dropdown" role="menu" aria-labelledby="settings_btn">
-          <li>
-            <%= render 'settings' %>
-          </li>
-        </ul>
-      </div>
-      <input id="search_field" type="text" placeholder="Поиск"/>
-      <div class="btn btn-default center_btn" ng-click="controller.centerForUser()"><%= image_tag 'center.png' %></div>
-      <button scroll-to="comments" container-id="map_container" duration="500" class="col-xs-12 col-sm-12  half_btn half_btn_up btn btn-default">
-        {{controller.currentPoint?'Комментарии':'Новости'}}
-      </button>
+
     </div>
 
 
