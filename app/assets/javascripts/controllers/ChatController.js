@@ -26,8 +26,8 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
                         audio.volume = 0.5;
                         audio.play();
                         msg.marked = true;
-                        msg.message = $this.prepareMessage(msg.message);
                     }
+                    msg.message = $this.prepareMessage(msg.message);
                     $this.messages.push(msg);
                     delayedScroll();
                 });
