@@ -40,7 +40,7 @@
   margin-bottom: 21px;
 }
 
-.map_container {
+#map_container {
   height: 100vh !important;
   overflow: hidden !important;
 }
@@ -74,6 +74,7 @@
   position: absolute;
   right: 10px;
   cursor: pointer;
+  top: 5px;
 }
 
 .comment_form {
@@ -167,12 +168,11 @@ textarea#name {
 }
 
 .half_btn {
-  display: block;
+  display: inline-block;
+  position: absolute !important;
   text-align: center;
   cursor: pointer;
   z-index: 3;
-  left: 50%;
-  margin-left: -60px;
   width: auto !important;
   background-color: #FBFBFB;
   border-radius: 4px;
@@ -184,22 +184,24 @@ a:hover {
 }
 
 .half_btn_up {
-  transform: translate(0px, -30px);
-  -webkit-transform: translate(0px, -30px);
+  transform: translate(-50%, 0px);
+  -webkit-transform: translate(-50%, 0px);
   padding-bottom: 10px;
   border-top: 1px solid;
   border-left: 1px solid;
   border-right: 1px solid;
+  display: inline-block!important;
+  position: absolute!important;
+  bottom: 0;
+  left: 50vw;
 }
 
 .half_btn_dn {
-  -webkit-transform: translate(0px, 34px);
-  transform: translate(0px, 34px);
   border-bottom: 1px solid;
   border-left: 1px solid;
   border-right: 1px solid;
   padding-top: 8px;
-  left: 10px;
+  left: 0px;
 }
 .padding_mobile
 {
@@ -362,6 +364,7 @@ div.dropdown.ib {
   padding-right: 5px;
   margin: 0;
   display: block !important;
+  left: 50vw;
 }
 
 .chat_msg_box {
