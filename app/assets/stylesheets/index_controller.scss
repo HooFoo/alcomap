@@ -46,10 +46,10 @@
 }
 
 .add_button {
-  transform: translate(-30px, -70px);
+  transform: translate(10px, -70px);
   position: absolute;
-  right: 0;
-  -webkit-transform: translate(-30px, -70px);
+  left: 0;
+  -webkit-transform: translate(10px, -70px);
 
 }
 
@@ -238,20 +238,20 @@ a:hover {
 }
 
 .center_btn {
-  transform: translate(-30px, -50vh);
+  transform: translate(-10px, -50vh);
   position: absolute;
   right: 0;
-  -webkit-transform: translate(-30px, -50vh);
+  -webkit-transform: translate(-10px, -50vh);
   padding: 4px !important;
   padding-left: 2px !important;
   padding-bottom: 3px !important;
 }
 
 #settings_btn {
-  transform: translate(24px, -50vh);
+  transform: translate(10px, -50vh);
   position: absolute;
   left: 0;
-  -webkit-transform: translate(24px, -50vh);
+  -webkit-transform: translate(10px, -50vh);
   padding: 4px !important;
   padding-left: 2px !important;
   padding-bottom: 3px !important;
@@ -461,10 +461,9 @@ div.dropdown.ib {
 
 .add_dropdown {
   position: absolute;
-  right: 0;
+  left: 0px !important;
   width: auto;
-  left: auto !important;
-  transform: translate(-30px, -70px);
+  transform: translate(10px, -70px);
 }
 
 #title-menu {
@@ -743,4 +742,24 @@ div.dropdown.ib {
   width: 80%;
   transform: translateX(12.5%);
   -webkit-transform: translateX(12.5%);
+}
+.search_box
+{
+  z-index: 3;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+#search_field
+{
+  z-index: 0;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  transform: translate(10px,50px);
+  -webkit-transform: translate(10px,50px);
+  height: 40px;
+  width: 200px;
+  font-size: 2em;
+  padding-left: 5px;
 }

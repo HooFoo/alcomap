@@ -60,8 +60,26 @@ app.factory('gmap', function () {
                 "stylers": [{"color": "#46bcec"}, {"visibility": "on"}]
             }]
     });
+    // Create the search box and link it to the UI element.
+    var input = document.getElementById('search_field');
+    var searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-    function mcFactory(point_type) {
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', function() {
+        searchBox.setBounds(map.getBounds());
+    });
+    searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+            return;
+        }
+        map.setZoom(14);
+        map.setCenter(places[0].geometry.location);
+    });
+
+        function mcFactory(point_type) {
         var styles = [
             {
                 textColor: '#22A7F0',

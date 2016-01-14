@@ -15,7 +15,6 @@
 //= require turbolinks
 //= require bootstrap
 //= require underscore
-//= require gmaps/google
 //= require markerclusterer_compiled
 //= require angular
 //= require angular-resource
