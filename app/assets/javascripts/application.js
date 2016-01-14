@@ -19,6 +19,7 @@
 //= require angular
 //= require angular-resource
 //= require angular-sanitize
+//= require angular-smooth-scroll
 
 
 //= require_tree ./common

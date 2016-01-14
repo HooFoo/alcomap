@@ -1,7 +1,7 @@
 /**
  * Created by �������� on 28.08.2015.
  */
-app = angular.module('alcomap', ['ngResource','ngSanitize']);
+app = angular.module('alcomap', ['ngResource','ngSanitize','smoothScroll']);
 app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User', 'ControllersProvider']);
 app.controller('ChatController', ChatController, ['$scope','$sce', 'ChatMessage', 'User', 'ControllersProvider']);
 app.controller('NewsController', NewsController, ['News', '$scope', 'ControllersProvider']);

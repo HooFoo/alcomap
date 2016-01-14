@@ -3349,10 +3349,10 @@ Copyright (c) 2015 Daniel Eden
 
 /* line 48, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .add_button {
-  transform: translate(-30px, -70px);
+  transform: translate(10px, -70px);
   position: absolute;
-  right: 0;
-  -webkit-transform: translate(-30px, -70px);
+  left: 0;
+  -webkit-transform: translate(10px, -70px);
 }
 
 /* line 56, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
@@ -3563,10 +3563,10 @@ a:hover {
 }
 /* line 240, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .center_btn {
-  transform: translate(-30px, -50vh);
+  transform: translate(-10px, -50vh);
   position: absolute;
   right: 0;
-  -webkit-transform: translate(-30px, -50vh);
+  -webkit-transform: translate(-10px, -50vh);
   padding: 4px !important;
   padding-left: 2px !important;
   padding-bottom: 3px !important;
@@ -3574,10 +3574,10 @@ a:hover {
 
 /* line 250, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #settings_btn {
-  transform: translate(24px, -50vh);
+  transform: translate(10px, -50vh);
   position: absolute;
   left: 0;
-  -webkit-transform: translate(24px, -50vh);
+  -webkit-transform: translate(10px, -50vh);
   padding: 4px !important;
   padding-left: 2px !important;
   padding-bottom: 3px !important;
@@ -3812,13 +3812,12 @@ div.dropdown.ib {
 /* line 462, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .add_dropdown {
   position: absolute;
-  right: 0;
+  left: 0px !important;
   width: auto;
-  left: auto !important;
-  transform: translate(-30px, -70px);
+  transform: translate(10px, -70px);
 }
 
-/* line 470, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 469, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #title-menu {
   width: 80vw;
   position: absolute;
@@ -3830,25 +3829,25 @@ div.dropdown.ib {
   max-width: 900px;
 }
 
-/* line 481, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 480, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #help {
   text-align: center;
 }
 
-/* line 485, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 484, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .news_header {
   font-weight: bold;
   font-size: 1.5em;
 }
 
-/* line 490, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 489, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #news {
   text-align: center;
   background-color: rgba(249, 249, 249, 0.7);
   height: 100vh;
 }
 
-/* line 496, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 495, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #news_scroller {
   position: absolute;
   z-index: 1;
@@ -3861,7 +3860,7 @@ div.dropdown.ib {
   height: 97vh;
 }
 
-/* line 508, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 507, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .news {
   list-style-type: none;
   list-style-type: none;
@@ -3874,34 +3873,34 @@ div.dropdown.ib {
   border-radius: 4px;
 }
 
-/* line 520, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 519, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .news_user_name {
   font-weight: bold;
 }
 
-/* line 524, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 523, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .news_point_name {
   font-weight: bold;
   text-decoration: underline;
 }
 
-/* line 529, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 528, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #news_scroller > ul {
   padding-left: 3px;
 }
 
-/* line 533, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 532, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .legend {
   text-align: left;
   padding-left: 15px;
 }
 
-/* line 538, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 537, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .legend > div > span {
   padding-left: 10px;
 }
 
-/* line 542, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 541, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #comments {
   border-left: 1px solid rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
@@ -3909,84 +3908,84 @@ div.dropdown.ib {
   height: 100vh;
 }
 
-/* line 549, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 548, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .add_point_labels {
   margin-bottom: 0px !important;
 }
 
-/* line 553, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 552, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .delete_point {
   border: 1px solid #c2c2c2;
   border-radius: 5px;
   padding: 2px;
 }
 
-/* line 559, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 558, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .point_wrap {
   width: auto;
   float: right;
 }
 
-/* line 564, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 563, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .timestamp {
   color: #c2c2c2;
 }
 
-/* line 568, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 567, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .highlight {
   color: #E7FF6E;
 }
 
-/* line 572, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 571, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .point_attr_icon {
   width: 23px;
 }
 
-/* line 576, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 575, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .point_attrs_inputs {
   margin: 0px 3px;
 }
 
-/* line 580, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 579, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .news_timestamp {
   font-size: 9px;
 }
 
-/* line 584, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 583, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .news_timestamp_my {
   text-align: left;
 }
 
-/* line 588, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 587, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .news_opts {
   position: absolute;
   right: 0;
   top: 6px;
 }
 
-/* line 594, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 593, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .my_text {
   vertical-align: text-bottom;
 }
 
-/* line 598, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 597, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .news_text {
   margin-bottom: 5px;
 }
 
-/* line 602, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 601, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .news_bottom {
   text-align: left;
 }
 
-/* line 606, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 605, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .news_buttons {
   display: inline-block;
   position: relative;
   float: right;
 }
 
-/* line 612, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 611, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .icon_shop {
   background-image: url(/assets/bottle-3c5f9a060846cc46bf30ecad99a07cc1a18859e7c7991b088012a30260b00f98.png);
   height: 20px;
@@ -3997,7 +3996,7 @@ div.dropdown.ib {
   right: 8px;
 }
 
-/* line 622, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 621, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .icon_bar {
   background-image: url(/assets/drinks-1e4e8c943d17f2157cc9114b30f8d9ffd3e939c113049b2ccb824e2ef4ed85f6.png);
   height: 20px;
@@ -4008,7 +4007,7 @@ div.dropdown.ib {
   right: 8px;
 }
 
-/* line 632, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 631, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .icon_marker {
   background-image: url(/assets/event-c4db32a00df3b3d4e9f4cb9eed09c3b90d8a4c9ea3abc25bf50002462cc08981.png);
   height: 20px;
@@ -4019,7 +4018,7 @@ div.dropdown.ib {
   right: 8px;
 }
 
-/* line 642, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 641, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .icon_message {
   background-image: url(/assets/message-16587aba29954e736c2e04ada8098275194ed06fe71b930704e7673985d167cd.png);
   height: 20px;
@@ -4030,18 +4029,18 @@ div.dropdown.ib {
   right: 8px;
 }
 
-/* line 652, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 651, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .cluster {
   background-size: contain;
 }
 
-/* line 656, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 655, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #settings {
   padding: 5px 10px 5px 6px;
   text-align: center;
 }
 
-/* line 661, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 660, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .settings_dropdown {
   transform: translate(69px, -50vh);
   -webkit-transform: translate(69px, -50vh);
@@ -4049,31 +4048,31 @@ div.dropdown.ib {
   text-align: center;
 }
 
-/* line 668, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 667, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .title_dropdown {
   transform: translateY(-60%);
 }
 
-/* line 672, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 671, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .online {
   position: absolute;
   right: 20px;
   color: rgba(255, 255, 255, 0.4);
 }
 
-/* line 677, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 676, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .chat_image {
   max-width: 100px;
   max-height: 100px;
 }
 
-/* line 682, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 681, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .comment_image {
   max-width: 300px;
   max-height: 300px;
 }
 
-/* line 687, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 686, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .help_btn {
   position: absolute;
   display: inline-block;
@@ -4100,7 +4099,7 @@ div.dropdown.ib {
     opacity: 1;
   }
 }
-/* line 714, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 713, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .help_btn:hover {
   animation: helpFadeIn 0.5s both;
 }
@@ -4113,9 +4112,50 @@ div.dropdown.ib {
     opacity: 1;
   }
 }
-/* line 728, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 727, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .dropdown.roll_out.open {
   animation: rollOut 1s both;
+}
+
+/* line 731, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+.usefull > img {
+  width: 70%;
+}
+
+/* line 735, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+.phone_add > img {
+  width: 45%;
+  height: 533px;
+}
+
+/* line 740, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+.phone_add {
+  width: 80%;
+  transform: translateX(12.5%);
+  -webkit-transform: translateX(12.5%);
+}
+
+/* line 746, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+.search_box {
+  z-index: 3;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+/* line 753, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+#search_field {
+  transform: translate(-113px, 70px);
+  height: 40px;
+  font-size: 2em;
+  width: 100px;
+  padding-left: 5px;
+  transition: 0.5s;
+}
+
+/* line 763, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+#search_field:focus {
+  width: 300px;
 }
 /* line 1, /home/hoofoo/projects/alcomap/app/assets/stylesheets/scaffolds.scss */
 body {

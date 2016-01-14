@@ -1,6 +1,6 @@
 <%= render 'chat' %>
 <div class="wrapper" ng-view ng-controller="IndexController as controller">
-  <div class="map_container">
+  <div id="map_container">
     <div id="map_area" class="col-xs-12 col-sm-12 col-md-8 col-lg-8 nopadding">
       <div class="title_wrapper">
         <h1 ng-model="controller.heading" class="app_tittle">{{controller.heading}}</h1>
@@ -35,14 +35,18 @@
           </li>
         </ul>
       </div>
-      <input id="search_field"  type="text" placeholder="Поиск"/>
+      <input id="search_field" type="text" placeholder="Поиск"/>
       <div class="btn btn-default center_btn" ng-click="controller.centerForUser()"><%= image_tag 'center.png' %></div>
+      <button scroll-to="comments" container-id="map_container" duration="500" class="col-xs-12 col-sm-12  half_btn half_btn_up btn btn-default">
+        {{controller.currentPoint?'Комментарии':'Новости'}}
+      </button>
     </div>
-    <a target="_self" href="#comments" class="col-xs-12 col-sm-12  half_btn half_btn_up btn btn-default">
-      Комментарии </a>
-    <a target="_self" href="#map_area" class="col-xs-12 col-sm-12  half_btn half_btn_dn btn btn-default"> Карта </a>
+
 
     <div id="comments" class="col-xs-12 col-sm-12 col-md-4 col-lg-4 nopadding">
+      <button scroll-to="map_area" container-id="map_container" duration="500" class="col-xs-12 col-sm-12  half_btn half_btn_dn btn btn-default">
+        Карта
+      </button>
       <div class="padding_mobile" ng-show="controller.currentPoint">
         <div ng-click="controller.closePoint()" class="point_close">x</div>
         <form class="comment_form">
@@ -80,7 +84,7 @@
               <span class="news_user">Пользователь <span class="news_user_name">{{item.user.name}}</span></span>
 
               <div class="news_text" ng-init="type = wordForPointType(item.point.point_type)"> Добавил точку
-                <span class="news_point_name" ng-click="controller.setCenter(item.point.lat,item.point.lng,item.point.id)">{{item.point.name}}</span>
+                <span scroll-to="map_area" container-id="map_container" duration="500" callback-after="controller.setCenter(item.point.lat,item.point.lng,item.point.id)" class="news_point_name">{{item.point.name}}</span>
               </div>
 
               <div ng-class="news.onlyMy?'news_bottom':''">
