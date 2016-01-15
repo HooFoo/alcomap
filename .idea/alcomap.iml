@@ -123,8 +123,8 @@
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
       <envs>
-        <env name="RAILS_ENV" value="production" />
         <env name="SECRET_KEY_BASE" value="cf7e3ef089b2b914bf82e4dfefef8b33b102f3154f3238d43bfb811730f58094f89a262e826a990c9f38f6bc1a81fe68a84c28b2ba098d4ab1dd348cf223985f" />
+        <env name="RAILS_ENV" value="development" />
       </envs>
       <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
       <EXTENSION ID="JRubyRunConfigurationExtension" NailgunExecEnabled="false" />
