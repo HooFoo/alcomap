@@ -184,7 +184,17 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
         $this.openedInfos.onClose();
         closeOther(undefined, undefined);
     };
-
+    this.addUserLocation = function()
+    {
+        Point.new(extractPoint({
+            lat: USER_POSITION.lat,
+            lng: USER_POSITION.lng,
+            name: "Готов к общению!",
+            point_type: "user",
+        }), function (result) {
+            var marker = buildMarker(result);
+        });
+    };
     this.addPoint = function () {
         if ($this.isEditing) {
             var point = Point.edit($scope.point.id, extractPoint($scope.point), function (result) {
@@ -295,6 +305,10 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
         gmap.setZoom(14);
         if (point_id)
             $this.setPointCurrent(point_id);
+    };
+    this.activateChat = function(name)
+    {
+        ControllersProvider.chat.activateWithName(name);
     };
     var init = function () {
         EventTarget.apply($this);

@@ -22,6 +22,6 @@ class User < ActiveRecord::Base
   end
 
   def online?
-    updated_at < 20.seconds
+    updated_at >= 20.seconds.ago
   end
 end

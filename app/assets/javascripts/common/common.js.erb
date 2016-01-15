@@ -6,6 +6,7 @@ function asset_path(name) {
     assets = {
         'bottle.png': '<%= asset_path "bottle.png" %>',
         'Alien.png': '<%= asset_path "Alien.png" %>',
+        'Alien_other.png': '<%= asset_path "Alien_other.png" %>',
         'drinks.png': '<%= asset_path "drinks.png" %>',
         'new.png': '<%= asset_path "new.png" %>',
         'info.html': '<%= asset_path "info.html" %>',
@@ -18,7 +19,7 @@ function asset_path(name) {
     };
     return assets[name]||'none';
 }
-var POINT_TYPES ={shop:'shop',bar:'bar',event:'marker',message:'message'};
+var POINT_TYPES ={shop:'shop',bar:'bar',event:'marker',message:'message', user:'user'};
 
 function iconForPoint(type) {
     var icon = asset_path('bottle.png');
@@ -38,6 +39,11 @@ function iconForPoint(type) {
         case POINT_TYPES.bar:
         {
             icon = asset_path('drinks.png');
+            break;
+        }
+        case POINT_TYPES.user:
+        {
+            icon = asset_path('Alien_other.png');
             break;
         }
     }
@@ -65,6 +71,7 @@ wordForPointType = function(type)
         case "marker": return "событие";
         case "shop": return "магазин";
         case "bar": return "бар";
+        case "user": return 'пользователь';
     }
 };
 

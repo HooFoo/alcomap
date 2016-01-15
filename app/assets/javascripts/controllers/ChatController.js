@@ -37,9 +37,7 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
                 });
             }
         });
-        User.online_count(function (result) {
-            $this.online = result.data.value;
-        });
+
         if ($this.messages)
             $this.lastUpdate = $this.messages[$this.messages.length - 1].id;
         setTimeout($this.update, 2500);
@@ -58,6 +56,20 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
         $this.chatMessage = name + ", ";
         $('input.chat_msg_box').focus();
     };
+    this.updateUserCount = function()
+    {
+        User.online_count(function (result) {
+            $this.online = result.data.value;
+        });
+        setTimeout($this.updateUserCount,10000);
+    };
+    this.activateWithName = function(name)
+    {
+        $this.enabled = false;
+        this.enable();
+        this.chatMessage = name + ", ";
+        $('input.chat_msg_box').focus();
+    };
     var init = function () {
         ControllersProvider.chat = $this;
         EventTarget.apply($this);
@@ -72,7 +84,7 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
                 $this.fire('messagesloaded')
             }, 2000)
         });
-
+        $this.updateUserCount();
     };
     var delayedScroll = function () {
         setTimeout(function () {

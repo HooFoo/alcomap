@@ -197,7 +197,7 @@ a:hover {
   background-color:rgba(249, 249, 249, 0.7) ;
 }
 @media (min-width: 992px) {
-  .half_btn {
+  .half_btn,.dn_btn {
     display: none !important;
   }
 }
@@ -631,6 +631,15 @@ div.dropdown.ib {
   background-size: contain;
   right: 8px;
 }
+.icon_user {
+  background-image: asset_url('Alien_other.png');
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  opacity: 0.7;
+  background-size: contain;
+  right: 8px;
+}
 
 .cluster {
   background-size: contain;
@@ -765,4 +774,9 @@ div.dropdown.ib {
 .menu_entry > img
 {
   max-width: 250px;
+}
+.user_chat_link
+{
+  font-size: 20px;
+  font-weight: bolder;
 }
