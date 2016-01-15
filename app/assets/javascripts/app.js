@@ -113,6 +113,7 @@ app.factory('gmap', function () {
     clusterers[POINT_TYPES.bar] = mcFactory(POINT_TYPES.bar);
     clusterers[POINT_TYPES.message] = mcFactory(POINT_TYPES.message);
     clusterers[POINT_TYPES.event] = mcFactory(POINT_TYPES.event);
+    clusterers[POINT_TYPES.user] = mcFactory(POINT_TYPES.user);
 
 
     map.addMarker = function (marker, type) {
@@ -126,6 +127,7 @@ app.factory('gmap', function () {
         clusterers[POINT_TYPES.bar].clearMarkers();
         clusterers[POINT_TYPES.message].clearMarkers();
         clusterers[POINT_TYPES.event].clearMarkers();
+        clusterers[POINT_TYPES.user].clearMarkers();
     };
     return map;
 });

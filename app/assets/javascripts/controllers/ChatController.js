@@ -25,6 +25,10 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
                         var audio = new Audio(asset_path('alert.mp3'));
                         audio.volume = 0.5;
                         audio.play();
+                        new Notification("Кто-то позвал вас на алкокарте!",{
+                            body : msg.message,
+                            icon : asset_path('message_notify.jpg')
+                        });
                         msg.marked = true;
                     }
                     msg.message = $this.prepareMessage(msg.message);
@@ -33,9 +37,7 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
                 });
             }
         });
-        User.online_count(function (result) {
-            $this.online = result.data.value;
-        });
+
         if ($this.messages)
             $this.lastUpdate = $this.messages[$this.messages.length - 1].id;
         setTimeout($this.update, 2500);
@@ -54,6 +56,20 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
         $this.chatMessage = name + ", ";
         $('input.chat_msg_box').focus();
     };
+    this.updateUserCount = function()
+    {
+        User.online_count(function (result) {
+            $this.online = result.data.value;
+        });
+        setTimeout($this.updateUserCount,10000);
+    };
+    this.activateWithName = function(name)
+    {
+        $this.enabled = false;
+        this.enable();
+        this.chatMessage = name + ", ";
+        $('input.chat_msg_box').focus();
+    };
     var init = function () {
         ControllersProvider.chat = $this;
         EventTarget.apply($this);
@@ -68,7 +84,7 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
                 $this.fire('messagesloaded')
             }, 2000)
         });
-
+        $this.updateUserCount();
     };
     var delayedScroll = function () {
         setTimeout(function () {
