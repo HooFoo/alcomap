@@ -1,5 +1,5 @@
 /**
- * Created by Геннадий on 18.09.2015.
+ * Created by пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ on 18.09.2015.
  */
 function NewsController(News, $scope, ControllersProvider) {
     var $this = this;
