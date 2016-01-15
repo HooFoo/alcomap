@@ -4117,21 +4117,22 @@ div.dropdown.ib {
   height: 20px;
   padding-top: 20px;
   transform: translateY(-20px);
-  transition: height 1s ease;
+  -webkit-transform: translateY(-20px);
+  transition: height 1s;
   overflow: hidden;
 }
 
-/* line 770, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 771, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .menu_entry:hover {
   height: auto;
 }
 
-/* line 774, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 775, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .menu_entry > img {
   max-width: 250px;
 }
 
-/* line 778, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
+/* line 779, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 .user_chat_link {
   font-size: 20px;
   font-weight: bolder;

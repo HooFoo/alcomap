@@ -749,6 +749,7 @@ div.dropdown.ib {
   border-radius: 2px;
   z-index:3;
   display: flex;
+  display: -webkit-flex;
   padding: 5px;
 }
 #buttons > div
@@ -764,7 +765,8 @@ div.dropdown.ib {
   height: 20px;
   padding-top: 20px;
   transform: translateY(-20px);
-  transition: height 1s ease;
+  -webkit-transform: translateY(-20px);
+  transition: height 1s;
   overflow: hidden;
 }
 .menu_entry:hover

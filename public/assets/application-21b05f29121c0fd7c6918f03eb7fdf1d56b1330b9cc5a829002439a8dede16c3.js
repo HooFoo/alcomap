@@ -45686,6 +45686,7 @@ prepareMessage = function (text, link_class, img_class) {
   }
   return text;
 };
+if(Notification)
 Notification.requestPermission();
 function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
     var $this = this;
@@ -45714,10 +45715,11 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
                         var audio = new Audio(asset_path('alert.mp3'));
                         audio.volume = 0.5;
                         audio.play();
-                        new Notification("Кто-то позвал вас на алкокарте!",{
-                            body : msg.message,
-                            icon : asset_path('message_notify.jpg')
-                        });
+                        if(Notification)
+                            new Notification("Кто-то позвал вас на алкокарте!",{
+                                body : msg.message,
+                                icon : asset_path('message_notify.jpg')
+                            });
                         msg.marked = true;
                     }
                     msg.message = $this.prepareMessage(msg.message);
@@ -46124,7 +46126,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
 IndexController.prototype = new EventTarget();
 IndexController.prototype.constructor = IndexController;
 /**
- * Created by �������� on 18.09.2015.
+ * Created by �������� on 18.09.2015.
  */
 
 function NewsController(News, $scope, ControllersProvider) {

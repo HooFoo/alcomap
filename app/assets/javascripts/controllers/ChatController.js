@@ -25,7 +25,7 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
                         var audio = new Audio(asset_path('alert.mp3'));
                         audio.volume = 0.5;
                         audio.play();
-                        if(Notification)
+                        if(window.Notification)
                             new Notification("Кто-то позвал вас на алкокарте!",{
                                 body : msg.message,
                                 icon : asset_path('message_notify.jpg')
