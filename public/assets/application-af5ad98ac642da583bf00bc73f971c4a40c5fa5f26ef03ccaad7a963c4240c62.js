@@ -15506,1002 +15506,6 @@ if (typeof jQuery === 'undefined') {
     });
   }
 }.call(this));
-(function() {
-  this.Gmaps = {
-    build: function(type, options) {
-      var model;
-      if (options == null) {
-        options = {};
-      }
-      model = _.isFunction(options.handler) ? options.handler : Gmaps.Objects.Handler;
-      return new model(type, options);
-    },
-    Builders: {},
-    Objects: {},
-    Google: {
-      Objects: {},
-      Builders: {}
-    }
-  };
-
-}).call(this);
-(function() {
-  var moduleKeywords,
-    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
-
-  moduleKeywords = ['extended', 'included'];
-
-  this.Gmaps.Base = (function() {
-    function Base() {}
-
-    Base.extend = function(obj) {
-      var key, ref, value;
-      for (key in obj) {
-        value = obj[key];
-        if (indexOf.call(moduleKeywords, key) < 0) {
-          this[key] = value;
-        }
-      }
-      if ((ref = obj.extended) != null) {
-        ref.apply(this);
-      }
-      return this;
-    };
-
-    Base.include = function(obj) {
-      var key, ref, value;
-      for (key in obj) {
-        value = obj[key];
-        if (indexOf.call(moduleKeywords, key) < 0) {
-          this.prototype[key] = value;
-        }
-      }
-      if ((ref = obj.included) != null) {
-        ref.apply(this);
-      }
-      return this;
-    };
-
-    return Base;
-
-  })();
-
-}).call(this);
-(function() {
-  this.Gmaps.Objects.BaseBuilder = (function() {
-    function BaseBuilder() {}
-
-    BaseBuilder.prototype.build = function() {
-      return new (this.model_class())(this.serviceObject);
-    };
-
-    BaseBuilder.prototype.before_init = function() {};
-
-    BaseBuilder.prototype.after_init = function() {};
-
-    BaseBuilder.prototype.addListener = function(action, fn) {
-      return this.primitives().addListener(this.getServiceObject(), action, fn);
-    };
-
-    BaseBuilder.prototype.getServiceObject = function() {
-      return this.serviceObject;
-    };
-
-    BaseBuilder.prototype.primitives = function() {
-      return this.constructor.PRIMITIVES;
-    };
-
-    BaseBuilder.prototype.model_class = function() {
-      return this.constructor.OBJECT;
-    };
-
-    return BaseBuilder;
-
-  })();
-
-}).call(this);
-(function() {
-  this.Gmaps.Objects.Builders = function(builderClass, objectClass, primitivesProvider) {
-    return {
-      build: function(args, provider_options, internal_options) {
-        var builder;
-        objectClass.PRIMITIVES = primitivesProvider;
-        builderClass.OBJECT = objectClass;
-        builderClass.PRIMITIVES = primitivesProvider;
-        builder = new builderClass(args, provider_options, internal_options);
-        return builder.build();
-      }
-    };
-  };
-
-}).call(this);
-(function() {
-  this.Gmaps.Objects.Handler = (function() {
-    function Handler(type, options) {
-      this.type = type;
-      if (options == null) {
-        options = {};
-      }
-      this.setPrimitives(options);
-      this.setOptions(options);
-      this._cacheAllBuilders();
-      this.resetBounds();
-    }
-
-    Handler.prototype.buildMap = function(options, onMapLoad) {
-      if (onMapLoad == null) {
-        onMapLoad = function() {};
-      }
-      return this.map = this._builder('Map').build(options, (function(_this) {
-        return function() {
-          _this._createClusterer();
-          return onMapLoad();
-        };
-      })(this));
-    };
-
-    Handler.prototype.addMarkers = function(markers_data, provider_options) {
-      return _.map(markers_data, (function(_this) {
-        return function(marker_data) {
-          return _this.addMarker(marker_data, provider_options);
-        };
-      })(this));
-    };
-
-    Handler.prototype.addMarker = function(marker_data, provider_options) {
-      var marker;
-      marker = this._builder('Marker').build(marker_data, provider_options, this.marker_options);
-      marker.setMap(this.getMap());
-      this.clusterer.addMarker(marker);
-      return marker;
-    };
-
-    Handler.prototype.addCircles = function(circles_data, provider_options) {
-      return _.map(circles_data, (function(_this) {
-        return function(circle_data) {
-          return _this.addCircle(circle_data, provider_options);
-        };
-      })(this));
-    };
-
-    Handler.prototype.addCircle = function(circle_data, provider_options) {
-      return this._addResource('circle', circle_data, provider_options);
-    };
-
-    Handler.prototype.addPolylines = function(polylines_data, provider_options) {
-      return _.map(polylines_data, (function(_this) {
-        return function(polyline_data) {
-          return _this.addPolyline(polyline_data, provider_options);
-        };
-      })(this));
-    };
-
-    Handler.prototype.addPolyline = function(polyline_data, provider_options) {
-      return this._addResource('polyline', polyline_data, provider_options);
-    };
-
-    Handler.prototype.addPolygons = function(polygons_data, provider_options) {
-      return _.map(polygons_data, (function(_this) {
-        return function(polygon_data) {
-          return _this.addPolygon(polygon_data, provider_options);
-        };
-      })(this));
-    };
-
-    Handler.prototype.addPolygon = function(polygon_data, provider_options) {
-      return this._addResource('polygon', polygon_data, provider_options);
-    };
-
-    Handler.prototype.addKmls = function(kmls_data, provider_options) {
-      return _.map(kmls_data, (function(_this) {
-        return function(kml_data) {
-          return _this.addKml(kml_data, provider_options);
-        };
-      })(this));
-    };
-
-    Handler.prototype.addKml = function(kml_data, provider_options) {
-      return this._addResource('kml', kml_data, provider_options);
-    };
-
-    Handler.prototype.removeMarkers = function(gem_markers) {
-      return _.map(gem_markers, (function(_this) {
-        return function(gem_marker) {
-          return _this.removeMarker(gem_marker);
-        };
-      })(this));
-    };
-
-    Handler.prototype.removeMarker = function(gem_marker) {
-      gem_marker.clear();
-      return this.clusterer.removeMarker(gem_marker);
-    };
-
-    Handler.prototype.fitMapToBounds = function() {
-      return this.map.fitToBounds(this.bounds.getServiceObject());
-    };
-
-    Handler.prototype.getMap = function() {
-      return this.map.getServiceObject();
-    };
-
-    Handler.prototype.setOptions = function(options) {
-      this.marker_options = _.extend(this._default_marker_options(), options.markers);
-      this.builders = _.extend(this._default_builders(), options.builders);
-      return this.models = _.extend(this._default_models(), options.models);
-    };
-
-    Handler.prototype.resetBounds = function() {
-      return this.bounds = this._builder('Bound').build();
-    };
-
-    Handler.prototype.setPrimitives = function(options) {
-      return this.primitives = options.primitives === void 0 ? this._rootModule().Primitives() : _.isFunction(options.primitives) ? options.primitives() : options.primitives;
-    };
-
-    Handler.prototype.currentInfowindow = function() {
-      return this.builders.Marker.CURRENT_INFOWINDOW;
-    };
-
-    Handler.prototype._addResource = function(resource_name, resource_data, provider_options) {
-      var resource;
-      resource = this._builder(resource_name).build(resource_data, provider_options);
-      resource.setMap(this.getMap());
-      return resource;
-    };
-
-    Handler.prototype._cacheAllBuilders = function() {
-      var that;
-      that = this;
-      return _.each(['Bound', 'Circle', 'Clusterer', 'Kml', 'Map', 'Marker', 'Polygon', 'Polyline'], function(kind) {
-        return that._builder(kind);
-      });
-    };
-
-    Handler.prototype._clusterize = function() {
-      return _.isObject(this.marker_options.clusterer);
-    };
-
-    Handler.prototype._createClusterer = function() {
-      return this.clusterer = this._builder('Clusterer').build({
-        map: this.getMap()
-      }, this.marker_options.clusterer);
-    };
-
-    Handler.prototype._default_marker_options = function() {
-      return _.clone({
-        singleInfowindow: true,
-        maxRandomDistance: 0,
-        clusterer: {
-          maxZoom: 5,
-          gridSize: 50
-        }
-      });
-    };
-
-    Handler.prototype._builder = function(name) {
-      var name1;
-      name = this._capitalize(name);
-      if (this[name1 = "__builder" + name] == null) {
-        this[name1] = Gmaps.Objects.Builders(this.builders[name], this.models[name], this.primitives);
-      }
-      return this["__builder" + name];
-    };
-
-    Handler.prototype._default_models = function() {
-      var models;
-      models = _.clone(this._rootModule().Objects);
-      if (this._clusterize()) {
-        return models;
-      } else {
-        models.Clusterer = Gmaps.Objects.NullClusterer;
-        return models;
-      }
-    };
-
-    Handler.prototype._capitalize = function(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    };
-
-    Handler.prototype._default_builders = function() {
-      return _.clone(this._rootModule().Builders);
-    };
-
-    Handler.prototype._rootModule = function() {
-      if (this.__rootModule == null) {
-        this.__rootModule = Gmaps[this.type];
-      }
-      return this.__rootModule;
-    };
-
-    return Handler;
-
-  })();
-
-}).call(this);
-(function() {
-  this.Gmaps.Objects.NullClusterer = (function() {
-    function NullClusterer() {}
-
-    NullClusterer.prototype.addMarkers = function() {};
-
-    NullClusterer.prototype.addMarker = function() {};
-
-    NullClusterer.prototype.clear = function() {};
-
-    NullClusterer.prototype.removeMarker = function() {};
-
-    return NullClusterer;
-
-  })();
-
-}).call(this);
-(function() {
-  this.Gmaps.Google.Objects.Common = {
-    getServiceObject: function() {
-      return this.serviceObject;
-    },
-    setMap: function(map) {
-      return this.getServiceObject().setMap(map);
-    },
-    clear: function() {
-      return this.getServiceObject().setMap(null);
-    },
-    show: function() {
-      return this.getServiceObject().setVisible(true);
-    },
-    hide: function() {
-      return this.getServiceObject().setVisible(false);
-    },
-    isVisible: function() {
-      return this.getServiceObject().getVisible();
-    },
-    primitives: function() {
-      return this.constructor.PRIMITIVES;
-    }
-  };
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Builders.Bound = (function(superClass) {
-    extend(Bound, superClass);
-
-    function Bound(options) {
-      this.before_init();
-      this.serviceObject = new (this.primitives().latLngBounds);
-      this.after_init();
-    }
-
-    return Bound;
-
-  })(Gmaps.Objects.BaseBuilder);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Builders.Circle = (function(superClass) {
-    extend(Circle, superClass);
-
-    function Circle(args, provider_options) {
-      this.args = args;
-      this.provider_options = provider_options != null ? provider_options : {};
-      this.before_init();
-      this.serviceObject = this.create_circle();
-      this.after_init();
-    }
-
-    Circle.prototype.create_circle = function() {
-      return new (this.primitives().circle)(this.circle_options());
-    };
-
-    Circle.prototype.circle_options = function() {
-      var base_options;
-      base_options = {
-        center: new (this.primitives().latLng)(this.args.lat, this.args.lng),
-        radius: this.args.radius
-      };
-      return _.defaults(base_options, this.provider_options);
-    };
-
-    return Circle;
-
-  })(Gmaps.Objects.BaseBuilder);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Builders.Clusterer = (function(superClass) {
-    extend(Clusterer, superClass);
-
-    function Clusterer(args, options) {
-      this.args = args;
-      this.options = options;
-      this.before_init();
-      this.serviceObject = new (this.primitives().clusterer)(this.args.map, [], this.options);
-      this.after_init();
-    }
-
-    return Clusterer;
-
-  })(Gmaps.Objects.BaseBuilder);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Builders.Kml = (function(superClass) {
-    extend(Kml, superClass);
-
-    function Kml(args, provider_options) {
-      this.args = args;
-      this.provider_options = provider_options != null ? provider_options : {};
-      this.before_init();
-      this.serviceObject = this.create_kml();
-      this.after_init();
-    }
-
-    Kml.prototype.create_kml = function() {
-      return new (this.primitives().kml)(this.args.url, this.kml_options());
-    };
-
-    Kml.prototype.kml_options = function() {
-      var base_options;
-      base_options = {};
-      return _.defaults(base_options, this.provider_options);
-    };
-
-    return Kml;
-
-  })(Gmaps.Objects.BaseBuilder);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Builders.Map = (function(superClass) {
-    extend(Map, superClass);
-
-    function Map(options, onMapLoad) {
-      var provider_options;
-      this.before_init();
-      provider_options = _.extend(this.default_options(), options.provider);
-      this.internal_options = options.internal;
-      this.serviceObject = new (this.primitives().map)(document.getElementById(this.internal_options.id), provider_options);
-      this.on_map_load(onMapLoad);
-      this.after_init();
-    }
-
-    Map.prototype.build = function() {
-      return new (this.model_class())(this.serviceObject, this.primitives());
-    };
-
-    Map.prototype.on_map_load = function(onMapLoad) {
-      return this.primitives().addListenerOnce(this.serviceObject, 'idle', onMapLoad);
-    };
-
-    Map.prototype.default_options = function() {
-      return {
-        mapTypeId: this.primitives().mapTypes('ROADMAP'),
-        center: new (this.primitives().latLng)(0, 0),
-        zoom: 8
-      };
-    };
-
-    return Map;
-
-  })(Gmaps.Objects.BaseBuilder);
-
-}).call(this);
-(function() {
-  var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Builders.Marker = (function(superClass) {
-    extend(Marker, superClass);
-
-    Marker.CURRENT_INFOWINDOW = void 0;
-
-    Marker.CACHE_STORE = {};
-
-    function Marker(args, provider_options, internal_options) {
-      this.args = args;
-      this.provider_options = provider_options != null ? provider_options : {};
-      this.internal_options = internal_options != null ? internal_options : {};
-      this.infowindow_binding = bind(this.infowindow_binding, this);
-      this.before_init();
-      this.create_marker();
-      this.create_infowindow_on_click();
-      this.after_init();
-    }
-
-    Marker.prototype.build = function() {
-      return this.marker = new (this.model_class())(this.serviceObject);
-    };
-
-    Marker.prototype.create_marker = function() {
-      return this.serviceObject = new (this.primitives().marker)(this.marker_options());
-    };
-
-    Marker.prototype.create_infowindow = function() {
-      if (!_.isString(this.args.infowindow)) {
-        return null;
-      }
-      return new (this.primitives().infowindow)({
-        content: this.args.infowindow
-      });
-    };
-
-    Marker.prototype.marker_options = function() {
-      var base_options, coords;
-      coords = this._randomized_coordinates();
-      base_options = {
-        title: this.args.marker_title,
-        position: new (this.primitives().latLng)(coords[0], coords[1]),
-        icon: this._get_picture('picture'),
-        shadow: this._get_picture('shadow')
-      };
-      return _.extend(this.provider_options, base_options);
-    };
-
-    Marker.prototype.create_infowindow_on_click = function() {
-      return this.addListener('click', this.infowindow_binding);
-    };
-
-    Marker.prototype.infowindow_binding = function() {
-      var base;
-      if (this._should_close_infowindow()) {
-        this.constructor.CURRENT_INFOWINDOW.close();
-      }
-      this.marker.panTo();
-      if (this.infowindow == null) {
-        this.infowindow = this.create_infowindow();
-      }
-      if (this.infowindow == null) {
-        return;
-      }
-      this.infowindow.open(this.getServiceObject().getMap(), this.getServiceObject());
-      if ((base = this.marker).infowindow == null) {
-        base.infowindow = this.infowindow;
-      }
-      return this.constructor.CURRENT_INFOWINDOW = this.infowindow;
-    };
-
-    Marker.prototype._get_picture = function(picture_name) {
-      if (!_.isObject(this.args[picture_name]) || !_.isString(this.args[picture_name].url)) {
-        return null;
-      }
-      return this._create_or_retrieve_image(this._picture_args(picture_name));
-    };
-
-    Marker.prototype._create_or_retrieve_image = function(picture_args) {
-      if (this.constructor.CACHE_STORE[picture_args.url] === void 0) {
-        this.constructor.CACHE_STORE[picture_args.url] = new (this.primitives().markerImage)(picture_args.url, picture_args.size, picture_args.origin, picture_args.anchor, picture_args.scaledSize);
-      }
-      return this.constructor.CACHE_STORE[picture_args.url];
-    };
-
-    Marker.prototype._picture_args = function(picture_name) {
-      return {
-        url: this.args[picture_name].url,
-        anchor: this._createImageAnchorPosition(this.args[picture_name].anchor),
-        size: new (this.primitives().size)(this.args[picture_name].width, this.args[picture_name].height),
-        scaledSize: null,
-        origin: null
-      };
-    };
-
-    Marker.prototype._createImageAnchorPosition = function(anchorLocation) {
-      if (!_.isArray(anchorLocation)) {
-        return null;
-      }
-      return new (this.primitives().point)(anchorLocation[0], anchorLocation[1]);
-    };
-
-    Marker.prototype._should_close_infowindow = function() {
-      return this.internal_options.singleInfowindow && (this.constructor.CURRENT_INFOWINDOW != null);
-    };
-
-    Marker.prototype._randomized_coordinates = function() {
-      var Lat, Lng, dx, dy, random;
-      if (!_.isNumber(this.internal_options.maxRandomDistance)) {
-        return [this.args.lat, this.args.lng];
-      }
-      random = function() {
-        return Math.random() * 2 - 1;
-      };
-      dx = this.internal_options.maxRandomDistance * random();
-      dy = this.internal_options.maxRandomDistance * random();
-      Lat = parseFloat(this.args.lat) + (180 / Math.PI) * (dy / 6378137);
-      Lng = parseFloat(this.args.lng) + (90 / Math.PI) * (dx / 6378137) / Math.cos(this.args.lat);
-      return [Lat, Lng];
-    };
-
-    return Marker;
-
-  })(Gmaps.Objects.BaseBuilder);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Builders.Polygon = (function(superClass) {
-    extend(Polygon, superClass);
-
-    function Polygon(args, provider_options) {
-      this.args = args;
-      this.provider_options = provider_options != null ? provider_options : {};
-      this.before_init();
-      this.serviceObject = this.create_polygon();
-      this.after_init();
-    }
-
-    Polygon.prototype.create_polygon = function() {
-      return new (this.primitives().polygon)(this.polygon_options());
-    };
-
-    Polygon.prototype.polygon_options = function() {
-      var base_options;
-      base_options = {
-        path: this._build_path()
-      };
-      return _.defaults(base_options, this.provider_options);
-    };
-
-    Polygon.prototype._build_path = function() {
-      return _.map(this.args, (function(_this) {
-        return function(arg) {
-          return new (_this.primitives().latLng)(arg.lat, arg.lng);
-        };
-      })(this));
-    };
-
-    return Polygon;
-
-  })(Gmaps.Objects.BaseBuilder);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Builders.Polyline = (function(superClass) {
-    extend(Polyline, superClass);
-
-    function Polyline(args, provider_options) {
-      this.args = args;
-      this.provider_options = provider_options != null ? provider_options : {};
-      this.before_init();
-      this.serviceObject = this.create_polyline();
-      this.after_init();
-    }
-
-    Polyline.prototype.create_polyline = function() {
-      return new (this.primitives().polyline)(this.polyline_options());
-    };
-
-    Polyline.prototype.polyline_options = function() {
-      var base_options;
-      base_options = {
-        path: this._build_path()
-      };
-      return _.defaults(base_options, this.provider_options);
-    };
-
-    Polyline.prototype._build_path = function() {
-      return _.map(this.args, (function(_this) {
-        return function(arg) {
-          return new (_this.primitives().latLng)(arg.lat, arg.lng);
-        };
-      })(this));
-    };
-
-    return Polyline;
-
-  })(Gmaps.Objects.BaseBuilder);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Objects.Bound = (function(superClass) {
-    extend(Bound, superClass);
-
-    Bound.include(Gmaps.Google.Objects.Common);
-
-    function Bound(serviceObject) {
-      this.serviceObject = serviceObject;
-    }
-
-    Bound.prototype.extendWith = function(array_or_object) {
-      var collection;
-      collection = _.isArray(array_or_object) ? array_or_object : [array_or_object];
-      return _.each(collection, (function(_this) {
-        return function(object) {
-          return object.updateBounds(_this);
-        };
-      })(this));
-    };
-
-    Bound.prototype.extend = function(value) {
-      return this.getServiceObject().extend(this.primitives().latLngFromPosition(value));
-    };
-
-    return Bound;
-
-  })(Gmaps.Base);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Objects.Circle = (function(superClass) {
-    extend(Circle, superClass);
-
-    Circle.include(Gmaps.Google.Objects.Common);
-
-    function Circle(serviceObject) {
-      this.serviceObject = serviceObject;
-    }
-
-    Circle.prototype.updateBounds = function(bounds) {
-      bounds.extend(this.getServiceObject().getBounds().getNorthEast());
-      return bounds.extend(this.getServiceObject().getBounds().getSouthWest());
-    };
-
-    return Circle;
-
-  })(Gmaps.Base);
-
-}).call(this);
-(function() {
-  this.Gmaps.Google.Objects.Clusterer = (function() {
-    function Clusterer(serviceObject) {
-      this.serviceObject = serviceObject;
-    }
-
-    Clusterer.prototype.addMarkers = function(markers) {
-      return _.each(markers, (function(_this) {
-        return function(marker) {
-          return _this.addMarker(marker);
-        };
-      })(this));
-    };
-
-    Clusterer.prototype.addMarker = function(marker) {
-      return this.getServiceObject().addMarker(marker.getServiceObject());
-    };
-
-    Clusterer.prototype.clear = function() {
-      return this.getServiceObject().clearMarkers();
-    };
-
-    Clusterer.prototype.removeMarker = function(marker) {
-      return this.getServiceObject().removeMarker(marker.getServiceObject());
-    };
-
-    Clusterer.prototype.getServiceObject = function() {
-      return this.serviceObject;
-    };
-
-    return Clusterer;
-
-  })();
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Objects.Kml = (function(superClass) {
-    extend(Kml, superClass);
-
-    function Kml(serviceObject) {
-      this.serviceObject = serviceObject;
-    }
-
-    Kml.prototype.updateBounds = function(bounds) {};
-
-    Kml.prototype.setMap = function(map) {
-      return this.getServiceObject().setMap(map);
-    };
-
-    Kml.prototype.getServiceObject = function() {
-      return this.serviceObject;
-    };
-
-    Kml.prototype.primitives = function() {
-      return this.constructor.PRIMITIVES;
-    };
-
-    return Kml;
-
-  })(Gmaps.Base);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Objects.Map = (function(superClass) {
-    extend(Map, superClass);
-
-    function Map(serviceObject) {
-      this.serviceObject = serviceObject;
-    }
-
-    Map.prototype.getServiceObject = function() {
-      return this.serviceObject;
-    };
-
-    Map.prototype.centerOn = function(position) {
-      return this.getServiceObject().setCenter(this.primitives().latLngFromPosition(position));
-    };
-
-    Map.prototype.fitToBounds = function(boundsObject) {
-      if (!boundsObject.isEmpty()) {
-        return this.getServiceObject().fitBounds(boundsObject);
-      }
-    };
-
-    Map.prototype.primitives = function() {
-      return this.constructor.PRIMITIVES;
-    };
-
-    return Map;
-
-  })(Gmaps.Base);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Objects.Marker = (function(superClass) {
-    extend(Marker, superClass);
-
-    Marker.include(Gmaps.Google.Objects.Common);
-
-    function Marker(serviceObject) {
-      this.serviceObject = serviceObject;
-    }
-
-    Marker.prototype.updateBounds = function(bounds) {
-      return bounds.extend(this.getServiceObject().position);
-    };
-
-    Marker.prototype.panTo = function() {
-      return this.getServiceObject().getMap().panTo(this.getServiceObject().getPosition());
-    };
-
-    return Marker;
-
-  })(Gmaps.Base);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Objects.Polygon = (function(superClass) {
-    extend(Polygon, superClass);
-
-    Polygon.include(Gmaps.Google.Objects.Common);
-
-    function Polygon(serviceObject) {
-      this.serviceObject = serviceObject;
-    }
-
-    Polygon.prototype.updateBounds = function(bounds) {
-      var i, len, ll, ref, results;
-      ref = this.serviceObject.getPath().getArray();
-      results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        ll = ref[i];
-        results.push(bounds.extend(ll));
-      }
-      return results;
-    };
-
-    return Polygon;
-
-  })(Gmaps.Base);
-
-}).call(this);
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  this.Gmaps.Google.Objects.Polyline = (function(superClass) {
-    extend(Polyline, superClass);
-
-    Polyline.include(Gmaps.Google.Objects.Common);
-
-    function Polyline(serviceObject) {
-      this.serviceObject = serviceObject;
-    }
-
-    Polyline.prototype.updateBounds = function(bounds) {
-      var i, len, ll, ref, results;
-      ref = this.serviceObject.getPath().getArray();
-      results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        ll = ref[i];
-        results.push(bounds.extend(ll));
-      }
-      return results;
-    };
-
-    return Polyline;
-
-  })(Gmaps.Base);
-
-}).call(this);
-(function() {
-  this.Gmaps.Google.Primitives = function() {
-    var factory;
-    factory = {
-      point: google.maps.Point,
-      size: google.maps.Size,
-      circle: google.maps.Circle,
-      latLng: google.maps.LatLng,
-      latLngBounds: google.maps.LatLngBounds,
-      map: google.maps.Map,
-      mapTypez: google.maps.MapTypeId,
-      markerImage: google.maps.MarkerImage,
-      marker: google.maps.Marker,
-      infowindow: google.maps.InfoWindow,
-      listener: google.maps.event.addListener,
-      clusterer: MarkerClusterer,
-      listenerOnce: google.maps.event.addListenerOnce,
-      polyline: google.maps.Polyline,
-      polygon: google.maps.Polygon,
-      kml: google.maps.KmlLayer,
-      addListener: function(object, event_name, fn) {
-        return factory.listener(object, event_name, fn);
-      },
-      addListenerOnce: function(object, event_name, fn) {
-        return factory.listenerOnce(object, event_name, fn);
-      },
-      mapTypes: function(type) {
-        return factory.mapTypez[type];
-      },
-      latLngFromPosition: function(position) {
-        if (_.isArray(position)) {
-          return new factory.latLng(position[0], position[1]);
-        } else {
-          if (_.isNumber(position.lat) && _.isNumber(position.lng)) {
-            return new factory.latLng(position.lat, position.lng);
-          } else {
-            if (_.isFunction(position.getServiceObject)) {
-              return position.getServiceObject().getPosition();
-            } else {
-              return position;
-            }
-          }
-        }
-      }
-    };
-    return factory;
-  };
-
-}).call(this);
-(function() {
-
-
-}).call(this);
 (function(){var d=null;function e(a){return function(b){this[a]=b}}function h(a){return function(){return this[a]}}var j;
 function k(a,b,c){this.extend(k,google.maps.OverlayView);this.c=a;this.a=[];this.f=[];this.ca=[53,56,66,78,90];this.j=[];this.A=!1;c=c||{};this.g=c.gridSize||60;this.l=c.minimumClusterSize||2;this.J=c.maxZoom||d;this.j=c.styles||[];this.X=c.imagePath||this.Q;this.W=c.imageExtension||this.P;this.O=!0;if(c.zoomOnClick!=void 0)this.O=c.zoomOnClick;this.r=!1;if(c.averageCenter!=void 0)this.r=c.averageCenter;l(this);this.setMap(a);this.K=this.c.getZoom();var f=this;google.maps.event.addListener(this.c,
 "zoom_changed",function(){var a=f.c.getZoom();if(f.K!=a)f.K=a,f.m()});google.maps.event.addListener(this.c,"idle",function(){f.i()});b&&b.length&&this.C(b,!1)}j=k.prototype;j.Q="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m";j.P="png";j.extend=function(a,b){return function(a){for(var b in a.prototype)this.prototype[b]=a.prototype[b];return this}.apply(a,[b])};j.onAdd=function(){if(!this.A)this.A=!0,n(this)};j.draw=function(){};
@@ -46242,6 +45246,278 @@ angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
 
 
 })(window, window.angular);
+/*!
+ *	 Angular Smooth Scroll (ngSmoothScroll)
+ *	 Animates scrolling to elements, by David Oliveros.
+ *
+ *   Callback hooks contributed by Ben Armston https://github.com/benarmston
+ *	 Easing support contributed by Willem Liu. https://github.com/willemliu
+ *	 Easing functions forked from Gaëtan Renaudeau. https://gist.github.com/gre/1650294
+ *	 Infinite loop bugs in iOS and Chrome (when zoomed) by Alex Guzman. https://github.com/alexguzman
+ *	 Support for scrolling in custom containers by Joseph Matthias Goh. https://github.com/zephinzer
+ *	 Influenced by Chris Ferdinandi
+ *	 https://github.com/cferdinandi
+ *
+ *	 Version: 2.0.0
+ * 	 License: MIT
+ */
+
+
+(function () {
+	'use strict';
+
+	var module = angular.module('smoothScroll', []);
+
+
+	/**
+	 * Smooth scrolls the window/div to the provided element.
+	 *
+	 * 20150713 EDIT - zephinzer
+	 * 	Added new option - containerId to account for scrolling within a DIV
+	 */
+	var smoothScroll = function (element, options) {
+		options = options || {};
+
+		// Options
+		var duration = options.duration || 800,
+			offset = options.offset || 0,
+			easing = options.easing || 'easeInOutQuart',
+			callbackBefore = options.callbackBefore || function() {},
+			callbackAfter = options.callbackAfter || function() {},
+			container = document.getElementById(options.containerId) || null,
+			containerPresent = (container != undefined && container != null);
+
+		/**
+		 * Retrieve current location
+		 */
+		var getScrollLocation = function() {
+			if(containerPresent) {
+				return container.scrollTop;
+			} else {
+				if(window.pageYOffset) {
+					return window.pageYOffset;
+				} else {
+					return document.documentElement.scrollTop;
+				}
+			}
+		};
+
+		/**
+		 * Calculate easing pattern.
+		 *
+		 * 20150713 edit - zephinzer
+		 * - changed if-else to switch
+		 * @see http://archive.oreilly.com/pub/a/server-administration/excerpts/even-faster-websites/writing-efficient-javascript.html
+		 */
+		var getEasingPattern = function(type, time) {
+			switch(type) {
+				case 'easeInQuad': 		return time * time; // accelerating from zero velocity
+				case 'easeOutQuad': 	return time * (2 - time); // decelerating to zero velocity
+				case 'easeInOutQuad': 	return time < 0.5 ? 2 * time * time : -1 + (4 - 2 * time) * time; // acceleration until halfway, then deceleration
+				case 'easeInCubic': 	return time * time * time; // accelerating from zero velocity
+				case 'easeOutCubic': 	return (--time) * time * time + 1; // decelerating to zero velocity
+				case 'easeInOutCubic': 	return time < 0.5 ? 4 * time * time * time : (time - 1) * (2 * time - 2) * (2 * time - 2) + 1; // acceleration until halfway, then deceleration
+				case 'easeInQuart': 	return time * time * time * time; // accelerating from zero velocity
+				case 'easeOutQuart': 	return 1 - (--time) * time * time * time; // decelerating to zero velocity
+				case 'easeInOutQuart': 	return time < 0.5 ? 8 * time * time * time * time : 1 - 8 * (--time) * time * time * time; // acceleration until halfway, then deceleration
+				case 'easeInQuint': 	return time * time * time * time * time; // accelerating from zero velocity
+				case 'easeOutQuint': 	return 1 + (--time) * time * time * time * time; // decelerating to zero velocity
+				case 'easeInOutQuint': 	return time < 0.5 ? 16 * time * time * time * time * time : 1 + 16 * (--time) * time * time * time * time; // acceleration until halfway, then deceleration
+				default:				return time;
+			}
+		};
+
+		/**
+		 * Calculate how far to scroll
+		 */
+		var getEndLocation = function(element) {
+			var location = 0;
+			if (element.offsetParent) {
+				do {
+					location += element.offsetTop;
+					element = element.offsetParent;
+				} while (element);
+			}
+			location = Math.max(location - offset, 0);
+			return location;
+		};
+
+		// Initialize the whole thing
+		setTimeout( function() {
+			var currentLocation = null,
+				startLocation 	= getScrollLocation(),
+				endLocation 	= getEndLocation(element),
+				timeLapsed 		= 0,
+				distance 		= endLocation - startLocation,
+				percentage,
+				position,
+				scrollHeight,
+				internalHeight;
+
+			/**
+			 * Stop the scrolling animation when the anchor is reached (or at the top/bottom of the page)
+			 */
+			var stopAnimation = function () {
+				currentLocation = getScrollLocation();
+				if(containerPresent) {
+					scrollHeight = container.scrollHeight;
+					internalHeight = container.clientHeight + currentLocation;
+				} else {
+					scrollHeight = document.body.scrollheight;
+					internalHeight = window.innerHeight + currentLocation;
+				}
+
+				if (
+					( // condition 1
+						position == endLocation
+					) ||
+					( // condition 2
+						currentLocation == endLocation
+					) ||
+					( // condition 3
+						internalHeight >= scrollHeight
+					)
+				) { // stop
+					clearInterval(runAnimation);
+					callbackAfter(element);
+				}
+			};
+
+			/**
+			 * Scroll the page by an increment, and check if it's time to stop
+			 */
+			var animateScroll = function () {
+				timeLapsed += 16;
+				percentage = ( timeLapsed / duration );
+				percentage = ( percentage > 1 ) ? 1 : percentage;
+				position = startLocation + ( distance * getEasingPattern(easing, percentage) );
+				if(containerPresent) {
+					container.scrollTop = position;
+				} else {
+					window.scrollTo( 0, position );
+				}
+				stopAnimation();
+			};
+
+			callbackBefore(element);
+			var runAnimation = setInterval(animateScroll, 16);
+		}, 0);
+	};
+
+
+	// Expose the library in a factory
+	//
+	module.factory('smoothScroll', function() {
+		return smoothScroll;
+	});
+
+
+	/**
+	 * Scrolls the window to this element, optionally validating an expression
+	 *
+	 * 20150713 EDIT - zephinzer
+	 * 	Added containerId to attributes for smooth scrolling within a DIV
+	 */
+	module.directive('smoothScroll', ['smoothScroll', function(smoothScroll) {
+		return {
+			restrict: 'A',
+			scope: {
+				callbackBefore: '&',
+				callbackAfter: '&',
+			},
+			link: function($scope, $elem, $attrs) {
+				if ( typeof $attrs.scrollIf === 'undefined' || $attrs.scrollIf === 'true' ) {
+					setTimeout( function() {
+
+						var callbackBefore = function(element) {
+							if ( $attrs.callbackBefore ) {
+								var exprHandler = $scope.callbackBefore({ element: element });
+								if (typeof exprHandler === 'function') {
+									exprHandler(element);
+								}
+							}
+						};
+
+						var callbackAfter = function(element) {
+							if ( $attrs.callbackAfter ) {
+								var exprHandler = $scope.callbackAfter({ element: element });
+								if (typeof exprHandler === 'function') {
+									exprHandler(element);
+								}
+							}
+						};
+
+						smoothScroll($elem[0], {
+							duration: $attrs.duration,
+							offset: $attrs.offset,
+							easing: $attrs.easing,
+							callbackBefore: callbackBefore,
+							callbackAfter: callbackAfter,
+							containerId: $attrs.containerId
+						});
+					}, 0);
+				}
+			}
+		};
+	}]);
+
+
+	/**
+	 * Scrolls to a specified element ID when this element is clicked
+	 *
+	 * 20150713 EDIT - zephinzer
+	 * 	Added containerId to attributes for smooth scrolling within a DIV
+	 */
+	module.directive('scrollTo', ['smoothScroll', function(smoothScroll) {
+		return {
+			restrict: 'A',
+			scope: {
+				callbackBefore: '&',
+				callbackAfter: '&',
+			},
+			link: function($scope, $elem, $attrs) {
+				var targetElement;
+
+				$elem.on('click', function(e) {
+					e.preventDefault();
+
+					targetElement = document.getElementById($attrs.scrollTo);
+					if ( !targetElement ) return;
+
+					var callbackBefore = function(element) {
+						if ( $attrs.callbackBefore ) {
+							var exprHandler = $scope.callbackBefore({element: element});
+							if (typeof exprHandler === 'function') {
+								exprHandler(element);
+							}
+						}
+					};
+
+					var callbackAfter = function(element) {
+						if ( $attrs.callbackAfter ) {
+							var exprHandler = $scope.callbackAfter({element: element});
+							if (typeof exprHandler === 'function') {
+								exprHandler(element);
+							}
+						}
+					};
+
+					smoothScroll(targetElement, {
+						duration: $attrs.duration,
+						offset: $attrs.offset,
+						easing: $attrs.easing,
+						callbackBefore: callbackBefore,
+						callbackAfter: callbackAfter,
+						containerId: $attrs.containerId
+					});
+
+					return false;
+				});
+			}
+		};
+	}]);
+
+}());
 //Copyright (c) 2010 Nicholas C. Zakas. All rights reserved.
 //MIT License
 
@@ -46314,18 +45590,20 @@ function asset_path(name) {
     assets = {
         'bottle.png': '/assets/bottle-3c5f9a060846cc46bf30ecad99a07cc1a18859e7c7991b088012a30260b00f98.png',
         'Alien.png': '/assets/Alien-23ed7e3d380b6467322c6740d54438a490e06bf541fff229f22ea9dd712e3d5e.png',
+        'Alien_other.png': '/assets/Alien_other-0e6a626d2b0ebead17118faab81914952603f1c1e38220f7082238a7ab35321d.png',
         'drinks.png': '/assets/drinks-1e4e8c943d17f2157cc9114b30f8d9ffd3e939c113049b2ccb824e2ef4ed85f6.png',
         'new.png': '/assets/new-053de3583ab069972e53dc312d224551c69220594d140e5ee1c7e0974761c8f6.png',
-        'info.html': '/assets/info-8af46d4e9bebd0e76df611a9acfd43491c311106974755711454b31882565e75.html',
+        'info.html': '/assets/info-8d09fd75a5a888ef9cbc7198822e3c6b9f121b8b4d62e7b14b13be708ddaab19.html',
         'new_point.html': '/assets/new_point-80c7407027583ed10a02cbb3746e790fca97fc601e9cd9c2e49d99be7d215ac9.html',
         'send_message.png': '/assets/send_message-58fa0559f449b875d8e86490c748c2ce91c550b55ed3873ac7c5d4b6a67b1382.png',
         'event.png': '/assets/event-c4db32a00df3b3d4e9f4cb9eed09c3b90d8a4c9ea3abc25bf50002462cc08981.png',
         'message.png': '/assets/message-16587aba29954e736c2e04ada8098275194ed06fe71b930704e7673985d167cd.png',
-        'alert.mp3': '/assets/alert-9bdc9c0c1c74c3b1f605c61def3013273a78c0b62e8cc12ce9268da4c8bcf478.mp3'
+        'alert.mp3': '/assets/alert-9bdc9c0c1c74c3b1f605c61def3013273a78c0b62e8cc12ce9268da4c8bcf478.mp3',
+        'message_notify.jpg': '/assets/message_notify-d0e06565eac12b4b0e6bd90aecd13085836b5f5979a2e2a355e4921c9c4232a1.jpg'
     };
     return assets[name]||'none';
 }
-var POINT_TYPES ={shop:'shop',bar:'bar',event:'marker',message:'message'};
+var POINT_TYPES ={shop:'shop',bar:'bar',event:'marker',message:'message', user:'user'};
 
 function iconForPoint(type) {
     var icon = asset_path('bottle.png');
@@ -46345,6 +45623,11 @@ function iconForPoint(type) {
         case POINT_TYPES.bar:
         {
             icon = asset_path('drinks.png');
+            break;
+        }
+        case POINT_TYPES.user:
+        {
+            icon = asset_path('Alien_other.png');
             break;
         }
     }
@@ -46372,6 +45655,7 @@ wordForPointType = function(type)
         case "marker": return "событие";
         case "shop": return "магазин";
         case "bar": return "бар";
+        case "user": return 'пользователь';
     }
 };
 
@@ -46402,6 +45686,11 @@ prepareMessage = function (text, link_class, img_class) {
   }
   return text;
 };
+if(window.Notification)
+{
+  Notification.requestPermission();
+}
+;
 function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
     var $this = this;
     var container = $('.overflow_hidden');
@@ -46429,17 +45718,20 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
                         var audio = new Audio(asset_path('alert.mp3'));
                         audio.volume = 0.5;
                         audio.play();
+                        if(window.Notification)
+                            new Notification("Кто-то позвал вас на алкокарте!",{
+                                body : msg.message,
+                                icon : asset_path('message_notify.jpg')
+                            });
                         msg.marked = true;
-                        msg.message = $this.prepareMessage(msg.message);
                     }
+                    msg.message = $this.prepareMessage(msg.message);
                     $this.messages.push(msg);
                     delayedScroll();
                 });
             }
         });
-        User.online_count(function (result) {
-            $this.online = result.data.value;
-        });
+
         if ($this.messages)
             $this.lastUpdate = $this.messages[$this.messages.length - 1].id;
         setTimeout($this.update, 2500);
@@ -46458,6 +45750,20 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
         $this.chatMessage = name + ", ";
         $('input.chat_msg_box').focus();
     };
+    this.updateUserCount = function()
+    {
+        User.online_count(function (result) {
+            $this.online = result.data.value;
+        });
+        setTimeout($this.updateUserCount,10000);
+    };
+    this.activateWithName = function(name)
+    {
+        $this.enabled = false;
+        this.enable();
+        this.chatMessage = name + ", ";
+        $('input.chat_msg_box').focus();
+    };
     var init = function () {
         ControllersProvider.chat = $this;
         EventTarget.apply($this);
@@ -46472,7 +45778,7 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
                 $this.fire('messagesloaded')
             }, 2000)
         });
-
+        $this.updateUserCount();
     };
     var delayedScroll = function () {
         setTimeout(function () {
@@ -46670,7 +45976,17 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
         $this.openedInfos.onClose();
         closeOther(undefined, undefined);
     };
-
+    this.addUserLocation = function()
+    {
+        Point.new(extractPoint({
+            lat: USER_POSITION.lat,
+            lng: USER_POSITION.lng,
+            name: "Готов к общению!",
+            point_type: "user",
+        }), function (result) {
+            var marker = buildMarker(result);
+        });
+    };
     this.addPoint = function () {
         if ($this.isEditing) {
             var point = Point.edit($scope.point.id, extractPoint($scope.point), function (result) {
@@ -46782,6 +46098,10 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
         if (point_id)
             $this.setPointCurrent(point_id);
     };
+    this.activateChat = function(name)
+    {
+        ControllersProvider.chat.activateWithName(name);
+    };
     var init = function () {
         EventTarget.apply($this);
         $scope.$watch('controller.settings', function (newValue, oldValue) {
@@ -46809,7 +46129,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
 IndexController.prototype = new EventTarget();
 IndexController.prototype.constructor = IndexController;
 /**
- * Created by �������� on 18.09.2015.
+ * Created by �������� on 18.09.2015.
  */
 
 function NewsController(News, $scope, ControllersProvider) {
@@ -46880,7 +46200,7 @@ function NewsController(News, $scope, ControllersProvider) {
  * Created by �������� on 28.08.2015.
  */
 
-app = angular.module('alcomap', ['ngResource','ngSanitize']);
+app = angular.module('alcomap', ['ngResource','ngSanitize','smoothScroll']);
 app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User', 'ControllersProvider']);
 app.controller('ChatController', ChatController, ['$scope','$sce', 'ChatMessage', 'User', 'ControllersProvider']);
 app.controller('NewsController', NewsController, ['News', '$scope', 'ControllersProvider']);
@@ -46939,8 +46259,26 @@ app.factory('gmap', function () {
                 "stylers": [{"color": "#46bcec"}, {"visibility": "on"}]
             }]
     });
+    // Create the search box and link it to the UI element.
+    var input = document.getElementById('search_field');
+    var searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-    function mcFactory(point_type) {
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', function() {
+        searchBox.setBounds(map.getBounds());
+    });
+    searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+            return;
+        }
+        map.setZoom(14);
+        map.setCenter(places[0].geometry.location);
+    });
+
+        function mcFactory(point_type) {
         var styles = [
             {
                 textColor: '#22A7F0',
@@ -46974,6 +46312,7 @@ app.factory('gmap', function () {
     clusterers[POINT_TYPES.bar] = mcFactory(POINT_TYPES.bar);
     clusterers[POINT_TYPES.message] = mcFactory(POINT_TYPES.message);
     clusterers[POINT_TYPES.event] = mcFactory(POINT_TYPES.event);
+    clusterers[POINT_TYPES.user] = mcFactory(POINT_TYPES.user);
 
 
     map.addMarker = function (marker, type) {
@@ -46987,6 +46326,7 @@ app.factory('gmap', function () {
         clusterers[POINT_TYPES.bar].clearMarkers();
         clusterers[POINT_TYPES.message].clearMarkers();
         clusterers[POINT_TYPES.event].clearMarkers();
+        clusterers[POINT_TYPES.user].clearMarkers();
     };
     return map;
 });

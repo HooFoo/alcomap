@@ -102,4 +102,7 @@ prepareMessage = function (text, link_class, img_class) {
   }
   return text;
 };
-Notification.requestPermission();
+if(window.Notification)
+{
+  Notification.requestPermission();
+}

@@ -45590,18 +45590,20 @@ function asset_path(name) {
     assets = {
         'bottle.png': '/assets/bottle-3c5f9a060846cc46bf30ecad99a07cc1a18859e7c7991b088012a30260b00f98.png',
         'Alien.png': '/assets/Alien-23ed7e3d380b6467322c6740d54438a490e06bf541fff229f22ea9dd712e3d5e.png',
+        'Alien_other.png': '/assets/Alien_other-0e6a626d2b0ebead17118faab81914952603f1c1e38220f7082238a7ab35321d.png',
         'drinks.png': '/assets/drinks-1e4e8c943d17f2157cc9114b30f8d9ffd3e939c113049b2ccb824e2ef4ed85f6.png',
         'new.png': '/assets/new-053de3583ab069972e53dc312d224551c69220594d140e5ee1c7e0974761c8f6.png',
-        'info.html': '/assets/info-8af46d4e9bebd0e76df611a9acfd43491c311106974755711454b31882565e75.html',
+        'info.html': '/assets/info-8d09fd75a5a888ef9cbc7198822e3c6b9f121b8b4d62e7b14b13be708ddaab19.html',
         'new_point.html': '/assets/new_point-80c7407027583ed10a02cbb3746e790fca97fc601e9cd9c2e49d99be7d215ac9.html',
         'send_message.png': '/assets/send_message-58fa0559f449b875d8e86490c748c2ce91c550b55ed3873ac7c5d4b6a67b1382.png',
         'event.png': '/assets/event-c4db32a00df3b3d4e9f4cb9eed09c3b90d8a4c9ea3abc25bf50002462cc08981.png',
         'message.png': '/assets/message-16587aba29954e736c2e04ada8098275194ed06fe71b930704e7673985d167cd.png',
-        'alert.mp3': '/assets/alert-9bdc9c0c1c74c3b1f605c61def3013273a78c0b62e8cc12ce9268da4c8bcf478.mp3'
+        'alert.mp3': '/assets/alert-9bdc9c0c1c74c3b1f605c61def3013273a78c0b62e8cc12ce9268da4c8bcf478.mp3',
+        'message_notify.jpg': '/assets/message_notify-d0e06565eac12b4b0e6bd90aecd13085836b5f5979a2e2a355e4921c9c4232a1.jpg'
     };
     return assets[name]||'none';
 }
-var POINT_TYPES ={shop:'shop',bar:'bar',event:'marker',message:'message'};
+var POINT_TYPES ={shop:'shop',bar:'bar',event:'marker',message:'message', user:'user'};
 
 function iconForPoint(type) {
     var icon = asset_path('bottle.png');
@@ -45621,6 +45623,11 @@ function iconForPoint(type) {
         case POINT_TYPES.bar:
         {
             icon = asset_path('drinks.png');
+            break;
+        }
+        case POINT_TYPES.user:
+        {
+            icon = asset_path('Alien_other.png');
             break;
         }
     }
@@ -45648,6 +45655,7 @@ wordForPointType = function(type)
         case "marker": return "событие";
         case "shop": return "магазин";
         case "bar": return "бар";
+        case "user": return 'пользователь';
     }
 };
 
@@ -45678,8 +45686,8 @@ prepareMessage = function (text, link_class, img_class) {
   }
   return text;
 };
-//smooth scrolling
-;
+if(Notification)
+Notification.requestPermission();
 function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
     var $this = this;
     var container = $('.overflow_hidden');
@@ -45707,6 +45715,11 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
                         var audio = new Audio(asset_path('alert.mp3'));
                         audio.volume = 0.5;
                         audio.play();
+                        if(Notification)
+                            new Notification("Кто-то позвал вас на алкокарте!",{
+                                body : msg.message,
+                                icon : asset_path('message_notify.jpg')
+                            });
                         msg.marked = true;
                     }
                     msg.message = $this.prepareMessage(msg.message);
@@ -45715,9 +45728,7 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
                 });
             }
         });
-        User.online_count(function (result) {
-            $this.online = result.data.value;
-        });
+
         if ($this.messages)
             $this.lastUpdate = $this.messages[$this.messages.length - 1].id;
         setTimeout($this.update, 2500);
@@ -45736,6 +45747,20 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
         $this.chatMessage = name + ", ";
         $('input.chat_msg_box').focus();
     };
+    this.updateUserCount = function()
+    {
+        User.online_count(function (result) {
+            $this.online = result.data.value;
+        });
+        setTimeout($this.updateUserCount,10000);
+    };
+    this.activateWithName = function(name)
+    {
+        $this.enabled = false;
+        this.enable();
+        this.chatMessage = name + ", ";
+        $('input.chat_msg_box').focus();
+    };
     var init = function () {
         ControllersProvider.chat = $this;
         EventTarget.apply($this);
@@ -45750,7 +45775,7 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
                 $this.fire('messagesloaded')
             }, 2000)
         });
-
+        $this.updateUserCount();
     };
     var delayedScroll = function () {
         setTimeout(function () {
@@ -45948,7 +45973,17 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
         $this.openedInfos.onClose();
         closeOther(undefined, undefined);
     };
-
+    this.addUserLocation = function()
+    {
+        Point.new(extractPoint({
+            lat: USER_POSITION.lat,
+            lng: USER_POSITION.lng,
+            name: "Готов к общению!",
+            point_type: "user",
+        }), function (result) {
+            var marker = buildMarker(result);
+        });
+    };
     this.addPoint = function () {
         if ($this.isEditing) {
             var point = Point.edit($scope.point.id, extractPoint($scope.point), function (result) {
@@ -46060,6 +46095,10 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
         if (point_id)
             $this.setPointCurrent(point_id);
     };
+    this.activateChat = function(name)
+    {
+        ControllersProvider.chat.activateWithName(name);
+    };
     var init = function () {
         EventTarget.apply($this);
         $scope.$watch('controller.settings', function (newValue, oldValue) {
@@ -46087,7 +46126,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
 IndexController.prototype = new EventTarget();
 IndexController.prototype.constructor = IndexController;
 /**
- * Created by �������� on 18.09.2015.
+ * Created by �������� on 18.09.2015.
  */
 
 function NewsController(News, $scope, ControllersProvider) {
@@ -46270,6 +46309,7 @@ app.factory('gmap', function () {
     clusterers[POINT_TYPES.bar] = mcFactory(POINT_TYPES.bar);
     clusterers[POINT_TYPES.message] = mcFactory(POINT_TYPES.message);
     clusterers[POINT_TYPES.event] = mcFactory(POINT_TYPES.event);
+    clusterers[POINT_TYPES.user] = mcFactory(POINT_TYPES.user);
 
 
     map.addMarker = function (marker, type) {
@@ -46283,6 +46323,7 @@ app.factory('gmap', function () {
         clusterers[POINT_TYPES.bar].clearMarkers();
         clusterers[POINT_TYPES.message].clearMarkers();
         clusterers[POINT_TYPES.event].clearMarkers();
+        clusterers[POINT_TYPES.user].clearMarkers();
     };
     return map;
 });
