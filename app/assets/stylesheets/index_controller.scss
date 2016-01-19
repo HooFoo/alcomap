@@ -290,6 +290,10 @@ div.dropdown.ib {
 
 .rating_box a {
   font-size: 18px;
+
+  &:hover, &:active {
+    text-decoration: none;
+  }
 }
 
 .plus {
@@ -506,6 +510,7 @@ div.dropdown.ib {
 .news_point_name {
   font-weight: bold;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 #news_scroller > ul {
