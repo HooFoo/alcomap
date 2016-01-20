@@ -93,7 +93,11 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
     };
     this.trackUser = function () {
         updateUserPosition();
-        if ($this.usersMarker) $this.usersMarker.setPosition(USER_POSITION);
+        if($this.lastUserPosition == USER_POSITION_DEFAULT)
+            $this.centerForUser();
+        if ($this.usersMarker)
+            $this.usersMarker.setPosition(USER_POSITION);
+        $this.lastUserPosition = USER_POSITION;
         setTimeout($this.trackUser, 2000);
     };
     this.styleForInfo = function () {

@@ -45,8 +45,22 @@ class Point < ActiveRecord::Base
     where("lat <= #{coords['ne']['lat']} and lat >= #{coords['sw']['lat']} and lng <= #{coords['ne']['lng']} and lng >= #{coords['sw']['lng']} and point_type = 'user' and created_at >= ?", DateTime.now-30.minutes)
         .to_a
         .select do |point|
-          puts point.user.online?
            point.user.online?
         end
+  end
+
+  def actual?
+    case point_type
+      when 'shop'
+        true
+      when 'bar'
+        true
+      when 'marker'
+        created_at > 7.days.ago
+      when 'message'
+        created_at > 30.minutes.ago
+      when 'user'
+        created_at > 30.minutes.ago and user.online?
+    end
   end
 end
