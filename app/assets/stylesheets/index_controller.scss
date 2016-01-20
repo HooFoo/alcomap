@@ -290,8 +290,12 @@ div.dropdown.ib {
 
 .rating_box a {
   font-size: 18px;
-}
 
+}
+.rating_box a:hover {
+  text-decoration: none;
+
+}
 .plus {
   margin-right: 5px;
 }
@@ -346,6 +350,7 @@ div.dropdown.ib {
   margin: 0;
   display: block !important;
   left: 50vw;
+  opacity: 1;
 }
 
 .chat_msg_box {
@@ -506,6 +511,7 @@ div.dropdown.ib {
 .news_point_name {
   font-weight: bold;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 #news_scroller > ul {
@@ -533,10 +539,22 @@ div.dropdown.ib {
   margin-bottom: 0px !important;
 }
 
-.delete_point {
-  border: 1px solid #c2c2c2;
-  border-radius: 5px;
+.edit_btns
+{
   padding: 2px;
+  height: 22px;
+  width: 22px;
+  cursor: pointer;
+  background-size: 20px;
+  background-repeat: no-repeat;
+  margin: 2px;
+}
+.delete_point {
+  background-image: asset_url('delete.png');
+}
+.edit_point
+{
+  background-image: asset_url('edit.png');
 }
 
 .point_wrap {
@@ -587,9 +605,10 @@ div.dropdown.ib {
 }
 
 .news_buttons {
-  display: inline-block;
+  display: inline-flex;
   position: relative;
   float: right;
+  transform: translateY(-5px);
 }
 
 .icon_shop {
@@ -781,4 +800,10 @@ div.dropdown.ib {
 {
   font-size: 20px;
   font-weight: bolder;
+}
+.invisible_label
+{
+  height: 50vh;
+  width: 100vw !important;
+  opacity: 0;
 }

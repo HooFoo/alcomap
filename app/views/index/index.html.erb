@@ -100,8 +100,8 @@
               <div ng-class="news.onlyMy?'news_bottom':''">
                 <span class="news_timestamp">{{item.created_at}}</span>
                 <div class="news_buttons" ng-show="news.onlyMy">
-                  <span class="delete_point" ng-click="controller.editPoint(item.point.id)">Изменить</span>
-                  <span class="delete_point" ng-click="controller.deletePoint(item.point.id)">Удалить</span>
+                  <div class="edit_point edit_btns" ng-click="controller.editPoint(item.point.id)"></div>
+                  <div class="delete_point edit_btns" ng-click="controller.deletePoint(item.point.id)"></div>
                 </div>
               </div>
             </li>

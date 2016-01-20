@@ -3,6 +3,7 @@ class CommentsController < InheritedResources::Base
 
   def create(options={}, &block)
     @comment = build_resource
+    @comment.text = ActionController::Base.helpers.strip_tags(@comment.text)
     @comment.point = Point.find(params[:point_id])
     @comment.user = current_user
     #image = Paperclip.io_adapters.for(params[:picture])

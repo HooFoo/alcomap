@@ -6,7 +6,7 @@ class ChatMessagesController < InheritedResources::Base
     last = ChatMessage.last
 
     unless last.message == params[:message] and last.user == current_user
-      @chat_message = ChatMessage.new :message => params[:message],
+      @chat_message = ChatMessage.new :message =>ActionController::Base.helpers.strip_tags(params[:message]),
                                       :user => current_user
       @chat_message.save
       if ChatMessage.count > 50

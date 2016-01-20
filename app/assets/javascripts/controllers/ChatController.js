@@ -49,6 +49,7 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
             delayedScroll();
         container.toggleClass('deployed');
         container.toggleClass('undeployed');
+        $("div.screen_label").toggleClass("invisible_label");
     };
     this.prepareMessage = function (text) {
         return prepareMessage(text,"chat_link","chat_image");
