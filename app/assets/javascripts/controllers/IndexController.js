@@ -316,14 +316,13 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
     };
     this.openWindow = function(title,href)
     {
-        $("#window_wrapper").toggleClass("window_opened")
+        $("#window_wrapper").addClass("window_opened")
         $("#window_content").empty();
         $("#window_content").append("<iframe src='"+href+"'></iframe>");
     };
     this.closeWindow = function()
     {
-        console.log("kek");
-        $("#window_wrapper").toggleClass("window_opened")
+        $("#window_wrapper").removeClass("window_opened")
     };
     var init = function () {
         EventTarget.apply($this);
