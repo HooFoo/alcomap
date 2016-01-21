@@ -9,8 +9,8 @@
         </div>
     </div>
     <div class="settings_buttons_container">
-        <a class="btn btn-default" href="/users/invitation/new">Позвать друзей</a>
-        <a class="btn btn-default" href="/users/edit">Изменить профиль</a>
+        <a class="btn btn-default" ng-click="controller.openWindow('Приглашения','/users/invitation/new')">Позвать друзей</a>
+        <a class="btn btn-default" ng-click="controller.openWindow('Настройки','/users/edit')">Изменить профиль</a>
         <a class="btn btn-default" href="/users/sign_out">Выйти</a>
     </div>
 </div>

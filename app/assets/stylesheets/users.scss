@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "bootstrap";
 
-#new_user, #edit_user {
+#new_user, .edit_user {
   position: absolute;
   left: 50%;
   transform: translate(-50%, 30vh);
@@ -13,10 +13,10 @@
   padding-right: 17px;
   border-radius: 15px;
 }
-#edit_user
+.edit_user
 {
-  transform: translate(-50%, 0) !important;
-  -webkit-transform: translate(-50%, 0) !important;
+  transform: translate(-50%, 25%) !important;
+  -webkit-transform: translate(-50%, 25%) !important;
 }
 .ios_add
 {
