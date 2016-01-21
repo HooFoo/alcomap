@@ -3,7 +3,10 @@ class NewsController < ApplicationController
   respond_to :json
 
   def index
-    @news = News.all.reverse_order.limit 50
+    @news = News.all.reverse_order
+                .limit(50).select do |news|
+      news.point.actual?
+    end
   end
 
   def my
@@ -13,6 +16,9 @@ class NewsController < ApplicationController
 
   def latest
     @news = News.where("id > ?", params[:id])
+                .select do |news|
+      news.point.actual?
+    end
     render 'index'
   end
 

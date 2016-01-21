@@ -1,7 +1,6 @@
 <%= render 'chat' %>
 <div class="wrapper" ng-view ng-controller="IndexController as controller">
   <div id="map_container">
-
     <div id="map_area" class="col-xs-12 col-sm-12 col-md-8 col-lg-8 nopadding">
       <div class="title_wrapper">
         <h1 ng-model="controller.heading" class="app_tittle">{{controller.heading}}</h1>
@@ -51,8 +50,6 @@
       </div>
 
     </div>
-
-
     <div id="comments" class="col-xs-12 col-sm-12 col-md-4 col-lg-4 nopadding">
       <button scroll-to="map_area" container-id="map_container" duration="500" class="col-xs-12 col-sm-12  half_btn half_btn_dn btn btn-default">
         Карта
@@ -100,8 +97,8 @@
               <div ng-class="news.onlyMy?'news_bottom':''">
                 <span class="news_timestamp">{{item.created_at}}</span>
                 <div class="news_buttons" ng-show="news.onlyMy">
-                  <span class="delete_point" ng-click="controller.editPoint(item.point.id)">Изменить</span>
-                  <span class="delete_point" ng-click="controller.deletePoint(item.point.id)">Удалить</span>
+                  <div class="edit_point edit_btns" ng-click="controller.editPoint(item.point.id)"></div>
+                  <div class="delete_point edit_btns" ng-click="controller.deletePoint(item.point.id)"></div>
                 </div>
               </div>
             </li>
@@ -113,6 +110,14 @@
 
           </ul>
         </div>
+      </div>
+    </div>
+    <div id="window_wrapper" ng-click="controller.closeWindow()" >
+      <div id="window">
+        <div id="window_title">
+          <div id="window_close" ng-click="controller.closeWindow()"></div>
+        </div>
+        <div id="window_content"></div>
       </div>
     </div>
   </div>

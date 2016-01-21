@@ -93,7 +93,11 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
     };
     this.trackUser = function () {
         updateUserPosition();
-        if ($this.usersMarker) $this.usersMarker.setPosition(USER_POSITION);
+        if($this.lastUserPosition == USER_POSITION_DEFAULT)
+            $this.centerForUser();
+        if ($this.usersMarker)
+            $this.usersMarker.setPosition(USER_POSITION);
+        $this.lastUserPosition = USER_POSITION;
         setTimeout($this.trackUser, 2000);
     };
     this.styleForInfo = function () {
@@ -309,6 +313,17 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
     this.activateChat = function(name)
     {
         ControllersProvider.chat.activateWithName(name);
+    };
+    this.openWindow = function(title,href)
+    {
+        $("#window_wrapper").toggleClass("window_opened")
+        $("#window_content").empty();
+        $("#window_content").append("<iframe src='"+href+"'></iframe>");
+    };
+    this.closeWindow = function()
+    {
+        console.log("kek");
+        $("#window_wrapper").toggleClass("window_opened")
     };
     var init = function () {
         EventTarget.apply($this);

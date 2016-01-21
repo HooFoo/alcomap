@@ -1,7 +1,7 @@
 == Hello All
 
 Alcomap is my project for Ruby learning.
-<a href="mailto:lHooFool@gmail.com">Ask any questions</a>
+http://mailto:lHooFool@gmail.com/
 
 
 <tt>rake doc:app</tt>.
