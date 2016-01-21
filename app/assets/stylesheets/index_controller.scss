@@ -291,11 +291,11 @@ div.dropdown.ib {
 .rating_box a {
   font-size: 18px;
 
+  &:hover, &:active {
+    text-decoration: none;
+  }
 }
-.rating_box a:hover {
-  text-decoration: none;
 
-}
 .plus {
   margin-right: 5px;
 }
