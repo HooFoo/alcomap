@@ -31,22 +31,17 @@ class PointsController < InheritedResources::Base
   def rate
     user = current_user
     @point = Point.find(params[:id])
-    rated_list = RatedPoint.where('user_id = :uid and point_id = :pid', {uid: user.id, pid: @point.id})
-    if rated_list.length==0
-      rated = RatedPoint.new :direction => params[:direction],
-                             :user => user,
-                             :point => @point
-      if params[:direction]
-        rating = 1
-      else
-        rating = -1
-      end
-      @point.rating+=rating
-      @point.save
-      rated.save
-      if @point.rating <= -5
-        @point.destroy
-      end
+    rate = RatedPoint.find_or_initialize_by point: @point, user: user
+    rating = params[:direction] ? 1 : -1
+    if rate.persisted?
+      @point.rating = rate.direction ? @point.rating - 1 : @point.rating + 1
+    end
+    rate.direction = params[:direction]
+    @point.rating+=rating
+    @point.save
+    rate.save
+    if @point.rating <= -5
+      @point.destroy
     end
     render 'show'
   end
