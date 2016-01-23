@@ -34,7 +34,7 @@ function NewsController(News, $scope, ControllersProvider) {
 
     this.update = function () {
         if (!$this.stopUpdate) {
-            var id = $this.news ? $this.news[0].id : 0;
+            var id = $this.news.length > 0 ? $this.news[0].id : 0;
             News.latest(id, function (result) {
                 if (result.data.length > 0) {
                     result.data.forEach(function (msg) {
