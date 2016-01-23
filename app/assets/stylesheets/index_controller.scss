@@ -291,7 +291,7 @@ div.dropdown.ib {
 .rating_box a {
   font-size: 18px;
 
-  &:hover, &:active {
+  &:focus, &:hover, &:active, &:visited {
     text-decoration: none;
   }
 }
