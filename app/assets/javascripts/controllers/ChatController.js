@@ -17,7 +17,8 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
             });
     };
     this.update = function () {
-        var id = $this.messages ? $this.messages[$this.messages.length - 1].id : 0;
+        var hasMessages = $this.messages.length > 0;
+        var id = hasMessages > 0 ? $this.messages[$this.messages.length - 1].id : 0;
         ChatMessage.latest(id, function (result) {
             if (result.data.length > 0) {
                 result.data.forEach(function (msg) {
@@ -39,7 +40,7 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
             }
         });
 
-        if ($this.messages)
+        if (hasMessages)
             $this.lastUpdate = $this.messages[$this.messages.length - 1].id;
         setTimeout($this.update, 2500);
     };
