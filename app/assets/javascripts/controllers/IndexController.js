@@ -93,7 +93,8 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
     };
     this.trackUser = function () {
         updateUserPosition();
-        if($this.lastUserPosition == USER_POSITION_DEFAULT)
+        if($this.lastUserPosition == USER_POSITION_DEFAULT &&
+        USER_POSITION != USER_POSITION_DEFAULT)
             $this.centerForUser();
         if ($this.usersMarker)
             $this.usersMarker.setPosition(USER_POSITION);
