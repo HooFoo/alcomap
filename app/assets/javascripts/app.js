@@ -2,9 +2,11 @@
  * Created by �������� on 28.08.2015.
  */
 app = angular.module('alcomap', ['ngResource','ngSanitize','smoothScroll']);
-app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User', 'ControllersProvider']);
+app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User', 'ControllersProvider', 'Settings']);
 app.controller('ChatController', ChatController, ['$scope','$sce', 'ChatMessage', 'User', 'ControllersProvider']);
 app.controller('NewsController', NewsController, ['News', '$scope', 'ControllersProvider']);
+app.controller('SocialController', SocialController, ['Profile', '$scope', 'ControllersProvider']);
+app.controller('MapController', MapController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User', 'ControllersProvider']);
 app.factory('gmap', function () {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
@@ -208,29 +210,20 @@ app.service('User', ['$resource', '$http', function ($resource, $http) {
 
     return usr;
 }]);
-app.service('Settings', ['BackendResource', function (BackendResource) {
+app.service('Settings', ['BackendResource','$http', function (BackendResource,$http) {
     var obj = BackendResource('settings');
-    var settings = {
-        settings: {
-            points: {
-                shops: true,
-                marks: true
-            },
-            privacy: {
-                show_me: false
-            }
-        },
-        save: function () {
-            obj.save({json: JSON.stringify(settings.settings)}, function (result) {
-                settings.settings = JSON.parse(result.json);
-            });
-        }
+    obj.get = function(accept,reject)
+    {
+        $http.get('/settings.json').then(accept);
     };
-    obj.index(function (result) {
-        if (result.json)
-            settings.settings = JSON.parse(result.json);
-    });
-    return settings;
+    obj.save = function (settings) {
+        if(settings == {})
+            settings = {"shops":true,"bars":true,"messages":true,"markers":true,"users":true};
+        obj.edit(0,{json: JSON.stringify(settings)}, function (result) {
+
+        });
+    };
+    return obj;
 }]);
 app.directive('myEnter', function () {
     return function (scope, element, attrs) {
@@ -257,7 +250,7 @@ app.directive("fileread", [function () {
                     scope.$apply(function () {
                         scope.fileread = loadEvent.target.result;
                     });
-                }
+                };
                 reader.readAsDataURL(changeEvent.target.files[0]);
             });
         }
@@ -267,7 +260,9 @@ app.service('ControllersProvider', function () {
     return {
         chat: undefined,
         news: undefined,
-        index: undefined
+        index: undefined,
+        map: undefined,
+        social: undefined
     }
 });
 app.run(['$http', function ($http) {

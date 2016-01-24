@@ -1,7 +1,7 @@
 /**
  * Created by Геннадий on 28.08.2015.
  */
-function IndexController($compile, $scope, $http, gmap, Point, Comment, User, ControllersProvider) {
+function IndexController($compile, $scope, $http, gmap, Point, Comment, User, ControllersProvider, Settings) {
     var $this = this;
 
     this.heading = 'Алкомап';
@@ -327,13 +327,14 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
     };
     var init = function () {
         EventTarget.apply($this);
+        Settings.get(function(result){
+            $this.settings = JSON.parse(result.data.json);
+        });
         $scope.$watch('controller.settings', function (newValue, oldValue) {
-            localStorage.setItem('settings', JSON.stringify(newValue));
+            Settings.save(newValue);
             $this.showMarkers();
         }, true);
-        $this.settings = localStorage.getItem('settings') ?
-            JSON.parse(localStorage.getItem('settings')) :
-        {shops: true, bars: true, markers: true, messages: true};
+
         gmap.addListener('idle', $this.showMarkers);
         ControllersProvider.index = $this;
         $this.usersMarker = new google.maps.Marker({

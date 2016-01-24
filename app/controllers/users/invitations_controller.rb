@@ -1,13 +1,20 @@
 class Users::InvitationsController < Devise::InvitationsController
 
-  helper_method :after_invite_path_for
 
-  # POST /resource/invitation
   def after_invite_path_for resource
     '/users/invitation/new'
   end
 
   before_filter :configure_permitted_parameters
+
+  def update
+    super do |user|
+      user.profile.age = params[:profile][:age]
+      user.profile.sex = params[:profile][:sex]
+      user.profile.comment = params[:profile][:comment]
+      user.profile.save!
+    end
+  end
 
   protected
 

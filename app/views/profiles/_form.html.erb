@@ -1,0 +1,31 @@
+<%= form_for(@profile,html: {method: :put}) do |f| %>
+    <h2>Профиль</h2>
+
+    <% if @profile.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
+
+      <ul>
+      <% @profile.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :age %><br>
+    <%= f.number_field :age %>
+  </div>
+  <div class="field">
+    <%= f.label :sex %><br>
+    <%= f.select :sex, Profile.sexes.keys %>
+  </div>
+  <div class="field">
+    <%= f.label :comment %><br>
+    <%= f.text_field :comment, autofocus: true%>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

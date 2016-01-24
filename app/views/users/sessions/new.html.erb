@@ -1,25 +1,27 @@
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <h2>Вход</h2>
-    <div class="field">
-      <%= f.label "Почта" %><br/>
-      <%= f.email_field :email, autofocus: true, class: 'form-control' %>
-    </div>
+<div class="forms_wrapper">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <h2>Вход</h2>
+      <div class="field">
+        <%= f.label "Почта" %><br/>
+        <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+      </div>
 
-    <div class="field">
-      <%= f.label "Пароль" %><br/>
-      <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
-    </div>
+      <div class="field">
+        <%= f.label "Пароль" %><br/>
+        <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+      </div>
 
-    <% if devise_mapping.rememberable? -%>
-        <div class="field">
-          <%= f.check_box :remember_me %>
-          <%= f.label "Запомнить" %>
-        </div>
-    <% end -%>
-
-    <div class="actions">
+      <% if devise_mapping.rememberable? -%>
+          <div class="field">
+            <%= f.check_box :remember_me %>
+            <%= f.label "Запомнить" %>
+          </div>
+      <% end -%>
       <%= f.submit "Вход", class: 'form-control' %>
-      <%= render "users/shared/links" %>
-    </div>
-<% end %>
+
+      <div class="actions">
+        <%= render "users/shared/links" %>
+      </div>
+  <% end %>
+</div>
 

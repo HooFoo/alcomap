@@ -12,7 +12,7 @@
     <span class='point_description'>{{controller.currentPoint.description}}</span><br>
   </div>
   <div ng-hide="controller.currentPoint.point_type == 'user'">
-    <span class='user_add'>Добавил: {{controller.currentPoint.user.name}}</span>
+    Добавил: <span ng-class="controller.currentPoint.user.profile.sex" class='user_add'>{{controller.currentPoint.user.name}}</span>
   </div>
 </div>
 <div class='infobox_down' ng-hide="controller.currentPoint.point_type == 'message' || controller.currentPoint.point_type == 'user'">
@@ -24,6 +24,6 @@
     <a href='javascript:void(0);' class='minus' ng-click='controller.pointRate(false)'>-</a>
   </div>
 </div>
-<div ng-show="controller.currentPoint.point_type == 'user'" ng-click="controller.activateChat(controller.currentPoint.user.name)">
+<div ng-class="controller.currentPoint.user.profile.sex" ng-show="controller.currentPoint.point_type == 'user'" ng-click="controller.activateChat(controller.currentPoint.user.name)">
   <span class="user_chat_link" >{{controller.currentPoint.user.name}}</span>
 </div>
