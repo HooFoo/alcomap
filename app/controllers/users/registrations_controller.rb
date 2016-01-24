@@ -7,6 +7,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
     '/users/edit'
   end
 
+  def edit
+    @profile = current_user.profile
+    super
+  end
 
   protected
 

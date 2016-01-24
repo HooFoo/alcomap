@@ -1,5 +1,7 @@
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {method: :put}) do |f| %>
-    <h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="forms_wrapper">
+  <%= render 'profiles/form' %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {method: :put}) do |f| %>
+    <h2>Общие настройки</h2>
 
     <%= devise_error_messages! %>
 
@@ -36,4 +38,5 @@
       <%= f.submit "Update" %>
     </div>
 
-<% end %>
+  <% end %>
+</div>

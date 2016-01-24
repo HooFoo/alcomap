@@ -47008,7 +47008,7 @@ function asset_path(name) {
         'Alien_other.png': '/assets/Alien_other-0e6a626d2b0ebead17118faab81914952603f1c1e38220f7082238a7ab35321d.png',
         'drinks.png': '/assets/drinks-1e4e8c943d17f2157cc9114b30f8d9ffd3e939c113049b2ccb824e2ef4ed85f6.png',
         'new.png': '/assets/new-053de3583ab069972e53dc312d224551c69220594d140e5ee1c7e0974761c8f6.png',
-        'info.html': '/assets/info-8d09fd75a5a888ef9cbc7198822e3c6b9f121b8b4d62e7b14b13be708ddaab19.html',
+        'info.html': '/assets/info-3e9379c7d166154ae3725702f042c8d3490fd33c16330e5ef19ccd4d7be21653.html',
         'new_point.html': '/assets/new_point-80c7407027583ed10a02cbb3746e790fca97fc601e9cd9c2e49d99be7d215ac9.html',
         'send_message.png': '/assets/send_message-58fa0559f449b875d8e86490c748c2ce91c550b55ed3873ac7c5d4b6a67b1382.png',
         'event.png': '/assets/event-c4db32a00df3b3d4e9f4cb9eed09c3b90d8a4c9ea3abc25bf50002462cc08981.png',
@@ -47126,7 +47126,8 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
             });
     };
     this.update = function () {
-        var id = $this.messages ? $this.messages[$this.messages.length - 1].id : 0;
+        var hasMessages = $this.messages.length > 0;
+        var id = hasMessages > 0 ? $this.messages[$this.messages.length - 1].id : 0;
         ChatMessage.latest(id, function (result) {
             if (result.data.length > 0) {
                 result.data.forEach(function (msg) {
@@ -47148,7 +47149,7 @@ function ChatController($scope,$sce, ChatMessage, User, ControllersProvider) {
             }
         });
 
-        if ($this.messages)
+        if (hasMessages)
             $this.lastUpdate = $this.messages[$this.messages.length - 1].id;
         setTimeout($this.update, 2500);
     };
@@ -47210,7 +47211,7 @@ ChatController.prototype.constructor = ChatController;
  * Created by Геннадий on 28.08.2015.
  */
 
-function IndexController($compile, $scope, $http, gmap, Point, Comment, User, ControllersProvider) {
+function IndexController($compile, $scope, $http, gmap, Point, Comment, User, ControllersProvider, Settings) {
     var $this = this;
 
     this.heading = 'Алкомап';
@@ -47302,7 +47303,8 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
     };
     this.trackUser = function () {
         updateUserPosition();
-        if($this.lastUserPosition == USER_POSITION_DEFAULT)
+        if($this.lastUserPosition == USER_POSITION_DEFAULT &&
+        USER_POSITION != USER_POSITION_DEFAULT)
             $this.centerForUser();
         if ($this.usersMarker)
             $this.usersMarker.setPosition(USER_POSITION);
@@ -47525,24 +47527,24 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
     };
     this.openWindow = function(title,href)
     {
-        $("#window_wrapper").toggleClass("window_opened")
+        $("#window_wrapper").addClass("window_opened")
         $("#window_content").empty();
         $("#window_content").append("<iframe src='"+href+"'></iframe>");
     };
     this.closeWindow = function()
     {
-        console.log("kek");
-        $("#window_wrapper").toggleClass("window_opened")
+        $("#window_wrapper").removeClass("window_opened")
     };
     var init = function () {
         EventTarget.apply($this);
+        Settings.get(function(result){
+            $this.settings = JSON.parse(result.data.json);
+        });
         $scope.$watch('controller.settings', function (newValue, oldValue) {
-            localStorage.setItem('settings', JSON.stringify(newValue));
+            Settings.save(newValue);
             $this.showMarkers();
         }, true);
-        $this.settings = localStorage.getItem('settings') ?
-            JSON.parse(localStorage.getItem('settings')) :
-        {shops: true, bars: true, markers: true, messages: true};
+
         gmap.addListener('idle', $this.showMarkers);
         ControllersProvider.index = $this;
         $this.usersMarker = new google.maps.Marker({
@@ -47560,6 +47562,21 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
 }
 IndexController.prototype = new EventTarget();
 IndexController.prototype.constructor = IndexController;
+/**
+ * Created by hoofoo on 22.01.16.
+ */
+//TODO: Вынести всю логику работы с картой из IndexController.
+function MapController($compile, $scope, $http, gmap, Point, Comment, User, ControllersProvider)
+{
+    var $this = this;
+    var init = function () {
+        EventTarget.apply($this);
+        ControllersProvider.map = $this;
+    }();
+
+}
+MapController.prototype = new EventTarget();
+MapController.prototype.constructor = MapController;
 /**
  * Created by �������� on 18.09.2015.
  */
@@ -47597,7 +47614,7 @@ function NewsController(News, $scope, ControllersProvider) {
 
     this.update = function () {
         if (!$this.stopUpdate) {
-            var id = $this.news ? $this.news[0].id : 0;
+            var id = $this.news.length > 0 ? $this.news[0].id : 0;
             News.latest(id, function (result) {
                 if (result.data.length > 0) {
                     result.data.forEach(function (msg) {
@@ -47629,13 +47646,36 @@ function NewsController(News, $scope, ControllersProvider) {
 }
 ;
 /**
+ * Created by hoofoo on 24.01.16.
+ */
+
+function SocialController(Profile, $scope, ControllersProvider)
+{
+    var $this = this;
+    this.current_profile = undefined;
+    this.showProfile = function(user_id)
+    {
+        Profile.by_user(user_id,function(result){
+            $this.current_profile = result.data;
+        })
+    };
+    var init = function () {
+        EventTarget.apply($this);
+        ControllersProvider.social = $this;
+    }();
+}
+SocialController.prototype = new EventTarget();
+SocialController.prototype.constructor = SocialController;
+/**
  * Created by �������� on 28.08.2015.
  */
 
 app = angular.module('alcomap', ['ngResource','ngSanitize','smoothScroll']);
-app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User', 'ControllersProvider']);
+app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User', 'ControllersProvider', 'Settings']);
 app.controller('ChatController', ChatController, ['$scope','$sce', 'ChatMessage', 'User', 'ControllersProvider']);
 app.controller('NewsController', NewsController, ['News', '$scope', 'ControllersProvider']);
+app.controller('SocialController', SocialController, ['Profile', '$scope', 'ControllersProvider']);
+app.controller('MapController', MapController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User', 'ControllersProvider']);
 app.factory('gmap', function () {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
@@ -47839,29 +47879,20 @@ app.service('User', ['$resource', '$http', function ($resource, $http) {
 
     return usr;
 }]);
-app.service('Settings', ['BackendResource', function (BackendResource) {
+app.service('Settings', ['BackendResource','$http', function (BackendResource,$http) {
     var obj = BackendResource('settings');
-    var settings = {
-        settings: {
-            points: {
-                shops: true,
-                marks: true
-            },
-            privacy: {
-                show_me: false
-            }
-        },
-        save: function () {
-            obj.save({json: JSON.stringify(settings.settings)}, function (result) {
-                settings.settings = JSON.parse(result.json);
-            });
-        }
+    obj.get = function(accept,reject)
+    {
+        $http.get('/settings.json').then(accept);
     };
-    obj.index(function (result) {
-        if (result.json)
-            settings.settings = JSON.parse(result.json);
-    });
-    return settings;
+    obj.save = function (settings) {
+        if(settings == {})
+            settings = {"shops":true,"bars":true,"messages":true,"markers":true,"users":true};
+        obj.edit(0,{json: JSON.stringify(settings)}, function (result) {
+
+        });
+    };
+    return obj;
 }]);
 app.directive('myEnter', function () {
     return function (scope, element, attrs) {
@@ -47888,7 +47919,7 @@ app.directive("fileread", [function () {
                     scope.$apply(function () {
                         scope.fileread = loadEvent.target.result;
                     });
-                }
+                };
                 reader.readAsDataURL(changeEvent.target.files[0]);
             });
         }
@@ -47898,7 +47929,9 @@ app.service('ControllersProvider', function () {
     return {
         chat: undefined,
         news: undefined,
-        index: undefined
+        index: undefined,
+        map: undefined,
+        social: undefined
     }
 });
 app.run(['$http', function ($http) {
@@ -47913,6 +47946,10 @@ app.run(['$http', function ($http) {
         }
     })
 }]);
+(function() {
+
+
+}).call(this);
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //

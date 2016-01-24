@@ -71,6 +71,7 @@ gem 'omniauth-facebook'
 gem 'gmaps4rails'
 gem 'underscore-rails'
 gem "paperclip", "~> 4.3"
+gem 'lazy_columns'
 
 group :production do
   gem 'pg', '0.15.1'

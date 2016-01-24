@@ -12,6 +12,16 @@ class User < ActiveRecord::Base
   has_many :chat_messages
   has_one :setting
   has_many :media
+  has_one :profile
+
+  after_create do |user|
+    user.setting ||= Setting.new(:json => '{"shops":true,"bars":true,"messages":true,"markers":true,"users":true}',
+                                 :user_id => user.id)
+    user.profile ||= Profile.new(:age => 18,
+                                 :sex => 'male',
+                                 :comment => '',
+                                 :user_id => user.id)
+  end
 
   def self.online
     where('updated_at > ?', 20.seconds.ago)

@@ -1,12 +1,14 @@
-<%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
-    <h2 class="title"><%= t "devise.invitations.new.header" %></h2>
-    <p>Осталось: <%= current_user.invitation_limit %></p><br/>
-    <%= devise_error_messages! %>
+<div class="forms_wrapper">
+  <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
+      <h2 class="title"><%= t "devise.invitations.new.header" %></h2>
+      <p>Осталось: <%= current_user.invitation_limit %></p><br/>
+      <%= devise_error_messages! %>
 
-    <% resource.class.invite_key_fields.each do |field| -%>
-        <p><%= f.label field %><br/>
-          <%= f.text_field field, class: 'form-control' %></p>
-    <% end -%>
+      <% resource.class.invite_key_fields.each do |field| -%>
+          <p><%= f.label field %><br/>
+            <%= f.text_field field, class: 'form-control' %></p>
+      <% end -%>
 
-    <p><%= f.submit 'Отправить', class: 'form-control' %></p>
-<% end %>
+      <p><%= f.submit 'Отправить', class: 'form-control' %></p>
+  <% end %>
+</div>

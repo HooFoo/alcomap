@@ -3,21 +3,16 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "bootstrap";
 
-#new_user, .edit_user {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 30vh);
-  -webkit-transform: translate(-50%, 30vh);
+#new_user, .edit_user, .edit_profile {
+
   background: rgba(255, 255, 255, 0.81);
+  border: 1px solid #B3B3B3;
+  margin: 5px 5px;
   padding-left: 17px;
   padding-right: 17px;
   border-radius: 15px;
 }
-.edit_user
-{
-  transform: translate(-50%, 25%) !important;
-  -webkit-transform: translate(-50%, 25%) !important;
-}
+
 .ios_add
 {
   max-width: 270px;
@@ -140,4 +135,22 @@
 .field_with_errors
 {
 
+}
+.forms_wrapper
+{
+  border: 1px solid #B3B3B3;
+  border-radius: 4px;
+  padding: 5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 30vh);
+  -webkit-transform: translate(-50%, 30vh);
+  background: rgba(255, 255, 255, 0.81);
+
+}
+.actions
+{
+  margin: 5px 0px;
 }

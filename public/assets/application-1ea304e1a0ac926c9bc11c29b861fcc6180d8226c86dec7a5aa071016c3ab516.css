@@ -3592,7 +3592,7 @@ div.dropdown.ib {
   font-size: 18px;
 }
 /* line 294, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
-.rating_box a:hover, .rating_box a:active {
+.rating_box a:focus, .rating_box a:hover, .rating_box a:active, .rating_box a:visited {
   text-decoration: none;
 }
 
@@ -4213,7 +4213,7 @@ div.dropdown.ib {
 
 /* line 851, /home/hoofoo/projects/alcomap/app/assets/stylesheets/index_controller.scss */
 #window_close {
-  background-image: url(/assets/close-f157b6d9b33b2d047068abf3cff508e06563ef3e78ac50585c845a9b4daecf61.png);
+  background-image: url(/close.png);
   background-size: contain;
   width: 25px;
   height: 25px;

@@ -2,7 +2,12 @@ json.array!(@points) do |point|
   json.extract! point, :id, :lng, :lat, :name, :rating, :description, :isFulltime, :cardAccepted, :beer, :hard, :elite
   json.created_at point.created_at.strftime("%d %b. %Y")
   json.url point_url(point, format: :json)
-  json.user(point.user, :name)
+  json.user do
+    json.name point.user.name
+    json.profile do
+      json.sex point.user.profile.sex
+    end
+  end
   json.point_type(point.point_type)
   json.editable (point.user == current_user)
 

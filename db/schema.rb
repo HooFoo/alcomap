@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160828204425) do
+ActiveRecord::Schema.define(version: 20160828204427) do
 
   create_table "chat_messages", force: :cascade do |t|
     t.string   "message"
@@ -67,6 +67,17 @@ ActiveRecord::Schema.define(version: 20160828204425) do
   end
 
   add_index "points", ["user_id"], name: "index_points_on_user_id"
+
+  create_table "profiles", force: :cascade do |t|
+    t.integer  "age"
+    t.string   "sex"
+    t.string   "comment"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "profiles", ["user_id"], name: "index_profiles_on_user_id"
 
   create_table "rated_points", force: :cascade do |t|
     t.boolean  "direction"
