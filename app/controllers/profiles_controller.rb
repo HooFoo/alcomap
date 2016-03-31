@@ -10,13 +10,15 @@ class ProfilesController < InheritedResources::Base
   end
 
   def update
-    @profile = current_user.profile
-    @profile.sex = params[:profile][:sex]
-    @profile.age = params[:profile][:age]
-    @profile.comment = params[:profile][:comment]
-    @profile.save!
+    authentificated? do
+      @profile = current_user.profile
+      @profile.sex = params[:profile][:sex]
+      @profile.age = params[:profile][:age]
+      @profile.comment = params[:profile][:comment]
+      @profile.save!
 
-    redirect_to '/users/edit', notice: 'Настройки сохранены'
+      redirect_to '/users/edit', notice: 'Настройки сохранены'
+    end
   end
 
   private

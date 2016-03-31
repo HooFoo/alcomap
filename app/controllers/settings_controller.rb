@@ -4,19 +4,40 @@ class SettingsController < InheritedResources::Base
   actions :all, :except => [:destroy, :create]
 
   def create
-    @setting = Setting.new :json => params[:json],
+    authentificated? do
+      @setting = Setting.new :json => params[:json],
                            :user => current_user
-    @setting.save
+      @setting.save
+    end
   end
+
   def update
-    @setting = Setting.find_by_user_id current_user.id
-    @setting.json = params[:json]
-    @setting.save!
-    render :json => {:result => :ok}
+    authentificated? do
+      @setting = Setting.find_by_user_id current_user.id
+      if @setting.nil?
+        @setting = Setting.new(id: current_user.id)
+      end
+      @setting.json = params[:json]
+      @setting.save!
+      render :json => {:result => :ok}
+    end
   end
 
   def index
-    @setting = current_user.setting
+    unless current_user.nil?
+      @setting = current_user.setting
+    else
+      #fake data
+      @setting = {json: {shops: true,
+                         bars: true,
+                         messages: true,
+                         markers: true,
+                         users: true},
+                  id:0,
+                  user_id:0,
+                  created_at: Time.now,
+                  updated_at: Time.now}
+    end
     render 'show'
   end
 

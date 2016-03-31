@@ -23,6 +23,7 @@
   transform: translate(-50%, 35px);
   -webkit-transform: translate(-50%, 35px);
   z-index: 1;
+  color: white;
 }
 
 .comment_user {
@@ -59,7 +60,7 @@
 }
 
 .comments {
-  background-color: rgba(249, 249, 249, 0.7);
+  background-color: #353535;
   padding-top: 10px;
   height: calc(100% - 100px);
   overflow: auto;
@@ -74,7 +75,7 @@
 }
 
 .comment_form {
-  background: rgba(249, 249, 249, 0.7);
+  background: #353535;
   padding: 5px 10px;
   height: 100px;
 }
@@ -85,10 +86,10 @@
 }
 
 .comment {
-  border: 2px solid rgba(2, 2, 2, 0.51);
+  border: 2px solid rgba(255, 255, 255, 0.51);
   padding: 3px 6px;
   margin-bottom: 5px;
-  background-color: rgba(249, 249, 249, 0.7);
+  background-color: #333333;
   margin-left: 2px;
   margin-right: 2px;
   border-radius: 4px;
@@ -194,7 +195,7 @@ a:hover {
 .padding_mobile
 {
   height: 100vh;
-  background-color:rgba(249, 249, 249, 0.7) ;
+  background-color:#000000 ;
 }
 @media (min-width: 992px) {
   .half_btn,.dn_btn {
@@ -476,8 +477,8 @@ div.dropdown.ib {
 
 #news {
   text-align: center;
-  background-color: rgba(249, 249, 249, 0.7);
-  height: 100vh;
+  background-color: #353535;
+  height: calc(100vh - 198px);
 }
 
 #news_scroller {
@@ -495,10 +496,10 @@ div.dropdown.ib {
 .news {
   list-style-type: none;
   list-style-type: none;
-  border: 2px solid rgba(2, 2, 2, 0.51);
+  border: 2px solid rgba(255, 255, 255, 0.51);
   padding: 3px 6px;
   margin-bottom: 5px;
-  background-color: rgba(249, 249, 249, 0.7);
+  background-color: #333333;
   margin-left: 2px;
   margin-right: 2px;
   border-radius: 4px;
@@ -533,6 +534,7 @@ div.dropdown.ib {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   height: 100vh;
   transition: 1s;
+  color: white;
 }
 
 .add_point_labels {

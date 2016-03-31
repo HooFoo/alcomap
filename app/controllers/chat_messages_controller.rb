@@ -3,18 +3,20 @@ class ChatMessagesController < InheritedResources::Base
   respond_to :json
 
   def create
-    last = ChatMessage.last
+    authentificated? do
+        last = ChatMessage.last
 
-    unless last.message == params[:message] and last.user == current_user
-      @chat_message = ChatMessage.new :message =>ActionController::Base.helpers.strip_tags(params[:message]),
-                                      :user => current_user
-      @chat_message.save
-      if ChatMessage.count > 50
-        ChatMessage.first.destroy
+      unless last.message == params[:message] and last.user == current_user
+        @chat_message = ChatMessage.new :message =>ActionController::Base.helpers.strip_tags(params[:message]),
+                                        :user => current_user
+        @chat_message.save
+        if ChatMessage.count > 50
+          ChatMessage.first.destroy
+        end
       end
-    end
 
-    render 'show'
+      render 'show'
+    end
   end
 
   def latest

@@ -4,11 +4,11 @@
 function IndexController($compile, $scope, $http, gmap, Point, Comment, User, ControllersProvider, Settings) {
     var $this = this;
 
-    this.heading = 'Алкомап';
+    this.heading = 'Шлюхокарта';
     this.currentPoint = undefined;
     this.openedInfos = undefined;
     this.user = User;
-    this.settings = {};
+    this.settings = {"shops":true,"bars":true,"messages":true,"markers":true,"users":true};
     $this.points = [];
 
     var findPointInList = function (point) {
@@ -218,8 +218,8 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
     this.comment = function () {
         $scope.comment.point_id = $this.currentPoint.id;
         var comment = Comment.new($scope.comment, function (result) {
-            $scope.comment.text = '';
-            $this.currentPoint.comments.unshift(result);
+                $scope.comment.text = '';
+                $this.currentPoint.comments.unshift(result);
         });
 
     };
@@ -328,10 +328,14 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
     var init = function () {
         EventTarget.apply($this);
         Settings.get(function(result){
-            $this.settings = JSON.parse(result.data.json);
+            if( typeof result.data.json == 'string')
+                $this.settings = JSON.parse(result.data.json);
+            else
+                $this.settings = result.data.json;
         });
         $scope.$watch('controller.settings', function (newValue, oldValue) {
-            Settings.save(newValue);
+            if (newValue!=oldValue)
+                Settings.save(newValue);
             $this.showMarkers();
         }, true);
 
@@ -339,7 +343,6 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
         ControllersProvider.index = $this;
         $this.usersMarker = new google.maps.Marker({
             position: USER_POSITION,
-            label: "Ты здесь",
             icon: {
                 url: asset_path('Alien.png')
             },

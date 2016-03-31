@@ -10,7 +10,7 @@ class NewsController < ApplicationController
   end
 
   def my
-    @news = News.where('user_id = ?',current_user.id).offset(params[:shift]).reverse_order.limit 50
+    @news = current_user.nil? ? [] : News.where('user_id = ?',current_user.id).offset(params[:shift]).reverse_order.limit(50)
     render 'index'
   end
 

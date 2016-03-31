@@ -107,3 +107,11 @@ if(window.Notification)
 {
   Notification.requestPermission();
 }
+function needLogIn(cb) {
+    return function (data){
+      if ('error' in data)
+        window.location.pathname = '/users/sign_in';
+      else
+        cb.call(data);
+    }
+}

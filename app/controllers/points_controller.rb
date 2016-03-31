@@ -3,13 +3,15 @@ class PointsController < InheritedResources::Base
   respond_to :json
 
   def create
-    #process_picture
-    @point = Point.new point_params
-    @point.user = current_user
-    if @point.save!
-      News.new(:user => current_user, :point => @point).save
+    authentificated? do
+        #process_picture
+      @point = Point.new point_params
+      @point.user = current_user
+      if @point.save!
+        News.new(:user => current_user, :point => @point).save
+      end
+      render 'show'
     end
-    render 'show'
   end
 
   def index(options={}, &block)
@@ -22,33 +24,37 @@ class PointsController < InheritedResources::Base
   end
 
   def destroy
-    @point = Point.find(params[:id])
-    if @point.user == current_user
-      super
+    authentificated? do
+        @point = Point.find(params[:id])
+      if @point.user == current_user
+        super
+      end
     end
   end
 
   def rate
-    user = current_user
-    @point = Point.find(params[:id])
-    rate = RatedPoint.find_or_initialize_by point: @point, user: user
-    rating = params[:direction] ? 1 : -1
-    if rate.persisted?
-      @point.rating = rate.direction ? @point.rating - 1 : @point.rating + 1
+    authentificated? do
+      user = current_user
+      @point = Point.find(params[:id])
+      rate = RatedPoint.find_or_initialize_by point: @point, user: user
+      rating = params[:direction] ? 1 : -1
+      if rate.persisted?
+        @point.rating = rate.direction ? @point.rating - 1 : @point.rating + 1
+      end
+      rate.direction = params[:direction]
+      @point.rating+=rating
+      @point.save
+      rate.save
+      if @point.rating <= -5
+        @point.destroy
+      end
+      render 'show'
     end
-    rate.direction = params[:direction]
-    @point.rating+=rating
-    @point.save
-    rate.save
-    if @point.rating <= -5
-      @point.destroy
-    end
-    render 'show'
   end
 
   def get_points
     bounds = params[:bounds]
-    settings =  params[:settings]
+    settings = params[:settings]
     @points = []
     @points.concat Point.shops(bounds) if settings[:shops]
     @points.concat Point.bars(bounds) if settings[:bars]

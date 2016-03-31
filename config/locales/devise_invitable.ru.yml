@@ -19,7 +19,7 @@ ru:
         submit_button: "Поехали!"
     mailer:
       invitation_instructions:
-        subject: "Кто-то позвал вас на Alkomap"
+        subject: "Кто-то позвал вас на Whoremap"
         hello: "Привет %{email}"
         someone_invited_you: "Кто-то позвал тебя сюда %{url}, ты можешь принять приглашение пройдя по ссылке."
         accept: "Принять приглашение!"

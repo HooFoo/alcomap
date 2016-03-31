@@ -11,20 +11,165 @@ app.factory('gmap', function () {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
         center: USER_POSITION,
-        styles: [{
-            "featureType": "administrative",
-            "elementType": "labels.text.fill",
-            "stylers": [{"color": "#444444"}]
-        },
+        styles: [
             {
-                "featureType": "poi",
+                "featureType": "all",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "saturation": 36
+                    },
+                    {
+                        "color": "#000000"
+                    },
+                    {
+                        "lightness": 40
+                    }
+                ]
+            },
+            {
+                "featureType": "all",
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                    {
+                        "visibility": "on"
+                    },
+                    {
+                        "color": "#000000"
+                    },
+                    {
+                        "lightness": 16
+                    }
+                ]
+            },
+            {
+                "featureType": "all",
+                "elementType": "labels.icon",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative",
                 "elementType": "geometry.fill",
-                "stylers": [{"color": "#999999"}]
+                "stylers": [
+                    {
+                        "color": "#000000"
+                    },
+                    {
+                        "lightness": 20
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                    {
+                        "color": "#000000"
+                    },
+                    {
+                        "lightness": 17
+                    },
+                    {
+                        "weight": 1.2
+                    }
+                ]
             },
             {
                 "featureType": "landscape",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#000000"
+                    },
+                    {
+                        "lightness": 20
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#000000"
+                    },
+                    {
+                        "lightness": 21
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "geometry.fill",
+                "stylers": [
+                    {
+                        "color": "#000000"
+                    },
+                    {
+                        "lightness": 17
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                    {
+                        "color": "#000000"
+                    },
+                    {
+                        "lightness": 29
+                    },
+                    {
+                        "weight": 0.2
+                    }
+                ]
+            },
+            {
+                "featureType": "road.arterial",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#000000"
+                    },
+                    {
+                        "lightness": 18
+                    }
+                ]
+            },
+            {
+                "featureType": "road.local",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#000000"
+                    },
+                    {
+                        "lightness": 16
+                    }
+                ]
+            },
+            {
+                "featureType": "transit",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#000000"
+                    },
+                    {
+                        "lightness": 19
+                    }
+                ]
+            },
+            {
+                "featureType": "transit.station",
                 "elementType": "all",
-                "stylers": [{"color": "#f2f2f2"}]
+                "stylers": [{"visibility": "on",
+                    "color":"#FF22CC"}]
             },
             {
                 "featureType": "landscape",
@@ -32,35 +177,18 @@ app.factory('gmap', function () {
                 "stylers": [{"color": "#7C7C7C"}]
             },
             {
-                "featureType": "poi",
-                "elementType": "all",
-                "stylers": [{"visibility": "off"}]
-            }, {
-                "featureType": "road",
-                "elementType": "all",
-                "stylers": [{"saturation": -100}, {"lightness": 45}]
-            }, {
-                "featureType": "road.highway",
-                "elementType": "all",
-                "stylers": [{"visibility": "simplified"}]
-            }, {
-                "featureType": "road.arterial",
-                "elementType": "labels.icon",
-                "stylers": [{"visibility": "off"}]
-            }, {
-                "featureType": "transit",
-                "elementType": "all",
-                "stylers": [{"visibility": "off"}]
-            }, {
-                "featureType": "transit.station",
-                "elementType": "all",
-                "stylers": [{"visibility": "on",
-                    "color":"#FF22CC"}]
-            }, {
                 "featureType": "water",
-                "elementType": "all",
-                "stylers": [{"color": "#46bcec"}, {"visibility": "on"}]
-            }]
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#000000"
+                    },
+                    {
+                        "lightness": 17
+                    }
+                ]
+            }
+        ]
     });
     // Create the search box and link it to the UI element.
     var input = document.getElementById('search_field');
@@ -149,13 +277,13 @@ app.factory('BackendResource', ['$resource', '$http', function ($resource, $http
                 this.resource.get({id: id, format: 'json'}).$promise.then(accept, reject);
             },
             edit: function (id, data, accept, reject) {
-                this.resource.update({id: id, format: 'json'}, data).$promise.then(accept, reject);
+                this.resource.update({id: id, format: 'json'}, data).$promise.then(needLogIn(accept), reject);
             },
             new: function (data, accept, reject) {
-                $resource('/' + name + '.:format').save({format: 'json'}, data).$promise.then(accept, reject);
+                $resource('/' + name + '.:format').save({format: 'json'}, data).$promise.then(needLogIn(accept), reject);
             },
             delete: function (id, accept, reject) {
-                this.resource.delete({id: id, format: 'json'}).$promise.then(accept, reject);
+                this.resource.delete({id: id, format: 'json'}).$promise.then(needLogIn(accept), reject);
             }
         }
     }

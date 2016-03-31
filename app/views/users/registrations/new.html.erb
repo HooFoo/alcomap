@@ -1,59 +1,36 @@
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'form-horizontal'}) do |f| %>
-    <%= devise_error_messages! %>
+<div class="forms_wrapper">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'form-horizontal'}) do |f| %>
+      <div class="form_wrapper">
+        <%= devise_error_messages! %>
+        <%= f.hidden_field :invitation_token, class: 'form-control' %>
 
-    <div class="field form-group">
-      <h1 class="col-sm-12">Регистрация</h1>
-    </div>
+        <p><%= f.label :email %><br/>
+          <%= f.email_field :email, :required => true, class: 'form-control' %></p>
 
-    <div class="field form-group">
-      <%= f.label :email, class: 'col-sm-2' %><br/>
+        <p><%= f.label :name %><br/>
+          <%= f.text_field :name, :required => true, class: 'form-control' %></p>
 
-      <div class="col-sm-10">
-        <%= f.email_field :email, autofocus: true %>
+        <p><%= f.label :password %><br/>
+          <%= f.password_field :password, class: 'form-control' %></p>
+
+        <p><%= f.label :password_confirmation %><br/>
+          <%= f.password_field :password_confirmation, class: 'form-control' %></p>
+
+        <p><%= label :profile, 'Age' %>
+          <%= number_field :profile, :age, value: 18 %></p>
+
+        <p><%= label :profile, 'Sex' %>
+          <%= select :profile, :sex, Profile.sexes.keys %></p>
+
+        <p><%= label :profile, 'Comment' %>
+          <%= text_field :profile, :comment %></p>
+
+        <p><%= f.label 'Я все понял' %>
+          <%= f.check_box :nil?, :required => true %></p>
+
+        <p><%= f.submit 'Я готов', class: 'form-control' %></p>
+        <%= render "users/shared/links" %>
       </div>
-    </div>
-
-    <div class="field form-group">
-      <%= f.label :name, class: 'col-sm-2' %><br/>
-
-      <div class="col-sm-10">
-        <%= f.text_field :name, autofocus: true %>
-      </div>
-    </div>
-
-    <div class="field form-group">
-      <%= f.label :invite, class: 'col-sm-2' %><br/>
-
-      <div class="col-sm-10">
-        <%= f.text_field :invitation_token, autofocus: true %>
-      </div>
-    </div>
-
-
-
-    <div class="field form-group">
-      <%= f.label :password, class: 'col-sm-2' %>
-      <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> characters minimum)</em>
-      <% end %><br/>
-
-      <div class="col-sm-10">
-        <%= f.password_field :password, autocomplete: "off" %>
-      </div>
-    </div>
-
-    <div class="field form-group">
-      <%= f.label :password_confirmation, class: 'col-sm-2' %><br/>
-
-      <div class="col-sm-10">
-        <%= f.password_field :password_confirmation, autocomplete: "off" %>
-      </div>
-    </div>
-
-    <div class="actions">
-      <%= f.submit "Зарегистрироваться" %>
-      <%= render "users/shared/links" %>
-    </div>
-<% end %>
-
+  <% end %>
+</div>
 

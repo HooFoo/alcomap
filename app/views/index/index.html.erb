@@ -13,11 +13,11 @@
             <%= image_tag 'new.png' %>
           </div>
           <ul class="dropdown-menu add_dropdown" role="menu" aria-labelledby="add_btn">
-            <li><a href="#" ng-click="controller.addPointDraggable('shop')">Магазин</a></li>
-            <li><a href="#" ng-click="controller.addPointDraggable('bar')">Бар</a></li>
-            <li><a href="#" ng-click="controller.addPointDraggable('marker')">Событие</a></li>
-            <li><a href="#" ng-click="controller.addPointDraggable('message')">Сообщение</a></li>
-            <li><a href="#" ng-click="controller.addUserLocation()">Свое положение</a></li>
+            <li><a href="#" ng-click="controller.addPointDraggable('shop')">Индивидуалка</a></li>
+            <li><a href="#" ng-click="controller.addPointDraggable('bar')">Бордель</a></li>
+            <li><a href="#" ng-click="controller.addPointDraggable('marker')">Что-то невообразимое</a></li>
+            <li><a href="#" ng-click="controller.addPointDraggable('message')">Разврат</a></li>
+            <li><a href="#" ng-click="controller.addUserLocation()">Ищу приключений</a></li>
           </ul>
         </div>
         <div class="dropup">
@@ -78,7 +78,7 @@
         </div>
       </div>
       <div id="news" ng-hide="controller.currentPoint" ng-controller="NewsController as news">
-        <span class="news_header"> Последние события </span>
+        <span class="news_header"> Последние места </span>
 
         <div class="news_opts">
           <span class="my_text">мое</span>
@@ -111,6 +111,7 @@
           </ul>
         </div>
       </div>
+      <iframe frameborder="0" allowtransparency="true" scrolling="no" src="https://money.yandex.ru/embed/shop.xml?account=41001623007864&quickpay=shop&payment-type-choice=on&mobile-payment-type-choice=on&writer=seller&targets=%D0%BF%D0%BE%D0%BD%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%BE%D1%81%D1%8C&targets-hint=&default-sum=&button-text=04&successURL=" width="100%" height="198"></iframe>
     </div>
     <div id="window_wrapper" ng-click="controller.closeWindow()" >
       <div id="window">
@@ -122,4 +123,3 @@
     </div>
   </div>
 </div>
-<script src="http://192.168.0.104:8080/target/target-script-min.js#anonymous"></script>

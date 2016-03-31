@@ -3,7 +3,7 @@ class UserController < ApplicationController
   respond_to :json
 
   def index
-    @user = current_user
+    @user = current_user || User.new(name: '')
   end
 
   def online_count
