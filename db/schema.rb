@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20160828204427) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "chat_messages", force: :cascade do |t|
     t.string   "message"
     t.integer  "user_id"
@@ -22,18 +25,27 @@ ActiveRecord::Schema.define(version: 20160828204427) do
 
   create_table "comments", force: :cascade do |t|
     t.string   "text"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer  "user_id"
     t.integer  "point_id"
-    t.string   "picture_file_name"
-    t.string   "picture_content_type"
-    t.integer  "picture_file_size"
-    t.datetime "picture_updated_at"
   end
 
-  add_index "comments", ["point_id"], name: "index_comments_on_point_id"
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+  add_index "comments", ["point_id"], name: "index_comments_on_point_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
+  create_table "media", force: :cascade do |t|
+    t.integer  "comment_id"
+    t.integer  "point_id"
+    t.integer  "user_id"
+    t.binary   "bin"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "media", ["comment_id"], name: "index_media_on_comment_id", using: :btree
+  add_index "media", ["point_id"], name: "index_media_on_point_id", using: :btree
+  add_index "media", ["user_id"], name: "index_media_on_user_id", using: :btree
 
   create_table "news", force: :cascade do |t|
     t.integer  "user_id"
@@ -42,8 +54,8 @@ ActiveRecord::Schema.define(version: 20160828204427) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "news", ["point_id"], name: "index_news_on_point_id"
-  add_index "news", ["user_id"], name: "index_news_on_user_id"
+  add_index "news", ["point_id"], name: "index_news_on_point_id", using: :btree
+  add_index "news", ["user_id"], name: "index_news_on_user_id", using: :btree
 
   create_table "points", force: :cascade do |t|
     t.float    "lng"
@@ -66,7 +78,7 @@ ActiveRecord::Schema.define(version: 20160828204427) do
     t.datetime "picture_updated_at"
   end
 
-  add_index "points", ["user_id"], name: "index_points_on_user_id"
+  add_index "points", ["user_id"], name: "index_points_on_user_id", using: :btree
 
   create_table "profiles", force: :cascade do |t|
     t.integer  "age"
@@ -77,7 +89,7 @@ ActiveRecord::Schema.define(version: 20160828204427) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "profiles", ["user_id"], name: "index_profiles_on_user_id"
+  add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
 
   create_table "rated_points", force: :cascade do |t|
     t.boolean  "direction"
@@ -87,8 +99,8 @@ ActiveRecord::Schema.define(version: 20160828204427) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "rated_points", ["point_id"], name: "index_rated_points_on_point_id"
-  add_index "rated_points", ["user_id"], name: "index_rated_points_on_user_id"
+  add_index "rated_points", ["point_id"], name: "index_rated_points_on_point_id", using: :btree
+  add_index "rated_points", ["user_id"], name: "index_rated_points_on_user_id", using: :btree
 
   create_table "settings", force: :cascade do |t|
     t.string   "json"
@@ -97,7 +109,7 @@ ActiveRecord::Schema.define(version: 20160828204427) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "settings", ["user_id"], name: "index_settings_on_user_id"
+  add_index "settings", ["user_id"], name: "index_settings_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
@@ -124,10 +136,22 @@ ActiveRecord::Schema.define(version: 20160828204427) do
     t.integer  "invitations_count",      default: 0
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["invitation_token"], name: "index_users_on_invitation_token", unique: true
-  add_index "users", ["invitations_count"], name: "index_users_on_invitations_count"
-  add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id"
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["invitation_token"], name: "index_users_on_invitation_token", unique: true, using: :btree
+  add_index "users", ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
+  add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "comments", "points"
+  add_foreign_key "comments", "users"
+  add_foreign_key "media", "comments"
+  add_foreign_key "media", "points"
+  add_foreign_key "media", "users"
+  add_foreign_key "news", "points"
+  add_foreign_key "news", "users"
+  add_foreign_key "points", "users"
+  add_foreign_key "profiles", "users"
+  add_foreign_key "rated_points", "points"
+  add_foreign_key "rated_points", "users"
+  add_foreign_key "settings", "users"
 end
