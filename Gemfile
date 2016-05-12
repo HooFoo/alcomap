@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.0.0'
+ruby '2.3.1'
 
 gem 'puma'
 
@@ -64,7 +64,7 @@ gem 'bower-rails'
 #gem 'quite_assets'
 
 gem 'devise'
-gem 'devise_invitable', '~> 1.5.2'
+gem 'devise_invitable'
 gem 'omniauth'
 gem 'omniauth-facebook'
 
