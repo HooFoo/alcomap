@@ -2,11 +2,11 @@
  * Created by �������� on 28.08.2015.
  */
 app = angular.module('alcomap', ['ngResource','ngSanitize','smoothScroll']);
-app.controller('IndexController', IndexController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User', 'ControllersProvider', 'Settings']);
-app.controller('ChatController', ChatController, ['$scope','$sce', 'ChatMessage', 'User', 'ControllersProvider']);
-app.controller('NewsController', NewsController, ['News', '$scope', 'ControllersProvider']);
-app.controller('SocialController', SocialController, ['Profile', '$scope', 'ControllersProvider']);
-app.controller('MapController', MapController, ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User', 'ControllersProvider']);
+app.controller('IndexController', ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User', 'ControllersProvider', 'Settings', IndexController]);
+app.controller('ChatController', ['$scope','$sce', 'ChatMessage', 'User', 'ControllersProvider',ChatController]);
+app.controller('NewsController', ['News', '$scope', 'ControllersProvider', NewsController]);
+app.controller('SocialController', ['Profile', '$scope', 'ControllersProvider', SocialController]);
+app.controller('MapController', ['$compile', '$scope', '$http', 'gmap', 'Point', 'Comment', 'User', 'ControllersProvider', MapController]);
 app.factory('gmap', function () {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
