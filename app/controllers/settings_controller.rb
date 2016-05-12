@@ -8,8 +8,12 @@ class SettingsController < InheritedResources::Base
                            :user => current_user
     @setting.save
   end
+
   def update
     @setting = Setting.find_by_user_id current_user.id
+    if @setting.nil?
+      @setting = Setting.new(id: current_user.id)
+    end
     @setting.json = params[:json]
     @setting.save!
     render :json => {:result => :ok}
@@ -17,6 +21,18 @@ class SettingsController < InheritedResources::Base
 
   def index
     @setting = current_user.setting
+    if @setting.nil?
+      @setting = {json: {shops: true,
+                         bars: true,
+                         messages: true,
+                         markers: true,
+                         users: true},
+                  id: 0,
+                  user_id: 0,
+                  created_at: Time.now,
+                  updated_at: Time.now}
+    end
+
     render 'show'
   end
 
@@ -25,5 +41,6 @@ class SettingsController < InheritedResources::Base
   def setting_params
     params.require(:setting).permit(:json, :user_id)
   end
+
 end
 
