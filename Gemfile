@@ -67,7 +67,6 @@ gem 'devise'
 gem 'devise_invitable'
 gem 'omniauth'
 gem 'omniauth-facebook'
-
 gem 'gmaps4rails'
 gem 'underscore-rails'
 gem "paperclip", "~> 4.3"
