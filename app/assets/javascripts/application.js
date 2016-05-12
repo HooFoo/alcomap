@@ -15,7 +15,7 @@
 //= require turbolinks
 //= require bootstrap
 //= require underscore
-//= require markerclusterer_compiled
+//= require markerclusterer.min
 //= require angular
 //= require angular-resource
 //= require angular-sanitize
