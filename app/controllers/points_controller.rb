@@ -48,13 +48,13 @@ class PointsController < InheritedResources::Base
 
   def get_points
     bounds = params[:bounds]
-    settings =  params[:settings]
+    settings = JSON.parse current_user.setting.json
     @points = []
-    @points.concat Point.shops(bounds) if settings[:shops]
-    @points.concat Point.bars(bounds) if settings[:bars]
-    @points.concat Point.messages(bounds) if settings[:messages]
-    @points.concat Point.markers(bounds) if settings[:markers]
-    @points.concat Point.users(bounds) if settings[:users]
+    @points.concat Point.shops(bounds) if settings['shops']
+    @points.concat Point.bars(bounds) if settings['bars']
+    @points.concat Point.messages(bounds) if settings['messages']
+    @points.concat Point.markers(bounds) if settings['markers']
+    @points.concat Point.users(bounds) if settings['users']
 
     render 'index.json'
   end

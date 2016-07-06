@@ -244,7 +244,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
             };
 
 
-            Point.getPoints(parsed, $this.settings, function (result) {
+            Point.getPoints(parsed, function (result) {
                 gmap.clearMarkers();
                 $this.points = result.data;
                 $this.points.forEach(function (item) {
