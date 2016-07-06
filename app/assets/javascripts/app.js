@@ -165,8 +165,8 @@ app.factory('Point', ['$resource', 'BackendResource', '$http', function ($resour
     obj.index_optimised = function (bounds, accept, reject) {
         $resource('/points.:format').query({bounds: bounds, format: 'json'}).$promise.then(accept, reject);
     };
-    obj.getPoints = function (bounds,settings, accept, reject) {
-        $http.post('/points/get_points',{bounds: bounds, settings:settings}).then(accept, reject);
+    obj.getPoints = function (bounds, accept, reject) {
+        $http.post('/points/get_points',{bounds: bounds}).then(accept, reject);
     };
 
     obj.rate = function (pid, direction, accept, reject) {
