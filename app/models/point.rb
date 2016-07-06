@@ -16,6 +16,15 @@ class Point < ActiveRecord::Base
   #has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/missing.png"
   #validates_attachment_content_type :picture, content_type: /\Aimage\/.*\Z/
 
+  def self.by_settings bounds,settings
+    res = []
+    res.concat shops(bounds) if settings['shops']
+    res.concat bars(bounds) if settings['bars']
+    res.concat messages(bounds) if settings['messages']
+    res.concat markers(bounds) if settings['markers']
+    res.concat users(bounds) if settings['users']
+    res
+  end
 
   def self.shops(coords)
     where("lat <= #{coords['ne']['lat']} and lat >= #{coords['sw']['lat']} and lng <= #{coords['ne']['lng']} and lng >= #{coords['sw']['lng']} and point_type = 'shop'").to_a
