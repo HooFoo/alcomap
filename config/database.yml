@@ -13,7 +13,7 @@ development:
   adapter: postgresql
   encoding: unicode
   host: localhost
-  database: development
+  database: alko_development
   pool: 5
   username: pguser
   password: pass
