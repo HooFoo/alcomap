@@ -216,11 +216,11 @@ app.service('Settings', ['BackendResource','$http', function (BackendResource,$h
     {
         $http.get('/settings.json').then(accept);
     };
-    obj.save = function (settings) {
+    obj.save = function (settings,callback) {
         if(settings == {})
             settings = {"shops":true,"bars":true,"messages":true,"markers":true,"users":true};
-        obj.edit(0,{json: JSON.stringify(settings)}, function (result) {
-
+            obj.edit(0,{json: JSON.stringify(settings)}, function (result) {
+                callback();
         });
     };
     return obj;

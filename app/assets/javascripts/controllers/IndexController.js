@@ -331,7 +331,9 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
             $this.settings = JSON.parse(result.data.json);
         });
         $scope.$watch('controller.settings', function (newValue, oldValue) {
-            Settings.save(newValue);
+            Settings.save(newValue, function () {
+                ControllersProvider.news.refresh();
+            });
             $this.showMarkers();
         }, true);
 
