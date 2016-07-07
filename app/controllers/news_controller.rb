@@ -3,10 +3,8 @@ class NewsController < ApplicationController
   respond_to :json
 
   def index
-    @news = News.all.reverse_order
-                .limit(50).select do |news|
-      news.point.actual?
-    end
+    @news = News.by_settings(current_user.setting.to_h)
+                .select { |news| news.point.actual? }
   end
 
   def my
