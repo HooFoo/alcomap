@@ -5,23 +5,35 @@ function NewsController(News, $scope, ControllersProvider) {
     var $this = this;
     this.onlyMy = false;
 
+    this.getIndex = function () {
+        $('#news_scroller').toggleClass(' fadeIn fadeOut');
+        News.index(function (result) {
+            $this.news = result;
+            $('#news_scroller').toggleClass(' fadeIn fadeOut');
+
+        });
+    };
+    this.getMy = function () {
+        $('#news_scroller').toggleClass(' fadeIn fadeOut');
+        News.indexMy(function (result) {
+            $this.news = result;
+            $('#news_scroller').toggleClass(' fadeIn fadeOut');
+        });
+    };
     this.onlyMyChanged = function () {
         if ($this.onlyMy) {
-            $('#news_scroller').toggleClass(' fadeIn fadeOut');
-            News.indexMy(function (result) {
-                $this.news = result;
-                $('#news_scroller').toggleClass(' fadeIn fadeOut');
-            });
+            this.getMy();
             this.stopUpdate = true;
         }
         else {
-            $('#news_scroller').toggleClass(' fadeIn fadeOut');
-            News.index(function (result) {
-                $this.news = result;
-                $('#news_scroller').toggleClass(' fadeIn fadeOut');
-
-            });
+            this.getIndex();
             this.stopUpdate = false;
+        }
+    };
+    this.refresh = function () {
+        if(!$this.onlyMy)
+        {
+            $this.getIndex();
         }
     };
     this.more = function () {
