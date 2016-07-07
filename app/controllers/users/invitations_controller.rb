@@ -19,7 +19,7 @@ class Users::InvitationsController < Devise::InvitationsController
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:accept_invitation) << [:name, :email, :invitation_relation]
+    devise_parameter_sanitizer.permit(:accept_invitation, keys: [:name, :email, :invitation_relation])
   end
 
 end
