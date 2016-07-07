@@ -7,7 +7,7 @@ class PointsController < InheritedResources::Base
     @point = Point.new point_params
     @point.user = current_user
     if @point.save!
-      News.new(:user => current_user, :point => @point).save
+      News.new(:user => current_user, :point => @point, :point_type => @point.point_type).save
     end
     render 'show'
   end
@@ -48,7 +48,7 @@ class PointsController < InheritedResources::Base
 
   def get_points
     bounds = params[:bounds]
-    settings = JSON.parse current_user.setting.json
+    settings = current_user.setting.to_h
     @points = Point.by_settings bounds,settings
 
     render 'index.json'
