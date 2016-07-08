@@ -219,9 +219,7 @@ app.service('Settings', ['BackendResource','$http', function (BackendResource,$h
     obj.save = function (settings,callback) {
         if(settings == {})
             settings = {"shops":true,"bars":true,"messages":true,"markers":true,"users":true};
-            obj.edit(0,{json: JSON.stringify(settings)}, function (result) {
-                callback();
-        });
+            obj.edit(0,{json: JSON.stringify(settings)}, callback);
     };
     return obj;
 }]);
