@@ -332,9 +332,9 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
         });
         $scope.$watch('controller.settings', function (newValue, oldValue) {
             Settings.save(newValue, function () {
+                $this.showMarkers();
                 ControllersProvider.news.refresh();
             });
-            $this.showMarkers();
         }, true);
 
         gmap.addListener('idle', $this.showMarkers);
