@@ -53,12 +53,14 @@ var USER_POSITION_DEFAULT={lat: 55.75370903771494, lng: 37.61981338262558};
 var up = localStorage.getItem('USER_POSITION');
 var USER_POSITION = (up && up.lat instanceof Number && up.lng instanceof Number)?{lat:up.lat,lng:up.lng}:USER_POSITION_DEFAULT;
 function updateUserPosition() {
-    navigator.geolocation.getCurrentPosition(function (position) {
-        USER_POSITION = {lat: position.coords.latitude, lng: position.coords.longitude};
-        localStorage.setItem('USER_POSITION',USER_POSITION);
-    }, function (err) {
-        console.log('ERROR(' + err.code + '): ' + err.message);
-    });
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            USER_POSITION = {lat: position.coords.latitude, lng: position.coords.longitude};
+            localStorage.setItem('USER_POSITION',USER_POSITION);
+        }, function (err) {
+            console.log('ERROR(' + err.code + '): ' + err.message);
+        });
+    }
 };
 updateUserPosition();
 setTimeout(function () {
