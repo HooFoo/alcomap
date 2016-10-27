@@ -74,7 +74,9 @@ gem "paperclip", "~> 4.3"
 gem 'lazy_columns'
 gem 'hashie'
 
+
 group :production do
   gem 'pg', '0.15.1'
   gem 'rails_12factor', '0.0.2'
+  gem 'actionpack-page_caching'
 end
