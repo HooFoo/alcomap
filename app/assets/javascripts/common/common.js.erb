@@ -4,18 +4,18 @@
 
 function asset_path(name) {
     assets = {
-        'bottle.png': '<%= asset_path "bottle.png" %>',
-        'Alien.png': '<%= asset_path "Alien.png" %>',
-        'Alien_other.png': '<%= asset_path "Alien_other.png" %>',
-        'drinks.png': '<%= asset_path "drinks.png" %>',
-        'new.png': '<%= asset_path "new.png" %>',
-        'info.html': '<%= asset_path "info.html" %>',
-        'new_point.html': '<%= asset_path "new_point.html" %>',
-        'send_message.png': '<%= asset_path "send_message.png" %>',
-        'event.png': '<%= asset_path "event.png" %>',
-        'message.png': '<%= asset_path "message.png" %>',
-        'alert.mp3': '<%= asset_path "alert.mp3" %>',
-        'message_notify.jpg': '<%= asset_path "message_notify.jpg" %>'
+        'bottle.png': '/images/bottle.png',
+        'Alien.png': '/images/Alien.png',
+        'Alien_other.png': '/images/Alien_other.png',
+        'drinks.png': '/images/drinks.png',
+        'new.png': '/images/new.png',
+        'info.html': '/templates/info.html',
+        'new_point.html': '/templates/new_point.html',
+        'send_message.png': '/images/send_message.png',
+        'event.png': '/images/event.png',
+        'message.png': '/images/message.png',
+        'alert.mp3': '/images/alert.mp3',
+        'message_notify.jpg': '/images/message_notify.jpg'
     };
     return assets[name]||'none';
 }

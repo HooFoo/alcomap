@@ -550,11 +550,11 @@ div.dropdown.ib {
   margin: 2px;
 }
 .delete_point {
-  background-image: asset_url('delete.png');
+  background-image: url('/images/delete.png');
 }
 .edit_point
 {
-  background-image: asset_url('edit.png');
+  background-image: url('/images/edit.png');
 }
 
 .point_wrap {
@@ -612,7 +612,7 @@ div.dropdown.ib {
 }
 
 .icon_shop {
-  background-image: asset_url('bottle.png');
+  background-image: url('/images/bottle.png');
   height: 20px;
   width: 20px;
   position: absolute;
@@ -622,7 +622,7 @@ div.dropdown.ib {
 }
 
 .icon_bar {
-  background-image: asset_url('drinks.png');
+  background-image: url('/images/drinks.png');
   height: 20px;
   width: 20px;
   position: absolute;
@@ -632,7 +632,7 @@ div.dropdown.ib {
 }
 
 .icon_marker {
-  background-image: asset_url('event.png');
+  background-image: url('/images/event.png');
   height: 20px;
   width: 20px;
   position: absolute;
@@ -642,7 +642,7 @@ div.dropdown.ib {
 }
 
 .icon_message {
-  background-image: asset_url('message.png');
+  background-image: url('/images/message.png');
   height: 20px;
   width: 20px;
   position: absolute;
@@ -651,7 +651,7 @@ div.dropdown.ib {
   right: 8px;
 }
 .icon_user {
-  background-image: asset_url('Alien_other.png');
+  background-image: url('/images/Alien_other.png');
   height: 20px;
   width: 20px;
   position: absolute;

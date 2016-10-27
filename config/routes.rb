@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   resources :profiles, defaults: {format: :json}
   #resources :media
   resources :settings, defaults: {format: :json}
@@ -20,6 +21,8 @@ Rails.application.routes.draw do
   get '/profiles/by_user/:user_id', to: 'profiles#by_user', defaults: {shift: 0, format: :json}
   resources :comments, defaults: {format: :json}
   resources :points, defaults: {format: :json}
+
+  get '/templates/:path.html' => 'templates#page', :constraints => { :path => /.+/  }
 
   root 'index#index'
 

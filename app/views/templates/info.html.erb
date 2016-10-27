@@ -1,0 +1,29 @@
+<div class='info'>
+  <span class='comment_user'>{{controller.currentPoint.name}}</span><br>
+  <div class="pointattrs" ng-hide="controller.currentPoint.point_type == 'message' || controller.currentPoint.point_type == 'marker' || controller.currentPoint.point_type == 'user' ">
+    <div class="ib" ng-show="controller.currentPoint.isFulltime" title="Круглосуточно"><%= image_tag '24.png', size: 16, class: 'point_attr_icon' %></div>
+    <div class="ib" ng-show="controller.currentPoint.cardAccepted" title="Оплата картой"><%= image_tag 'CreditCard.png', size: 16, class: 'point_attr_icon' %></div>
+    <div class="ib" ng-show="controller.currentPoint.beer" title="Пиво"><%= image_tag 'beer.png', size: 16, class: 'point_attr_icon' %></div>
+    <div class="ib" ng-show="controller.currentPoint.hard" title="Крепкое"><%= image_tag 'hard.png', size: 16, class: 'point_attr_icon' %></div>
+    <div class="ib" ng-show="controller.currentPoint.elite" title="Хороший алкоголь"><%= image_tag 'elite.png', size: 16, class: 'point_attr_icon'%></div>
+  </div>
+  <div ng-show="controller.currentPoint.description">
+    <span class="point_description_heading">Описание:</span>
+    <span class='point_description'>{{controller.currentPoint.description}}</span><br>
+  </div>
+  <div ng-hide="controller.currentPoint.point_type == 'user'">
+    Добавил: <span ng-class="controller.currentPoint.user.profile.sex" class='user_add'>{{controller.currentPoint.user.name}}</span>
+  </div>
+</div>
+<div class='infobox_down' ng-hide="controller.currentPoint.point_type == 'message' || controller.currentPoint.point_type == 'user'">
+  <span class='added'>Добавлено: {{controller.currentPoint.created_at}}</span>
+
+  <div class='rating_box'>
+    <a href='javascript:void(0);' class='plus' ng-click='controller.pointRate(true)'>+</a>
+    <span class='rating'>{{controller.currentPoint.rating}}</span>
+    <a href='javascript:void(0);' class='minus' ng-click='controller.pointRate(false)'>-</a>
+  </div>
+</div>
+<div ng-class="controller.currentPoint.user.profile.sex" ng-show="controller.currentPoint.point_type == 'user'" ng-click="controller.activateChat(controller.currentPoint.user.name)">
+  <span class="user_chat_link" >{{controller.currentPoint.user.name}}</span>
+</div>
