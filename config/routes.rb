@@ -5,8 +5,7 @@ Rails.application.routes.draw do
   resources :settings, defaults: {format: :json}
   resources :chat_messages, defaults: {format: :json}
   devise_for :users, controllers: {registrations: 'users/registrations',
-                                   invitations: 'users/invitations'},
-             path_names: {sign_up: '',}
+                                   invitations: 'users/invitations'}
   get 'index_controller/index'
   post 'users/invitation', to: 'users/invitations#update'
   get 'users/success', to: 'users/invitations#success'

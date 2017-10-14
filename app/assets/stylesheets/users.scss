@@ -32,6 +32,7 @@
   bottom: 0;
   left: 0;
   overflow: hidden;
+  z-index: -999;
 }
 
 @media (max-width: 1024px) {
@@ -148,7 +149,7 @@
   transform: translate(-50%, 30vh);
   -webkit-transform: translate(-50%, 30vh);
   background: rgba(255, 255, 255, 0.81);
-
+  width: 60%;
 }
 .actions
 {

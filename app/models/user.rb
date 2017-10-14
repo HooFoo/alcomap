@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_one :setting
   has_many :media
   has_one :profile
+  validates :email, :uniqueness => true
 
   after_create do |user|
     user.setting ||= Setting.new(:json => '{"shops":true,"bars":true,"messages":true,"markers":true,"users":true}',
