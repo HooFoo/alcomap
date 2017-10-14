@@ -35,11 +35,11 @@ class Point < ActiveRecord::Base
   end
 
   def self.markers(coords)
-    limit(40).eager_load(:comments, :user, :rated_points).where("lat <= #{coords['ne']['lat']} and lat >= #{coords['sw']['lat']} and lng <= #{coords['ne']['lng']} and lng >= #{coords['sw']['lng']} and point_type = 'marker' AND created_at >= ?", Date.today - 7).to_a
+    limit(40).eager_load(:comments, :user, :rated_points).where("lat <= #{coords['ne']['lat']} and lat >= #{coords['sw']['lat']} and lng <= #{coords['ne']['lng']} and lng >= #{coords['sw']['lng']} and point_type = 'marker' AND points.created_at >= ?", Date.today - 7).to_a
   end
 
   def self.messages(coords)
-    limit(40).eager_load(:comments, :user, :rated_points).where("lat <= #{coords['ne']['lat']} and lat >= #{coords['sw']['lat']} and lng <= #{coords['ne']['lng']} and lng >= #{coords['sw']['lng']} and point_type = 'message' AND created_at >= ?", DateTime.now-30.minutes).to_a
+    limit(40).eager_load(:comments, :user, :rated_points).where("lat <= #{coords['ne']['lat']} and lat >= #{coords['sw']['lat']} and lng <= #{coords['ne']['lng']} and lng >= #{coords['sw']['lng']} and point_type = 'message' AND points.created_at >= ?", DateTime.now-30.minutes).to_a
   end
 
   def self.visible(coords)
@@ -47,11 +47,11 @@ class Point < ActiveRecord::Base
   end
 
   def self.mixed(coords)
-    limit(40).eager_load(:comments, :user, :rated_points).where("lat <= #{coords['ne']['lat']} and lat >= #{coords['sw']['lat']} and lng <= #{coords['ne']['lng']} and lng >= #{coords['sw']['lng']} and (point_type = 'shop') or (point_type = 'bar') or (point_type = 'message' AND created_at >= ?) or (point_type = 'marker' AND created_at >= ?)", DateTime.now-30.minutes, Date.today - 7).to_a
+    limit(40).eager_load(:comments, :user, :rated_points).where("lat <= #{coords['ne']['lat']} and lat >= #{coords['sw']['lat']} and lng <= #{coords['ne']['lng']} and lng >= #{coords['sw']['lng']} and (point_type = 'shop') or (point_type = 'bar') or (point_type = 'message' AND points.created_at >= ?) or (point_type = 'marker' AND points.created_at >= ?)", DateTime.now-30.minutes, Date.today - 7).to_a
   end
 
   def self.users(coords)
-    limit(40).eager_load(:comments, :user, :rated_points).where("lat <= #{coords['ne']['lat']} and lat >= #{coords['sw']['lat']} and lng <= #{coords['ne']['lng']} and lng >= #{coords['sw']['lng']} and point_type = 'user' and created_at >= ?", DateTime.now-30.minutes)
+    limit(40).eager_load(:comments, :user, :rated_points).where("lat <= #{coords['ne']['lat']} and lat >= #{coords['sw']['lat']} and lng <= #{coords['ne']['lng']} and lng >= #{coords['sw']['lng']} and point_type = 'user' and points.created_at >= ?", DateTime.now-30.minutes)
         .to_a
         .select do |point|
            point.user.online?
