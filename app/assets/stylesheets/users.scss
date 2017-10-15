@@ -155,3 +155,34 @@
 {
   margin: 5px 0px;
 }
+.auth_info {
+  position: absolute;
+  background: #fafafb;
+  border-radius: 5px;
+  left: 50%;
+  padding: 5px;
+  text-align: center;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  bottom: 0;
+}
+@media (max-width: 420px) {
+  .auth_info {
+    height: 47px;
+    transition: 1s;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+    padding: 5px;
+    > h1 {
+      font-size: 12pt;
+    }
+  }
+  .auth_info:hover {
+    height: auto;
+    width: 100vw;
+  }
+  .forms_wrapper{
+    transform: translate(-50%, 20vh);
+    -webkit-transform: translate(-50%, 20vh);
+  }
+}
