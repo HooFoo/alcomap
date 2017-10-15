@@ -14,6 +14,7 @@
   <link rel="apple-touch-icon" sizes="152x152" href="/images/touch-icon-ipad-retina.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
+  <meta name="yandex-verification" content="5944fccbd7b96edc" />
   <link rel="manifest" href="<%= asset_path 'manifest.json' %>">
   <meta name="Алкомап" content="Где купить алкоголь ночью" />
 </head>
@@ -31,6 +32,15 @@
 <% end %>
 
 <%= yield %>
+<div class="info">
+  <h1 class="info_header">
+    Что это такое?
+  </h1>
+  <p>
+    Алкомап - интерактевная карта, где люди делятся информацией о том, как купить алкоголь ночью.</br>
+    После регистрации вы сможете все увидеть сами.
+  </p>
+</div>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
