@@ -166,6 +166,13 @@
   -webkit-transform: translateX(-50%);
   bottom: 0;
 }
+.vk_widget{
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  width: 200px;
+}
 @media (max-width: 420px) {
   .auth_info {
     height: 47px;
