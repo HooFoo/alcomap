@@ -1,8 +1,8 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   before_action {
-    Rails.logger.info(request)
-    Rails.logger.info(request.params)
-    Rails.logger.info(request.env["omniauth.auth"])
+    Rails.logger.info(request.inspect)
+    Rails.logger.info(request.params.inspect)
+    Rails.logger.info(request.env["omniauth.auth"].inspect)
   }
   def vkontakte
     # You need to implement the method below in your model (e.g. app/models/user.rb)
