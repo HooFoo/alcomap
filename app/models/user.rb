@@ -33,6 +33,15 @@ class User < ActiveRecord::Base
     where({:updated_at => 20.seconds.ago..Time.now}).count
   end
 
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0,20]
+      user.name = auth.info.name   # assuming the user model has a name
+      user.skip_confirmation!
+    end
+  end
+
   def online?
     updated_at >= 20.seconds.ago
   end
