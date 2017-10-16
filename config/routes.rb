@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   resources :settings, defaults: {format: :json}
   resources :chat_messages, defaults: {format: :json}
   devise_for :users, controllers: {registrations: 'users/registrations',
-                                   invitations: 'users/invitations'}
+                                   invitations: 'users/invitations',
+                                   :omniauth_callbacks => 'users/omniauth_callbacks'}
   get 'index_controller/index'
   post 'users/invitation', to: 'users/invitations#update'
   get 'users/success', to: 'users/invitations#success'
