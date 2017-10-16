@@ -1,8 +1,10 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  def vkontakte
+  before_action {
     Rails.logger.info(request)
     Rails.logger.info(request.params)
     Rails.logger.info(request.env["omniauth.auth"])
+  }
+  def vkontakte
     # You need to implement the method below in your model (e.g. app/models/user.rb)
     @user = User.from_omniauth(request.env["omniauth.auth"])
 
