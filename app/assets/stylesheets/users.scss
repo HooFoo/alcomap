@@ -167,11 +167,9 @@
   bottom: 0;
 }
 .vk_widget{
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  -webkit-transform: translateX(-50%);
-  width: 200px;
+  > a > img {
+    width: 30px;
+  }
 }
 @media (max-width: 420px) {
   .auth_info {
