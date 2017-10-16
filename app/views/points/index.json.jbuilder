@@ -3,7 +3,7 @@ json.array!(@points) do |point|
   json.created_at point.created_at.strftime("%d %b. %Y")
   json.url point_url(point, format: :json)
   json.user do
-    json.name point.user.name
+    json.name point.user.try(:name)
     json.profile do
       json.sex point.user.profile.sex
     end
@@ -15,12 +15,12 @@ json.array!(@points) do |point|
     json.text comment.text
     json.id comment.id
     json.user do
-      json.name comment.user.name
-      json.id comment.user.id
+      json.name comment.user.try(:name)
+      json.id comment.user.try(:id)
     end
   end
   json.rated_by(point.rated_points) do |rated|
-    json.user rated.user.name
+    json.user rated.user.try(:name)
     json.direction rated.direction
   end
 end

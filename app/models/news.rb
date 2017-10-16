@@ -6,6 +6,6 @@ class News < ActiveRecord::Base
 
   def self.by_settings settings
     types = settings.keys.map { |key| key.to_s.singularize if settings[key] }
-    eager_load(:user).where('point_type IN (?)',types).limit(20).reverse_order
+    eager_load(:user,:point).where('points.point_type IN (?)',types).limit(20).reverse_order
   end
 end

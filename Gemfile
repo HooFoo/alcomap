@@ -67,7 +67,7 @@ gem 'bower-rails'
 gem 'devise', '~> 4.2'
 gem 'devise_invitable'
 gem 'omniauth'
-gem 'omniauth-facebook'
+gem 'omniauth-vkontakte'
 gem 'gmaps4rails'
 gem 'underscore-rails'
 gem "paperclip", "~> 4.3"

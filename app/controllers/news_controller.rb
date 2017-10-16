@@ -4,7 +4,7 @@ class NewsController < ApplicationController
 
   def index
     @news = News.by_settings(current_user.setting.to_h)
-                .select { |news| news.point.actual? }
+                .select { |news| news.point.try(:actual?) }
   end
 
   def my
@@ -15,7 +15,7 @@ class NewsController < ApplicationController
   def latest
     @news = News.where("id > ?", params[:id])
                 .select do |news|
-      news.point.actual?
+      news.point.try(:actual?)
     end
     render 'index'
   end
