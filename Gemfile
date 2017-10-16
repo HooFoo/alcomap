@@ -67,7 +67,7 @@ gem 'bower-rails'
 gem 'devise', '~> 4.2'
 gem 'devise_invitable'
 gem 'omniauth'
-gem 'omniauth-vkontakte', git: 'https://github.com/ngoral/omniauth-vkontakte.git'
+gem 'omniauth-vkontakte', git: 'https://github.com/ngoral/omniauth-vkontakte.git', branch: 'test'
 gem 'gmaps4rails'
 gem 'underscore-rails'
 gem "paperclip", "~> 4.3"

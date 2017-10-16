@@ -1,9 +1,10 @@
 GIT
   remote: https://github.com/ngoral/omniauth-vkontakte.git
-  revision: 9c3e4de8401aa68913705c9c5d7918c8f1357fb6
+  revision: bad01c683d057de36cbcc577f93cd63929475a23
+  branch: test
   specs:
     omniauth-vkontakte (1.4.0)
-      omniauth-oauth2 (~> 1.4.0)
+      omniauth-oauth2 (~> 1.2)
 
 GEM
   remote: https://rubygems.org/
