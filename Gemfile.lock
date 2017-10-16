@@ -1,11 +1,3 @@
-GIT
-  remote: https://github.com/ngoral/omniauth-vkontakte.git
-  revision: bad01c683d057de36cbcc577f93cd63929475a23
-  branch: test
-  specs:
-    omniauth-vkontakte (1.4.0)
-      omniauth-oauth2 (~> 1.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -169,6 +161,8 @@ GEM
     omniauth-oauth2 (1.4.0)
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
+    omniauth-vkontakte (1.4.1)
+      omniauth-oauth2 (~> 1.2)
     orm_adapter (0.5.0)
     paperclip (4.3.6)
       activemodel (>= 3.2.0)
@@ -302,7 +296,7 @@ DEPENDENCIES
   jquery-rails
   lazy_columns
   omniauth
-  omniauth-vkontakte!
+  omniauth-vkontakte
   paperclip (~> 4.3)
   pg (= 0.15.1)
   puma
