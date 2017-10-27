@@ -14,8 +14,10 @@ class SettingsController < InheritedResources::Base
     if @setting.nil?
       @setting = Setting.new(id: current_user.id)
     end
-    @setting.json = params[:json]
-    @setting.save!
+    if params[:json] != '{}'
+      @setting.json = params[:json]
+      @setting.save!
+    end
     render :json => {:result => :ok}
   end
 
