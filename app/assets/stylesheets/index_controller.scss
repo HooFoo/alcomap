@@ -193,7 +193,7 @@ a:hover {
 }
 .padding_mobile
 {
-  height: 100vh;
+  height: calc(100vh - 260px);
   background-color:rgba(249, 249, 249, 0.7) ;
 }
 @media (min-width: 992px) {
@@ -477,7 +477,7 @@ div.dropdown.ib {
 #news {
   text-align: center;
   background-color: rgba(249, 249, 249, 0.7);
-  height: 100vh;
+  height: calc(100vh - 260px);
 }
 
 #news_scroller {
@@ -489,7 +489,7 @@ div.dropdown.ib {
   padding: 0;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  height: 97vh;
+  height: calc(93vh - 260px);
 }
 
 .news {
@@ -868,4 +868,9 @@ div.dropdown.ib {
 .female
 {
   color: red;
+}
+.partner {
+  width: 100%;
+  text-align: center;
+  background-color: rgba(249, 249, 249, 0.7);
 }
