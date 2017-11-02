@@ -112,11 +112,21 @@
         </div>
       </div>
       <div class="partner">
-        <!-- admitad.banner: hmj9zkmc4o032016822f35e8fc368c Domino's Pizza -->
-          <a target="_blank" rel="nofollow" href="https://ad.admitad.com/g/hmj9zkmc4o032016822f35e8fc368c/?i=4">
-            <img width="300" height="250" border="0" src="https://ad.admitad.com/b/hmj9zkmc4o032016822f35e8fc368c/" alt="Domino&#39;s Pizza"/>
-          </a>
-        <!-- /admitad.banner -->
+        <script type='text/javascript'>(function() {
+  /* Optional settings (these lines can be removed): */ 
+   subID = "";  // - local banner key;
+   injectTo = "";  // - #id of html element (ex., "top-banner").
+  /* End settings block */ 
+
+if(injectTo=="")injectTo="admitad_shuffle"+subID+Math.round(Math.random()*100000000);
+if(subID=='')subid_block=''; else subid_block='subid/'+subID+'/';
+document.write('<div id="'+injectTo+'"></div>');
+var s = document.createElement('script');
+s.type = 'text/javascript'; s.async = true;
+s.src = 'https://ad.admitad.com/shuffle/d96a4a61ad/'+subid_block+'?inject_to='+injectTo;
+var x = document.getElementsByTagName('script')[0];
+x.parentNode.insertBefore(s, x);
+})();</script>
       </div>
     </div>
     <div id="window_wrapper" ng-click="controller.closeWindow()" >
