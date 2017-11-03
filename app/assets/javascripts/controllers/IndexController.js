@@ -25,8 +25,8 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
       return 'https://m.uber.com/ul/?action=setPickup&client_id=vzSp0Z9GSKPVzBo36YNuoZLVkY6MWhGT&pickup=my_location'+
              '&dropoff[latitude]=' + point.lat +
              '&dropoff[longitude]=' + point.lng +
-             '&dropoff[nickname]='+ point.name
-             '&link_text='+ 'Поехали за алкашкой!'
+             '&dropoff[nickname]='+ encodeURIComponent(point.name) +
+             '&link_text='+ encodeURIComponent('Поехали за алкашкой!')
     };
 
     function extractPoint(resource) {
