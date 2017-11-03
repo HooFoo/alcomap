@@ -26,6 +26,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
              '&dropoff[latitude]=' + point.lat +
              '&dropoff[longitude]=' + point.lng +
              '&dropoff[nickname]='+ encodeURIComponent(point.name) +
+             '&dropoff[formatted_address]='+ encodeURIComponent(point.name) +
              '&link_text='+ encodeURIComponent('Поехали за алкашкой!')
     };
 
