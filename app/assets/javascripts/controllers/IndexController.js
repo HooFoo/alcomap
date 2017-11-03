@@ -6,6 +6,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
 
     this.heading = 'Алкомап';
     this.currentPoint = undefined;
+    this.uberLink = undefined;
     this.openedInfos = undefined;
     this.user = User;
     this.settings = {};
@@ -18,6 +19,14 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
                 result = item;
         });
         return result;
+    };
+
+    var createLink = function (point) {
+      return 'https://m.uber.com/ul/?action=setPickup&client_id=vzSp0Z9GSKPVzBo36YNuoZLVkY6MWhGT&'+
+             '&dropoff[latitude]=' + point.lat +
+             '&dropoff[longitude]=' + point.lng +
+             '&dropoff[nickname]='+ point.name
+             '&link_text='+ 'Поехали за алкашкой!'
     };
 
     function extractPoint(resource) {
@@ -71,12 +80,14 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
             marker.setMap(null);
             gmap.addMarker(marker, item.point_type);
             $this.currentPoint = undefined;
+            $this.uberLink = undefined;
             //$scope.$apply();
         };
         infoWindow.addListener('closeclick', infoWindow.onClose);
 
         marker.openInfo = function (event) {
             $this.currentPoint = findPointInList(item);
+            $this.uberLink = createLink($this.currentPoint);
             $this.points.splice($this.points.indexOf(item), 1);
             gmap.removeMarker(marker, item.point_type);
             marker.setMap(gmap);

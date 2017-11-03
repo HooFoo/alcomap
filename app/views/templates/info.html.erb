@@ -14,6 +14,11 @@
   <div ng-hide="controller.currentPoint.point_type == 'user'">
     Добавил: <span ng-class="controller.currentPoint.user.profile.sex" class='user_add'>{{controller.currentPoint.user.name}}</span>
   </div>
+  <div class="uber_btn">
+    <a ng-href="{{controller.uberLink}}" target="_blank">
+      <%= image_tag('uber.png', class: 'uber_icon') %>
+    </a>
+  </div>
 </div>
 <div class='infobox_down' ng-hide="controller.currentPoint.point_type == 'message' || controller.currentPoint.point_type == 'user'">
   <span class='added'>Добавлено: {{controller.currentPoint.created_at}}</span>

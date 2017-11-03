@@ -38,8 +38,14 @@
 
 .info {
   margin-bottom: 21px;
+  max-width: 320px;
 }
-
+.uber_btn{
+  text-align: center;
+  .uber_icon {
+    max-width: 280px;
+  }
+}
 #map_container {
   height: 100vh !important;
   overflow: hidden !important;
@@ -199,6 +205,9 @@ a:hover {
 @media (min-width: 992px) {
   .half_btn,.dn_btn {
     display: none !important;
+  }
+  .uber_btn {
+    display: none;
   }
 }
 @media (max-width: 992px) {
