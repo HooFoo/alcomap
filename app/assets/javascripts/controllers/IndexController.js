@@ -22,7 +22,7 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
     };
 
     var createLink = function (point) {
-      return 'https://m.uber.com/ul/?action=setPickup&client_id=vzSp0Z9GSKPVzBo36YNuoZLVkY6MWhGT&'+
+      return 'https://m.uber.com/ul/?action=setPickup&client_id=vzSp0Z9GSKPVzBo36YNuoZLVkY6MWhGT&pickup=my_location'+
              '&dropoff[latitude]=' + point.lat +
              '&dropoff[longitude]=' + point.lng +
              '&dropoff[nickname]='+ point.name
