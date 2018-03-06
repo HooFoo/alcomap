@@ -348,12 +348,12 @@ function IndexController($compile, $scope, $http, gmap, Point, Comment, User, Co
                 ControllersProvider.news.refresh();
             });
         }, true);
-
-        gmap.addListener('idle', $this.showMarkers);
+        console.log('init')
+        gmap.addListener('zoom_changed', $this.showMarkers);
+        gmap.addListener('dragend', $this.showMarkers);
         ControllersProvider.index = $this;
         $this.usersMarker = new google.maps.Marker({
             position: USER_POSITION,
-            label: "Ты здесь",
             icon: {
                 url: asset_path('Alien.png')
             },
