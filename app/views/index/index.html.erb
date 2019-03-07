@@ -51,9 +51,9 @@
 
     </div>
     <div id="comments" class="col-xs-12 col-sm-12 col-md-4 col-lg-4 nopadding">
-      <button scroll-to="map_area" container-id="map_container" duration="500" class="col-xs-12 col-sm-12  half_btn half_btn_dn btn btn-default">
+      <div scroll-to="map_area" container-id="map_container" duration="500" class="col-xs-12 col-sm-12  half_btn half_btn_dn btn btn-default">
         Карта
-      </button>
+      </div>
       <div class="padding_mobile" ng-show="controller.currentPoint">
         <div ng-click="controller.closePoint()" class="point_close">x</div>
         <form class="comment_form">
@@ -95,7 +95,8 @@
               </div>
 
               <div ng-class="news.onlyMy?'news_bottom':''">
-                <span class="news_timestamp">{{item.created_at}}</span>
+                <span class="news_timestampАлкомап - интерактивная карта, где люди делятся информацией о том, как купить алкоголь ночью.
+">{{item.created_at}}</span>
                 <div class="news_buttons" ng-show="news.onlyMy">
                   <div class="edit_point edit_btns" ng-click="controller.editPoint(item.point.id)"></div>
                   <div class="delete_point edit_btns" ng-click="controller.deletePoint(item.point.id)"></div>
@@ -113,20 +114,21 @@
       </div>
       <div class="partner">
         <script type='text/javascript'>(function() {
-  /* Optional settings (these lines can be removed): */ 
-   subID = "";  // - local banner key;
-   injectTo = "";  // - #id of html element (ex., "top-banner").
-  /* End settings block */ 
+          /* Optional settings (these lines can be removed): */
+           subID = "";  // - local banner key;
+           injectTo = "";  // - #id of html element (ex., "top-banner").
+          /* End settings block */
 
-if(injectTo=="")injectTo="admitad_shuffle"+subID+Math.round(Math.random()*100000000);
-if(subID=='')subid_block=''; else subid_block='subid/'+subID+'/';
-document.write('<div id="'+injectTo+'"></div>');
-var s = document.createElement('script');
-s.type = 'text/javascript'; s.async = true;
-s.src = 'https://ad.admitad.com/shuffle/d96a4a61ad/'+subid_block+'?inject_to='+injectTo;
-var x = document.getElementsByTagName('script')[0];
-x.parentNode.insertBefore(s, x);
-})();</script>
+          if(injectTo=="")injectTo="admitad_shuffle"+subID+Math.round(Math.random()*100000000);
+          if(subID=='')subid_block=''; else subid_block='subid/'+subID+'/';
+          document.write('<div id="'+injectTo+'"></div>');
+          var s = document.createElement('script');
+          s.type = 'text/javascript'; s.async = true;
+          s.src = 'https://ad.admitad.com/shuffle/d96a4a61ad/'+subid_block+'?inject_to='+injectTo;
+          var x = document.getElementsByTagName('script')[0];
+          x.parentNode.insertBefore(s, x);
+          })();
+        </script>
       </div>
     </div>
     <div id="window_wrapper" ng-click="controller.closeWindow()" >

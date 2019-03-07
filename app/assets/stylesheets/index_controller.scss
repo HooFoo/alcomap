@@ -226,6 +226,9 @@ a:hover {
   {
 
   }
+  .uber_icon {
+    width: 100%;
+  }
 }
 
 @keyframes blinking {
@@ -285,7 +288,7 @@ div.dropdown.ib {
 .infobox_down {
   position: absolute;
   bottom: 0;
-  width: 100%;
+  width: 87%;
   text-align: right;
   transform: translateY(10%);
   -webkit-transform: translateY(10%);
@@ -317,7 +320,8 @@ div.dropdown.ib {
   display: inline-block;
   left: 0;
   position: absolute;
-  bottom: 6px;
+  height: 23px;
+  line-height: 23px;
 }
 
 #info {
