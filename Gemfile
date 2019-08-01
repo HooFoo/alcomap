@@ -1,10 +1,11 @@
 source 'https://rubygems.org'
-ruby '2.3.1'
+ruby '2.5.5'
 
 gem 'puma'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~>4.2.1'
+gem 'rails', '~>4.2.8'
+gem 'rake', '< 11.0'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -68,6 +69,7 @@ gem 'devise', '~> 4.2'
 gem 'devise_invitable'
 gem 'omniauth'
 gem 'omniauth-vkontakte'
+gem 'omniauth-facebook'
 gem 'gmaps4rails'
 gem 'underscore-rails'
 gem "paperclip", "~> 4.3"

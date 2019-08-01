@@ -1,7 +1,26 @@
 <div class="forms_wrapper">
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <h2>Вход</h2>
-      <div class="field">
+
+
+    <%- if devise_mapping.omniauthable? %>
+      <a href="<%= user_vkontakte_omniauth_authorize_path %>">
+        <div class="vk_widget">
+          <img src="/images/vk.png" alt="да мне вообще насрать на картинку если честно">
+          <span> Вход через ВК </span>
+        </div>
+      </a>
+      <a href="<%= user_facebook_omniauth_authorize_path %>">
+        <div class="vk_widget">
+          <img src="/images/fb.png" alt="да мне вообще насрать на картинку если честно">
+          <span> Вход через FB </span>
+        </div>
+      </a>
+    <% end -%>
+
+    <div class="delimiter">или</div>
+
+    <div class="field">
         <%= f.label "Почта" %><br/>
         <%= f.email_field :email, autofocus: true, class: 'form-control' %>
       </div>

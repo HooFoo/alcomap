@@ -167,10 +167,32 @@
   bottom: 0;
 }
 .vk_widget{
-  > a > img {
-    width: 30px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+    > span {
+      padding-left: 20px;
+    }
+    > img {
+      width: 50px;
+      height: 50px;
+    }
+}
+
+.delimiter {
+  width: 100%;
+  text-align: center;
+
+  &::before, &::after {
+    display: inline-block;
+    margin: 10px 10px 5px 10px;
+    height: 2px;
+    content: " ";
+    text-shadow: none;
+    background-color: #ccc;
+    width: 20px;
   }
 }
+
 @media (max-width: 420px) {
   .auth_info {
     height: 47px;
