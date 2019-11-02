@@ -65,7 +65,7 @@ gem 'bootstrap-sass'
 gem 'bower-rails'
 #gem 'quite_assets'
 
-gem 'devise', '~> 4.2'
+gem 'devise', '~> 4.7'
 gem 'devise_invitable'
 gem 'omniauth'
 gem 'omniauth-vkontakte'
