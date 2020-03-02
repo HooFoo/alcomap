@@ -5,7 +5,7 @@ gem 'puma'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~>4.2.8'
-gem 'rake', '< 11.0'
+gem 'rake', '< 13.0'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
